@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "combinecocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CombineCommunity/CombineCocoa.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1a1821995b49c05032980554fc5c3f1204d53076"
+      }
+    },
+    {
+      "identity" : "floatingpanel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scenee/FloatingPanel.git",
+      "state" : {
+        "revision" : "fe30e60235c5cc753e2ee2a3eebc8e654971634d",
+        "version" : "2.5.2"
+      }
+    }
+  ],
+  "version" : 2
+}
