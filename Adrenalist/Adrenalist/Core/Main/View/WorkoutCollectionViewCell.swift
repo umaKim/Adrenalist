@@ -9,7 +9,7 @@ import UIKit.UICollectionViewCell
 import Combine
 
 enum WorkoutCollectionViewCellAction {
-    case setting, calendar
+    case setting, workout ,calendar
 }
 
 final class WorkoutCollectionViewCell: UICollectionViewCell {
@@ -30,21 +30,22 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         let viewModel = WorkoutViewModel()
-        viewModel.transitionPublisher.sink { trans in
-            switch trans {
-            case .setting:
-                self.action.send(.setting)
-            case .calendar:
-                self.action.send(.calendar)
+        viewModel
+            .transitionPublisher
+            .sink { trans in
+                switch trans {
+                case .setting:
+                    self.action.send(.setting)
+                case .calendar:
+                    self.action.send(.calendar)
+                }
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
         
         let nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
-        
         guard let myListView = nav.view else { return }
         contentView.addSubview(myListView)
-
+        
         NSLayoutConstraint.activate([
             myListView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             myListView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

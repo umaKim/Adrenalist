@@ -1,15 +1,18 @@
 //
-//  WorkoutHistoryView.swift
+//  SettingView.swift
 //  Adrenalist
 //
 //  Created by 김윤석 on 2022/04/27.
 //
 
-import CombineCocoa
 import Combine
-import UIKit
+import UIKit.UIView
 
-final class WorkoutHistoryView: UIView {
+enum SettingViewAction {
+    case backButtonDidTap
+}
+
+final class SettingView: UIView {
     private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
@@ -24,6 +27,10 @@ final class WorkoutHistoryView: UIView {
         bind()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func bind() {
         backButton
             .tapPublisher
@@ -32,8 +39,4 @@ final class WorkoutHistoryView: UIView {
             }
             .store(in: &cancellables)
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }    
 }

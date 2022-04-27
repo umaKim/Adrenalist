@@ -52,7 +52,16 @@ extension MainViewController: UICollectionViewDataSource {
         switch indexPath.item {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingCollectionViewCell.identifier, for: indexPath) as? SettingCollectionViewCell else {return UICollectionViewCell()}
-            cell.backgroundColor = .green
+            cell.configure()
+            cell.action
+                .sink { action in
+                    switch action {
+                    case .workout:
+                        self.scrollTo(index: 1)
+                    }
+                }
+                .store(in: &cancellables)
+            
             return cell
             
         case 1:
@@ -65,6 +74,10 @@ extension MainViewController: UICollectionViewDataSource {
                     switch action {
                     case .setting:
                         self.scrollTo(index: 0)
+                    
+                    case .workout:
+                        break
+                        
                     case .calendar:
                         self.scrollTo(index: 2)
                     }
@@ -74,7 +87,15 @@ extension MainViewController: UICollectionViewDataSource {
             
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier, for: indexPath) as? WorkoutHistoryCollectionViewCell else {return UICollectionViewCell()}
-            cell.backgroundColor = .blue
+            cell.configure()
+            cell.action
+                .sink { action in
+                    switch action {
+                    case .workout:
+                        self.scrollTo(index: 1)
+                    }
+                }
+                .store(in: &cancellables)
             return cell
             
         default:
