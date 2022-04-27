@@ -14,11 +14,15 @@ final class WorkoutHistoryViewController: UIViewController {
     private let viewModel: WorkoutHistoryViewModel
     private var cancellables: Set<AnyCancellable>
     
+    override func loadView() {
+        super.loadView()
+        view = contentView
+    }
+    
     init(viewModel: WorkoutHistoryViewModel) {
         self.viewModel = viewModel
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
-        
         
     }
     
@@ -27,6 +31,9 @@ final class WorkoutHistoryViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = .red
         navigationItem.leftBarButtonItems = [contentView.backButton]
+        
+        contentView.tableView.dataSource = self
+        contentView.tableView.delegate = self
         
         bind()
     }
@@ -46,4 +53,29 @@ final class WorkoutHistoryViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension WorkoutHistoryViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutHistoryTableViewCell.identifier, for: indexPath) as? WorkoutHistoryTableViewCell else {return UITableViewCell()}
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        UIScreen.main.bounds.height / 3
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let weatherTableViewHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: WorkoutHistoryHeaderTableViewCell.identifier) as? WorkoutHistoryHeaderTableViewCell else { return UIView() }
+        return weatherTableViewHeaderView
+    }
+}
+
+extension WorkoutHistoryViewController: UITableViewDelegate {
+    
 }

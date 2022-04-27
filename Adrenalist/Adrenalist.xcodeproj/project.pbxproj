@@ -31,6 +31,9 @@
 		3548C867281913490089A0C4 /* WorkoutHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */; };
 		3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C8682819137A0089A0C4 /* SettingViewModel.swift */; };
 		3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86A2819137F0089A0C4 /* SettingView.swift */; };
+		3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C86D281926A30089A0C4 /* FSCalendar */; };
+		3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */; };
+		3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +62,8 @@
 		3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryViewModel.swift; sourceTree = "<group>"; };
 		3548C8682819137A0089A0C4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3548C86A2819137F0089A0C4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */,
+				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +169,7 @@
 				3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */,
 				3548C864281913130089A0C4 /* WorkoutHistoryViewController.swift */,
 				3548C85428190E8D0089A0C4 /* WorkoutHistoryView.swift */,
+				3548C87128192CA10089A0C4 /* View */,
 			);
 			path = WorkoutHistory;
 			sourceTree = "<group>";
@@ -173,6 +180,15 @@
 				3548C85228190E750089A0C4 /* WorkoutCollectionViewCell.swift */,
 				351C5BC628190D1A00FE9C0F /* CircularView.swift */,
 				3548C85F281910150089A0C4 /* SuggestBarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3548C87128192CA10089A0C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */,
+				3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -196,6 +212,7 @@
 			packageProductDependencies = (
 				3548C85D28190FA90089A0C4 /* FloatingPanel */,
 				3548C862281910D90089A0C4 /* CombineCocoa */,
+				3548C86D281926A30089A0C4 /* FSCalendar */,
 			);
 			productName = Adrenalist;
 			productReference = 351C5BA728190B7000FE9C0F /* Adrenalist.app */;
@@ -228,6 +245,7 @@
 			packageReferences = (
 				3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 351C5BA828190B7000FE9C0F /* Products */;
 			projectDirPath = "";
@@ -268,9 +286,11 @@
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
+				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
+				3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */,
 				3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
@@ -500,6 +520,14 @@
 				kind = branch;
 			};
 		};
+		3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -512,6 +540,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		3548C86D281926A30089A0C4 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
