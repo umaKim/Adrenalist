@@ -34,6 +34,11 @@
 		3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C86D281926A30089A0C4 /* FSCalendar */; };
 		3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */; };
 		3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */; };
+		3548C876281A2ECE0089A0C4 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C875281A2ECE0089A0C4 /* PersistanceManager.swift */; };
+		3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C878281A86960089A0C4 /* WorkoutListViewController.swift */; };
+		3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */; };
+		3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */; };
+		3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87F281A87050089A0C4 /* WorkoutListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +69,11 @@
 		3548C86A2819137F0089A0C4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		3548C875281A2ECE0089A0C4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
+		3548C878281A86960089A0C4 /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
+		3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewModel.swift; sourceTree = "<group>"; };
+		3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListCell.swift; sourceTree = "<group>"; };
+		3548C87F281A87050089A0C4 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,7 @@
 				351C5BAA28190B7000FE9C0F /* AppDelegate.swift */,
 				351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */,
 				351C5BAE28190B7000FE9C0F /* ViewController.swift */,
+				3548C874281A2EBB0089A0C4 /* Manager */,
 				3548C84928190DF10089A0C4 /* Core */,
 				351C5BB328190B7100FE9C0F /* Assets.xcassets */,
 				351C5BB528190B7100FE9C0F /* LaunchScreen.storyboard */,
@@ -121,9 +132,9 @@
 		3548C84A28190DFC0089A0C4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				351C5BBE28190BCC00FE9C0F /* MainView.swift */,
-				351C5BC028190C2100FE9C0F /* MainViewController.swift */,
 				351C5BC228190C6500FE9C0F /* MainViewModel.swift */,
+				351C5BC028190C2100FE9C0F /* MainViewController.swift */,
+				351C5BBE28190BCC00FE9C0F /* MainView.swift */,
 				3548C84B28190E040089A0C4 /* View */,
 			);
 			path = Main;
@@ -135,6 +146,7 @@
 				3548C85628190ECF0089A0C4 /* SettingCollectionViewCell.swift */,
 				3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */,
 				3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */,
+				3548C877281A868A0089A0C4 /* WorkoutList */,
 				3548C84C28190E130089A0C4 /* Setting */,
 				3548C84D28190E190089A0C4 /* Workout */,
 				3548C84E28190E250089A0C4 /* WorkoutHistory */,
@@ -177,8 +189,8 @@
 		3548C85128190E510089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3548C85228190E750089A0C4 /* WorkoutCollectionViewCell.swift */,
 				351C5BC628190D1A00FE9C0F /* CircularView.swift */,
+				3548C85228190E750089A0C4 /* WorkoutCollectionViewCell.swift */,
 				3548C85F281910150089A0C4 /* SuggestBarView.swift */,
 			);
 			path = View;
@@ -189,6 +201,33 @@
 			children = (
 				3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */,
 				3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3548C874281A2EBB0089A0C4 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				3548C875281A2ECE0089A0C4 /* PersistanceManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		3548C877281A868A0089A0C4 /* WorkoutList */ = {
+			isa = PBXGroup;
+			children = (
+				3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */,
+				3548C878281A86960089A0C4 /* WorkoutListViewController.swift */,
+				3548C87F281A87050089A0C4 /* WorkoutListView.swift */,
+				3548C87E281A86FD0089A0C4 /* View */,
+			);
+			path = WorkoutList;
+			sourceTree = "<group>";
+		};
+		3548C87E281A86FD0089A0C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -276,6 +315,7 @@
 				351C5BAF28190B7000FE9C0F /* ViewController.swift in Sources */,
 				3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */,
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
+				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
 				3548C867281913490089A0C4 /* WorkoutHistoryViewModel.swift in Sources */,
 				3548C85528190E8D0089A0C4 /* WorkoutHistoryView.swift in Sources */,
 				3548C860281910150089A0C4 /* SuggestBarView.swift in Sources */,
@@ -283,15 +323,19 @@
 				351C5BCB28190D6200FE9C0F /* WorkoutViewController.swift in Sources */,
 				351C5BAB28190B7000FE9C0F /* AppDelegate.swift in Sources */,
 				3548C85B28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift in Sources */,
+				3548C876281A2ECE0089A0C4 /* PersistanceManager.swift in Sources */,
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
+				3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
 				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
+				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
 				3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */,
 				3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */,
+				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
@@ -362,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -416,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

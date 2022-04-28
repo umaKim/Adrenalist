@@ -42,14 +42,14 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
         
         let vc =  WorkoutHistoryViewController(viewModel: viewModel)
         let nav = UINavigationController(rootViewController: vc)
-        guard let myListView = nav.view else { return }
-        contentView.addSubview(myListView)
+        guard let myHistoryView = nav.view else { return }
+        contentView.addSubview(myHistoryView)
         
         NSLayoutConstraint.activate([
-            myListView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            myListView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            myListView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            myListView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            myHistoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            myHistoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            myHistoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            myHistoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
     

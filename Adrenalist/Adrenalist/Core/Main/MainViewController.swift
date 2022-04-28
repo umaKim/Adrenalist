@@ -28,7 +28,6 @@ final class MainViewController: UIViewController {
         
         view = contentView
         
-        
         setupCollectionView()
     }
     
@@ -67,9 +66,7 @@ extension MainViewController: UICollectionViewDataSource {
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.identifier, for: indexPath) as? WorkoutCollectionViewCell else {return UICollectionViewCell()}
             cell.configure()
-            
-            cell
-                .action
+            cell.action
                 .sink { action in
                     switch action {
                     case .setting:

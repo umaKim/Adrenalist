@@ -26,6 +26,6 @@ final class WorkoutViewModel {
     }
     
     func didDoubleTap() {
-        print("tap")
+        print("circle tap")
     }
 }

@@ -15,15 +15,15 @@ final class SettingViewController: UIViewController {
     
     private var cancellables: Set<AnyCancellable>
     
-    override func loadView() {
-        super.loadView()
-        view = contentView
-    }
-    
     init(viewModel: SettingViewModel) {
         self.viewModel = viewModel
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func loadView() {
+        super.loadView()
+        view = contentView
     }
     
     override func viewDidLoad() {

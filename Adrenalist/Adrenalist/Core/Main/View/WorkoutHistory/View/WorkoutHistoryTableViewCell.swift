@@ -9,4 +9,6 @@ import UIKit
 
 final class WorkoutHistoryTableViewCell: UITableViewCell {
     static let identifier = "WorkoutHistoryTableViewCell"
+    
+    
 }

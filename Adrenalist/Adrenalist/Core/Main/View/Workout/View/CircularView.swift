@@ -6,17 +6,15 @@
 //
 
 import UIKit.UIView
-
-enum CircularViewAction {
-    case doubleTap
-}
+import Combine
 
 final class CircularView: UIView {
-    let circularPath = UIBezierPath(arcCenter: .zero, radius: 150, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-    let pulsingLayer = CAShapeLayer()
-    let outlineStrokeLayer = CAShapeLayer()
-    let trackLayer = CAShapeLayer()
-    let timerInsideStrokeLayer = CAShapeLayer()
+    
+    private let circularPath = UIBezierPath(arcCenter: .zero, radius: 150, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+    private let pulsingLayer = CAShapeLayer()
+    private let outlineStrokeLayer = CAShapeLayer()
+    private let trackLayer = CAShapeLayer()
+    private let timerInsideStrokeLayer = CAShapeLayer()
     
     init() {
         super.init(frame: .zero)
@@ -27,7 +25,7 @@ final class CircularView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func drawLayers() {
+    private func drawLayers() {
         self.drawPulsingLayer()
         self.drawTrackLayer()
         self.drawOutlineStrokeLayer()
@@ -36,7 +34,7 @@ final class CircularView: UIView {
         self.drawTimerLayer()
     }
     
-    func drawOutlineStrokeLayer() {
+    private func drawOutlineStrokeLayer() {
         outlineStrokeLayer.path = circularPath.cgPath
         outlineStrokeLayer.strokeColor = UIColor(red: 234/255, green: 46/255, blue: 111/255, alpha: 1).cgColor
         outlineStrokeLayer.lineWidth = 20
@@ -48,7 +46,7 @@ final class CircularView: UIView {
         layer.addSublayer(outlineStrokeLayer)
     }
     
-    func drawTimerLayer( ){
+    private func drawTimerLayer( ){
         let circularPath = UIBezierPath(arcCenter: .zero, radius: 120, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
         timerInsideStrokeLayer.path = circularPath.cgPath
         timerInsideStrokeLayer.strokeColor = UIColor(red: 234/255, green: 120/255, blue: 47/255, alpha: 1).cgColor
@@ -61,7 +59,7 @@ final class CircularView: UIView {
         layer.addSublayer(timerInsideStrokeLayer)
     }
     
-    func drawTrackLayer() {
+    private func drawTrackLayer() {
         trackLayer.path = circularPath.cgPath
         trackLayer.strokeColor = UIColor(red: 56/255, green: 25/255, blue: 49/255, alpha: 1).cgColor
         trackLayer.lineWidth = 20
@@ -71,7 +69,7 @@ final class CircularView: UIView {
         layer.addSublayer(trackLayer)
     }
     
-    func drawPulsingLayer() {
+    private func drawPulsingLayer() {
         let circularPathforPulsingLayer = UIBezierPath(arcCenter: .zero, radius: 125, startAngle: 0, endAngle:  2 * CGFloat.pi, clockwise: true)
         pulsingLayer.path = circularPathforPulsingLayer.cgPath
         pulsingLayer.strokeColor = UIColor.clear.cgColor
@@ -79,6 +77,52 @@ final class CircularView: UIView {
         pulsingLayer.lineCap = CAShapeLayerLineCap.round
         pulsingLayer.position = center
         layer.addSublayer(pulsingLayer)
+    }
+    
+    func animate() {
+        animatePulse()
+        animateOutlineStroke()
+    }
+    
+    private func animatePulse() {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        
+        if(PersistanceManager.shared.retrieveWorkouts().count == 0){
+            animation.toValue = 1.0
+        } else {
+            animation.toValue = 1.5
+        }
+        
+        animation.fromValue = 1.25
+        animation.duration = progressResult()
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        animation.autoreverses = true
+        animation.repeatCount = Float.infinity
+        pulsingLayer.add(animation, forKey: "pulsing")
+    }
+    
+    private func animateOutlineStroke() {
+        print(PersistanceManager.shared.retrieveWorkouts())
+        
+//        guard let percentage = PersistanceManager.shared.retrieveWorkouts().count else { return }
+        let percentage = CGFloat((PersistanceManager.shared.retrieveWorkouts().filter({$0.isDone}).count / PersistanceManager.shared.retrieveWorkouts().count) / 100)
+        outlineStrokeLayer.strokeEnd = percentage / 100.0
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.duration = 0.5
+        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
+        outlineStrokeLayer.add(basicAnimation, forKey: "Basic")
+    }
+    
+    private func progressResult() -> CFTimeInterval {
+        let finishedWorkOut = CGFloat(PersistanceManager.shared.retrieveWorkouts().filter({ $0.isDone}).count)
+        let totalWorkout = CGFloat(PersistanceManager.shared.retrieveWorkouts().count)
+        
+        if 0.2 >= CFTimeInterval(finishedWorkOut / totalWorkout) {
+            return 0.2
+        } else {
+            return CFTimeInterval(finishedWorkOut / totalWorkout)
+        }
     }
     
 //    func drawCurrentWorkOutLayer() {

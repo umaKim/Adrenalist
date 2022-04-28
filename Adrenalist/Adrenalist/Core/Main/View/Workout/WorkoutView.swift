@@ -57,6 +57,7 @@ final class WorkoutView: UIView {
     @objc
     private func didTap() {
         self.actionSubject.send(.doubleTap)
+        self.circularView.animate()
     }
     
     private func setupUI() {

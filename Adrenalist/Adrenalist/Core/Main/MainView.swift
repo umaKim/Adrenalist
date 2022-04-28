@@ -27,6 +27,10 @@ final class MainView: UIView {
     init() {
         super.init(frame: .zero)
         
+        setupUI()
+    }
+    
+    private func setupUI() {
         addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),

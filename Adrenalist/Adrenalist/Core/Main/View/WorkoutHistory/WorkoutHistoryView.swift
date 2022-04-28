@@ -51,7 +51,7 @@ final class WorkoutHistoryView: UIView {
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tableView.topAnchor.constraint(equalTo: topAnchor)
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
         ])
     }
 
