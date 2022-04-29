@@ -53,6 +53,19 @@ final class WorkoutViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        viewModel
+            .listenPublisher
+            .sink { listen in
+                switch listen {
+                case .updateOutlineStrokeEnd(let value):
+                    self.contentView.updateOutline(value)
+                    
+                case .updatePulse(let value):
+                    self.contentView.updatePulse(value)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
@@ -75,7 +88,7 @@ extension WorkoutViewController: FloatingPanelControllerDelegate  {
         let panel = FloatingPanelController(delegate: self)
         panel.set(contentViewController: UINavigationController(rootViewController: vc))
         panel.addPanel(toParent: self)
-        panel.track(scrollView: vc.contentView.collectionView)
+        panel.track(scrollView: vc.contentView.workoutListCollectionView)
         
         let appearance = SurfaceAppearance()
         appearance.backgroundColor = .systemBackground
@@ -101,7 +114,7 @@ final class MyFloatingPanelLayout: FloatingPanelLayout {
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
         return [
             .full: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height - 150, edge: .bottom, referenceGuide: .safeArea),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height / 2, edge: .bottom, referenceGuide: .safeArea),
+//            .half: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height / 2, edge: .bottom, referenceGuide: .safeArea),
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 50, edge: .bottom, referenceGuide: .safeArea),
         ]
     }

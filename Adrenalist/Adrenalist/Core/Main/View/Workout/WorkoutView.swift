@@ -57,7 +57,14 @@ final class WorkoutView: UIView {
     @objc
     private func didTap() {
         self.actionSubject.send(.doubleTap)
-        self.circularView.animate()
+    }
+    
+    public func updatePulse(_ duration: CFTimeInterval) {
+        circularView.animatePulse(duration)
+    }
+    
+    public func updateOutline(_ strokeEnd: CGFloat) {
+        circularView.animateOutlineStroke(strokeEnd)
     }
     
     private func setupUI() {
