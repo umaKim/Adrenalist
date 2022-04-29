@@ -5,6 +5,7 @@
 //  Created by 김윤석 on 2022/04/28.
 //
 
+import Combine
 import Foundation
 
 final class PersistanceManager {
@@ -19,21 +20,22 @@ final class PersistanceManager {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(workouts)
             defaults.setValue(encodedFavorites, forKey: Keys.workouts)
-//            return Just(.successful).setFailureType(to: .self).eraseToAnyPublisher()
         } catch {
-//            return Fail(error: .error).eraseToAnyPublisher()
+            print(error)
         }
     }
     
-    func retrieveWorkouts() -> [Workout] {
-        guard let data = defaults.object(forKey: Keys.workouts) as? Data else { return [] }
+    func retrieveWorkouts() -> AnyPublisher<[Workout], Error> {
+        guard let data = defaults.object(forKey: Keys.workouts) as? Data else {
+            return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
+        }
         
         do {
             let decoder = JSONDecoder()
             let workouts = try decoder.decode([Workout].self, from: data)
-            return workouts
+            return Just(workouts).setFailureType(to: Error.self).eraseToAnyPublisher()
         } catch {
-            return []
+            return Fail(error: error).eraseToAnyPublisher()
         }
     }
 }
