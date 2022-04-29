@@ -21,13 +21,21 @@ final class WorkoutListView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
     
-    private(set) lazy var suggestBarView: SuggestBarView = SuggestBarView()
+    private(set) lazy var suggestedCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifierForSuggested)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = .red
+        return cv
+    }()
     
-    private(set) lazy var collectionView: UICollectionView = {
+    private(set) lazy var workoutListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
+        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifierWorkout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
@@ -38,6 +46,7 @@ final class WorkoutListView: UIView {
         self.cancellables = .init()
         super.init(frame: .zero)
         bind()
+        setupUI()
     }
     
     private func bind() {
@@ -47,6 +56,23 @@ final class WorkoutListView: UIView {
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        addSubview(suggestedCollectionView)
+        addSubview(workoutListCollectionView)
+        
+        NSLayoutConstraint.activate([
+            suggestedCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            suggestedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            suggestedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
+            
+            workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
+            workoutListCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
     }
     
     required init?(coder: NSCoder) {

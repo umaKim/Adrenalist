@@ -8,7 +8,8 @@
 import UIKit.UICollectionViewCell
 
 final class WorkoutListCell: UICollectionViewCell {
-    static let identifier = "WorkoutListCell"
+    static let identifierForSuggested = "identifierForSuggested"
+    static let identifierWorkout = "identifierWorkout"
     
     private lazy var titleLabel: UILabel = {
        let label = UILabel()
@@ -40,14 +41,9 @@ final class WorkoutListCell: UICollectionViewCell {
     }
     
     func update() {
-        let uv = UIView()
-        guard let workout = workout else {
-            uv.backgroundColor = .blue
-            selectedBackgroundView = uv
-            return
-        }
-
-        uv.backgroundColor = workout.isDone ? .red : .blue
+//        workout?.isDone.toggle()
+//        PersistanceManager.shared.saveWorkouts(<#T##workouts: [Workout]##[Workout]#>)
+//        WorkOutToDoManager.shared.completeCurrentWorkOut()
     }
     
     required init?(coder: NSCoder) {
