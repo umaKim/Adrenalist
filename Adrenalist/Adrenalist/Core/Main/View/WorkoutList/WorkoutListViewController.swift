@@ -70,63 +70,7 @@ final class WorkoutListViewController: UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Private Methods
     
-    /// This method moves a cell from source indexPath to destination indexPath within the same collection view. It works for only 1 item. If multiple items selected, no reordering happens.
-    ///
-    /// - Parameters:
-    ///   - coordinator: coordinator obtained from performDropWith: UICollectionViewDropDelegate method
-    ///   - destinationIndexPath: indexpath of the collection view where the user drops the element
-    ///   - collectionView: collectionView in which reordering needs to be done.
-    private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
-        let items = coordinator.items
-        if items.count == 1,
-           let item = items.first,
-           let sourceIndexPath = item.sourceIndexPath {
-            var dIndexPath = destinationIndexPath
-            if dIndexPath.row >= collectionView.numberOfItems(inSection: 0) {
-                dIndexPath.row = collectionView.numberOfItems(inSection: 0) - 1
-            }
-            collectionView.performBatchUpdates({
-                if collectionView === self.contentView.workoutListCollectionView
-                {
-                    self.viewModel.workouts.remove(at: sourceIndexPath.row)
-                    self.viewModel.workouts.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
-                }
-                else
-                {
-                    self.viewModel.suggestions.remove(at: sourceIndexPath.row)
-                    self.viewModel.suggestions.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
-                }
-                collectionView.deleteItems(at: [sourceIndexPath])
-                collectionView.insertItems(at: [dIndexPath])
-            })
-            coordinator.drop(items.first!.dragItem, toItemAt: dIndexPath)
-        }
-    }
-    
-    /// This method copies a cell from source indexPath in 1st collection view to destination indexPath in 2nd collection view. It works for multiple items.
-    ///
-    /// - Parameters:
-    ///   - coordinator: coordinator obtained from performDropWith: UICollectionViewDropDelegate method
-    ///   - destinationIndexPath: indexpath of the collection view where the user drops the element
-    ///   - collectionView: collectionView in which reordering needs to be done.
-    private func copyItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView)
-    {
-        collectionView.performBatchUpdates({
-            var indexPaths = [IndexPath]()
-            for (index, item) in coordinator.items.enumerated() {
-                let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
-                if collectionView === self.contentView.workoutListCollectionView {
-                    self.viewModel.workouts.insert(item.dragItem.localObject as! Workout, at: indexPath.row)
-                } else {
-                    self.viewModel.suggestions.insert(item.dragItem.localObject as! Workout, at: indexPath.row)
-                }
-                indexPaths.append(indexPath)
-            }
-            collectionView.insertItems(at: indexPaths)
-        })
-    }
 }
 
 //MARK: - UICollectionView Drop Delegate
@@ -165,16 +109,16 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
         
         switch coordinator.proposal.operation {
         case .move:
-            self.reorderItems(coordinator: coordinator,
-                              destinationIndexPath:destinationIndexPath,
-                              collectionView: collectionView)
-            break
+            self.viewModel.reorderItems(coordinator: coordinator,
+                                        destinationIndexPath:destinationIndexPath,
+                                        collectionView: collectionView,
+                                        currentCollectionView: contentView.workoutListCollectionView)
             
         case .copy:
-            self.copyItems(coordinator: coordinator,
-                           destinationIndexPath: destinationIndexPath,
-                           collectionView: collectionView)
-            
+            self.viewModel.copyItems(coordinator: coordinator,
+                                     destinationIndexPath: destinationIndexPath,
+                                     collectionView: collectionView,
+                                     currentCollectionView: contentView.workoutListCollectionView)
         default:
             return
         }
@@ -216,7 +160,7 @@ extension WorkoutListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutListCell.identifierForSuggested, for: indexPath) as! WorkoutListCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SuggestionListCell.identifier, for: indexPath) as! SuggestionListCell
             cell.configure(with: viewModel.suggestions[indexPath.item])
             return cell
         } else {
@@ -232,11 +176,17 @@ extension WorkoutListViewController: UICollectionViewDelegate {
         //        viewModel.didTapCell(at: indexPath.item)
         //        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutListCell.identifier, for: indexPath) as? WorkoutListCell else {return}
         //
+        viewModel.didTapCell(at: indexPath.item)
     }
 }
 
 extension WorkoutListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        .init(width: UIScreen.main.bounds.width - 50, height: 60)
+        if collectionView == contentView.suggestedCollectionView {
+            return .init(width: UIScreen.main.bounds.width / 3, height: 40)
+        } else {
+            return .init(width: UIScreen.main.bounds.width - 50, height: 60)
+        }
     }
 }
+

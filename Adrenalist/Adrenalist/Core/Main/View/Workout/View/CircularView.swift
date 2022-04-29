@@ -16,15 +16,12 @@ final class CircularView: UIView {
     private let trackLayer = CAShapeLayer()
     private let timerInsideStrokeLayer = CAShapeLayer()
     
-    private var workouts: [Workout] = WorkOutToDoManager.shared.workOutToDos
-    
     private var cancellables: Set<AnyCancellable>
     
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
         drawLayers()
-//        bind()
     }
    
     required init?(coder: NSCoder) {
@@ -32,35 +29,10 @@ final class CircularView: UIView {
     }
 }
 
-//MARK: - Bind
-extension CircularView {
-    private func bind() {
-        PersistanceManager.shared.retrieveWorkouts()
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    
-                case .finished:
-                    print("finished")
-                }
-            } receiveValue: { workouts in
-                self.workouts = workouts
-            }
-            .store(in: &cancellables)
-    }
-}
-
 //MARK: - Animate
 extension CircularView {
-//    func animate(duration: CFTimeInterval, outlineStrokeEnd: CGFloat) {
-//        animatePulse(duration)
-//        animateOutlineStroke(outlineStrokeEnd)
-//    }
-    
     func animatePulse(_ duration: CGFloat) {
         let animation = CABasicAnimation(keyPath: "transform.scale")
-        print()
         if(duration == 0) {
             animation.toValue = 1.0
         } else {
@@ -76,11 +48,6 @@ extension CircularView {
     }
     
     func animateOutlineStroke(_ strokeEnd: CGFloat) {
-//        guard workouts.count != 0 else { return }
-        
-//        let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
-//        let total = CGFloat(workouts.count)
-//        let percentage = (numberOfDone / total)
         outlineStrokeLayer.strokeEnd = strokeEnd
         
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
