@@ -16,21 +16,88 @@ final class CircularView: UIView {
     private let trackLayer = CAShapeLayer()
     private let timerInsideStrokeLayer = CAShapeLayer()
     
+    private var workouts: [Workout] = WorkOutToDoManager.shared.workOutToDos
+    
+    private var cancellables: Set<AnyCancellable>
+    
     init() {
+        self.cancellables = .init()
         super.init(frame: .zero)
         drawLayers()
+//        bind()
     }
-    
+   
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+//MARK: - Bind
+extension CircularView {
+    private func bind() {
+        PersistanceManager.shared.retrieveWorkouts()
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    
+                case .finished:
+                    print("finished")
+                }
+            } receiveValue: { workouts in
+                self.workouts = workouts
+            }
+            .store(in: &cancellables)
+    }
+}
+
+//MARK: - Animate
+extension CircularView {
+//    func animate(duration: CFTimeInterval, outlineStrokeEnd: CGFloat) {
+//        animatePulse(duration)
+//        animateOutlineStroke(outlineStrokeEnd)
+//    }
     
+    func animatePulse(_ duration: CGFloat) {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        print()
+        if(duration == 0) {
+            animation.toValue = 1.0
+        } else {
+            animation.toValue = 1.5
+        }
+        
+        animation.fromValue = 1.25
+        animation.duration = CFTimeInterval(duration)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        animation.autoreverses = true
+        animation.repeatCount = Float.infinity
+        pulsingLayer.add(animation, forKey: "pulsing")
+    }
+    
+    func animateOutlineStroke(_ strokeEnd: CGFloat) {
+//        guard workouts.count != 0 else { return }
+        
+//        let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
+//        let total = CGFloat(workouts.count)
+//        let percentage = (numberOfDone / total)
+        outlineStrokeLayer.strokeEnd = strokeEnd
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.duration = 0.5
+        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
+        outlineStrokeLayer.add(basicAnimation, forKey: "Basic")
+    }
+}
+
+//MARK: - Set up UI
+extension CircularView {
     private func drawLayers() {
         self.drawPulsingLayer()
         self.drawTrackLayer()
         self.drawOutlineStrokeLayer()
-//        self.drawCurrentWorkOutLayer()
-//        self.drawNextWorkOutLabel()
+        //        self.drawCurrentWorkOutLayer()
+        //        self.drawNextWorkOutLabel()
         self.drawTimerLayer()
     }
     
@@ -79,66 +146,18 @@ final class CircularView: UIView {
         layer.addSublayer(pulsingLayer)
     }
     
-    func animate() {
-        animatePulse()
-        animateOutlineStroke()
-    }
-    
-    private func animatePulse() {
-        let animation = CABasicAnimation(keyPath: "transform.scale")
-        
-        if(PersistanceManager.shared.retrieveWorkouts().count == 0){
-            animation.toValue = 1.0
-        } else {
-            animation.toValue = 1.5
-        }
-        
-        animation.fromValue = 1.25
-        animation.duration = progressResult()
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        animation.autoreverses = true
-        animation.repeatCount = Float.infinity
-        pulsingLayer.add(animation, forKey: "pulsing")
-    }
-    
-    private func animateOutlineStroke() {
-        print(PersistanceManager.shared.retrieveWorkouts())
-        
-//        guard let percentage = PersistanceManager.shared.retrieveWorkouts().count else { return }
-        let percentage = CGFloat((PersistanceManager.shared.retrieveWorkouts().filter({$0.isDone}).count / PersistanceManager.shared.retrieveWorkouts().count) / 100)
-        outlineStrokeLayer.strokeEnd = percentage / 100.0
-        
-        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        basicAnimation.duration = 0.5
-        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
-        outlineStrokeLayer.add(basicAnimation, forKey: "Basic")
-    }
-    
-    private func progressResult() -> CFTimeInterval {
-        let finishedWorkOut = CGFloat(PersistanceManager.shared.retrieveWorkouts().filter({ $0.isDone}).count)
-        let totalWorkout = CGFloat(PersistanceManager.shared.retrieveWorkouts().count)
-        
-        if 0.2 >= CFTimeInterval(finishedWorkOut / totalWorkout) {
-            return 0.2
-        } else {
-            return CFTimeInterval(finishedWorkOut / totalWorkout)
-        }
-    }
-    
-//    func drawCurrentWorkOutLayer() {
-//        currentWorkOutLabel.font = UIFont.boldSystemFont(ofSize: 26)
-//        currentWorkOutLabel.textColor = .white
-//        currentWorkOutLabel.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-//        currentWorkOutLabel.center = view.center
-//        currentWorkOutLabel.numberOfLines = 3
-//        addSubview(currentWorkOutLabel)
-//    }
+//    private func progressResult() -> CFTimeInterval {
+////        let finishedWorkOut = CGFloat(workouts.filter({ $0.isDone}).count)
+////        let totalWorkout = CGFloat(workouts.count)
 //
-//    func drawNextWorkOutLabel() {
-//        nextWorkOutLabel.font = UIFont.boldSystemFont(ofSize: 18)
-//        nextWorkOutLabel.textColor = .white
-//        nextWorkOutLabel.alpha = 0.3
-//        nextWorkOutLabel.numberOfLines = 2
-//        addSubview(nextWorkOutLabel)
+//        let finishedWorkout = CGFloat(WorkOutToDoManager.shared.workOutToDos.filter({$0.isDone}).count)
+//        let totalWorkout = CGFloat(WorkOutToDoManager.shared.workOutToDos.count)
+//
+//        if 0.2 >= CFTimeInterval(finishedWorkout / totalWorkout) {
+//            return 0.2
+//        } else {
+//            return CFTimeInterval(finishedWorkout / totalWorkout)
+//        }
 //    }
+    
 }
