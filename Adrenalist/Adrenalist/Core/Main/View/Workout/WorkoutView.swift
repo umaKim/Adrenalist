@@ -19,10 +19,29 @@ final class WorkoutView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutViewAction, Never>()
     
-    private(set) lazy var calendarButton = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .done, target: self, action: nil)
-    private(set) lazy var settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .done, target: self, action: nil)
+    private(set) lazy var calendarButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.calendar), style: .done, target: nil, action: nil)
+    private(set) lazy var settingButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.setting), style: .done, target: nil, action: nil)
     
     private let circularView = CircularView()
+    
+    private var workoutLabel: UILabel = {
+        let lb = UILabel()
+        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        return lb
+    }()
+    
+    private var weightLabel: UILabel = {
+        let lb = UILabel()
+        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        return lb
+    }()
+    
+    var updateWorkout: Workout? {
+        didSet {
+            self.workoutLabel.text = updateWorkout?.title
+            self.weightLabel.text = String(updateWorkout?.weight ?? 0)
+        }
+    }
     
     private var cancellables: Set<AnyCancellable>
     
@@ -69,11 +88,26 @@ final class WorkoutView: UIView {
     
     private func setupUI() {
         backgroundColor = .black
-        addSubview(circularView)
-        circularView.translatesAutoresizingMaskIntoConstraints = false
+//        addSubview(circularView)
+//        circularView.translatesAutoresizingMaskIntoConstraints = false
+//
+        let labelStackView = UIStackView(arrangedSubviews: [workoutLabel, weightLabel])
+        labelStackView.axis = .vertical
+        labelStackView.distribution = .fill
+        labelStackView.alignment = .center
+        labelStackView.spacing = 6
+        
+        [circularView, labelStackView].forEach { view in
+            addSubview(view)
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
         NSLayoutConstraint.activate([
             circularView.centerXAnchor.constraint(equalTo: centerXAnchor),
             circularView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            labelStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
