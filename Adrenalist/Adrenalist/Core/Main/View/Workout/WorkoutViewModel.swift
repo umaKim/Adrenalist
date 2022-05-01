@@ -17,6 +17,7 @@ enum WorkoutTransition {
 enum WorkoutViewModelListener {
     case updateOutlineStrokeEnd(CGFloat)
     case updatePulse(CGFloat)
+    case updateToCurrentWorkout(Workout?)
 }
 
 final class WorkoutViewModel {
@@ -35,8 +36,10 @@ final class WorkoutViewModel {
         bind()
     }
     
+    private let workout = WorkOutToDoManager.shared
+    
     private func bind() {
-        WorkOutToDoManager.shared
+        workout
             .$workOutToDos
             .sink { workouts in
                 self.workouts = workouts
@@ -44,9 +47,10 @@ final class WorkoutViewModel {
             }
             .store(in: &cancellables)
         
-        WorkOutToDoManager.shared.setCurrentIndex()
+        workout.setCurrentIndex()
     }
     
+    //MARK: - Public Methods
     func didTapSetting() {
         transitionSubject.send(.setting)
     }
@@ -56,22 +60,28 @@ final class WorkoutViewModel {
     }
     
     func didDoubleTap() {
-        WorkOutToDoManager.shared.completeCurrentWorkOut()
+        workout.completeCurrentWorkOut()
         sendViewUpdate()
     }
     
+    //MARK: - Private Methods
     private func sendViewUpdate() {
         listenSubject.send(.updatePulse(progressPulse))
         listenSubject.send(.updateOutlineStrokeEnd(progressOutline))
+        listenSubject.send(.updateToCurrentWorkout(currentWorkout))
+    }
+    
+    private var currentWorkout: Workout? {
+        return workout.getCurrentWorkOut()
     }
     
     private var progressPulse: CGFloat {
-        if WorkOutToDoManager.shared.workOutToDos.count == 0 {
+        if workout.workOutToDos.count == 0 {
             return 0
         }
         
-        let finishedWorkout = CGFloat(WorkOutToDoManager.shared.getUnfinishedWorkOut().count)
-        let totalWorkout = CGFloat(WorkOutToDoManager.shared.workOutToDos.count)
+        let finishedWorkout = CGFloat(workout.getUnfinishedWorkOut().count)
+        let totalWorkout = CGFloat(workout.workOutToDos.count)
         
         if 0.2 >= finishedWorkout / totalWorkout {
             return 0.2
