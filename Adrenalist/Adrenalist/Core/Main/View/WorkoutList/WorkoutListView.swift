@@ -15,8 +15,8 @@ enum WorkoutListViewAction {
 }
 
 final class WorkoutListView: UIView {
-    private(set) lazy var edittingButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .done, target: nil, action: nil)
-    private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: "plus.square"), style: .done, target: nil, action: nil)
+    private(set) lazy var edittingButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.editting), style: .done, target: nil, action: nil)
+    private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.addWorkout), style: .done, target: nil, action: nil)
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
@@ -25,9 +25,9 @@ final class WorkoutListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifierForSuggested)
+        cv.register(SuggestionListCell.self, forCellWithReuseIdentifier: SuggestionListCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .red
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
     
@@ -35,7 +35,7 @@ final class WorkoutListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifierWorkout)
+        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
