@@ -13,11 +13,11 @@ final class MainViewController: UIViewController {
     
     private let contentView = MainView()
     private var cancellables: Set<AnyCancellable>
+    private var panel: FloatingPanelController?
     
     init() {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
-        
         
     }
     
@@ -31,6 +31,26 @@ final class MainViewController: UIViewController {
         view = contentView
         
         setupCollectionView()
+        setUpFloatingPanel()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        bind()
+    }
+    
+    private func bind() {
+        contentView
+            .collectionView
+            .contentOffsetPublisher
+            .filter({ _ in
+                self.view.frame.width != 0
+            })
+            .sink {[weak self] offset in
+                self?.panelHiddenStatus(with: offset)
+            }
+            .store(in: &cancellables)
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,6 +61,11 @@ final class MainViewController: UIViewController {
     private func setupCollectionView() {
         contentView.collectionView.delegate     = self
         contentView.collectionView.dataSource   = self
+    }
+    
+    private func panelHiddenStatus(with contentOffSet: CGPoint) {
+        let index = Int(contentOffSet.x / view.frame.width)
+        panel?.surfaceView.isHidden = index == 1 ? false : true
     }
 }
 
@@ -73,7 +98,7 @@ extension MainViewController: UICollectionViewDataSource {
                     switch action {
                     case .setting:
                         self.scrollTo(index: 0)
-                    
+                        
                     case .workout:
                         break
                         
@@ -110,7 +135,47 @@ extension MainViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        print(view.frame.width)
-        return CGSize(width: view.frame.width, height: collectionView.frame.height)
+        return .init(width: view.frame.width, height: collectionView.frame.height)
+    }
+}
+
+//MARK: - FloatingPanelControllerDelegate
+extension MainViewController: FloatingPanelControllerDelegate  {
+    /// Sets up floating news panel
+    private func setUpFloatingPanel() {
+        let viewModel = WorkoutListViewModel()
+        let vc = WorkoutListViewController(viewModel: viewModel)
+        panel = FloatingPanelController(delegate: self)
+        panel?.set(contentViewController: UINavigationController(rootViewController: vc))
+        panel?.addPanel(toParent: self)
+        panel?.track(scrollView: vc.contentView.workoutListCollectionView)
+        
+        let appearance = SurfaceAppearance()
+        appearance.backgroundColor = .systemBackground
+        appearance.cornerRadius = 10
+        panel?.surfaceView.appearance = appearance
+    }
+    
+    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
+        MyFloatingPanelLayout()
+    }
+}
+
+final class MyFloatingPanelLayout: FloatingPanelLayout {
+    
+    var position: FloatingPanelPosition {
+        return .bottom
+    }
+    
+    var initialState: FloatingPanelState {
+        return .tip
+    }
+    
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
+        return [
+            .full: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height - 150, edge: .bottom, referenceGuide: .safeArea),
+            //            .half: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height / 2, edge: .bottom, referenceGuide: .safeArea),
+            .tip: FloatingPanelLayoutAnchor(absoluteInset: 50, edge: .bottom, referenceGuide: .safeArea),
+        ]
     }
 }
