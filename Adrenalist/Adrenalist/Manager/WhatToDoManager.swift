@@ -94,6 +94,9 @@ final class WorkOutToDoManager {
         currentIndex += 1
         self.currentIndex = currentIndex
     }
+    func update(workouts: [Workout]) {
+        self.workOutToDos = workouts
+    }
     
     private init() {}
 }
