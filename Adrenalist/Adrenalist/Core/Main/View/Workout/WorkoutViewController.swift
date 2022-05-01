@@ -34,7 +34,6 @@ final class WorkoutViewController: UIViewController {
         
         bind()
         setupUI()
-        setUpFloatingPanel()
     }
     
     private func bind() {
@@ -63,6 +62,9 @@ final class WorkoutViewController: UIViewController {
                     
                 case .updatePulse(let value):
                     self.contentView.updatePulse(value)
+                    
+                case .updateToCurrentWorkout(let workout):
+                    self.contentView.updateWorkout = workout
                 }
             }
             .store(in: &cancellables)
@@ -78,46 +80,3 @@ final class WorkoutViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-//MARK: - FloatingPanelControllerDelegate
-extension WorkoutViewController: FloatingPanelControllerDelegate  {
-    /// Sets up floating news panel
-    private func setUpFloatingPanel() {
-        let viewModel = WorkoutListViewModel()
-        let vc = WorkoutListViewController(viewModel: viewModel)
-        let panel = FloatingPanelController(delegate: self)
-        panel.set(contentViewController: UINavigationController(rootViewController: vc))
-        panel.addPanel(toParent: self)
-        panel.track(scrollView: vc.contentView.workoutListCollectionView)
-        
-        let appearance = SurfaceAppearance()
-        appearance.backgroundColor = .systemBackground
-        appearance.cornerRadius = 10
-        panel.surfaceView.appearance = appearance
-    }
-    
-    func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
-        MyFloatingPanelLayout()
-    }
-}
-
-final class MyFloatingPanelLayout: FloatingPanelLayout {
-    
-    var position: FloatingPanelPosition {
-        return .bottom
-    }
-    
-    var initialState: FloatingPanelState {
-        return .tip
-    }
-    
-    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
-        return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height - 150, edge: .bottom, referenceGuide: .safeArea),
-//            .half: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height / 2, edge: .bottom, referenceGuide: .safeArea),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 50, edge: .bottom, referenceGuide: .safeArea),
-        ]
-    }
-}
-
-
