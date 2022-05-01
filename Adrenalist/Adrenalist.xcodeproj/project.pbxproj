@@ -40,6 +40,7 @@
 		3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CCE3281C0D1D00DA830E /* WhatToDoManager.swift */; };
 		3555CD27281C69A100DA830E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD26281C69A100DA830E /* Constant.swift */; };
 		3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD29281C747100DA830E /* SuggestionListCell.swift */; };
+		3555CD2D281CD5DA00DA830E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD2C281CD5DA00DA830E /* Workout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		3555CCE3281C0D1D00DA830E /* WhatToDoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatToDoManager.swift; sourceTree = "<group>"; };
 		3555CD26281C69A100DA830E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		3555CD29281C747100DA830E /* SuggestionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionListCell.swift; sourceTree = "<group>"; };
+		3555CD2C281CD5DA00DA830E /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				351C5BAA28190B7000FE9C0F /* AppDelegate.swift */,
 				351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */,
+				3555CD2B281CD5D100DA830E /* Model */,
 				3555CD28281C69A400DA830E /* Helper */,
 				3548C874281A2EBB0089A0C4 /* Manager */,
 				3548C84928190DF10089A0C4 /* Core */,
@@ -241,6 +244,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		3555CD2B281CD5D100DA830E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3555CD2C281CD5DA00DA830E /* Workout.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -346,6 +357,7 @@
 				3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */,
 				3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */,
 				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
+				3555CD2D281CD5DA00DA830E /* Workout.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
