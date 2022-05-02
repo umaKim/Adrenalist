@@ -56,6 +56,7 @@ final class WorkoutViewController: UIViewController {
         viewModel
             .listenPublisher
             .sink { listen in
+//                guard let self = self else {return }
                 switch listen {
                 case .updateOutlineStrokeEnd(let value):
                     self.contentView.updateOutline(value)
@@ -65,6 +66,9 @@ final class WorkoutViewController: UIViewController {
                     
                 case .updateToCurrentWorkout(let workout):
                     self.contentView.updateWorkout = workout
+                    
+                case .updateNextWorkout(let nextWorkout):
+                    self.contentView.nextWorkout = nextWorkout
                 }
             }
             .store(in: &cancellables)

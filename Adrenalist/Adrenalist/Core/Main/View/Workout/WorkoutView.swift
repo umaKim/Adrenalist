@@ -26,12 +26,28 @@ final class WorkoutView: UIView {
     
     private var workoutLabel: UILabel = {
         let lb = UILabel()
+        lb.textColor = .white
+        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        return lb
+    }()
+    
+    private var nextLabel:  UILabel = {
+        let lb = UILabel()
+        lb.textColor = .systemGray5
+        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        return lb
+    }()
+    
+    private var repsLabel: UILabel = {
+        let lb = UILabel()
+        lb.textColor = .white
         lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         return lb
     }()
     
     private var weightLabel: UILabel = {
         let lb = UILabel()
+        lb.textColor = .white
         lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         return lb
     }()
@@ -39,7 +55,14 @@ final class WorkoutView: UIView {
     var updateWorkout: Workout? {
         didSet {
             self.workoutLabel.text = updateWorkout?.title
+            self.repsLabel.text = "\(updateWorkout?.reps) Reps"
             self.weightLabel.text = String(updateWorkout?.weight ?? 0)
+        }
+    }
+    
+    var nextWorkout: Workout? {
+        didSet{
+            self.nextLabel.text = nextWorkout?.title
         }
     }
     
@@ -50,6 +73,11 @@ final class WorkoutView: UIView {
         super.init(frame: .zero)
         
         bind()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
         setupUI()
     }
     
@@ -88,18 +116,22 @@ final class WorkoutView: UIView {
     
     private func setupUI() {
         backgroundColor = .black
-//        addSubview(circularView)
-//        circularView.translatesAutoresizingMaskIntoConstraints = false
-//
-        let labelStackView = UIStackView(arrangedSubviews: [workoutLabel, weightLabel])
+        
+        let labelStackView = UIStackView(arrangedSubviews: [workoutLabel, nextLabel])
         labelStackView.axis = .vertical
         labelStackView.distribution = .fill
         labelStackView.alignment = .center
         labelStackView.spacing = 6
         
-        [circularView, labelStackView].forEach { view in
-            addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
+        let labelStackView2 = UIStackView(arrangedSubviews: [repsLabel, weightLabel])
+        labelStackView2.axis = .vertical
+        labelStackView2.distribution = .fill
+        labelStackView2.alignment = .center
+        labelStackView2.spacing = 6
+        
+        [circularView, labelStackView, labelStackView2].forEach {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
@@ -107,7 +139,10 @@ final class WorkoutView: UIView {
             circularView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             labelStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            labelStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            labelStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            labelStackView2.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelStackView2.topAnchor.constraint(equalTo: centerYAnchor, constant: frame.height / 3.5)
         ])
     }
     

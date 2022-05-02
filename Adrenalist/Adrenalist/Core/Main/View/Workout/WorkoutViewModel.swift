@@ -18,6 +18,7 @@ enum WorkoutViewModelListener {
     case updateOutlineStrokeEnd(CGFloat)
     case updatePulse(CGFloat)
     case updateToCurrentWorkout(Workout?)
+    case updateNextWorkout(Workout?)
 }
 
 final class WorkoutViewModel {
@@ -69,10 +70,15 @@ final class WorkoutViewModel {
         listenSubject.send(.updatePulse(progressPulse))
         listenSubject.send(.updateOutlineStrokeEnd(progressOutline))
         listenSubject.send(.updateToCurrentWorkout(currentWorkout))
+        listenSubject.send(.updateNextWorkout(nextWorkout))
     }
     
     private var currentWorkout: Workout? {
         return workout.getCurrentWorkOut()
+    }
+    
+    private var nextWorkout: Workout? {
+        return workout.getNextWorkOut()
     }
     
     private var progressPulse: CGFloat {
@@ -82,12 +88,7 @@ final class WorkoutViewModel {
         
         let finishedWorkout = CGFloat(workout.getUnfinishedWorkOut().count)
         let totalWorkout = CGFloat(workout.workOutToDos.count)
-        
-        if 0.2 >= finishedWorkout / totalWorkout {
-            return 0.2
-        } else {
-            return finishedWorkout / totalWorkout
-        }
+        return 0.2 >= finishedWorkout / totalWorkout ? 0.2 : finishedWorkout / totalWorkout
     }
     
     private var progressOutline: CGFloat {
