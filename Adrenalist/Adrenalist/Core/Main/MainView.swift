@@ -25,7 +25,6 @@ final class MainView: UIView {
     
     init() {
         super.init(frame: .zero)
-        
         setupUI()
     }
     
