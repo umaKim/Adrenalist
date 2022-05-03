@@ -16,10 +16,7 @@ final class CircularView: UIView {
     private let trackLayer = CAShapeLayer()
     private let timerInsideStrokeLayer = CAShapeLayer()
     
-    private var cancellables: Set<AnyCancellable>
-    
     init() {
-        self.cancellables = .init()
         super.init(frame: .zero)
         drawLayers()
     }
@@ -63,8 +60,6 @@ extension CircularView {
         self.drawPulsingLayer()
         self.drawTrackLayer()
         self.drawOutlineStrokeLayer()
-        //        self.drawCurrentWorkOutLayer()
-        //        self.drawNextWorkOutLabel()
         self.drawTimerLayer()
     }
     
@@ -112,19 +107,4 @@ extension CircularView {
         pulsingLayer.position = center
         layer.addSublayer(pulsingLayer)
     }
-    
-//    private func progressResult() -> CFTimeInterval {
-////        let finishedWorkOut = CGFloat(workouts.filter({ $0.isDone}).count)
-////        let totalWorkout = CGFloat(workouts.count)
-//
-//        let finishedWorkout = CGFloat(WorkOutToDoManager.shared.workOutToDos.filter({$0.isDone}).count)
-//        let totalWorkout = CGFloat(WorkOutToDoManager.shared.workOutToDos.count)
-//
-//        if 0.2 >= CFTimeInterval(finishedWorkout / totalWorkout) {
-//            return 0.2
-//        } else {
-//            return CFTimeInterval(finishedWorkout / totalWorkout)
-//        }
-//    }
-    
 }

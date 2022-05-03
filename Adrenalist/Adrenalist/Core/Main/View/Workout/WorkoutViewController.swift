@@ -56,7 +56,6 @@ final class WorkoutViewController: UIViewController {
         viewModel
             .listenPublisher
             .sink { listen in
-//                guard let self = self else {return }
                 switch listen {
                 case .updateOutlineStrokeEnd(let value):
                     self.contentView.updateOutline(value)

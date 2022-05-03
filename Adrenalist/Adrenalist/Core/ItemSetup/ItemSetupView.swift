@@ -10,7 +10,7 @@ import Combine
 import UIKit.UIView
 
 enum WorkoutSetupViewAction {
-    case confirm
+    case confirm(Workout)
     case cancel
 }
 
@@ -19,35 +19,12 @@ final class WorkoutSetupView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutSetupViewAction, Never>()
     
-    private lazy var workoutTextField: UITextField = {
-        let lb = UITextField()
-        lb.placeholder = "workout"
-        return lb
-    }()
+    private lazy var workoutTextField = AdrenalistTextField(placeHolder: "workout")
+    private lazy var repsTextField = AdrenalistTextField(placeHolder: "Reps")
+    private lazy var weightTextField = AdrenalistTextField(placeHolder: "Count")
     
-    private lazy var repsTextField: UITextField = {
-        let lb = UITextField()
-        lb.placeholder = "Reps"
-        return lb
-    }()
-    
-    private lazy var countTextField: UITextField = {
-        let lb = UITextField()
-        lb.placeholder = "Weight"
-        return lb
-    }()
-    
-    private lazy var confirmButton: UIButton = {
-        let bt = UIButton()
-        bt.setTitle("Confirm", for: .normal)
-        return bt
-    }()
-    
-    private lazy var cancelButton: UIButton = {
-        let bt = UIButton()
-        bt.setTitle("Cancel", for: .normal)
-        return bt
-    }()
+    private lazy var confirmButton = AdrenalistButton(title: "Confirm")
+    private lazy var cancelButton = AdrenalistButton(title: "Cancel")
     
     private var cancellables: Set<AnyCancellable>
     
@@ -70,7 +47,11 @@ final class WorkoutSetupView: UIView {
         confirmButton
             .tapPublisher
             .sink { _ in
-                self.actionSubject.send(.confirm)
+                let workout = Workout(title: self.workoutTextField.text ?? "",
+                                      reps: Int(self.repsTextField.text ?? "0") ?? 0,
+                                      weight: Double(self.weightTextField.text ?? "0") ?? 0,
+                                      isDone: false)
+                self.actionSubject.send(.confirm(workout))
             }
             .store(in: &cancellables)
     }
@@ -79,7 +60,7 @@ final class WorkoutSetupView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .gray
         
-        let stackView = UIStackView (arrangedSubviews: [workoutTextField, repsTextField, countTextField])
+        let stackView = UIStackView (arrangedSubviews: [workoutTextField, repsTextField, weightTextField])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -111,8 +92,4 @@ final class WorkoutSetupView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-final class TimerSetupView: UIView {
-    
 }

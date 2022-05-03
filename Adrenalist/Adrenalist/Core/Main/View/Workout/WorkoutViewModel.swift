@@ -37,17 +37,19 @@ final class WorkoutViewModel {
         bind()
     }
     
-    private let workout = WorkOutToDoManager.shared
+    private let workoutManager = WorkoutManager.shared
+    
+    private var currentIndex = 0
     
     private func bind() {
-        workout
+        workoutManager
             .$workOutToDos
             .sink { workouts in
                 self.workouts = workouts
                 self.sendViewUpdate()
             }
             .store(in: &cancellables)
-        workout.setCurrentIndex()
+//        workoutManager.setCurrentIndex()
     }
     
     //MARK: - Public Methods
@@ -60,7 +62,8 @@ final class WorkoutViewModel {
     }
     
     func didDoubleTap() {
-        workout.completeCurrentWorkOut()
+        completeCurrentWorkout()
+        workoutManager.updateWorkoutToDos(workouts)
         sendViewUpdate()
     }
     
@@ -72,10 +75,22 @@ final class WorkoutViewModel {
         listenSubject.send(.updateNextWorkout(nextWorkout))
     }
     
+    private func completeCurrentWorkout() {
+        let intendedIndex = currentIndex
+        updateCurrentIndex()
+        for index in 0..<workouts.count {
+            if index == intendedIndex {
+                workouts[index].isDone = true
+                return
+            }
+        }
+    }
+    
+    private func updateCurrentIndex() {
+       currentIndex += 1
+    }
+    
     private var currentWorkout: Workout? {
-//        return workout.getCurrentWorkOut()
-//        return workouts.first
-        
         for currentindex in 0..<workouts.count {
             if workouts[currentindex].isDone == false {
                 self.currentIndex = currentindex
@@ -85,16 +100,10 @@ final class WorkoutViewModel {
         return workouts.last
     }
     
-    private var currentIndex = 0
-    
     private var nextWorkout: Workout? {
-//        return workout.getNextWorkOut()
-        if currentIndex == workouts.count || workouts.isEmpty {
-            return nil
-        }
+        if currentIndex == workouts.count || workouts.isEmpty { return nil }
         
         var workOut: [Workout] = []
-//        guard var currentIndex = currentIndex else { return nil }
         var currentIndex = currentIndex
         currentIndex += 1
         
@@ -105,30 +114,17 @@ final class WorkoutViewModel {
     }
     
     private var progressPulse: CGFloat {
-//        if workout.workOutToDos.count == 0 {
-        if workouts.isEmpty {
-            return 0
-        }
-        
-//        let finishedWorkout = CGFloat(workout.getUnfinishedWorkOut().count)
-//        let totalWorkout = CGFloat(workout.workOutToDos.count)
+        if workouts.isEmpty { return 0 }
         let finishedWorkout = CGFloat(workouts.filter({$0.isDone}).count)
         let totalWorkout = CGFloat(workouts.count)
         return 0.2 >= finishedWorkout / totalWorkout ? 0.2 : finishedWorkout / totalWorkout
     }
     
     private var progressOutline: CGFloat {
-//        if workouts.count == 0 { return 0}
-//        let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
-//        let total = CGFloat(workouts.count)
-        
-        if workouts.isEmpty {
-            return 0
-        }
+        if workouts.isEmpty { return 0 }
         let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
         let total = CGFloat(workouts.count)
-        
-        return (numberOfDone / total)
+        return numberOfDone / total
     }
 }
 

@@ -14,6 +14,7 @@ final class MainViewController: UIViewController {
     private let contentView = MainView()
     private var cancellables: Set<AnyCancellable>
     private var panel: FloatingPanelController?
+    private var vc: WorkoutListViewController?
     
     init() {
         self.cancellables = .init()
@@ -44,8 +45,8 @@ final class MainViewController: UIViewController {
         contentView
             .collectionView
             .contentOffsetPublisher
-            .filter({ _ in
-                self.view.frame.width != 0
+            .filter({[weak self] _ in
+                self?.view.frame.width != 0
             })
             .sink {[weak self] offset in
                 self?.panelHiddenStatus(with: offset)
@@ -65,7 +66,10 @@ final class MainViewController: UIViewController {
     
     private func panelHiddenStatus(with contentOffSet: CGPoint) {
         let index = Int(contentOffSet.x / view.frame.width)
-        panel?.surfaceView.isHidden = index == 1 ? false : true
+        UIView.animate(withDuration: 1) {
+            self.panel?.surfaceView.isHidden = index == 1 ? false : true
+        }
+        
     }
 }
 
@@ -144,16 +148,29 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     /// Sets up floating news panel
     private func setUpFloatingPanel() {
         let viewModel = WorkoutListViewModel()
-        let vc = WorkoutListViewController(viewModel: viewModel)
+        vc = WorkoutListViewController(viewModel: viewModel)
         panel = FloatingPanelController(delegate: self)
-        panel?.set(contentViewController: UINavigationController(rootViewController: vc))
+        panel?.set(contentViewController: UINavigationController(rootViewController: vc ?? UIViewController()))
         panel?.addPanel(toParent: self)
-        panel?.track(scrollView: vc.contentView.workoutListCollectionView)
+        panel?.track(scrollView: vc?.contentView.workoutListCollectionView ?? UIScrollView())
         
         let appearance = SurfaceAppearance()
         appearance.backgroundColor = .systemBackground
         appearance.cornerRadius = 10
+        appearance.backgroundColor = .black
         panel?.surfaceView.appearance = appearance
+    }
+    
+    func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
+        UIView.animate(withDuration: 1) {[unowned self] in
+            animateAlpha(value: fpc.state == .tip ? 0 : 1)
+        }
+    }
+    
+    private func animateAlpha(value: CGFloat) {
+        vc?.contentView.edittingButton.tintColor = .red.withAlphaComponent(value)
+        vc?.contentView.addWorkoutButton.tintColor = .red.withAlphaComponent(value)
+        vc?.contentView.suggestedCollectionView.alpha = value
     }
     
     func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
