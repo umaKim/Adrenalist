@@ -27,13 +27,13 @@ final class WorkoutView: UIView {
     private var workoutLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .white
-        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        lb.font = UIFont.systemFont(ofSize: 42, weight: .heavy)
         return lb
     }()
     
     private var nextLabel:  UILabel = {
         let lb = UILabel()
-        lb.textColor = .systemGray5
+        lb.textColor = .systemGray3
         lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         return lb
     }()
