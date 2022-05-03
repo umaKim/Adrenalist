@@ -104,19 +104,21 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        if collectionView === self.contentView.suggestedCollectionView {
+//        if collectionView === self.contentView.suggestedCollectionView {
+//            if collectionView.hasActiveDrag {
+//                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+//            } else {
+//                return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+//            }
+//        } else
+//        {
             if collectionView.hasActiveDrag {
                 return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-            } else {
-                return UICollectionViewDropProposal(operation: .forbidden)
             }
-        } else {
-            if collectionView.hasActiveDrag {
-                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-            } else {
+//        else {
                 return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-            }
-        }
+//            }
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
@@ -197,11 +199,7 @@ extension WorkoutListViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension WorkoutListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-//        if collectionView == contentView.workoutListCollectionView {
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutListCell.identifier, for: indexPath) as? WorkoutListCell else { return }
-            viewModel.didTapCell(at: indexPath.item)
-//        }
+        viewModel.didTapCell(at: indexPath.item)
     }
 }
 
