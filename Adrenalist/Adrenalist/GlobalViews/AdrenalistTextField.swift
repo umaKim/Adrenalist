@@ -1,17 +1,17 @@
 //
-//  AdrenalistButton.swift
+//  AdrenalistTextField.swift
 //  Adrenalist
 //
 //  Created by 김윤석 on 2022/05/03.
 //
 
-import UIKit.UIButton
+import UIKit.UITextField
 
-final class AdrenalistButton: UIButton {
-    init(title: String) {
+final class AdrenalistTextField: UITextField {
+    init(placeHolder: String) {
         super.init(frame: .zero)
         
-        setTitle(title, for: .normal)
+        self.placeholder = placeHolder
     }
     
     required init?(coder: NSCoder) {

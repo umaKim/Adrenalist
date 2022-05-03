@@ -45,7 +45,9 @@
 		3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD312820E88A00DA830E /* ItemSetupView.swift */; };
 		3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD33282136B100DA830E /* ItemSetupViewModel.swift */; };
 		3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD36282169D600DA830E /* AdrenalistLabel.swift */; };
-		3555CD39282169EC00DA830E /* AdrenalistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD38282169EC00DA830E /* AdrenalistButton.swift */; };
+		3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */; };
+		3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD3A2821729800DA830E /* AdrenalistButton.swift */; };
+		3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,7 +88,9 @@
 		3555CD312820E88A00DA830E /* ItemSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupView.swift; sourceTree = "<group>"; };
 		3555CD33282136B100DA830E /* ItemSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupViewModel.swift; sourceTree = "<group>"; };
 		3555CD36282169D600DA830E /* AdrenalistLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistLabel.swift; sourceTree = "<group>"; };
-		3555CD38282169EC00DA830E /* AdrenalistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistButton.swift; sourceTree = "<group>"; };
+		3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistCircleButton.swift; sourceTree = "<group>"; };
+		3555CD3A2821729800DA830E /* AdrenalistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistButton.swift; sourceTree = "<group>"; };
+		3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,7 +282,9 @@
 			isa = PBXGroup;
 			children = (
 				3555CD36282169D600DA830E /* AdrenalistLabel.swift */,
-				3555CD38282169EC00DA830E /* AdrenalistButton.swift */,
+				3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */,
+				3555CD3A2821729800DA830E /* AdrenalistButton.swift */,
+				3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */,
 			);
 			path = GlobalViews;
 			sourceTree = "<group>";
@@ -377,6 +383,7 @@
 				3548C876281A2ECE0089A0C4 /* PersistanceManager.swift in Sources */,
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
 				3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */,
+				3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
@@ -385,8 +392,9 @@
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
 				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
-				3555CD39282169EC00DA830E /* AdrenalistButton.swift in Sources */,
+				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
 				3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */,
+				3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */,
 				3555CD27281C69A100DA830E /* Constant.swift in Sources */,
 				3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */,
 				3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */,
