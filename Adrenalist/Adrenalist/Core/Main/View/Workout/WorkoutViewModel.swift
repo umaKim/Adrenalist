@@ -47,7 +47,6 @@ final class WorkoutViewModel {
                 self.sendViewUpdate()
             }
             .store(in: &cancellables)
-        
         workout.setCurrentIndex()
     }
     
@@ -74,27 +73,61 @@ final class WorkoutViewModel {
     }
     
     private var currentWorkout: Workout? {
-        return workout.getCurrentWorkOut()
+//        return workout.getCurrentWorkOut()
+//        return workouts.first
+        
+        for currentindex in 0..<workouts.count {
+            if workouts[currentindex].isDone == false {
+                self.currentIndex = currentindex
+                return workouts[currentindex]
+            }
+        }
+        return workouts.last
     }
     
+    private var currentIndex = 0
+    
     private var nextWorkout: Workout? {
-        return workout.getNextWorkOut()
+//        return workout.getNextWorkOut()
+        if currentIndex == workouts.count || workouts.isEmpty {
+            return nil
+        }
+        
+        var workOut: [Workout] = []
+//        guard var currentIndex = currentIndex else { return nil }
+        var currentIndex = currentIndex
+        currentIndex += 1
+        
+        for index in currentIndex..<workouts.count {
+            workOut.append(workouts[index])
+        }
+        return workOut.filter { $0.isDone == false}.first
     }
     
     private var progressPulse: CGFloat {
-        if workout.workOutToDos.count == 0 {
+//        if workout.workOutToDos.count == 0 {
+        if workouts.isEmpty {
             return 0
         }
         
-        let finishedWorkout = CGFloat(workout.getUnfinishedWorkOut().count)
-        let totalWorkout = CGFloat(workout.workOutToDos.count)
+//        let finishedWorkout = CGFloat(workout.getUnfinishedWorkOut().count)
+//        let totalWorkout = CGFloat(workout.workOutToDos.count)
+        let finishedWorkout = CGFloat(workouts.filter({$0.isDone}).count)
+        let totalWorkout = CGFloat(workouts.count)
         return 0.2 >= finishedWorkout / totalWorkout ? 0.2 : finishedWorkout / totalWorkout
     }
     
     private var progressOutline: CGFloat {
-        if workouts.count == 0 { return 0}
+//        if workouts.count == 0 { return 0}
+//        let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
+//        let total = CGFloat(workouts.count)
+        
+        if workouts.isEmpty {
+            return 0
+        }
         let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
         let total = CGFloat(workouts.count)
+        
         return (numberOfDone / total)
     }
 }

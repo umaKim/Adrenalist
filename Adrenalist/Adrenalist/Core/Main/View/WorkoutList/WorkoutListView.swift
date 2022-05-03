@@ -25,6 +25,7 @@ final class WorkoutListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .black
         cv.register(SuggestionListCell.self, forCellWithReuseIdentifier: SuggestionListCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
@@ -35,6 +36,7 @@ final class WorkoutListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .black
         cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
