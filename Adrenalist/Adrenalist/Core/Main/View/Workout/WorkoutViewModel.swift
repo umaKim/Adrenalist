@@ -44,12 +44,13 @@ final class WorkoutViewModel {
     private func bind() {
         workoutManager
             .$workOutToDos
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
             .sink { workouts in
                 self.workouts = workouts
                 self.sendViewUpdate()
             }
             .store(in: &cancellables)
-//        workoutManager.setCurrentIndex()
     }
     
     //MARK: - Public Methods
