@@ -11,9 +11,6 @@ import Combine
 enum WorkoutListViewModelListener {
     case reloadWorkouts
     case reloadSuggestions
-    
-//    case addWorkout
-//    case addSuggestion
 }
 
 final class WorkoutListViewModel  {
