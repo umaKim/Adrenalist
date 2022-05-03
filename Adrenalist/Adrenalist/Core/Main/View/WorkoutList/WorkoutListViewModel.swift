@@ -61,6 +61,10 @@ final class WorkoutListViewModel  {
         workoutManager.updateWorkoutToDos(workouts)
     }
     
+    private func updateSuggestions() {
+        workoutManager.updateSuggestions(suggestions)
+    }
+    
     /// This method moves a cell from source indexPath to destination indexPath within the same collection view. It works for only 1 item. If multiple items selected, no reordering happens.
     ///
     /// - Parameters:
@@ -88,6 +92,7 @@ final class WorkoutListViewModel  {
                 } else {
                     self.suggestions.remove(at: sourceIndexPath.row)
                     self.suggestions.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
+                    self.updateSuggestions()
                 }
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [dIndexPath])
@@ -116,6 +121,7 @@ final class WorkoutListViewModel  {
                     self.updateWorkoutToDo()
                 } else {
                     self.suggestions.insert(item.dragItem.localObject as! Workout, at: indexPath.row)
+                    self.updateSuggestions()
                 }
                 indexPaths.append(indexPath)
             }
