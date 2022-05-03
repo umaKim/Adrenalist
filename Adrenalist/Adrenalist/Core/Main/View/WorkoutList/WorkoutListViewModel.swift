@@ -20,27 +20,27 @@ final class WorkoutListViewModel  {
     private(set) lazy var suggestions: [Workout] = [
         .init(uuid: UUID().uuidString,
               title: "Timer",
-              reps: "10",
+              reps: 10,
               weight: 100,
               isDone: false),
         .init(uuid: UUID().uuidString,
               title: "bench",
-              reps: "10",
+              reps: 20,
               weight: 100,
               isDone: false),
         .init(uuid: UUID().uuidString,
               title: "squat",
-              reps: "10",
+              reps: 5,
               weight: 100,
               isDone: false),
         .init(uuid: UUID().uuidString,
               title: "pull up",
-              reps: "10",
+              reps: 25,
               weight: 100,
               isDone: false),
         .init(uuid: UUID().uuidString,
               title: "dead lift",
-              reps: "10",
+              reps: 30,
               weight: 100,
               isDone: false)
     ]
@@ -70,12 +70,12 @@ final class WorkoutListViewModel  {
     }
     
     func updateWorkoutToDo() {
-        workout.update(workouts: self.workouts)
+        workout.update(with: self.workouts)
     }
     
     func didTapAddWorkoutButton() {
-        workouts.append(.init(title: "Bench", reps: "10", weight: 100, isDone: false))
-        workout.workOutToDos = workouts
+        workouts.append(.init(title: "Bench", reps: 100, weight: 100, isDone: false))
+        updateWorkoutToDo()
         listenerSubject.send(.reload)
     }
     
@@ -105,9 +105,7 @@ final class WorkoutListViewModel  {
                     self.workouts.remove(at: sourceIndexPath.row)
                     self.workouts.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
                     self.updateWorkoutToDo()
-                }
-                else
-                {
+                } else {
                     self.suggestions.remove(at: sourceIndexPath.row)
                     self.suggestions.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
                 }

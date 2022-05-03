@@ -4,7 +4,7 @@
 //
 //  Created by 김윤석 on 2022/04/29.
 //
-
+import Combine
 import UIKit
 
 final class WorkOutToDoManager {
@@ -19,7 +19,7 @@ final class WorkOutToDoManager {
     var weightStandard = "Kg"
     
     public func setCurrentIndex() {
-        if workOutToDos.count == 0 {
+        if workOutToDos.isEmpty {
             currentIndex = 0
             return
         }
@@ -32,7 +32,7 @@ final class WorkOutToDoManager {
     }
     
     func createWorkOutTodo(_ contents: String, reps: Int, weight: Double) {
-        workOutToDos.append(.init(title: contents, reps: String(reps), weight: weight, isDone: false))
+        workOutToDos.append(.init(title: contents, reps: reps, weight: weight, isDone: false))
     }
     
     func calculateDonePercentage() {
@@ -55,7 +55,7 @@ final class WorkOutToDoManager {
     }
     
     func getNextWorkOut()-> Workout? {
-        if currentIndex == workOutToDos.count {
+        if currentIndex == workOutToDos.count || workOutToDos.isEmpty {
             return nil
         }
         
@@ -94,7 +94,7 @@ final class WorkOutToDoManager {
         currentIndex += 1
         self.currentIndex = currentIndex
     }
-    func update(workouts: [Workout]) {
+    func update(with workouts: [Workout]) {
         self.workOutToDos = workouts
     }
     
