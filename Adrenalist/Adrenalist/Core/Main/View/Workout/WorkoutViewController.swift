@@ -27,11 +27,6 @@ final class WorkoutViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view = contentView
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
         bind()
         setupUI()
     }
