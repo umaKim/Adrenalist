@@ -15,6 +15,13 @@ enum SettingViewAction {
 final class SettingView: UIView {
     private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
     
+    private(set) lazy var tableView: UITableView = {
+        let tv = UITableView(frame: .zero, style: .insetGrouped)
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        return tv
+    }()
+    
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<SettingViewAction, Never>()
     
@@ -25,10 +32,7 @@ final class SettingView: UIView {
         super.init(frame: .zero)
         
         bind()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        setupUI()
     }
     
     private func bind() {
@@ -38,5 +42,20 @@ final class SettingView: UIView {
                 self?.actionSubject.send(.backButtonDidTap)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
