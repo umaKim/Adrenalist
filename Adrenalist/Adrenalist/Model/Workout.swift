@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Workout: Codable {
+struct Workout: Codable, Hashable {
     var uuid = UUID().uuidString
     let title: String
     let reps: Int

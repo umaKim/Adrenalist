@@ -9,7 +9,11 @@ import UIKit
 import Combine
 
 enum WorkoutListViewModelListener {
-    case reload
+    case reloadWorkouts
+    case reloadSuggestions
+    
+//    case addWorkout
+//    case addSuggestion
 }
 
 final class WorkoutListViewModel  {
@@ -17,69 +21,45 @@ final class WorkoutListViewModel  {
     private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
     private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
     
-    private(set) lazy var suggestions: [Workout] = [
-        .init(uuid: UUID().uuidString,
-              title: "Timer",
-              reps: 10,
-              weight: 100,
-              isDone: false),
-        .init(uuid: UUID().uuidString,
-              title: "bench",
-              reps: 20,
-              weight: 100,
-              isDone: false),
-        .init(uuid: UUID().uuidString,
-              title: "squat",
-              reps: 5,
-              weight: 100,
-              isDone: false),
-        .init(uuid: UUID().uuidString,
-              title: "pull up",
-              reps: 25,
-              weight: 100,
-              isDone: false),
-        .init(uuid: UUID().uuidString,
-              title: "dead lift",
-              reps: 30,
-              weight: 100,
-              isDone: false)
-    ]
-    
+    private(set) lazy var suggestions: [Workout] = []
     private(set) lazy var workouts: [Workout] = []
     
     private var cancellables: Set<AnyCancellable>
+    
+    private let workoutManager = WorkoutManager.shared
     
     init() {
         self.cancellables = .init()
         bind()
     }
     
-    private let workout = WorkOutToDoManager.shared
-    
     private func bind() {
-        workout
+        workoutManager
             .$workOutToDos
             .sink { workouts in
                 self.workouts = workouts
+                self.listenerSubject.send(.reloadWorkouts)
+            }
+            .store(in: &cancellables)
+        
+        workoutManager
+            .$suggestions
+            .sink { suggestions in
+                self.suggestions = suggestions
+                self.listenerSubject.send(.reloadSuggestions)
             }
             .store(in: &cancellables)
     }
     
     func didTapCell(at index: Int) {
-        print("cell: \(index)")
-    }
-    
-    func updateWorkoutToDo() {
-        workout.update(with: self.workouts)
-    }
-    
-    func didTapAddWorkoutButton() {
-        workouts.append(.init(title: "Bench", reps: 100, weight: 100, isDone: false))
+        workouts[index].isDone.toggle()
         updateWorkoutToDo()
-        listenerSubject.send(.reload)
     }
     
-    //MARK: Private Methods
+    //MARK: - Private Methods
+    private func updateWorkoutToDo() {
+        workoutManager.updateWorkoutToDos(workouts)
+    }
     
     /// This method moves a cell from source indexPath to destination indexPath within the same collection view. It works for only 1 item. If multiple items selected, no reordering happens.
     ///

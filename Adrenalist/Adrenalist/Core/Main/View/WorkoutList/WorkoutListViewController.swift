@@ -10,6 +10,7 @@ import Combine
 import UIKit.UIViewController
 
 final class WorkoutListViewController: UIViewController {
+    
     private(set) lazy var contentView = WorkoutListView()
     
     private let viewModel: WorkoutListViewModel
@@ -35,22 +36,7 @@ final class WorkoutListViewController: UIViewController {
         
         bind()
         setupCollectionView()
-//        setUpFloatingPanel()
     }
-    
-//    private func setUpFloatingPanel() {
-////        let viewModel = WorkoutListViewModel()
-//        let vc = self
-//        let panel = FloatingPanelController(delegate: self)
-//        panel.set(contentViewController: UINavigationController(rootViewController: vc))
-//        panel.addPanel(toParent: self)
-//        panel.track(scrollView: vc.contentView.workoutListCollectionView)
-//        
-//        let appearance = SurfaceAppearance()
-//        appearance.backgroundColor = .systemBackground
-//        appearance.cornerRadius = 10
-//        panel.surfaceView.appearance = appearance
-//    }
     
     private func bind() {
         contentView
@@ -59,7 +45,10 @@ final class WorkoutListViewController: UIViewController {
                 guard let self = self else { return }
                 switch action {
                 case .addWorkoutButtonDidTap:
-                    self.present(ItemSetupViewController(), animated: true)
+                    let vm = ItemSetupViewModel()
+                    let vc = ItemSetupViewController(viewModel: vm)
+                    vc.delegate = self
+                    self.present(vc, animated: true)
                     
                 case .edittingButtonDidTap:
                     break
@@ -72,30 +61,39 @@ final class WorkoutListViewController: UIViewController {
             .sink {[weak self] listener in
                 guard let self = self else {return }
                 switch listener {
-                case .reload:
+                case .reloadWorkouts:
                     self.contentView.workoutListCollectionView.reloadData()
+                    
+                case .reloadSuggestions:
+                    self.contentView.suggestedCollectionView.reloadData()
                 }
             }
             .store(in: &cancellables)
     }
     
     private func setupCollectionView() {
-        contentView.suggestedCollectionView.delegate = self
-        contentView.suggestedCollectionView.dataSource = self
-        contentView.suggestedCollectionView.dropDelegate = self
-        contentView.suggestedCollectionView.dragDelegate = self
+        contentView.suggestedCollectionView.delegate        = self
+        contentView.suggestedCollectionView.dataSource      = self
+        contentView.suggestedCollectionView.dropDelegate    = self
+        contentView.suggestedCollectionView.dragDelegate    = self
         contentView.suggestedCollectionView.dragInteractionEnabled = true
         
-        contentView.workoutListCollectionView.delegate = self
-        contentView.workoutListCollectionView.dataSource = self
-        contentView.workoutListCollectionView.dropDelegate = self
-        contentView.workoutListCollectionView.dragDelegate = self
+        contentView.workoutListCollectionView.delegate      = self
+        contentView.workoutListCollectionView.dataSource    = self
+        contentView.workoutListCollectionView.dropDelegate  = self
+        contentView.workoutListCollectionView.dragDelegate  = self
         contentView.workoutListCollectionView.dragInteractionEnabled = true
         contentView.workoutListCollectionView.reorderingCadence = .slow
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WorkoutListViewController: ItemSetupViewControllerDelegate {
+    func dismiss() {
+        self.dismiss(animated: true)
     }
 }
 
@@ -199,7 +197,11 @@ extension WorkoutListViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension WorkoutListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.didTapCell(at: indexPath.item)
+        
+//        if collectionView == contentView.workoutListCollectionView {
+//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutListCell.identifier, for: indexPath) as? WorkoutListCell else { return }
+            viewModel.didTapCell(at: indexPath.item)
+//        }
     }
 }
 

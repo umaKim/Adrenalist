@@ -54,9 +54,10 @@ final class WorkoutView: UIView {
     
     var updateWorkout: Workout? {
         didSet {
-            self.workoutLabel.text = updateWorkout?.title
-            self.repsLabel.text = "\(updateWorkout?.reps) Reps"
-            self.weightLabel.text = String(updateWorkout?.weight ?? 0)
+            guard let updateWorkout = updateWorkout else { return }
+            self.workoutLabel.text = updateWorkout.title
+            self.repsLabel.text = "\(updateWorkout.reps) Reps"
+            self.weightLabel.text = "\(updateWorkout.weight) Kg"
         }
     }
     
@@ -117,19 +118,13 @@ final class WorkoutView: UIView {
     private func setupUI() {
         backgroundColor = .black
         
-        let labelStackView = UIStackView(arrangedSubviews: [workoutLabel, nextLabel])
-        labelStackView.axis = .vertical
-        labelStackView.distribution = .fill
-        labelStackView.alignment = .center
-        labelStackView.spacing = 6
-        
         let labelStackView2 = UIStackView(arrangedSubviews: [repsLabel, weightLabel])
         labelStackView2.axis = .vertical
         labelStackView2.distribution = .fill
         labelStackView2.alignment = .center
-        labelStackView2.spacing = 6
+        labelStackView2.spacing = 12
         
-        [circularView, labelStackView, labelStackView2].forEach {
+        [circularView, workoutLabel, nextLabel, labelStackView2].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -138,8 +133,11 @@ final class WorkoutView: UIView {
             circularView.centerXAnchor.constraint(equalTo: centerXAnchor),
             circularView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            labelStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            labelStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            workoutLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            workoutLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            nextLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            nextLabel.topAnchor.constraint(equalTo: workoutLabel.bottomAnchor, constant: frame.height / 13),
             
             labelStackView2.centerXAnchor.constraint(equalTo: centerXAnchor),
             labelStackView2.topAnchor.constraint(equalTo: centerYAnchor, constant: frame.height / 3.5)
