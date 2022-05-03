@@ -9,15 +9,21 @@ import CombineCocoa
 import Combine
 import UIKit
 
-
+protocol ItemSetupViewControllerDelegate: AnyObject {
+    func dismiss()
+}
 
 final class ItemSetupViewController: UIViewController {
     
     private let contentView = WorkoutSetupView()
+    private let viewModel: ItemSetupViewModel
     
     private var cancellables: Set<AnyCancellable>
     
-    init() {
+    weak var delegate: ItemSetupViewControllerDelegate?
+    
+    init(viewModel: ItemSetupViewModel) {
+        self.viewModel = viewModel
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
     }
@@ -34,8 +40,9 @@ final class ItemSetupViewController: UIViewController {
             .actionPublisher
             .sink { action in
                 switch action {
-                case .confirm:
-                    self.dismiss(animated: true)
+                case .confirm(let workout):
+                    self.viewModel.confirm(for: workout)
+                    self.delegate?.dismiss()
                     
                 case .cancel:
                     self.dismiss(animated: true)

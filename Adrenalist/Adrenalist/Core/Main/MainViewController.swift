@@ -13,6 +13,7 @@ final class MainViewController: UIViewController {
     
     private let contentView = MainView()
     private var cancellables: Set<AnyCancellable>
+    
     private var panel: FloatingPanelController?
     private var vc: WorkoutListViewController?
     
@@ -168,8 +169,8 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     }
     
     private func animateAlpha(value: CGFloat) {
-        vc?.contentView.edittingButton.tintColor = .red.withAlphaComponent(value)
-        vc?.contentView.addWorkoutButton.tintColor = .red.withAlphaComponent(value)
+        vc?.contentView.edittingButton.tintColor      = .red.withAlphaComponent(value)
+        vc?.contentView.addWorkoutButton.tintColor    = .red.withAlphaComponent(value)
         vc?.contentView.suggestedCollectionView.alpha = value
     }
     
