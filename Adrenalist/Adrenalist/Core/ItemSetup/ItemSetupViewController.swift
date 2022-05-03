@@ -26,13 +26,15 @@ final class ItemSetupViewController: UIViewController {
         self.viewModel = viewModel
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
+        
+        bind()
+        setupUI()
+       
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bind()
-        setupUI()
     }
     
     private func bind() {
@@ -52,6 +54,7 @@ final class ItemSetupViewController: UIViewController {
     }
     
     private func setupUI() {
+        view.addTapGestureToViewForKeyboardDismiss()
         view.backgroundColor = .black.withAlphaComponent(0.5)
         modalPresentationStyle = .fullScreen
         modalTransitionStyle = .coverVertical
