@@ -18,4 +18,6 @@ final class SettingViewModel {
     func didTapBackButton() {
         transitionSubject.send(.workout)
     }
+    
+    private(set) lazy var models = ["", "About"]
 }
