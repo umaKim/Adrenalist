@@ -10,7 +10,7 @@ import Foundation
 struct Workout: Codable {
     var uuid = UUID().uuidString
     let title: String
-    let reps: String
+    let reps: Int
     let weight: Double
     var isDone: Bool
 }
