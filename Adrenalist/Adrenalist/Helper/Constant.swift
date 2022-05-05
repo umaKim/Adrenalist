@@ -14,5 +14,8 @@ enum Constant {
         static let addWorkout   = "plus.square"
         static let calendar     = "calendar.circle"
         static let setting      = "gearshape"
+        static let back         = "chevron.left"
+        static let xmark        = "xmark"
+        static let upArrow      = "chevron.up"
     }
 }
