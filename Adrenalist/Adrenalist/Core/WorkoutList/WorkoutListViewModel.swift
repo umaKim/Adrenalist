@@ -18,12 +18,12 @@ final class WorkoutListViewModel  {
     private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
     private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
     
-    private(set) lazy var suggestions: [Workout] = []
-    private(set) lazy var workouts: [Workout] = []
+    private(set) lazy var suggestions: [Item] = []
+    private(set) lazy var workouts: [Item] = []
     
     private var cancellables: Set<AnyCancellable>
     
-    private let workoutManager = WorkoutManager.shared
+    private let workoutManager = ItemManager.shared
     
     init() {
         self.cancellables = .init()
@@ -32,7 +32,7 @@ final class WorkoutListViewModel  {
     
     private func bind() {
         workoutManager
-            .$workOutToDos
+            .$itemToDos
             .sink { workouts in
                 self.workouts = workouts
                 self.listenerSubject.send(.reloadWorkouts)
@@ -55,7 +55,7 @@ final class WorkoutListViewModel  {
     
     //MARK: - Private Methods
     private func updateWorkoutToDo() {
-        workoutManager.updateWorkoutToDos(workouts)
+        workoutManager.updateItemToDos(workouts)
     }
     
     private func updateSuggestions() {
@@ -84,11 +84,11 @@ final class WorkoutListViewModel  {
             collectionView.performBatchUpdates({
                 if collectionView === currentCollectionView {
                     self.workouts.remove(at: sourceIndexPath.row)
-                    self.workouts.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
+                    self.workouts.insert(item.dragItem.localObject as! Item, at: dIndexPath.row)
                     self.updateWorkoutToDo()
                 } else {
                     self.suggestions.remove(at: sourceIndexPath.row)
-                    self.suggestions.insert(item.dragItem.localObject as! Workout, at: dIndexPath.row)
+                    self.suggestions.insert(item.dragItem.localObject as! Item, at: dIndexPath.row)
                     self.updateSuggestions()
                 }
                 collectionView.deleteItems(at: [sourceIndexPath])
@@ -114,10 +114,10 @@ final class WorkoutListViewModel  {
             for (index, item) in coordinator.items.enumerated() {
                 let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
                 if collectionView === currentCollectionView {
-                    self.workouts.insert(item.dragItem.localObject as! Workout, at: indexPath.row)
+                    self.workouts.insert(item.dragItem.localObject as! Item, at: indexPath.row)
                     self.updateWorkoutToDo()
                 } else {
-                    self.suggestions.insert(item.dragItem.localObject as! Workout, at: indexPath.row)
+                    self.suggestions.insert(item.dragItem.localObject as! Item, at: indexPath.row)
                     self.updateSuggestions()
                 }
                 indexPaths.append(indexPath)

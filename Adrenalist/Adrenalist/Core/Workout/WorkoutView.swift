@@ -52,7 +52,7 @@ final class WorkoutView: UIView {
         return lb
     }()
     
-    var updateWorkout: Workout? {
+    var updateWorkout: Item? {
         didSet {
             guard let updateWorkout = updateWorkout else { return }
             self.workoutLabel.text = updateWorkout.title
@@ -61,7 +61,7 @@ final class WorkoutView: UIView {
         }
     }
     
-    var nextWorkout: Workout? {
+    var nextWorkout: Item? {
         didSet{
             self.nextLabel.text = nextWorkout?.title
         }
@@ -113,6 +113,10 @@ final class WorkoutView: UIView {
     
     public func updateOutline(_ strokeEnd: CGFloat) {
         circularView.animateOutlineStroke(strokeEnd)
+    }
+    
+    public func updateInline() {
+        circularView.animateInlineStroke()
     }
     
     private func setupUI() {

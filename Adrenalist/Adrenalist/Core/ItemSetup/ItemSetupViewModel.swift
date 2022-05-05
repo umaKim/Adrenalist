@@ -10,8 +10,8 @@ import Combine
 
 final class ItemSetupViewModel {
     
-    private let workoutManager = WorkoutManager.shared
-    private var workouts: [Workout] = []
+    private let workoutManager = ItemManager.shared
+    private var workouts: [Item] = []
     
     private var cancellables: Set<AnyCancellable>
     
@@ -19,15 +19,16 @@ final class ItemSetupViewModel {
         self.cancellables = .init()
         
         workoutManager
-            .$workOutToDos
+            .$itemToDos
             .sink { workouts in
+                print(workouts)
                 self.workouts = workouts
             }
             .store(in: &cancellables)
     }
     
-    func confirm(for workout: Workout) {
+    func confirm(for workout: Item) {
         workouts.append(workout)
-        workoutManager.updateWorkoutToDos(workouts)
+        workoutManager.updateItemToDos(workouts)
     }
 }

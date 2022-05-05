@@ -15,7 +15,7 @@ protocol ItemSetupViewControllerDelegate: AnyObject {
 
 final class ItemSetupViewController: UIViewController {
     
-    private let contentView = WorkoutSetupView()
+    private let contentView = ItemSetupView()
     private let viewModel: ItemSetupViewModel
     
     private var cancellables: Set<AnyCancellable>
@@ -29,12 +29,6 @@ final class ItemSetupViewController: UIViewController {
         
         bind()
         setupUI()
-       
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
     }
     
     private func bind() {
@@ -55,9 +49,12 @@ final class ItemSetupViewController: UIViewController {
     
     private func setupUI() {
         view.addTapGestureToViewForKeyboardDismiss()
-        view.backgroundColor = .black.withAlphaComponent(0.5)
-        modalPresentationStyle = .fullScreen
-        modalTransitionStyle = .coverVertical
+        view.backgroundColor = .black.withAlphaComponent(0.7)
+        modalPresentationStyle = .overFullScreen
+        modalTransitionStyle = .crossDissolve
+        
+        view.layer.cornerRadius = 12
+        
         
         view.addSubview(contentView)
         NSLayoutConstraint.activate([

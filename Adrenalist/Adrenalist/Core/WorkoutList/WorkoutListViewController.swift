@@ -21,18 +21,17 @@ final class WorkoutListViewController: UIViewController {
         self.cancellables = .init()
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .black
     }
     
     override func loadView() {
         super.loadView()
         view = contentView
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        navigationItem.rightBarButtonItems = [contentView.addWorkoutButton]
-        navigationItem.leftBarButtonItems = [contentView.edittingButton]
+        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
+        navigationItem.leftBarButtonItems   = [contentView.edittingButton]
+        navigationItem.titleView            = contentView.upwardImageView
         
         bind()
         setupCollectionView()

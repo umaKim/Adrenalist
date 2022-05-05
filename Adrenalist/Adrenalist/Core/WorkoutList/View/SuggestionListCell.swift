@@ -31,7 +31,7 @@ final class SuggestionListCell: UICollectionViewCell {
         ])
     }
     
-    func configure(with workout: Workout) {
+    func configure(with workout: Item) {
         titleLabel.text = workout.title
         backgroundColor = .blue
     }

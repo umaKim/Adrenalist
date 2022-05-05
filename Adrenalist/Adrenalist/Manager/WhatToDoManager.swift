@@ -8,22 +8,22 @@ import Combine
 import UIKit
 
 enum DataType {
-    case workouts, suggestions
+    case main, suggestions
 }
 
-final class WorkoutManager {
-    static let shared = WorkoutManager()
+final class ItemManager {
+    static let shared = ItemManager()
     
-    @Published private(set) var suggestions: [Workout] = []
-    @Published private(set) var workOutToDos: [Workout] = []
+    @Published private(set) var suggestions: [Item] = []
+    @Published private(set) var itemToDos: [Item] = []
     
     //MARK: - Public
-    public func updateWorkoutToDos(_ workouts: [Workout]) {
-        self.workOutToDos = workouts
-        self.save(workouts, for: .workouts)
+    public func updateItemToDos(_ workouts: [Item]) {
+        self.itemToDos = workouts
+        self.save(workouts, for: .main)
     }
     
-    public func updateSuggestions(_ suggestions: [Workout]) {
+    public func updateSuggestions(_ suggestions: [Item]) {
         self.suggestions = suggestions
         self.save(suggestions, for: .suggestions)
     }
@@ -36,24 +36,24 @@ final class WorkoutManager {
         static let suggestions = "suggestions"
     }
     
-    private func save(_ workouts: [Workout], for type: DataType) {
+    private func save(_ workouts: [Item], for type: DataType) {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(workouts)
-            defaults.setValue(encodedFavorites, forKey: type == .workouts ? Keys.workouts : Keys.suggestions)
+            defaults.setValue(encodedFavorites, forKey: type == .main ? Keys.workouts : Keys.suggestions)
         } catch {
             print(error)
         }
     }
     
-    private func retrieve(_ type: DataType) -> AnyPublisher<[Workout], Error> {
-        guard let data = defaults.object(forKey: type == .workouts ? Keys.workouts : Keys.suggestions) as? Data else {
+    private func retrieve(_ type: DataType) -> AnyPublisher<[Item], Error> {
+        guard let data = defaults.object(forKey: type == .main ? Keys.workouts : Keys.suggestions) as? Data else {
             return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
         }
         
         do {
             let decoder = JSONDecoder()
-            let workouts = try decoder.decode([Workout].self, from: data)
+            let workouts = try decoder.decode([Item].self, from: data)
             return Just(workouts).setFailureType(to: Error.self).eraseToAnyPublisher()
         } catch {
             return Fail(error: error).eraseToAnyPublisher()
@@ -78,7 +78,7 @@ final class WorkoutManager {
             }
             .store(in: &cancellables)
         
-        self.retrieve(.workouts)
+        self.retrieve(.main)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -88,7 +88,7 @@ final class WorkoutManager {
                     print(error.localizedDescription)
                 }
             } receiveValue: { workouts in
-                self.workOutToDos = workouts
+                self.itemToDos = workouts
             }
             .store(in: &cancellables)
     }

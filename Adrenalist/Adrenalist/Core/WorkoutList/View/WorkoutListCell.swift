@@ -22,7 +22,7 @@ final class WorkoutListCell: UICollectionViewCell {
         setupUI()
     }
     
-    func configure(with workout: Workout) {
+    func configure(with workout: Item) {
         let image = workout.isDone ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
         circleButton.setImage(image, for: .normal)
         titleLabel.text     = workout.title
