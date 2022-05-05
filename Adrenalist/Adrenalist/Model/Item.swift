@@ -7,10 +7,12 @@
 
 import Foundation
 
-struct Workout: Codable, Hashable {
+struct Item: Codable, Hashable {
     var uuid = UUID().uuidString
-    let title: String
-    let reps: Int
-    let weight: Double
+    var timer: TimeInterval?
+    var title: String
+    var reps: Int?
+    var weight: Double?
     var isDone: Bool
+    var type: ItemType
 }
