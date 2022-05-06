@@ -141,8 +141,6 @@
 				3555CD28281C69A400DA830E /* Helper */,
 				3548C874281A2EBB0089A0C4 /* Manager */,
 				3548C84928190DF10089A0C4 /* Core */,
-				351C5BB528190B7100FE9C0F /* LaunchScreen.storyboard */,
-				351C5BB328190B7100FE9C0F /* Assets.xcassets */,
 				351C5BB828190B7100FE9C0F /* Info.plist */,
 			);
 			path = Adrenalist;
@@ -291,6 +289,8 @@
 		3555CD35282169B000DA830E /* GlobalViews */ = {
 			isa = PBXGroup;
 			children = (
+				351C5BB528190B7100FE9C0F /* LaunchScreen.storyboard */,
+				351C5BB328190B7100FE9C0F /* Assets.xcassets */,
 				3555CD36282169D600DA830E /* AdrenalistLabel.swift */,
 				3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */,
 				3555CD3A2821729800DA830E /* AdrenalistButton.swift */,
@@ -302,8 +302,8 @@
 		3555CD4728219BCA00DA830E /* About */ = {
 			isa = PBXGroup;
 			children = (
-				3555CD4828219BD100DA830E /* AboutView.swift */,
 				3555CD4A28219BD900DA830E /* AboutViewController.swift */,
+				3555CD4828219BD100DA830E /* AboutView.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";

@@ -19,12 +19,14 @@ final class AboutViewController: UIViewController {
     }
     
     override func loadView() {
-        
         super.loadView()
         view = contentView
         
-        navigationItem.setRightBarButton(contentView.dismissButton, animated: true)
-        
+        bind()
+        setupUI()
+    }
+    
+    private func bind() {
         contentView
             .actionPublisher
             .sink { action in
@@ -34,6 +36,10 @@ final class AboutViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        navigationItem.setRightBarButton(contentView.dismissButton, animated: true)
     }
     
     required init?(coder: NSCoder) {

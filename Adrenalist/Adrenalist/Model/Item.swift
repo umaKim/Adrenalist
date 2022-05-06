@@ -8,7 +8,7 @@
 import Foundation
 
 struct Item: Codable, Hashable {
-    var uuid = UUID().uuidString
+    var uuid = UUID()
     var timer: TimeInterval?
     var title: String
     var reps: Int?
