@@ -11,6 +11,13 @@ import Combine
 enum WorkoutListViewModelListener {
     case reloadWorkouts
     case reloadSuggestions
+    case delete
+    case edit
+}
+
+enum UpdateMode {
+    case edit
+    case delete
 }
 
 final class WorkoutListViewModel  {
@@ -24,6 +31,8 @@ final class WorkoutListViewModel  {
     private var cancellables: Set<AnyCancellable>
     
     private let workoutManager = ItemManager.shared
+    
+    @Published private var mode: UpdateMode?
     
     init() {
         self.cancellables = .init()
@@ -41,11 +50,37 @@ final class WorkoutListViewModel  {
         
         workoutManager
             .$suggestions
-            .sink { suggestions in
+            .sink {[weak self] suggestions in
+                guard let self = self else {return }
                 self.suggestions = suggestions
                 self.listenerSubject.send(.reloadSuggestions)
             }
             .store(in: &cancellables)
+        
+        $mode
+            .sink {[weak self] mode in
+                guard let self = self else {return }
+                switch mode {
+                case .edit:
+                    self.listenerSubject.send(.edit)
+                    
+                case .delete:
+                    self.listenerSubject.send(.delete)
+                    
+                default:
+                    break
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func editMode() {
+        mode = .edit
+    }
+    
+    func deleteMode() {
+        mode = .delete
+        
     }
     
     func didTapCell(at index: Int) {
@@ -62,6 +97,7 @@ final class WorkoutListViewModel  {
         workoutManager.updateSuggestions(suggestions)
     }
     
+    //MARK: - Public Methods
     /// This method moves a cell from source indexPath to destination indexPath within the same collection view. It works for only 1 item. If multiple items selected, no reordering happens.
     ///
     /// - Parameters:
@@ -116,7 +152,10 @@ final class WorkoutListViewModel  {
                 if collectionView === currentCollectionView {
                     self.workouts.insert(item.dragItem.localObject as! Item, at: indexPath.row)
                     self.updateWorkoutToDo()
+                    
                 } else {
+//                    guard let item = item.dragItem.localObject as? Item else {return }
+//                    self.suggestions.insert(item, at: indexPath.row)
                     self.suggestions.insert(item.dragItem.localObject as! Item, at: indexPath.row)
                     self.updateSuggestions()
                 }
