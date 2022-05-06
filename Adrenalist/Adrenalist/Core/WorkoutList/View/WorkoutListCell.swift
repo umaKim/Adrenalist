@@ -25,11 +25,17 @@ final class WorkoutListCell: UICollectionViewCell {
     func configure(with workout: Item) {
         let image = workout.isDone ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
         circleButton.setImage(image, for: .normal)
-        titleLabel.text     = workout.title
-        repsLabel.text      = "\(workout.reps)"
-        weightLabel.text    = "\(workout.weight) kg"
+        titleLabel.text = workout.title
         
-        backgroundColor     = workout.isDone ? .red : .white
+        if let reps = workout.reps {
+            repsLabel.text = "\(reps)"
+        }
+        
+        if let weight = workout.weight {
+            weightLabel.text = "\(weight) kg"
+        }
+        
+        backgroundColor = workout.isDone ? .red : .white
     }
     
     private func setupUI() {
