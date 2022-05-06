@@ -18,6 +18,7 @@ final class SettingView: UIView {
     private(set) lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .insetGrouped)
         tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.backgroundColor = .black
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -45,8 +46,8 @@ final class SettingView: UIView {
     }
     
     private func setupUI() {
+        backgroundColor = .black
         addSubview(tableView)
-        
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
