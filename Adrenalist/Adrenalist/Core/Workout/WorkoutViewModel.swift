@@ -31,24 +31,26 @@ final class WorkoutViewModel {
     
     private var cancellables: Set<AnyCancellable>
     
+    private let workoutManager = ItemManager.shared
+    
+    private var currentIndex = 0
+    
     private(set) lazy var items: [Item] = []
-    private var onGoingTime: Double = 0
     
     init() {
         self.cancellables = .init()
         bind()
     }
     
-    private let workoutManager = ItemManager.shared
-    
-    private var currentIndex = 0
+   
     
     private func bind() {
         workoutManager
             .$itemToDos
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
-            .sink { workouts in
+            .sink {[weak self] workouts in
+                guard let self = self else {return }
                 self.items = workouts
                 self.sendViewUpdate()
             }
@@ -76,32 +78,6 @@ final class WorkoutViewModel {
         }
     }
     
-    private var timer: Timer?
-    
-    private func startTimer() {
-        self.timer = Timer.scheduledTimer(timeInterval: 1,
-                                          target: self,
-                                          selector: #selector(timeTics),
-                                          userInfo: nil,
-                                          repeats: true)
-    }
-    
-    @objc
-    private func timeTics() {
-        onGoingTime += 1
-        guard let countUpTo = items[currentIndex].timer else {return }
-        listenSubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
-        
-        if onGoingTime == countUpTo + 1 {
-            timer?.invalidate()
-            onGoingTime = 0
-            listenSubject.send(.updateInlineStrokeEnd(onGoingTime))
-            completeCurrentWorkout()
-            workoutManager.updateItemToDos(items)
-            sendViewUpdate()
-        }
-    }
-    
     //MARK: - Private Methods
     private func sendViewUpdate() {
         listenSubject.send(.updatePulse(progressPulse))
@@ -122,7 +98,7 @@ final class WorkoutViewModel {
     }
     
     private func updateCurrentIndex() {
-       currentIndex += 1
+        currentIndex += 1
     }
     
     private var currentWorkout: Item? {
@@ -161,6 +137,31 @@ final class WorkoutViewModel {
         let total = CGFloat(items.count)
         return numberOfDone / total
     }
+    
+    private func startTimer() {
+        var timer: AnyCancellable?
+        var onGoingTime: Double = 0
+        
+        func timeTics() {
+            onGoingTime += 1
+            guard let countUpTo = items[currentIndex].timer else {return }
+            listenSubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
+
+            if onGoingTime == countUpTo + 1 {
+                timer?.cancel()
+                timer = nil
+                onGoingTime = 0
+                listenSubject.send(.updateInlineStrokeEnd(onGoingTime))
+                completeCurrentWorkout()
+                workoutManager.updateItemToDos(items)
+                sendViewUpdate()
+            }
+        }
+        
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                timeTics()
+            }
+    }
 }
-
-
