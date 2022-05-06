@@ -34,7 +34,8 @@ final class ItemSetupViewController: UIViewController {
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else {return }
                 switch action {
                 case .confirm(let workout):
                     self.viewModel.confirm(for: workout)

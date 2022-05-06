@@ -20,8 +20,8 @@ final class ItemSetupViewModel {
         
         workoutManager
             .$itemToDos
-            .sink { workouts in
-                print(workouts)
+            .sink {[weak self] workouts in
+                guard let self = self else {return }
                 self.workouts = workouts
             }
             .store(in: &cancellables)

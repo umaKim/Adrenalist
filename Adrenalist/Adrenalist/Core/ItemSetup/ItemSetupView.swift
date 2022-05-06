@@ -47,32 +47,37 @@ final class ItemSetupView: UIView {
     private func bind() {
         workoutView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else {return }
                 switch action {
                 case .total(let title, let reps, let weight):
                     self.workout.title = title
                     self.workout.reps = Int(reps) ?? 0
                     self.workout.weight = Double(weight) ?? 0
-                    self.workout.type = .workout
                 }
+                self.workout.type = .workout
             }
             .store(in: &cancellables)
         
         timerView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else {return }
                 switch action {
                 case .time(let time):
-                    self.workout.title = "\(time) sec"
                     self.workout.timer = time
-                    self.workout.type = .timer
+                    
+                case .title(let title):
+                    self.workout.title = title
                 }
+                self.workout.type = .timer
             }
             .store(in: &cancellables)
         
         segmentController
             .selectedSegmentIndexPublisher
-            .sink { index in
+            .sink {[weak self] index in
+                guard let self = self else {return }
                 switch index {
                 case 0:
                     self.workoutView.isHidden = false
@@ -91,14 +96,16 @@ final class ItemSetupView: UIView {
         
         confirmButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else {return }
                 self.actionSubject.send(.confirm(self.workout))
             }
             .store(in: &cancellables)
         
         cancelButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else {return }
                 self.actionSubject.send(.cancel)
             }
             .store(in: &cancellables)
