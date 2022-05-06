@@ -29,11 +29,8 @@ final class WorkoutListViewController: UIViewController {
         super.loadView()
         view = contentView
         
-        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
-        navigationItem.leftBarButtonItems   = [contentView.edittingButton]
-        navigationItem.titleView            = contentView.upwardImageView
-        
         bind()
+        setupUI()
         setupCollectionView()
     }
     
@@ -44,30 +41,45 @@ final class WorkoutListViewController: UIViewController {
                 guard let self = self else { return }
                 switch action {
                 case .addWorkoutButtonDidTap:
-                    let vm = ItemSetupViewModel()
-                    let vc = ItemSetupViewController(viewModel: vm)
+                    let vc = ItemSetupViewController(viewModel: ItemSetupViewModel())
                     vc.delegate = self
                     self.present(vc, animated: true)
                     
-                case .edittingButtonDidTap:
-                    break
+                case .edit:
+                    self.viewModel.editMode()
+                    
+                case .delete:
+                    self.viewModel.deleteMode()
                 }
             }
             .store(in: &cancellables)
         
         viewModel
             .listenerPublisher
-            .sink {[weak self] listener in
-                guard let self = self else {return }
+            .sink { listener in
+//                guard let self = self else {return }
                 switch listener {
-                case .reloadWorkouts:
-                    self.contentView.workoutListCollectionView.reloadData()
-                    
                 case .reloadSuggestions:
                     self.contentView.suggestedCollectionView.reloadData()
+                    
+                case .reloadWorkouts:
+                    self.contentView.workoutListCollectionView.reloadData()
+               
+                case .edit:
+                    self.contentView.workoutListCollectionView.isEditing = true
+                    break
+                    
+                case .delete:
+                    break
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
+        navigationItem.leftBarButtonItems   = [contentView.updateButton]
+        navigationItem.titleView            = contentView.upwardImageView
     }
     
     private func setupCollectionView() {
@@ -116,6 +128,7 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
             }
 //        else {
                 return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+//        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
 //            }
 //        }
     }
@@ -130,19 +143,20 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
             let row = collectionView.numberOfItems(inSection: section)
             destinationIndexPath = IndexPath(row: row, section: section)
         }
-        
+
         switch coordinator.proposal.operation {
         case .move:
             self.viewModel.reorderItems(coordinator: coordinator,
                                         destinationIndexPath:destinationIndexPath,
                                         collectionView: collectionView,
                                         currentCollectionView: contentView.workoutListCollectionView)
-            
+
         case .copy:
             self.viewModel.copyItems(coordinator: coordinator,
                                      destinationIndexPath: destinationIndexPath,
                                      collectionView: collectionView,
                                      currentCollectionView: contentView.workoutListCollectionView)
+
         default:
             return
         }
@@ -153,7 +167,7 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
 extension WorkoutListViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let item = collectionView == contentView.suggestedCollectionView ? viewModel.suggestions[indexPath.row] : viewModel.workouts[indexPath.row]
-        let itemProvider = NSItemProvider(object: item.uuid as NSString)
+        let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
         return [dragItem]
@@ -161,7 +175,7 @@ extension WorkoutListViewController: UICollectionViewDragDelegate {
     
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
         let item = collectionView == contentView.suggestedCollectionView ? viewModel.suggestions[indexPath.row] : viewModel.workouts[indexPath.row]
-        let itemProvider = NSItemProvider(object: item.uuid as NSString)
+        let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
         return [dragItem]
@@ -181,10 +195,11 @@ extension WorkoutListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionView == contentView.suggestedCollectionView ? viewModel.suggestions.count : viewModel.workouts.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SuggestionListCell.identifier, for: indexPath) as? SuggestionListCell else {return UICollectionViewCell() }
+
             cell.configure(with: viewModel.suggestions[indexPath.item])
             return cell
         } else {

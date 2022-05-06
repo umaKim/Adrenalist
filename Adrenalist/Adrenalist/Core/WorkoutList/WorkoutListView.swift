@@ -10,14 +10,29 @@ import CombineCocoa
 import UIKit
 
 enum WorkoutListViewAction {
-    case edittingButtonDidTap
     case addWorkoutButtonDidTap
+    case edit
+    case delete
 }
 
 final class WorkoutListView: UIView {
     
     private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.Button.upArrow))
-    private(set) lazy var edittingButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.editting), style: .done, target: nil, action: nil)
+    private(set) lazy var updateButton = UIBarButtonItem(title: "",
+                                                         image: UIImage(systemName: Constant.Button.editting),
+                                                         menu: UIMenu(options: .displayInline,
+                                                                      children: [edit, delete]))
+    
+    private lazy var edit = UIAction(title: "Update",
+                                     handler: {[weak self] _ in
+        self?.actionSubject.send(.edit)
+    })
+    
+    private lazy var delete = UIAction(title: "Delete",
+                                       handler: {[weak self] _ in
+        self?.actionSubject.send(.delete)
+    })
+    
     private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.addWorkout), style: .done, target: nil, action: nil)
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
@@ -56,7 +71,8 @@ final class WorkoutListView: UIView {
     private func bind() {
         addWorkoutButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else {return }
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
@@ -66,6 +82,9 @@ final class WorkoutListView: UIView {
         backgroundColor = .black
         addSubview(suggestedCollectionView)
         addSubview(workoutListCollectionView)
+        
+        suggestedCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         NSLayoutConstraint.activate([
             suggestedCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
