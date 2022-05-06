@@ -20,7 +20,7 @@ final class MainViewController: UIViewController {
     init() {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
-        
+        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -34,12 +34,6 @@ final class MainViewController: UIViewController {
         
         setupCollectionView()
         setUpFloatingPanel()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        bind()
     }
     
     private func bind() {
@@ -70,7 +64,6 @@ final class MainViewController: UIViewController {
         UIView.animate(withDuration: 1) {
             self.panel?.surfaceView.isHidden = index == 1 ? false : true
         }
-        
     }
 }
 
@@ -133,7 +126,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     private func scrollTo(index: Int) {
-        contentView.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .top, animated: true)
+        contentView.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
     }
 }
 
@@ -150,28 +143,31 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     private func setUpFloatingPanel() {
         let viewModel = WorkoutListViewModel()
         vc = WorkoutListViewController(viewModel: viewModel)
-        panel = FloatingPanelController(delegate: self)
+        panel = FloatingPanelController()
+        panel?.delegate = self
         panel?.set(contentViewController: UINavigationController(rootViewController: vc ?? UIViewController()))
         panel?.addPanel(toParent: self)
         panel?.track(scrollView: vc?.contentView.workoutListCollectionView ?? UIScrollView())
         
         let appearance = SurfaceAppearance()
-        appearance.backgroundColor = .systemBackground
         appearance.cornerRadius = 10
         appearance.backgroundColor = .black
+        panel?.surfaceView.grabberHandle.isHidden = true
         panel?.surfaceView.appearance = appearance
     }
     
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
-        UIView.animate(withDuration: 1) {[unowned self] in
-            animateAlpha(value: fpc.state == .tip ? 0 : 1)
-        }
+        animateAlpha(isShown: fpc.state == .tip)
     }
     
-    private func animateAlpha(value: CGFloat) {
-        vc?.contentView.edittingButton.tintColor      = .red.withAlphaComponent(value)
-        vc?.contentView.addWorkoutButton.tintColor    = .red.withAlphaComponent(value)
-        vc?.contentView.suggestedCollectionView.alpha = value
+    private func animateAlpha(isShown: Bool) {
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {[unowned self] in
+            vc?.contentView.edittingButton.tintColor      = .red.withAlphaComponent(isShown ? 0 : 1)
+            vc?.contentView.addWorkoutButton.tintColor    = .red.withAlphaComponent(isShown ? 0 : 1)
+            vc?.contentView.suggestedCollectionView.alpha = isShown ? 0 : 1
+            vc?.contentView.workoutListCollectionView.alpha = isShown ? 0 : 1
+            vc?.contentView.upwardImageView.alpha = isShown ? 1 : 0
+        }, completion: nil)
     }
     
     func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {

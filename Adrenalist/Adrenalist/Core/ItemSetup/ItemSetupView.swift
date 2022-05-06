@@ -9,19 +9,25 @@ import CombineCocoa
 import Combine
 import UIKit.UIView
 
-enum WorkoutSetupViewAction {
-    case confirm(Workout)
+enum ItemType: String, Codable {
+    case workout = "Workout"
+    case timer = "Timer"
+}
+
+enum ItemSetupViewAction {
+    case confirm(Item)
     case cancel
 }
 
-final class WorkoutSetupView: UIView {
+final class ItemSetupView: UIView {
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
-    private let actionSubject = PassthroughSubject<WorkoutSetupViewAction, Never>()
+    private let actionSubject = PassthroughSubject<ItemSetupViewAction, Never>()
     
-    private lazy var workoutTextField = AdrenalistTextField(placeHolder: "workout")
-    private lazy var repsTextField = AdrenalistTextField(placeHolder: "Reps")
-    private lazy var weightTextField = AdrenalistTextField(placeHolder: "Count")
+    private let workoutView = WorkoutSetupView()
+    private let timerView = TimerSetupView()
+    
+    private lazy var segmentController = UISegmentedControl(items: [ItemType.workout.rawValue, ItemType.timer.rawValue])
     
     private lazy var confirmButton = AdrenalistButton(title: "Confirm")
     private lazy var cancelButton = AdrenalistButton(title: "Cancel")
@@ -36,36 +42,79 @@ final class WorkoutSetupView: UIView {
         setupUI()
     }
     
+    private var workout = Item(title: "", isDone: false, type: .workout)
+    
     private func bind() {
-        cancelButton
-            .tapPublisher
-            .sink { _ in
-                self.actionSubject.send(.cancel)
+        workoutView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .total(let title, let reps, let weight):
+                    self.workout.title = title
+                    self.workout.reps = Int(reps) ?? 0
+                    self.workout.weight = Double(weight) ?? 0
+                    self.workout.type = .workout
+                }
+            }
+            .store(in: &cancellables)
+        
+        timerView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .time(let time):
+                    self.workout.title = "\(time) sec"
+                    self.workout.timer = time
+                    self.workout.type = .timer
+                }
+            }
+            .store(in: &cancellables)
+        
+        segmentController
+            .selectedSegmentIndexPublisher
+            .sink { index in
+                switch index {
+                case 0:
+                    self.workoutView.isHidden = false
+                    self.timerView.isHidden = true
+                    
+                case 1:
+                    self.workoutView.isHidden = true
+                    self.timerView.isHidden = false
+                    
+                default:
+                    self.workoutView.isHidden = false
+                    self.timerView.isHidden = true
+                }
             }
             .store(in: &cancellables)
         
         confirmButton
             .tapPublisher
             .sink { _ in
-                let workout = Workout(title: self.workoutTextField.text ?? "",
-                                      reps: Int(self.repsTextField.text ?? "0") ?? 0,
-                                      weight: Double(self.weightTextField.text ?? "0") ?? 0,
-                                      isDone: false)
-                self.actionSubject.send(.confirm(workout))
+                self.actionSubject.send(.confirm(self.workout))
+            }
+            .store(in: &cancellables)
+        
+        cancelButton
+            .tapPublisher
+            .sink { _ in
+                self.actionSubject.send(.cancel)
             }
             .store(in: &cancellables)
     }
     
+    private var selectedItemType: ItemType {
+        segmentController.selectedSegmentIndex == 0 ? .workout : .timer
+    }
+    
     private func setupUI() {
+        layer.cornerRadius = 12
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .gray
         
-        let stackView = UIStackView (arrangedSubviews: [workoutTextField, repsTextField, weightTextField])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.axis = .vertical
-        stackView.spacing = 6
+        segmentController.translatesAutoresizingMaskIntoConstraints = false
+        segmentController.selectedSegmentIndex = 0
         
         let buttonStack = UIStackView(arrangedSubviews: [confirmButton, cancelButton])
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
@@ -74,18 +123,30 @@ final class WorkoutSetupView: UIView {
         buttonStack.axis = .horizontal
         buttonStack.spacing = 6
         
-        addSubview(stackView)
+        addSubview(timerView)
+        addSubview(workoutView)
+        addSubview(segmentController)
         addSubview(buttonStack)
         
         NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            timerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
+            timerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
+            timerView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            timerView.bottomAnchor.constraint(equalTo: segmentController.topAnchor),
+            
+            workoutView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
+            workoutView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
+            workoutView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            workoutView.bottomAnchor.constraint(equalTo: segmentController.topAnchor),
+            
+            segmentController.centerXAnchor.constraint(equalTo: centerXAnchor),
+            segmentController.bottomAnchor.constraint(equalTo: buttonStack.topAnchor),
             
             buttonStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             buttonStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            widthAnchor.constraint(equalToConstant: 200),
-            heightAnchor.constraint(equalToConstant: 200)
+            widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.5),
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.5)
         ])
     }
     

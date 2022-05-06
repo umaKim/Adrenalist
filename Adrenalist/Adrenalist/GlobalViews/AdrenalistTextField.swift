@@ -12,6 +12,8 @@ final class AdrenalistTextField: UITextField {
         super.init(frame: .zero)
         
         self.placeholder = placeHolder
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.blue.cgColor
     }
     
     required init?(coder: NSCoder) {
