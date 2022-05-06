@@ -15,7 +15,7 @@ final class SettingViewModel {
     private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
     private let transitionSubject = PassthroughSubject<SettingTransition, Never>()
     
-    private(set) lazy var models = ["Correct", "About"]
+    private(set) lazy var models = ["About"]
     
     func didTapBackButton() {
         transitionSubject.send(.workout)
