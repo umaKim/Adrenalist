@@ -34,7 +34,8 @@ final class WorkoutViewController: UIViewController {
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else {return }
                 switch action {
                 case .didTapCalendar:
                     self.viewModel.didTapCalendar()

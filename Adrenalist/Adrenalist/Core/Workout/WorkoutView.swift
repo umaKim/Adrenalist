@@ -56,8 +56,18 @@ final class WorkoutView: UIView {
         didSet {
             guard let updateWorkout = updateWorkout else { return }
             self.workoutLabel.text = updateWorkout.title
-            self.repsLabel.text = "\(updateWorkout.reps) Reps"
-            self.weightLabel.text = "\(updateWorkout.weight) Kg"
+            
+            if let reps = updateWorkout.reps {
+                self.repsLabel.text = "\(reps) Reps"
+            }
+        
+            if let timer = updateWorkout.timer {
+                self.repsLabel.text = "\(timer) sec"
+            }
+            
+            if let weight = updateWorkout.weight {
+                self.weightLabel.text = "\(weight) Kg"
+            }
         }
     }
     
@@ -86,14 +96,16 @@ final class WorkoutView: UIView {
         calendarButton
             .tapPublisher
             .sink {[weak self] _ in
-                self?.actionSubject.send(.didTapCalendar)
+                guard let self = self else {return }
+                self.actionSubject.send(.didTapCalendar)
             }
             .store(in: &cancellables)
         
         settingButton
             .tapPublisher
             .sink {[weak self] _ in
-                self?.actionSubject.send(.didTapSetting)
+                guard let self = self else {return }
+                self.actionSubject.send(.didTapSetting)
             }
             .store(in: &cancellables)
         
