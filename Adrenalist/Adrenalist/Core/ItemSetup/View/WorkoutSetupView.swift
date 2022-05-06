@@ -35,7 +35,8 @@ final class WorkoutSetupView: UIView {
         workoutTextField.textPublisher
             .zip(repsTextField.textPublisher, weightTextField.textPublisher)
             .compactMap({ $0 as? (String, String, String) })
-            .sink { workout, reps, weight in
+            .sink {[weak self] workout, reps, weight in
+                guard let self = self else {return }
                 self.actionSubject.send(.total(workout, reps, weight))
             }
             .store(in: &cancellbales)
