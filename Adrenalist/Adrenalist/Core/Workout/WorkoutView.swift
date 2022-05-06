@@ -115,8 +115,8 @@ final class WorkoutView: UIView {
         circularView.animateOutlineStroke(strokeEnd)
     }
     
-    public func updateInline() {
-        circularView.animateInlineStroke()
+    public func updateInline(_ strokeEnd: CGFloat) {
+        circularView.animateInlineStroke(strokeEnd)
     }
     
     private func setupUI() {
