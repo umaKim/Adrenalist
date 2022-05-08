@@ -8,6 +8,7 @@ import Combine
 import UIKit.UIView
 
 enum TimerSetupViewAction {
+    case title(String)
     case time(Double)
 }
 
@@ -16,6 +17,8 @@ final class TimerSetupView: UIView {
     private let actionSubject = PassthroughSubject<TimerSetupViewAction, Never>()
     
     private var cancellbales: Set<AnyCancellable>
+    
+    private lazy var titleTextfield = AdrenalistTextField(placeHolder: "Work out")
     
     private lazy var timerLabel: UILabel = {
         let lb = UILabel()
@@ -47,23 +50,33 @@ final class TimerSetupView: UIView {
     }
     
     private func bind() {
+        titleTextfield
+            .textPublisher
+            .sink { [weak self] title in
+                guard let self = self else {return }
+                self.actionSubject.send(.title(title ?? ""))
+            }
+            .store(in: &cancellbales)
+        
         addButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else {return }
                 self.timerSubject.send(self.timerSubject.value + 10)
             }
             .store(in: &cancellbales)
         
         subtractButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else {return }
                 self.timerSubject.send(self.timerSubject.value - 10)
             }
             .store(in: &cancellbales)
         
         timerSubject
-            .compactMap({
-                self.actionSubject.send(.time(TimeInterval($0)))
+            .compactMap({[weak self] in
+                self?.actionSubject.send(.time(TimeInterval($0)))
                 return "\($0)"
             })
             .assign(to: \.text,
@@ -79,7 +92,7 @@ final class TimerSetupView: UIView {
         buttonStackView.axis = .horizontal
         buttonStackView.spacing = 6
         
-        let verticalStackView = UIStackView(arrangedSubviews: [timerLabel, buttonStackView])
+        let verticalStackView = UIStackView(arrangedSubviews: [titleTextfield, timerLabel, buttonStackView])
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.distribution = .fill
         verticalStackView.alignment = .center
