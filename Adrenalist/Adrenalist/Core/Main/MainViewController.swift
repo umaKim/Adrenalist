@@ -162,7 +162,7 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     
     private func animateAlpha(isShown: Bool) {
         UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {[unowned self] in
-            vc?.contentView.edittingButton.tintColor      = .red.withAlphaComponent(isShown ? 0 : 1)
+            vc?.contentView.updateButton.tintColor        = .red.withAlphaComponent(isShown ? 0 : 1)
             vc?.contentView.addWorkoutButton.tintColor    = .red.withAlphaComponent(isShown ? 0 : 1)
             vc?.contentView.suggestedCollectionView.alpha = isShown ? 0 : 1
             vc?.contentView.workoutListCollectionView.alpha = isShown ? 0 : 1
