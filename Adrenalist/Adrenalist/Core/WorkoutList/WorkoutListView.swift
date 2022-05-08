@@ -13,13 +13,14 @@ enum WorkoutListViewAction {
     case addWorkoutButtonDidTap
     case edit
     case delete
+    case tapBackground
 }
 
 final class WorkoutListView: UIView {
     
-    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.Button.upArrow))
+    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     private(set) lazy var updateButton = UIBarButtonItem(title: "",
-                                                         image: UIImage(systemName: Constant.Button.editting),
+                                                         image: UIImage(systemName: Constant.ButtonImage.editting),
                                                          menu: UIMenu(options: .displayInline,
                                                                       children: [edit, delete]))
     
@@ -33,7 +34,7 @@ final class WorkoutListView: UIView {
         self?.actionSubject.send(.delete)
     })
     
-    private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.addWorkout), style: .done, target: nil, action: nil)
+    private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.addWorkout), style: .done, target: nil, action: nil)
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
@@ -64,6 +65,7 @@ final class WorkoutListView: UIView {
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
+        
         bind()
         setupUI()
     }
@@ -72,7 +74,7 @@ final class WorkoutListView: UIView {
         addWorkoutButton
             .tapPublisher
             .sink {[weak self] _ in
-                guard let self = self else {return }
+                guard let self = self else { return }
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
@@ -83,7 +85,7 @@ final class WorkoutListView: UIView {
         addSubview(suggestedCollectionView)
         addSubview(workoutListCollectionView)
         
-        suggestedCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
         workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         NSLayoutConstraint.activate([
