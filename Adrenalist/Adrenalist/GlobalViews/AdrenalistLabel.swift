@@ -16,7 +16,7 @@ final class AdrenalistLabel: UILabel {
     }
     
     private func setupUI() {
-        
+        textColor = .white
     }
     
     required init?(coder: NSCoder) {
