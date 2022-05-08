@@ -29,7 +29,7 @@ final class WorkoutHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.tintColor = .red
+        navigationController?.navigationBar.tintColor = .pinkishRed
         navigationItem.leftBarButtonItems = [contentView.backButton]
         
         contentView.tableView.dataSource = self

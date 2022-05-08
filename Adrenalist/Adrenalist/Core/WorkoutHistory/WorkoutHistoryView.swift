@@ -11,7 +11,7 @@ import Combine
 import UIKit
 
 final class WorkoutHistoryView: UIView {
-    private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.back), style: .done, target: nil, action: nil)
+    private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.back), style: .done, target: nil, action: nil)
     private let calendar = FSCalendar()
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()

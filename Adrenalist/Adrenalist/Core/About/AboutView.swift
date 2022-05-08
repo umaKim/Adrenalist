@@ -14,7 +14,15 @@ enum AboutViewAction {
 
 final class AboutView: UIView {
     
-    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.xmark), style: .done, target: nil, action: nil)
+    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.xmark), style: .done, target: nil, action: nil)
+    
+    private let aboutLabel: UILabel = {
+        let lb = UILabel()
+        lb.text = "Created by Uma Kim"
+        lb.textColor = .white
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        return lb
+    }()
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<AboutViewAction, Never>()
@@ -25,14 +33,27 @@ final class AboutView: UIView {
         self.cancellables = .init()
         super.init(frame: .zero)
         
-        backgroundColor = .black
-        
+        bind()
+        setupUI()
+    }
+    
+    private func bind() {
         dismissButton
             .tapPublisher
             .sink { _ in
                 self.actionSubject.send(.dismiss)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        backgroundColor = .black
+        
+        addSubview(aboutLabel)
+        NSLayoutConstraint.activate([
+            aboutLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            aboutLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
     required init?(coder: NSCoder) {

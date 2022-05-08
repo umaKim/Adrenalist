@@ -25,7 +25,7 @@ final class WorkoutSetupView: UIView {
         self.cancellbales = .init()
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .red
+        backgroundColor = .pinkishRed
         
         bind()
         setupUI()
@@ -36,7 +36,7 @@ final class WorkoutSetupView: UIView {
             .zip(repsTextField.textPublisher, weightTextField.textPublisher)
             .compactMap({ $0 as? (String, String, String) })
             .sink {[weak self] workout, reps, weight in
-                guard let self = self else {return }
+                guard let self = self else { return }
                 self.actionSubject.send(.total(workout, reps, weight))
             }
             .store(in: &cancellbales)

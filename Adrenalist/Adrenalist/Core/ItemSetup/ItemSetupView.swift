@@ -40,6 +40,7 @@ final class ItemSetupView: UIView {
         
         bind()
         setupUI()
+        
     }
     
     private var workout = Item(title: "", isDone: false, type: .workout)

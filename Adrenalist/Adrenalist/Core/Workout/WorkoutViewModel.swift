@@ -42,8 +42,6 @@ final class WorkoutViewModel {
         bind()
     }
     
-   
-    
     private func bind() {
         workoutManager
             .$itemToDos

@@ -19,8 +19,8 @@ final class WorkoutView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutViewAction, Never>()
     
-    private(set) lazy var calendarButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.calendar), style: .done, target: nil, action: nil)
-    private(set) lazy var settingButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.setting), style: .done, target: nil, action: nil)
+    private(set) lazy var calendarButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.calendar), style: .done, target: nil, action: nil)
+    private(set) lazy var settingButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.setting), style: .done, target: nil, action: nil)
     
     private let circularView = CircularView()
     

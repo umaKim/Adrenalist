@@ -13,7 +13,7 @@ enum SettingViewAction {
 }
 
 final class SettingView: UIView {
-    private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: Constant.Button.back), style: .done, target: nil, action: nil)
+    private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.back), style: .done, target: nil, action: nil)
     
     private(set) lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .insetGrouped)

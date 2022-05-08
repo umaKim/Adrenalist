@@ -39,6 +39,7 @@ final class AboutViewController: UIViewController {
     }
     
     private func setupUI() {
+        navigationController?.navigationBar.tintColor = .pinkishRed
         navigationItem.setRightBarButton(contentView.dismissButton, animated: true)
     }
     
