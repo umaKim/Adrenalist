@@ -41,15 +41,18 @@ final class ItemSetupContainerView: UIView {
     }
     
     func updateUI(with item: Item?) {
-        switch item?.type {
+        guard
+            let item = item
+        else { return }
+        
+        self.receivedWorkout = item
+        
+        switch item.type {
         case .workout:
             workoutView.updateUI(with: item)
         
         case .timer:
             timerView.updateUI(with: item)
-            
-        default :
-            break
         }
     }
     
@@ -93,20 +96,26 @@ final class ItemSetupContainerView: UIView {
         ])
     }
     
-    private var workout = Item(title: "", isDone: false, type: .workout)
+    private var receivedWorkout: Item = Item(uuid: UUID(), timer: nil, title: "", reps: nil, weight: nil, isDone: false, type: .workout)
     
     private func bind() {
         workoutView
             .actionPublisher
             .sink {[weak self] action in
                 guard let self = self else {return }
+                
                 switch action {
-                case .total(let title, let reps, let weight):
-                    self.workout.title = title
-                    self.workout.reps = Int(reps) ?? 0
-                    self.workout.weight = Double(weight) ?? 0
+                case .workout(let title):
+                    self.receivedWorkout.title = title
+                
+                case .reps(let reps):
+                    self.receivedWorkout.reps = Int(reps) ?? 0
+                    
+                case .weight(let weight):
+                    self.receivedWorkout.weight = Double(weight) ?? 0
                 }
-                self.workout.type = .workout
+
+                self.receivedWorkout.type = .workout
             }
             .store(in: &cancellables)
         
@@ -116,12 +125,12 @@ final class ItemSetupContainerView: UIView {
                 guard let self = self else {return }
                 switch action {
                 case .time(let time):
-                    self.workout.timer = time
+                    self.receivedWorkout.timer = time
                     
                 case .title(let title):
-                    self.workout.title = title
+                    self.receivedWorkout.title = title
                 }
-                self.workout.type = .timer
+                self.receivedWorkout.type = .timer
             }
             .store(in: &cancellables)
         
@@ -148,8 +157,11 @@ final class ItemSetupContainerView: UIView {
         confirmButton
             .tapPublisher
             .sink {[weak self] _ in
-                guard let self = self else {return }
-                self.actionSubject.send(.confirm(self.workout))
+                guard
+                    let self = self
+                else { return }
+                
+                self.actionSubject.send(.confirm(self.receivedWorkout))
             }
             .store(in: &cancellables)
         
