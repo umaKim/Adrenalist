@@ -11,8 +11,9 @@ import Combine
 enum WorkoutListViewModelListener {
     case reloadWorkouts
     case reloadSuggestions
-    case delete
-    case edit
+    case modeChanged(UpdateMode?)
+    
+    case delete(Int)
 }
 
 enum UpdateMode {
@@ -32,7 +33,8 @@ final class WorkoutListViewModel  {
     
     private let workoutManager = ItemManager.shared
     
-    @Published private var mode: UpdateMode?
+//    @Published private(set) var mode: UpdateMode?
+    private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
     
     init() {
         self.cancellables = .init()
@@ -50,47 +52,66 @@ final class WorkoutListViewModel  {
         
         workoutManager
             .$suggestions
-            .sink {[weak self] suggestions in
+            .sink { [weak self] suggestions in
                 guard let self = self else {return }
                 self.suggestions = suggestions
                 self.listenerSubject.send(.reloadSuggestions)
             }
             .store(in: &cancellables)
         
-        $mode
+        mode
             .sink {[weak self] mode in
                 guard let self = self else {return }
-                switch mode {
-                case .edit:
-                    self.listenerSubject.send(.edit)
-                    
-                case .delete:
-                    self.listenerSubject.send(.delete)
-                    
-                default:
-                    break
-                }
+                self.listenerSubject.send(.modeChanged(mode))
             }
             .store(in: &cancellables)
     }
     
     func editMode() {
-        mode = .edit
+        mode.value = .edit
     }
     
     func deleteMode() {
-        mode = .delete
-        
+        mode.value = .delete
     }
     
-    func didTapCell(at index: Int) {
+    func noMode() {
+        mode.value = nil
+    }
+    
+    func didTapWorkoutCell(at index: Int) {
         workouts[index].isDone.toggle()
+        updateWorkoutToDo()
+    }
+    
+    func didTapSuggestion(at index: Int) {
+        let tappedItem = suggestions[index]
+        let item = Item(uuid: UUID(),
+                        timer: tappedItem.timer,
+                        title: tappedItem.title,
+                        reps: tappedItem.reps,
+                        weight: tappedItem.weight,
+                        isDone: tappedItem.isDone,
+                        type: tappedItem.type)
+        workouts.append(item)
+        updateWorkoutToDo()
+    }
+    
+    func deleteSuggestion(at index: Int, completion: () -> Void) {
+        suggestions.remove(at: index)
+        completion()
+        updateSuggestions()
+    }
+    
+    func deleteWorkout(at index: Int, completion: () -> Void) {
+        workouts.remove(at: index)
+        completion()
         updateWorkoutToDo()
     }
     
     //MARK: - Private Methods
     private func updateWorkoutToDo() {
-        workoutManager.updateItemToDos(workouts)
+        workoutManager.updateWorkoutToDos(workouts)
     }
     
     private func updateSuggestions() {
@@ -149,14 +170,19 @@ final class WorkoutListViewModel  {
             var indexPaths = [IndexPath]()
             for (index, item) in coordinator.items.enumerated() {
                 let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
+
                 if collectionView === currentCollectionView {
-                    self.workouts.insert(item.dragItem.localObject as! Item, at: indexPath.row)
+                    guard var item = item.dragItem.localObject as? Item else { return }
+//                    item.uuid = UUID()
+                    let newItem = Item(uuid: UUID(), timer: item.timer, title: item.title, reps: item.reps, weight: item.weight, isDone: item.isDone, type: item.type)
+                    self.workouts.insert(newItem, at: indexPath.row)
                     self.updateWorkoutToDo()
                     
                 } else {
-//                    guard let item = item.dragItem.localObject as? Item else {return }
-//                    self.suggestions.insert(item, at: indexPath.row)
-                    self.suggestions.insert(item.dragItem.localObject as! Item, at: indexPath.row)
+                    guard var item = item.dragItem.localObject as? Item else { return }
+//                    item.uuid = UUID()
+                    let newItem = Item(uuid: UUID(), timer: item.timer, title: item.title, reps: item.reps, weight: item.weight, isDone: item.isDone, type: item.type)
+                    self.suggestions.insert(newItem, at: indexPath.row)
                     self.updateSuggestions()
                 }
                 indexPaths.append(indexPath)

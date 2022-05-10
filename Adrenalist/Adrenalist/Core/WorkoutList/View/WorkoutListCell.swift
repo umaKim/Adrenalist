@@ -13,8 +13,8 @@ enum WorkoutListCellAction: Equatable {
 }
 
 protocol WorkoutListCellDelegate: AnyObject {
-    func edit(id: UUID)
-    func delete(id: UUID)
+    func workoutListDidTapEdit(id: UUID)
+    func workoutListDidTapdelete(id: UUID)
 }
 
 final class WorkoutListCell: UICollectionViewCell, Shakeable {
@@ -22,8 +22,8 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
     
     static let identifier = "WorkoutListCell"
     
-    private lazy var editButton     = AdrenalistImageButton(image: UIImage(systemName: Constant.ButtonImage.editting))
-    private lazy var deleteButton   = AdrenalistImageButton(image: UIImage(systemName: Constant.ButtonImage.xmark))
+    private lazy var editButton     = AdrenalistImageButton(image: UIImage(systemName: Constant.ButtonImage.pencilCircle))
+    private lazy var deleteButton   = AdrenalistImageButton(image: UIImage(systemName: Constant.ButtonImage.xmarkCircle))
     private lazy var circleButton   = AdrenalistCircleButton()
     private lazy var titleLabel     = AdrenalistLabel(text: "")
     private lazy var repsLabel      = AdrenalistLabel(text: "")
@@ -52,7 +52,7 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
             .tapPublisher
             .sink {[weak self] _ in
                 guard let id = self?.uuid else {return }
-                self?.delegate?.delete(id: id)
+                self?.delegate?.workoutListDidTapdelete(id: id)
             }
             .store(in: &cancellables)
         
@@ -60,7 +60,7 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
             .tapPublisher
             .sink {[weak self] _ in
                 guard let id = self?.uuid else {return }
-                self?.delegate?.edit(id: id)
+                self?.delegate?.workoutListDidTapEdit(id: id)
             }
             .store(in: &cancellables)
     }
@@ -122,13 +122,13 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
         }
         
         NSLayoutConstraint.activate([
-            editButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            editButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            deleteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            deleteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             deleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            circleButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            circleButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             circleButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             titleLabel.leadingAnchor.constraint(equalTo: circleButton.trailingAnchor, constant: 8),
