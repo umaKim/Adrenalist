@@ -54,7 +54,7 @@ final class TimerSetupView: UIView {
             let timer = item?.timer
         else { return }
 
-        timerLabel.text = "\(timer)"
+        timerLabel.text = "\(timer) sec"
     }
     
     private func bind() {
