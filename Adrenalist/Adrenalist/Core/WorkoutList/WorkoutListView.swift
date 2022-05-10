@@ -27,11 +27,13 @@ final class WorkoutListView: UIView {
     private lazy var edit = UIAction(title: "Update",
                                      handler: {[weak self] _ in
         self?.actionSubject.send(.edit)
+        self?.recognizer?.isEnabled = true
     })
     
     private lazy var delete = UIAction(title: "Delete",
                                        handler: {[weak self] _ in
         self?.actionSubject.send(.delete)
+        self?.recognizer?.isEnabled = true
     })
     
     private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.addWorkout), style: .done, target: nil, action: nil)
@@ -60,6 +62,8 @@ final class WorkoutListView: UIView {
         return cv
     }()
     
+    private var recognizer: UITapGestureRecognizer?
+    
     private var cancellables: Set<AnyCancellable>
     
     init() {
@@ -78,15 +82,15 @@ final class WorkoutListView: UIView {
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
-        
-        let reco = UITapGestureRecognizer(target: self, action: #selector(tap))
-        reco.cancelsTouchesInView = false
-        addGestureRecognizer(reco)
+            
+        recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
+        addGestureRecognizer(recognizer ?? UITapGestureRecognizer())
     }
-    
+   
     @objc
     private func tap() {
         actionSubject.send(.tapBackground)
+        recognizer?.isEnabled = false
     }
     
     private func setupUI() {
