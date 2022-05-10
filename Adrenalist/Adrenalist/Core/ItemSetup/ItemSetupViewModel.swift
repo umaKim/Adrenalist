@@ -8,27 +8,60 @@
 import Foundation
 import Combine
 
+enum CollectionViewType {
+    case suggestion
+    case mainWorkout
+}
+
+enum ItemSetupViewModelListen {
+    case item(Item?)
+}
+
 final class ItemSetupViewModel {
+//    private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
+//    private let listenerSubject = PassthroughSubject<ItemSetupViewModelListen, Never>()
     
     private let workoutManager = ItemManager.shared
-    private var workouts: [Item] = []
+    
+    private(set) var workout: Item?
+    private var collectionViewType: CollectionViewType
     
     private var cancellables: Set<AnyCancellable>
     
-    init() {
+    init(workout: Item? = nil, collectionViewType: CollectionViewType) {
+        self.workout = workout
+        self.collectionViewType = collectionViewType
         self.cancellables = .init()
         
-        workoutManager
-            .$itemToDos
-            .sink {[weak self] workouts in
-                guard let self = self else {return }
-                self.workouts = workouts
-            }
-            .store(in: &cancellables)
+//        listenerSubject.send(.item(workout))
     }
     
     func confirm(for workout: Item) {
-        workouts.append(workout)
-        workoutManager.updateItemToDos(workouts)
+        if self.workout != nil {
+            switch collectionViewType {
+            case .suggestion:
+                var suggestions = workoutManager.suggestions
+                guard let index = suggestions.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
+                suggestions[index] = workout
+                workoutManager.updateSuggestions(suggestions)
+                
+            case .mainWorkout:
+                var workouts = workoutManager.itemToDos
+                guard let index = workouts.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
+                workouts[index] = workout
+                workoutManager.updateWorkoutToDos(workouts)
+            }
+            
+        } else {
+            workoutManager.appendWorkoutToDos(workout)
+        }
+    }
+    
+    private func update() {
+        
+    }
+    
+    private func create() {
+        
     }
 }
