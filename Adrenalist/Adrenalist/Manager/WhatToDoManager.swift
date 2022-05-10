@@ -18,9 +18,19 @@ final class ItemManager {
     @Published private(set) var itemToDos: [Item] = []
     
     //MARK: - Public
-    public func updateItemToDos(_ workouts: [Item]) {
+    public func appendWorkoutToDos(_ workout: Item) {
+        self.itemToDos.append(workout)
+        self.save(itemToDos, for: .main)
+    }
+    
+    public func updateWorkoutToDos(_ workouts: [Item]) {
         self.itemToDos = workouts
         self.save(workouts, for: .main)
+    }
+    
+    public func appendSuggetion(_ suggestion: Item) {
+        self.suggestions.append(suggestion)
+        self.save(suggestions, for: .suggestions)
     }
     
     public func updateSuggestions(_ suggestions: [Item]) {

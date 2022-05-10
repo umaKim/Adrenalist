@@ -49,6 +49,14 @@ final class TimerSetupView: UIView {
         setupUI()
     }
     
+    func updateUI(with item: Item?) {
+        guard
+            let timer = item?.timer
+        else { return }
+
+        timerLabel.text = "\(timer)"
+    }
+    
     private func bind() {
         titleTextfield
             .textPublisher

@@ -134,13 +134,13 @@ final class WorkoutView: UIView {
     private func setupUI() {
         backgroundColor = .black
         
-        let labelStackView2 = UIStackView(arrangedSubviews: [repsLabel, weightLabel])
-        labelStackView2.axis = .vertical
-        labelStackView2.distribution = .fill
-        labelStackView2.alignment = .center
-        labelStackView2.spacing = 12
+        let labelStackView = UIStackView(arrangedSubviews: [repsLabel, weightLabel])
+        labelStackView.axis = .vertical
+        labelStackView.distribution = .fill
+        labelStackView.alignment = .center
+        labelStackView.spacing = 12
         
-        [circularView, workoutLabel, nextLabel, labelStackView2].forEach {
+        [circularView, workoutLabel, nextLabel, labelStackView].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -155,8 +155,8 @@ final class WorkoutView: UIView {
             nextLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             nextLabel.topAnchor.constraint(equalTo: workoutLabel.bottomAnchor, constant: frame.height / 13),
             
-            labelStackView2.centerXAnchor.constraint(equalTo: centerXAnchor),
-            labelStackView2.topAnchor.constraint(equalTo: centerYAnchor, constant: frame.height / 3.5)
+            labelStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            labelStackView.topAnchor.constraint(equalTo: centerYAnchor, constant: frame.height / 3.5)
         ])
     }
     

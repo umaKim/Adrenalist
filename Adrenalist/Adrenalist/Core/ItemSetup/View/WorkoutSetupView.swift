@@ -31,6 +31,18 @@ final class WorkoutSetupView: UIView {
         setupUI()
     }
     
+    func updateUI(with item: Item?) {
+        workoutTextField.text = item?.title
+        
+        if let reps = item?.reps {
+            repsTextField.text = "\(reps)"
+        }
+        
+        if let weight = item?.weight {
+            weightTextField.text = "\(weight)"
+        }
+    }
+    
     private func bind() {
         workoutTextField.textPublisher
             .zip(repsTextField.textPublisher, weightTextField.textPublisher)

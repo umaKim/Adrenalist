@@ -22,6 +22,10 @@ final class ItemSetupViewController: UIViewController {
     
     weak var delegate: ItemSetupViewControllerDelegate?
     
+    override func loadView() {
+        view = contentView
+    }
+    
     init(viewModel: ItemSetupViewModel) {
         self.viewModel = viewModel
         self.cancellables = .init()
@@ -46,22 +50,13 @@ final class ItemSetupViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        contentView.updateUI(with: viewModel.workout)
     }
     
     private func setupUI() {
-        view.addTapGestureToViewForKeyboardDismiss()
-        view.backgroundColor = .black.withAlphaComponent(0.7)
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
-        
-        view.layer.cornerRadius = 12
-        
-        
-        view.addSubview(contentView)
-        NSLayoutConstraint.activate([
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
     }
     
     required init?(coder: NSCoder) {

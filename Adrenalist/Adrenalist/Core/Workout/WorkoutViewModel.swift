@@ -33,7 +33,7 @@ final class WorkoutViewModel {
     
     private let workoutManager = ItemManager.shared
     
-    private var currentIndex = 0
+    private var currentIndex: Int?
     
     private(set) lazy var items: [Item] = []
     
@@ -65,10 +65,14 @@ final class WorkoutViewModel {
     }
     
     func didDoubleTap() {
+        guard
+            let currentIndex = currentIndex
+        else { return }
+
         switch items[currentIndex].type {
         case .workout:
             self.completeCurrentWorkout()
-            self.workoutManager.updateItemToDos(items)
+            self.workoutManager.updateWorkoutToDos(items)
             self.sendViewUpdate()
             
         case .timer:
@@ -96,7 +100,12 @@ final class WorkoutViewModel {
     }
     
     private func updateCurrentIndex() {
+        guard var currentIndex = currentIndex else {
+            return
+        }
+
         currentIndex += 1
+        self.currentIndex = currentIndex
     }
     
     private var currentWorkout: Item? {
@@ -113,7 +122,7 @@ final class WorkoutViewModel {
         if currentIndex == items.count || items.isEmpty { return nil }
         
         var workOut: [Item] = []
-        var currentIndex = currentIndex
+        guard var currentIndex = currentIndex else {return nil}
         currentIndex += 1
         
         for index in currentIndex..<items.count {
@@ -142,7 +151,11 @@ final class WorkoutViewModel {
         
         func timeTics() {
             onGoingTime += 1
-            guard let countUpTo = items[currentIndex].timer else {return }
+            guard
+                let currentIndex = currentIndex,
+                let countUpTo = items[currentIndex].timer
+            else {return }
+            
             listenSubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
 
             if onGoingTime == countUpTo + 1 {
@@ -151,7 +164,7 @@ final class WorkoutViewModel {
                 onGoingTime = 0
                 listenSubject.send(.updateInlineStrokeEnd(onGoingTime))
                 completeCurrentWorkout()
-                workoutManager.updateItemToDos(items)
+                workoutManager.updateWorkoutToDos(items)
                 sendViewUpdate()
             }
         }

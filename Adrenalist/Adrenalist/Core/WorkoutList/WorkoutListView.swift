@@ -78,6 +78,15 @@ final class WorkoutListView: UIView {
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
+        
+        let reco = UITapGestureRecognizer(target: self, action: #selector(tap))
+        reco.cancelsTouchesInView = false
+        addGestureRecognizer(reco)
+    }
+    
+    @objc
+    private func tap() {
+        actionSubject.send(.tapBackground)
     }
     
     private func setupUI() {
