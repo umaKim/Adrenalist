@@ -11,6 +11,8 @@ enum Constant {
     
     enum ButtonImage {
         static let editting     = "slider.horizontal.3"
+        static let pencilCircle = "pencil.circle.fill"
+        static let xmarkCircle  = "xmark.circle.fill"
         static let addWorkout   = "plus.square"
         static let calendar     = "calendar.circle"
         static let setting      = "gearshape"
