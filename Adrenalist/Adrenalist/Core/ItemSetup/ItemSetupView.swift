@@ -33,6 +33,7 @@ final class ItemSetupView: UIView {
         super.init(frame: .zero)
         
         bind()
+        addTapGestureToViewForKeyboardDismiss()
     }
    
     override func layoutSubviews() {
