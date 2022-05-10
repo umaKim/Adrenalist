@@ -8,7 +8,10 @@ import Combine
 import UIKit.UIView
 
 enum WorkoutSetupViewAction {
-    case total(String, String, String)
+    //    case total(String, String, String)
+    case workout(String)
+    case reps(String)
+    case weight(String)
 }
 
 final class WorkoutSetupView: UIView {
@@ -44,12 +47,27 @@ final class WorkoutSetupView: UIView {
     }
     
     private func bind() {
-        workoutTextField.textPublisher
-            .zip(repsTextField.textPublisher, weightTextField.textPublisher)
-            .compactMap({ $0 as? (String, String, String) })
-            .sink {[weak self] workout, reps, weight in
-                guard let self = self else { return }
-                self.actionSubject.send(.total(workout, reps, weight))
+        workoutTextField
+            .textPublisher
+            .compactMap({$0})
+            .sink(receiveValue: { string in
+                self.actionSubject.send(.workout(string))
+            })
+            .store(in: &cancellbales)
+        
+        repsTextField
+            .textPublisher
+            .compactMap({$0})
+            .sink { string in
+                self.actionSubject.send(.reps(string))
+            }
+            .store(in: &cancellbales)
+        
+        weightTextField
+            .textPublisher
+            .compactMap({$0})
+            .sink { string in
+                self.actionSubject.send(.weight(string))
             }
             .store(in: &cancellbales)
     }
