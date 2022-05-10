@@ -25,23 +25,32 @@ final class SettingViewController: UIViewController {
         super.loadView()
         view = contentView
         
-        navigationItem.leftBarButtonItems = [contentView.backButton]
-        contentView.tableView.delegate = self
-        contentView.tableView.dataSource = self
-        
         bind()
+        setupTableView()
+        setupNavigationBar()
     }
     
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .backButtonDidTap:
                     self.viewModel.didTapBackButton()
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupTableView() {
+        contentView.tableView.delegate = self
+        contentView.tableView.dataSource = self
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .pinkishRed
+        navigationItem.leftBarButtonItems = [contentView.backButton]
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +66,7 @@ extension SettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = viewModel.models[indexPath.row]
+        cell.backgroundColor = .systemGray2
         return cell
     }
 }
@@ -64,10 +74,13 @@ extension SettingViewController: UITableViewDataSource {
 extension SettingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if viewModel.models[indexPath.row] == "About" {
+        switch viewModel.models[indexPath.row] {
+        case "About":
             let vc = AboutViewController()
             let nav = UINavigationController(rootViewController: vc)
             present(nav, animated: true)
+        default:
+            break
         }
     }
 }
