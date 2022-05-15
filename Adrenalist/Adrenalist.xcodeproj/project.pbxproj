@@ -30,7 +30,7 @@
 		3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C8682819137A0089A0C4 /* SettingViewModel.swift */; };
 		3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86A2819137F0089A0C4 /* SettingView.swift */; };
 		3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C86D281926A30089A0C4 /* FSCalendar */; };
-		3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */; };
+		3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */; };
 		3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */; };
 		3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C878281A86960089A0C4 /* WorkoutListViewController.swift */; };
 		3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */; };
@@ -78,7 +78,7 @@
 		3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryViewModel.swift; sourceTree = "<group>"; };
 		3548C8682819137A0089A0C4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3548C86A2819137F0089A0C4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryHeaderView.swift; sourceTree = "<group>"; };
 		3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		3548C878281A86960089A0C4 /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
 		3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewModel.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 		3548C87128192CA10089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift */,
+				3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */,
 				3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */,
 			);
 			path = View;
@@ -254,8 +254,8 @@
 		3548C87E281A86FD0089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */,
 				3555CD29281C747100DA830E /* SuggestionListCell.swift */,
+				3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -418,7 +418,7 @@
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
-				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderTableViewCell.swift in Sources */,
+				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift in Sources */,
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
 				3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */,

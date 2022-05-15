@@ -18,9 +18,6 @@ enum ItemSetupViewModelListen {
 }
 
 final class ItemSetupViewModel {
-//    private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
-//    private let listenerSubject = PassthroughSubject<ItemSetupViewModelListen, Never>()
-    
     private let workoutManager = ItemManager.shared
     
     private(set) var workout: Item?
@@ -32,8 +29,6 @@ final class ItemSetupViewModel {
         self.workout = workout
         self.collectionViewType = collectionViewType
         self.cancellables = .init()
-        
-//        listenerSubject.send(.item(workout))
     }
     
     func confirm(for workout: Item) {
