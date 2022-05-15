@@ -10,46 +10,7 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController: UIViewController, WorkoutListCellDelegate, SuggestionListCellDelegate {
-    func suggestionDidTapEdit(id: UUID) {
-        guard
-            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
-        else { return }
-        
-        let indexPath = IndexPath(row: itemIndex, section: 0)
-        presentItemSetupModalForUpdate(at: indexPath, type: .suggestion)
-    }
-    
-    func suggestionDidTapDelete(id: UUID) {
-        guard
-            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
-        else { return }
-        
-        let indexPath = IndexPath(row: itemIndex, section: 0)
-        viewModel.deleteSuggestion(at: indexPath.row, completion: {
-            self.contentView.suggestedCollectionView.deleteItems(at: [indexPath])
-        })
-    }
-    
-    func workoutListDidTapEdit(id: UUID) {
-        guard
-            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
-        else { return }
-        
-        let indexPath = IndexPath(row: itemIndex, section: 0)
-        presentItemSetupModalForUpdate(at: indexPath, type: .mainWorkout)
-    }
-    
-    func workoutListDidTapdelete(id: UUID) {
-        guard
-            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
-        else { return }
-        
-        let indexPath = IndexPath(row: itemIndex, section: 0)
-        viewModel.deleteWorkout(at: indexPath.row, completion: {
-            self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
-        })
-    }
+final class WorkoutListViewController: UIViewController {
     
     private(set) lazy var contentView = WorkoutListView()
     private let viewModel: WorkoutListViewModel
@@ -122,28 +83,18 @@ final class WorkoutListViewController: UIViewController, WorkoutListCellDelegate
             .store(in: &cancellables)
         
         viewModel
-            .listenerPublisher
-            .sink {[weak self] listener in
+            .notifyPublisher
+            .sink {[weak self] noti in
                 guard let self = self else {return }
-                switch listener {
+                switch noti {
                 case .reloadSuggestions:
                     self.contentView.suggestedCollectionView.reloadData()
                     
                 case .reloadWorkouts:
                     self.contentView.workoutListCollectionView.reloadData()
-                  
+                    
                 case.modeChanged(let mode):
                     self.mode = mode
-                    
-//                    for index in 0..<self.viewModel.suggestions.count {
-//                        let indexPath = IndexPath(row: index, section: 0)
-//                        self.contentView.suggestedCollectionView.reloadItems(at: [indexPath])
-//                    }
-//
-//                    for index in 0..<self.viewModel.workouts.count {
-//                        let indexPath = IndexPath(row: index, section: 0)
-//                        self.contentView.workoutListCollectionView.reloadItems(at: [indexPath])
-//                    }
                     self.contentView.suggestedCollectionView.reloadData()
                     self.contentView.workoutListCollectionView.reloadData()
                     
@@ -155,20 +106,7 @@ final class WorkoutListViewController: UIViewController, WorkoutListCellDelegate
                 }
             }
             .store(in: &cancellables)
-        
-//        let reco = UIGestureRecognizer(target: self, action: #selector(tap))
-//        reco.cancelsTouchesInView = false
-////        contentView.workoutListCollectionView.addGestureRecognizer(reco)
-//        reco.isEnabled = false
-////        reco.numberOfTapsRequired = 1
-//        contentView.addGestureRecognizer(reco)
     }
-    
-//    @objc
-//    private func tap() {
-//        viewModel.noMode()
-//    }
-   
     
     private func setupUI() {
         navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
@@ -196,6 +134,53 @@ final class WorkoutListViewController: UIViewController, WorkoutListCellDelegate
     }
 }
 
+//MARK: - WorkoutListCellDelegate
+extension WorkoutListViewController: WorkoutListCellDelegate {
+    func workoutListDidTapEdit(id: UUID) {
+        guard
+            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
+        else { return }
+        
+        let indexPath = IndexPath(row: itemIndex, section: 0)
+        presentItemSetupModalForUpdate(at: indexPath, type: .mainWorkout)
+    }
+    
+    func workoutListDidTapdelete(id: UUID) {
+        guard
+            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
+        else { return }
+        
+        let indexPath = IndexPath(row: itemIndex, section: 0)
+        viewModel.deleteWorkout(at: indexPath.row, completion: {
+            self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
+        })
+    }
+}
+
+//MARK: - SuggestionListCellDelegate
+extension WorkoutListViewController: SuggestionListCellDelegate {
+    func suggestionDidTapEdit(id: UUID) {
+        guard
+            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
+        else { return }
+        
+        let indexPath = IndexPath(row: itemIndex, section: 0)
+        presentItemSetupModalForUpdate(at: indexPath, type: .suggestion)
+    }
+    
+    func suggestionDidTapDelete(id: UUID) {
+        guard
+            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
+        else { return }
+        
+        let indexPath = IndexPath(row: itemIndex, section: 0)
+        viewModel.deleteSuggestion(at: indexPath.row, completion: {
+            self.contentView.suggestedCollectionView.deleteItems(at: [indexPath])
+        })
+    }
+}
+
+//MARK: - ItemSetupViewControllerDelegate
 extension WorkoutListViewController: ItemSetupViewControllerDelegate {
     func dismiss() {
         self.dismiss(animated: true)
