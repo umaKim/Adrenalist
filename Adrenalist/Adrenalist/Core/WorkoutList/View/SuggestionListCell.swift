@@ -13,7 +13,7 @@ protocol SuggestionListCellDelegate: AnyObject {
     func suggestionDidTapDelete(id: UUID)
 }
 
-final class SuggestionListCell: UICollectionViewCell, Shakeable {
+final class SuggestionListCell: UICollectionViewCell, ShakeableProtocol {
     static let identifier = "SuggestionListCell"
     
     lazy var caLayer: CALayer = self.layer
@@ -47,15 +47,14 @@ final class SuggestionListCell: UICollectionViewCell, Shakeable {
         }
         
         NSLayoutConstraint.activate([
-            editButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            editButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -30),
             editButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
-            deleteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+
+            deleteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -30),
             deleteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            titleLabel.leadingAnchor.constraint(equalTo: deleteButton.trailingAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 5),
             
             repsLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 16),
             repsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -100,21 +99,18 @@ final class SuggestionListCell: UICollectionViewCell, Shakeable {
         
         switch mode {
         case .delete:
-            deleteButton.isHidden = false
-            editButton.isHidden = true
-//            circleButton.isHidden = true
-            shakeIcons()
+            self.deleteButton.isHidden = false
+            self.editButton.isHidden = true
+            self.shakeIcons()
             
         case .edit:
             deleteButton.isHidden = true
             editButton.isHidden = false
-//            circleButton.isHidden = true
             shakeIcons()
             
         case .none:
             deleteButton.isHidden = true
             editButton.isHidden = true
-//            circleButton.isHidden = false
             stopShakingIcons(completion: {
                 self.deleteButton.isHidden = true
             })
