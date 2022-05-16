@@ -50,7 +50,7 @@ final class WorkoutViewController: UIViewController {
             .store(in: &cancellables)
         
         viewModel
-            .listenPublisher
+            .notifyPublisher
             .sink { listen in
                 switch listen {
                 case .updateInlineStrokeEnd(let value):

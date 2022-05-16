@@ -14,16 +14,15 @@ final class WorkoutHistoryViewController: UIViewController {
     private let viewModel: WorkoutHistoryViewModel
     private var cancellables: Set<AnyCancellable>
     
-    override func loadView() {
-        super.loadView()
-        view = contentView
-    }
-    
     init(viewModel: WorkoutHistoryViewModel) {
         self.viewModel = viewModel
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
-        
+    }
+    
+    override func loadView() {
+        super.loadView()
+        view = contentView
     }
     
     override func viewDidLoad() {
@@ -32,16 +31,19 @@ final class WorkoutHistoryViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .pinkishRed
         navigationItem.leftBarButtonItems = [contentView.backButton]
         
+        configureTableView()
+        bind()
+    }
+    
+    private func configureTableView() {
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
-        
-        bind()
     }
     
     private func bind() {
         contentView
             .actionPublisher
-            .sink {action in
+            .sink { action in
                 switch action {
                 case .backButtonDidTap:
                     self.viewModel.didTapBackButton()
@@ -62,7 +64,6 @@ extension WorkoutHistoryViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WorkoutHistoryTableViewCell.identifier, for: indexPath) as? WorkoutHistoryTableViewCell else {return UITableViewCell()}
-        
         return cell
     }
     
@@ -71,11 +72,22 @@ extension WorkoutHistoryViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let weatherTableViewHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: WorkoutHistoryHeaderTableViewCell.identifier) as? WorkoutHistoryHeaderTableViewCell else { return UIView() }
+        guard let weatherTableViewHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: WorkoutHistoryHeaderView.identifier) as? WorkoutHistoryHeaderView else { return UIView() }
+        weatherTableViewHeaderView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .didTapDate:
+                    break
+                }
+            }
+            .store(in: &cancellables)
         return weatherTableViewHeaderView
     }
 }
 
 extension WorkoutHistoryViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        contentView.tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

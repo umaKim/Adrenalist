@@ -22,7 +22,8 @@ final class WorkoutHistoryView: UIView {
     private(set) lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .grouped)
         tv.sectionFooterHeight = 0
-        tv.register(WorkoutHistoryHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: WorkoutHistoryHeaderTableViewCell.identifier)
+        tv.backgroundColor = .black
+        tv.register(WorkoutHistoryHeaderView.self, forHeaderFooterViewReuseIdentifier: WorkoutHistoryHeaderView.identifier)
         tv.register(WorkoutHistoryTableViewCell.self, forCellReuseIdentifier: WorkoutHistoryTableViewCell.identifier)
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
@@ -46,6 +47,7 @@ final class WorkoutHistoryView: UIView {
     }
     
     private func setupUI() {
+        backgroundColor = .black
         addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),

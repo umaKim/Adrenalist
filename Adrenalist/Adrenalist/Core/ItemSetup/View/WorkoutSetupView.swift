@@ -8,17 +8,16 @@ import Combine
 import UIKit.UIView
 
 enum WorkoutSetupViewAction {
-    //    case total(String, String, String)
     case workout(String)
     case reps(String)
     case weight(String)
 }
 
 final class WorkoutSetupView: UIView {
-    private lazy var workoutTextField = AdrenalistTextField(placeHolder: "workout")
-    private lazy var repsTextField = AdrenalistTextField(placeHolder: "Reps")
-    private lazy var weightTextField = AdrenalistTextField(placeHolder: "Weight")
-    
+    private lazy var workoutTextField   = AdrenalistTextField(placeHolder: "workout")
+    private lazy var weightTextField    = AdrenalistTextField(placeHolder: "Weight")
+    private lazy var repsTextField      = AdrenalistTextField(placeHolder: "Reps")
+
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutSetupViewAction, Never>()
     
@@ -28,7 +27,6 @@ final class WorkoutSetupView: UIView {
         self.cancellbales = .init()
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .pinkishRed
         
         bind()
         setupUI()
@@ -74,14 +72,14 @@ final class WorkoutSetupView: UIView {
     
     private func setupUI() {
         let horizontalStackView = UIStackView(arrangedSubviews: [repsTextField, weightTextField])
-        horizontalStackView.distribution = .fill
+        horizontalStackView.distribution = .fillEqually
         horizontalStackView.alignment = .fill
         horizontalStackView.axis = .horizontal
         horizontalStackView.spacing = 6
         
         let verticalStackView = UIStackView (arrangedSubviews: [workoutTextField, horizontalStackView])
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackView.distribution = .fill
+        verticalStackView.distribution = .fillProportionally
         verticalStackView.alignment = .fill
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 6
@@ -89,8 +87,11 @@ final class WorkoutSetupView: UIView {
         addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
-            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            verticalStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            
         ])
     }
     

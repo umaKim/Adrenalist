@@ -17,7 +17,7 @@ protocol WorkoutListCellDelegate: AnyObject {
     func workoutListDidTapdelete(id: UUID)
 }
 
-final class WorkoutListCell: UICollectionViewCell, Shakeable {
+final class WorkoutListCell: UICollectionViewCell, ShakeableProtocol {
     lazy var caLayer: CALayer = self.layer
     
     static let identifier = "WorkoutListCell"
@@ -75,7 +75,11 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
         uuid = workout.uuid
         
         if let reps = workout.reps {
-            repsLabel.text = "\(reps)"
+            repsLabel.text = "\(reps) rep"
+        }
+        
+        if let timer = workout.timer {
+            repsLabel.text = "\(timer) sec"
         }
         
         if let weight = workout.weight {
@@ -135,7 +139,7 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 5),
             
-            repsLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 16),
+            repsLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 8),
             repsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             weightLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -153,11 +157,11 @@ final class WorkoutListCell: UICollectionViewCell, Shakeable {
 }
 
 
-protocol Shakeable {
+protocol ShakeableProtocol {
     var caLayer: CALayer { get set }
 }
 
-extension Shakeable {
+extension ShakeableProtocol {
     func shakeIcons() {
         let shakeAnim = CABasicAnimation(keyPath: "transform.rotation")
         shakeAnim.duration = 0.05

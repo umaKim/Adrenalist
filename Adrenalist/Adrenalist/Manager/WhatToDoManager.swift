@@ -7,8 +7,10 @@
 import Combine
 import UIKit
 
-enum DataType {
-    case main, suggestions
+enum DataType: String {
+    case workouts = "workouts"
+    case suggestions = "suggestions"
+    case history = "history"
 }
 
 final class ItemManager {
@@ -20,12 +22,12 @@ final class ItemManager {
     //MARK: - Public
     public func appendWorkoutToDos(_ workout: Item) {
         self.itemToDos.append(workout)
-        self.save(itemToDos, for: .main)
+        self.save(itemToDos, for: .workouts)
     }
     
     public func updateWorkoutToDos(_ workouts: [Item]) {
         self.itemToDos = workouts
-        self.save(workouts, for: .main)
+        self.save(workouts, for: .workouts)
     }
     
     public func appendSuggetion(_ suggestion: Item) {
@@ -44,20 +46,21 @@ final class ItemManager {
     private enum Keys {
         static let workouts = "workouts"
         static let suggestions = "suggestions"
+        static let history = "history"
     }
     
     private func save(_ workouts: [Item], for type: DataType) {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(workouts)
-            defaults.setValue(encodedFavorites, forKey: type == .main ? Keys.workouts : Keys.suggestions)
+            defaults.setValue(encodedFavorites, forKey: type.rawValue)
         } catch {
             print(error)
         }
     }
     
     private func retrieve(_ type: DataType) -> AnyPublisher<[Item], Error> {
-        guard let data = defaults.object(forKey: type == .main ? Keys.workouts : Keys.suggestions) as? Data else {
+        guard let data = defaults.object(forKey: type.rawValue) as? Data else {
             return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
         }
         
@@ -75,6 +78,10 @@ final class ItemManager {
     private init() {
         self.cancellables = .init()
         
+        bind()
+    }
+    
+    private func bind() {
         self.retrieve(.suggestions)
             .sink { completion in
                 switch completion {
@@ -88,7 +95,7 @@ final class ItemManager {
             }
             .store(in: &cancellables)
         
-        self.retrieve(.main)
+        self.retrieve(.workouts)
             .sink { completion in
                 switch completion {
                 case .finished:

@@ -15,6 +15,7 @@ final class WorkoutHistoryViewModel {
     private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
     private let transitionSubject = PassthroughSubject<WorkoutHistoryTransition, Never>()
     
+    /// Tap for going back to workout page
     func didTapBackButton() {
         transitionSubject.send(.workout)
     }
