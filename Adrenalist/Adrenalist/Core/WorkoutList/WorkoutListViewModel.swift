@@ -8,11 +8,10 @@
 import UIKit
 import Combine
 
-enum WorkoutListViewModelListener {
+enum WorkoutListViewModelNotification {
     case reloadWorkouts
     case reloadSuggestions
     case modeChanged(UpdateMode?)
-    
     case delete(Int)
 }
 
@@ -23,8 +22,8 @@ enum UpdateMode {
 
 final class WorkoutListViewModel  {
     
-    private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
-    private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
+    private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
+    private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
     
     private(set) lazy var suggestions: [Item] = []
     private(set) lazy var workouts: [Item] = []
@@ -33,7 +32,6 @@ final class WorkoutListViewModel  {
     
     private let workoutManager = ItemManager.shared
     
-//    @Published private(set) var mode: UpdateMode?
     private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
     
     init() {
@@ -46,7 +44,7 @@ final class WorkoutListViewModel  {
             .$itemToDos
             .sink { workouts in
                 self.workouts = workouts
-                self.listenerSubject.send(.reloadWorkouts)
+                self.notifySubject.send(.reloadWorkouts)
             }
             .store(in: &cancellables)
         
@@ -55,14 +53,14 @@ final class WorkoutListViewModel  {
             .sink { [weak self] suggestions in
                 guard let self = self else {return }
                 self.suggestions = suggestions
-                self.listenerSubject.send(.reloadSuggestions)
+                self.notifySubject.send(.reloadSuggestions)
             }
             .store(in: &cancellables)
         
         mode
             .sink {[weak self] mode in
                 guard let self = self else {return }
-                self.listenerSubject.send(.modeChanged(mode))
+                self.notifySubject.send(.modeChanged(mode))
             }
             .store(in: &cancellables)
     }
@@ -95,12 +93,14 @@ final class WorkoutListViewModel  {
                         type: tappedItem.type)
         workouts.append(item)
         updateWorkoutToDo()
+        checkIfWorkoutIsFinished()
     }
     
     func deleteSuggestion(at index: Int, completion: () -> Void) {
         suggestions.remove(at: index)
         completion()
         updateSuggestions()
+        checkIfWorkoutIsFinished()
     }
     
     func deleteWorkout(at index: Int, completion: () -> Void) {
@@ -112,6 +112,15 @@ final class WorkoutListViewModel  {
     //MARK: - Private Methods
     private func updateWorkoutToDo() {
         workoutManager.updateWorkoutToDos(workouts)
+    }
+    
+    private func checkIfWorkoutIsFinished() {
+        let finished = workouts.filter({$0.isDone})
+        let unfinished = workouts.filter({!$0.isDone})
+        
+        if finished.count == unfinished.count {
+            print("finished")
+        }
     }
     
     private func updateSuggestions() {
@@ -172,15 +181,13 @@ final class WorkoutListViewModel  {
                 let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
 
                 if collectionView === currentCollectionView {
-                    guard var item = item.dragItem.localObject as? Item else { return }
-//                    item.uuid = UUID()
+                    guard let item = item.dragItem.localObject as? Item else { return }
                     let newItem = Item(uuid: UUID(), timer: item.timer, title: item.title, reps: item.reps, weight: item.weight, isDone: item.isDone, type: item.type)
                     self.workouts.insert(newItem, at: indexPath.row)
                     self.updateWorkoutToDo()
                     
                 } else {
-                    guard var item = item.dragItem.localObject as? Item else { return }
-//                    item.uuid = UUID()
+                    guard let item = item.dragItem.localObject as? Item else { return }
                     let newItem = Item(uuid: UUID(), timer: item.timer, title: item.title, reps: item.reps, weight: item.weight, isDone: item.isDone, type: item.type)
                     self.suggestions.insert(newItem, at: indexPath.row)
                     self.updateSuggestions()
