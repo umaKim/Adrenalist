@@ -14,7 +14,7 @@ enum WorkoutTransition {
     case calendar
 }
 
-enum WorkoutViewModelListener {
+enum WorkoutViewModelNotification {
     case updateInlineStrokeEnd(CGFloat)
     case updateOutlineStrokeEnd(CGFloat)
     case updatePulse(CGFloat)
@@ -26,14 +26,17 @@ final class WorkoutViewModel {
     private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
     private let transitionSubject = PassthroughSubject<WorkoutTransition, Never>()
     
-    private(set) lazy var listenPublisher = listenSubject.eraseToAnyPublisher()
-    private let listenSubject = PassthroughSubject<WorkoutViewModelListener, Never>()
+    private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
+    private let notifySubject = PassthroughSubject<WorkoutViewModelNotification, Never>()
     
     private var cancellables: Set<AnyCancellable>
     
     private let workoutManager = ItemManager.shared
     
     private var currentIndex: Int?
+    private var isTimerGoingOn: Bool = false
+    private var timer: Timer?
+    private var onGoingTime: Double = 0
     
     private(set) lazy var items: [Item] = []
     
@@ -66,7 +69,8 @@ final class WorkoutViewModel {
     
     func didDoubleTap() {
         guard
-            let currentIndex = currentIndex
+            let currentIndex = currentIndex,
+            currentIndex < items.count
         else { return }
 
         switch items[currentIndex].type {
@@ -82,10 +86,10 @@ final class WorkoutViewModel {
     
     //MARK: - Private Methods
     private func sendViewUpdate() {
-        listenSubject.send(.updatePulse(progressPulse))
-        listenSubject.send(.updateOutlineStrokeEnd(progressOutline))
-        listenSubject.send(.updateToCurrentWorkout(currentWorkout))
-        listenSubject.send(.updateNextWorkout(nextWorkout))
+        notifySubject.send(.updatePulse(progressPulse))
+        notifySubject.send(.updateOutlineStrokeEnd(progressOutline))
+        notifySubject.send(.updateToCurrentWorkout(currentWorkout))
+        notifySubject.send(.updateNextWorkout(nextWorkout))
     }
     
     private func completeCurrentWorkout() {
@@ -144,35 +148,50 @@ final class WorkoutViewModel {
         let total = CGFloat(items.count)
         return numberOfDone / total
     }
+   
     
     private func startTimer() {
-        var timer: AnyCancellable?
-        var onGoingTime: Double = 0
-        
-        func timeTics() {
-            onGoingTime += 1
-            guard
-                let currentIndex = currentIndex,
-                let countUpTo = items[currentIndex].timer
-            else {return }
-            
-            listenSubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
-
-            if onGoingTime == countUpTo + 1 {
-                timer?.cancel()
-                timer = nil
-                onGoingTime = 0
-                listenSubject.send(.updateInlineStrokeEnd(onGoingTime))
-                completeCurrentWorkout()
-                workoutManager.updateWorkoutToDos(items)
-                sendViewUpdate()
-            }
+        if isTimerGoingOn {
+            timer?.invalidate()
+            timer = nil
+            isTimerGoingOn = false
+            onGoingTime = 0
+            notifySubject.send(.updateInlineStrokeEnd(onGoingTime))
+            completeCurrentWorkout()
+            workoutManager.updateWorkoutToDos(items)
+            sendViewUpdate()
+            return
         }
         
-        timer = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                timeTics()
-            }
+        isTimerGoingOn = true
+        
+        timer = Timer.scheduledTimer(timeInterval: 1,
+                                     target: self,
+                                     selector: #selector(self.timerRun),
+                                     userInfo: nil,
+                                     repeats: true)
+    }
+    
+    @objc
+    private func timerRun() {
+        onGoingTime += 1
+
+        guard
+            let currentIndex = currentIndex,
+            let countUpTo = items[currentIndex].timer
+        else { return }
+
+        notifySubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
+
+        if onGoingTime == countUpTo + 1 {
+            timer?.invalidate()
+            timer = nil
+            isTimerGoingOn = false
+            onGoingTime = 0
+            notifySubject.send(.updateInlineStrokeEnd(onGoingTime))
+            completeCurrentWorkout()
+            workoutManager.updateWorkoutToDos(items)
+            sendViewUpdate()
+        }
     }
 }
