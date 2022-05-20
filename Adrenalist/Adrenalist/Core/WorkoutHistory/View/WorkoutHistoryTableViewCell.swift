@@ -10,5 +10,18 @@ import UIKit
 final class WorkoutHistoryTableViewCell: UITableViewCell {
     static let identifier = "WorkoutHistoryTableViewCell"
     
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+    }
+    
+    private func setupUI() {
+        backgroundColor = .black
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
 }
