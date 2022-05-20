@@ -27,11 +27,14 @@ final class ItemSetupContainerView: UIView {
     private lazy var confirmButton = AdrenalistButton(title: "Confirm")
     private lazy var cancelButton = AdrenalistButton(title: "Cancel")
 
+    private lazy var switcher = CurrentValueSubject<Bool, Never>(true)
+    
     private var cancellables: Set<AnyCancellable>
     
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
+        segmentController.selectedSegmentIndex = 0
         bind()
     }
     
@@ -49,25 +52,28 @@ final class ItemSetupContainerView: UIView {
         
         switch item.type {
         case .workout:
-            workoutView.updateUI(with: item)
-        
+            segmentController.selectedSegmentIndex = 0
+            
         case .timer:
-            timerView.updateUI(with: item)
+            segmentController.selectedSegmentIndex = 1
         }
+        
+        workoutView.updateUI(with: item)
+        timerView.updateUI(with: item)
     }
     
     private func setupUI() {
         layer.cornerRadius = 12
         
         backgroundColor = .gray
-        segmentController.selectedSegmentIndex = 0
+//        segmentController.selectedSegmentIndex = 0
         
-        let buttonStack = UIStackView(arrangedSubviews: [confirmButton, cancelButton])
+        let buttonStack = UIStackView(arrangedSubviews: [cancelButton, confirmButton])
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.distribution = .fillEqually
         buttonStack.alignment = .fill
         buttonStack.axis = .horizontal
-        buttonStack.spacing = 6
+        buttonStack.spacing = 16
         
         [timerView, workoutView, segmentController, buttonStack].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +98,7 @@ final class ItemSetupContainerView: UIView {
             buttonStack.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.5),
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.5),
+            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2.5),
         ])
     }
     
@@ -125,11 +131,12 @@ final class ItemSetupContainerView: UIView {
                 guard let self = self else {return }
                 switch action {
                 case .time(let time):
-                    self.receivedWorkout.timer = time
+                    self.receivedWorkout.timer = time == 0 ? nil : time
                     
                 case .title(let title):
                     self.receivedWorkout.title = title
                 }
+                
                 self.receivedWorkout.type = .timer
             }
             .store(in: &cancellables)
@@ -137,21 +144,27 @@ final class ItemSetupContainerView: UIView {
         segmentController
             .selectedSegmentIndexPublisher
             .sink {[weak self] index in
-                guard let self = self else {return }
-                switch index {
-                case 0:
-                    self.workoutView.isHidden = false
-                    self.timerView.isHidden = true
-                    
-                case 1:
-                    self.workoutView.isHidden = true
-                    self.timerView.isHidden = false
-                    
-                default:
-                    self.workoutView.isHidden = false
-                    self.timerView.isHidden = true
-                }
+                guard let self = self else { return }
+                    switch index {
+                    case 0:
+                        self.switcher.send(false)
+
+                    case 1:
+                        self.switcher.send(true)
+
+                    default:
+                        self.switcher.send(false)
+                    }
             }
+            .store(in: &cancellables)
+        
+        switcher
+            .assign(to: \.isHidden, on: workoutView, animation: .fade(duration: 0.5))
+            .store(in: &cancellables)
+        
+        switcher
+            .map({!$0})
+            .assign(to: \.isHidden, on: timerView, animation: .fade(duration: 0.5))
             .store(in: &cancellables)
         
         confirmButton
@@ -168,7 +181,10 @@ final class ItemSetupContainerView: UIView {
         cancelButton
             .tapPublisher
             .sink {[weak self] _ in
-                guard let self = self else {return }
+                guard
+                    let self = self
+                else { return }
+                
                 self.actionSubject.send(.cancel)
             }
             .store(in: &cancellables)
