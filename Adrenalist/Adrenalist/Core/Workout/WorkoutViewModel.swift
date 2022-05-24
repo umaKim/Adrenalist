@@ -45,19 +45,6 @@ final class WorkoutViewModel {
         bind()
     }
     
-    private func bind() {
-        workoutManager
-            .$itemToDos
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .receive(on: DispatchQueue.main)
-            .sink {[weak self] workouts in
-                guard let self = self else {return }
-                self.items = workouts
-                self.sendViewUpdate()
-            }
-            .store(in: &cancellables)
-    }
-    
     //MARK: - Public Methods
     func didTapSetting() {
         transitionSubject.send(.setting)
@@ -85,6 +72,20 @@ final class WorkoutViewModel {
     }
     
     //MARK: - Private Methods
+    
+    private func bind() {
+        workoutManager
+            .$itemToDos
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .sink {[weak self] workouts in
+                guard let self = self else {return }
+                self.items = workouts
+                self.sendViewUpdate()
+            }
+            .store(in: &cancellables)
+    }
+    
     private func sendViewUpdate() {
         notifySubject.send(.updatePulse(progressPulse))
         notifySubject.send(.updateOutlineStrokeEnd(progressOutline))
