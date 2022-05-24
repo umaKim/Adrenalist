@@ -62,6 +62,22 @@ final class WorkoutListView: UIView {
         return cv
     }()
     
+    private(set) lazy var inputAccessory = InputView()
+    
+    func showKeyboard(_ frame: CGRect) {
+        UIView.animate(withDuration: 1) {
+            self.inputAccessory.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: frame.height * -1).isActive = true
+            self.layoutIfNeeded()
+        }
+    }
+    
+    func hideKeyboard() {
+        UIView.animate(withDuration: 1) {
+            self.inputAccessory.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            self.layoutIfNeeded()
+        }
+    }
+    
     private var recognizer: UITapGestureRecognizer?
     
     private var cancellables: Set<AnyCancellable>
@@ -97,6 +113,7 @@ final class WorkoutListView: UIView {
         backgroundColor = .black
         addSubview(suggestedCollectionView)
         addSubview(workoutListCollectionView)
+        addSubview(inputAccessory)
         
         suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
         workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -108,9 +125,13 @@ final class WorkoutListView: UIView {
             suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
             
             workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
-            workoutListCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            workoutListCollectionView.bottomAnchor.constraint(equalTo: inputAccessory.topAnchor),
             workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
+            inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
+            inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     

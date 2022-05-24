@@ -5,6 +5,7 @@
 //  Created by 김윤석 on 2022/04/28.
 //
 
+import FloatingPanel
 import UIKit
 import Combine
 
@@ -13,6 +14,10 @@ enum WorkoutListViewModelNotification {
     case reloadSuggestions
     case modeChanged(UpdateMode?)
     case delete(Int)
+    case showKeyboard(CGRect)
+    case hideKeyboard
+    case fullPanel
+    case tipPanel
 }
 
 enum UpdateMode {
@@ -34,10 +39,15 @@ final class WorkoutListViewModel  {
     
     private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
     
-    init() {
+    private(set) var panelState: PassthroughSubject<FloatingPanelState, Never>
+    
+    init(panelState: PassthroughSubject<FloatingPanelState, Never>) {
+        self.panelState = panelState
         self.cancellables = .init()
         bind()
     }
+    
+    private var keyboardHelper: KeyboardHelper?
     
     private func bind() {
         workoutManager
@@ -63,6 +73,30 @@ final class WorkoutListViewModel  {
                 self.notifySubject.send(.modeChanged(mode))
             }
             .store(in: &cancellables)
+        
+        panelState
+            .sink { state in
+                switch state {
+                case .tip:
+                    self.notifySubject.send(.tipPanel)
+                    
+                case .full:
+                    self.notifySubject.send(.fullPanel)
+                    
+                default:
+                    break
+                }
+            }
+            .store(in: &cancellables)
+        
+        keyboardHelper = KeyboardHelper { [unowned self] animation, keyboardFrame, duration in
+            switch animation {
+            case .keyboardWillShow:
+                self.notifySubject.send(.showKeyboard(keyboardFrame))
+            case .keyboardWillHide:
+                self.notifySubject.send(.hideKeyboard)
+            }
+        }
     }
     
     func editMode() {

@@ -10,9 +10,88 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
+final class InputView: UIView {
+    
+    private let workoutTextField = AdrenalistTextField(placeHolder: "workout")
+    private let repsField = AdrenalistTextField(placeHolder: "Reps")
+    private let weightField = AdrenalistTextField(placeHolder: "Weight")
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = .red
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        [workoutTextField, repsField, weightField].forEach { view in
+            addSubview(view)
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate([
+            self.heightAnchor.constraint(equalToConstant: 50),
+            
+            workoutTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
+            repsField.centerYAnchor.constraint(equalTo: centerYAnchor),
+            weightField.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            workoutTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            repsField.leadingAnchor.constraint(equalTo: workoutTextField.trailingAnchor),
+            weightField.leadingAnchor.constraint(equalTo: repsField.trailingAnchor)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension KeyboardHelper {
+    enum Animation {
+        case keyboardWillShow
+        case keyboardWillHide
+    }
+
+    typealias HandleBlock = (_ animation: Animation, _ keyboardFrame: CGRect, _ duration: TimeInterval) -> Void
+}
+
+final class KeyboardHelper {
+    private let handleBlock: HandleBlock
+
+    init(handleBlock: @escaping HandleBlock) {
+        self.handleBlock = handleBlock
+        setupNotification()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    private func setupNotification() {
+        _ = NotificationCenter.default
+            .addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
+                self?.handle(animation: .keyboardWillShow, notification: notification)
+            }
+
+        _ = NotificationCenter.default
+            .addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] notification in
+                self?.handle(animation: .keyboardWillHide, notification: notification)
+            }
+    }
+
+    private func handle(animation: Animation, notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        else { return }
+
+        handleBlock(animation, keyboardFrame, duration)
+    }
+}
+
 final class WorkoutListViewController: UIViewController {
     
     private(set) lazy var contentView = WorkoutListView()
+    
     private let viewModel: WorkoutListViewModel
     private var mode: UpdateMode?
     
@@ -103,6 +182,17 @@ final class WorkoutListViewController: UIViewController {
                         let indexPath = IndexPath(row: index, section: 0)
                         self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
                     }
+                case .showKeyboard(let frame):
+                    self.contentView.showKeyboard(frame)
+                    
+                case .hideKeyboard:
+                    self.contentView.hideKeyboard()
+                    
+                case .fullPanel:
+                    break
+                    
+                case .tipPanel:
+                    self.view.endEditing(true)
                 }
             }
             .store(in: &cancellables)
