@@ -6,6 +6,7 @@
 //
 
 import UIKit.UICollectionViewCell
+import FloatingPanel
 import Combine
 
 enum WorkoutCollectionViewCellAction {
@@ -24,11 +25,11 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
     }
     
-    func configure() {
-        setupUI()
+    func configure(_ panelState: PassthroughSubject<FloatingPanelState, Never>) {
+        setupUI(panelState)
     }
     
-    private func setupUI() {
+    private func setupUI(_ panelState: PassthroughSubject<FloatingPanelState, Never>) {
         let viewModel = WorkoutViewModel()
         viewModel
             .transitionPublisher

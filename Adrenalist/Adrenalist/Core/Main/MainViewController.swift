@@ -17,6 +17,8 @@ final class MainViewController: UIViewController {
     private var panel: FloatingPanelController?
     private var vc: WorkoutListViewController?
     
+    private var panelState = PassthroughSubject<FloatingPanelState, Never>()
+    
     init() {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
@@ -33,7 +35,7 @@ final class MainViewController: UIViewController {
         view = contentView
         
         setupCollectionView()
-        setUpFloatingPanel()
+        setUpFloatingPanel(with: panelState)
     }
     
     private func bind() {
@@ -90,7 +92,7 @@ extension MainViewController: UICollectionViewDataSource {
             
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.identifier, for: indexPath) as? WorkoutCollectionViewCell else {return UICollectionViewCell()}
-            cell.configure()
+            cell.configure(panelState)
             cell.action
                 .sink { action in
                     switch action {
@@ -140,8 +142,8 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - FloatingPanelControllerDelegate
 extension MainViewController: FloatingPanelControllerDelegate  {
     /// Sets up floating news panel
-    private func setUpFloatingPanel() {
-        let viewModel = WorkoutListViewModel()
+    private func setUpFloatingPanel(with panelState: PassthroughSubject<FloatingPanelState, Never>) {
+        let viewModel = WorkoutListViewModel(panelState: panelState)
         vc = WorkoutListViewController(viewModel: viewModel)
         panel = FloatingPanelController()
         panel?.delegate = self
@@ -157,6 +159,7 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     }
     
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
+        panelState.send(fpc.state)
         animateAlpha(isShown: fpc.state == .tip)
     }
     
@@ -167,7 +170,9 @@ extension MainViewController: FloatingPanelControllerDelegate  {
             vc?.contentView.suggestedCollectionView.alpha   = isShown ? 0 : 1
             vc?.contentView.workoutListCollectionView.alpha = isShown ? 0 : 1
             vc?.contentView.upwardImageView.alpha = isShown ? 1 : 0
-        }, completion: nil)
+        }, completion: { _ in
+            print("Animate")
+        })
     }
     
     func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {
@@ -188,7 +193,6 @@ final class MyFloatingPanelLayout: FloatingPanelLayout {
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
         return [
             .full: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height - 150, edge: .bottom, referenceGuide: .safeArea),
-            //            .half: FloatingPanelLayoutAnchor(absoluteInset: UIScreen.main.bounds.height / 2, edge: .bottom, referenceGuide: .safeArea),
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 50, edge: .bottom, referenceGuide: .safeArea),
         ]
     }
