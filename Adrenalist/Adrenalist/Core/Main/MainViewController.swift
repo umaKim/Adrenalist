@@ -144,6 +144,8 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     /// Sets up floating news panel
     private func setUpFloatingPanel(with panelState: PassthroughSubject<FloatingPanelState, Never>) {
         let viewModel = WorkoutListViewModel(panelState: panelState)
+       
+        
         vc = WorkoutListViewController(viewModel: viewModel)
         panel = FloatingPanelController()
         panel?.delegate = self
@@ -156,6 +158,16 @@ extension MainViewController: FloatingPanelControllerDelegate  {
         appearance.backgroundColor = .black
         panel?.surfaceView.grabberHandle.isHidden = true
         panel?.surfaceView.appearance = appearance
+        
+        viewModel
+            .listenerPublisher
+            .sink { noti in
+                switch noti {
+                case .dismiss:
+                    self.panel?.move(to: .tip, animated: true)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
@@ -169,10 +181,8 @@ extension MainViewController: FloatingPanelControllerDelegate  {
             vc?.contentView.addWorkoutButton.tintColor      = .pinkishRed.withAlphaComponent(isShown ? 0 : 1)
             vc?.contentView.suggestedCollectionView.alpha   = isShown ? 0 : 1
             vc?.contentView.workoutListCollectionView.alpha = isShown ? 0 : 1
-            vc?.contentView.upwardImageView.alpha = isShown ? 1 : 0
-        }, completion: { _ in
-            print("Animate")
-        })
+            vc?.contentView.upwardImageView.alpha           = isShown ? 1 : 0
+        }, completion: { _ in })
     }
     
     func floatingPanel(_ fpc: FloatingPanelController, layoutFor newCollection: UITraitCollection) -> FloatingPanelLayout {

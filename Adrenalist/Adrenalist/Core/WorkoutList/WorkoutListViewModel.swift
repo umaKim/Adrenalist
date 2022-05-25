@@ -25,10 +25,17 @@ enum UpdateMode {
     case delete
 }
 
+enum WorkoutListViewModelListener {
+    case dismiss
+}
+
 final class WorkoutListViewModel  {
     
     private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
     private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
+    
+    private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
+    private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
     
     private(set) lazy var suggestions: [Item] = []
     private(set) lazy var workouts: [Item] = []
@@ -97,6 +104,10 @@ final class WorkoutListViewModel  {
                 self.notifySubject.send(.hideKeyboard)
             }
         }
+    }
+    
+    func dismiss() {
+        listenerSubject.send(.dismiss)
     }
     
     func editMode() {
