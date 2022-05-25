@@ -55,10 +55,12 @@ extension CircularView {
     
     func animateInlineStroke(_ duration: CGFloat) {
         timerInsideStrokeLayer.strokeEnd = duration
-        timerInsideStrokeLayer.isHidden = false
+        timerInsideStrokeLayer.opacity = 1
         
         if duration == 0 {
-            timerInsideStrokeLayer.isHidden = true
+            UIView.animate(withDuration: 1) {
+                self.timerInsideStrokeLayer.opacity = 0.5
+            }
         }
         
         //MARK: TIMER DESIGN HERE
