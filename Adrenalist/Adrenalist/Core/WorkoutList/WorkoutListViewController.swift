@@ -10,95 +10,6 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-enum InputViewAction {
-    case workoutTextFieldChange
-    case repsFieldChange
-    case weightFieldChange
-    case addButton
-}
-
-final class InputView: UIView {
-    
-    private let workoutTextField = AdrenalistTextField(placeHolder: "workout")
-    private let repsField = AdrenalistTextField(placeHolder: "Reps")
-    private let weightField = AdrenalistTextField(placeHolder: "Weight")
-    private let addButton = AdrenalistImageButton(image: UIImage(systemName: "plus"))
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        backgroundColor = .red
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        [workoutTextField, repsField, weightField].forEach { view in
-            addSubview(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        let stackView = UIStackView(arrangedSubviews: [workoutTextField, repsField, weightField, addButton])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.alignment = .fill
-        stackView.distribution = .fillProportionally
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            self.heightAnchor.constraint(equalToConstant: 50),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension KeyboardHelper {
-    enum Animation {
-        case keyboardWillShow
-        case keyboardWillHide
-    }
-
-    typealias HandleBlock = (_ animation: Animation, _ keyboardFrame: CGRect, _ duration: TimeInterval) -> Void
-}
-
-final class KeyboardHelper {
-    private let handleBlock: HandleBlock
-
-    init(handleBlock: @escaping HandleBlock) {
-        self.handleBlock = handleBlock
-        setupNotification()
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    private func setupNotification() {
-        _ = NotificationCenter.default
-            .addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { [weak self] notification in
-                self?.handle(animation: .keyboardWillShow, notification: notification)
-            }
-
-        _ = NotificationCenter.default
-            .addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { [weak self] notification in
-                self?.handle(animation: .keyboardWillHide, notification: notification)
-            }
-    }
-
-    private func handle(animation: Animation, notification: Notification) {
-        guard let userInfo = notification.userInfo,
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-        else { return }
-
-        handleBlock(animation, keyboardFrame, duration)
-    }
-}
-
 final class WorkoutListViewController: UIViewController {
     
     private(set) lazy var contentView = WorkoutListView()
@@ -213,8 +124,7 @@ final class WorkoutListViewController: UIViewController {
     }
     
     private func setupUI() {
-//        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
-        navigationItem.rightBarButtonItems = [contentView.addWorkoutButton, contentView.dismissButton]
+        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton, contentView.dismissButton]
         navigationItem.leftBarButtonItems   = [contentView.updateButton]
         navigationItem.titleView            = contentView.upwardImageView
     }

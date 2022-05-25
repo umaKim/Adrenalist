@@ -69,6 +69,7 @@ final class MainViewController: UIViewController {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         3
@@ -144,7 +145,6 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     /// Sets up floating news panel
     private func setUpFloatingPanel(with panelState: PassthroughSubject<FloatingPanelState, Never>) {
         let viewModel = WorkoutListViewModel(panelState: panelState)
-       
         
         vc = WorkoutListViewController(viewModel: viewModel)
         panel = FloatingPanelController()

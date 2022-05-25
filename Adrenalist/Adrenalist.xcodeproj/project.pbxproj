@@ -53,6 +53,8 @@
 		3555CD4E28239F2B00DA830E /* WorkoutSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4D28239F2B00DA830E /* WorkoutSetupView.swift */; };
 		3555CD5028239F4000DA830E /* TimerSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4F28239F4000DA830E /* TimerSetupView.swift */; };
 		3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD522829278A00DA830E /* ItemSetupContainerView.swift */; };
+		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
+		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +103,8 @@
 		3555CD4D28239F2B00DA830E /* WorkoutSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupView.swift; sourceTree = "<group>"; };
 		3555CD4F28239F4000DA830E /* TimerSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSetupView.swift; sourceTree = "<group>"; };
 		3555CD522829278A00DA830E /* ItemSetupContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupContainerView.swift; sourceTree = "<group>"; };
+		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +269,7 @@
 			children = (
 				3555CD26281C69A100DA830E /* Constant.swift */,
 				3555CD452821903400DA830E /* UIViewController+Ext.swift */,
+				35DD525C283E7F090031A912 /* KeyboardHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */,
 				3555CD3A2821729800DA830E /* AdrenalistButton.swift */,
 				3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */,
+				35DD525A283E7E3E0031A912 /* InputView.swift */,
 			);
 			path = GlobalViews;
 			sourceTree = "<group>";
@@ -415,6 +421,7 @@
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
 				3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */,
 				3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */,
+				35DD525B283E7E3E0031A912 /* InputView.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
@@ -424,6 +431,7 @@
 				3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
 				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
+				35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
 				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
 				3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */,
