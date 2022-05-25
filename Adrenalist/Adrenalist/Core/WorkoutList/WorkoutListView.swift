@@ -14,6 +14,7 @@ enum WorkoutListViewAction {
     case edit
     case delete
     case tapBackground
+    case dismiss
 }
 
 final class WorkoutListView: UIView {
@@ -37,6 +38,8 @@ final class WorkoutListView: UIView {
     })
     
     private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.addWorkout), style: .done, target: nil, action: nil)
+    
+    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .done, target: nil, action: nil)
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
@@ -65,15 +68,17 @@ final class WorkoutListView: UIView {
     private(set) lazy var inputAccessory = InputView()
     
     func showKeyboard(_ frame: CGRect) {
+        self.recognizer?.isEnabled = true
         UIView.animate(withDuration: 1) {
-            self.inputAccessory.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: frame.height * -1).isActive = true
+            self.inputAccessoryBottomAnchor?.constant = frame.height * -1 + 34
             self.layoutIfNeeded()
         }
     }
     
     func hideKeyboard() {
-        UIView.animate(withDuration: 1) {
-            self.inputAccessory.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.inputAccessoryBottomAnchor?.constant = 0
             self.layoutIfNeeded()
         }
     }
@@ -93,20 +98,30 @@ final class WorkoutListView: UIView {
     private func bind() {
         addWorkoutButton
             .tapPublisher
-            .sink {[weak self] _ in
+            .sink {[weak self] in
                 guard let self = self else { return }
                 self.actionSubject.send(.addWorkoutButtonDidTap)
             }
             .store(in: &cancellables)
+        
+        dismissButton
+            .tapPublisher
+            .sink { [weak self] in
+                self?.actionSubject.send(.dismiss)
+            }
+            .store(in: &cancellables)
             
-        recognizer = UITapGestureRecognizer(target: self, action: #selector(tap))
+        recognizer = UITapGestureRecognizer(target: self, action: #selector(tapBackground))
         addGestureRecognizer(recognizer ?? UITapGestureRecognizer())
     }
    
     @objc
-    private func tap() {
+    private func tapBackground() {
         actionSubject.send(.tapBackground)
         recognizer?.isEnabled = false
+        
+        self.hideKeyboard()
+        self.endEditing(true)
     }
     
     private func setupUI() {
@@ -131,9 +146,15 @@ final class WorkoutListView: UIView {
             
             inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
             inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
-            inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+//            inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+//            inputAccessory.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -200)
         ])
+        
+        inputAccessoryBottomAnchor = inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        inputAccessoryBottomAnchor?.isActive = true
     }
+    
+    private var inputAccessoryBottomAnchor: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
