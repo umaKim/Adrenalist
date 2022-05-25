@@ -18,32 +18,22 @@ final class TimerSetupView: UIView {
     
     private var cancellbales: Set<AnyCancellable>
     
-    private lazy var titleTextfield = AdrenalistTextField(placeHolder: "Work out")
-    
     private lazy var timerLabel: UILabel = {
         let lb = UILabel()
         return lb
     }()
     
-    private lazy var addButton: UIButton = {
-        let bt = UIButton()
-        bt.setTitle("+", for: .normal)
-        return bt
+    private lazy var stepper: UIStepper = {
+       let st = UIStepper()
+        st.minimumValue = 0
+        st.stepValue = 10
+        return st
     }()
-    
-    private lazy var subtractButton: UIButton = {
-        let bt = UIButton()
-        bt.setTitle("-", for: .normal)
-        return bt
-    }()
-    
-    private var timerSubject = CurrentValueSubject<Int, Never>(0)
     
     init() {
         self.cancellbales = .init()
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .blue
         
         bind()
         setupUI()
@@ -58,49 +48,22 @@ final class TimerSetupView: UIView {
     }
     
     private func bind() {
-        titleTextfield
-            .textPublisher
-            .sink { [weak self] title in
-                guard let self = self else {return }
-                self.actionSubject.send(.title(title ?? ""))
-            }
+        stepper
+            .valuePublisher
+            .compactMap({"\(Int($0)) sec"})
+            .assign(to: \.text, on: timerLabel, animation: .flip(direction: .top, duration: 0.5))
             .store(in: &cancellbales)
         
-        addButton
-            .tapPublisher
-            .sink {[weak self] _ in
-                guard let self = self else {return }
-                self.timerSubject.send(self.timerSubject.value + 10)
+        stepper
+            .valuePublisher
+            .sink {[weak self] value in
+                self?.actionSubject.send(.time(value))
             }
-            .store(in: &cancellbales)
-        
-        subtractButton
-            .tapPublisher
-            .sink {[weak self] _ in
-                guard let self = self else {return }
-                self.timerSubject.send(self.timerSubject.value - 10)
-            }
-            .store(in: &cancellbales)
-        
-        timerSubject
-            .compactMap({[weak self] in
-                self?.actionSubject.send(.time(TimeInterval($0)))
-                return "\($0)"
-            })
-            .assign(to: \.text,
-                    on: timerLabel,
-                    animation: .flip(direction: .top, duration: 0.5))
             .store(in: &cancellbales)
     }
     
     private func setupUI() {
-        let buttonStackView = UIStackView(arrangedSubviews: [addButton, subtractButton])
-        buttonStackView.distribution = .fill
-        buttonStackView.alignment = .fill
-        buttonStackView.axis = .horizontal
-        buttonStackView.spacing = 6
-        
-        let verticalStackView = UIStackView(arrangedSubviews: [titleTextfield, timerLabel, buttonStackView])
+        let verticalStackView = UIStackView(arrangedSubviews: [timerLabel, stepper])
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.distribution = .fill
         verticalStackView.alignment = .center
