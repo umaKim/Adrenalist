@@ -10,11 +10,19 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
+enum InputViewAction {
+    case workoutTextFieldChange
+    case repsFieldChange
+    case weightFieldChange
+    case addButton
+}
+
 final class InputView: UIView {
     
     private let workoutTextField = AdrenalistTextField(placeHolder: "workout")
     private let repsField = AdrenalistTextField(placeHolder: "Reps")
     private let weightField = AdrenalistTextField(placeHolder: "Weight")
+    private let addButton = AdrenalistImageButton(image: UIImage(systemName: "plus"))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,16 +35,19 @@ final class InputView: UIView {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         
+        let stackView = UIStackView(arrangedSubviews: [workoutTextField, repsField, weightField, addButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.distribution = .fillProportionally
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+        
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: 50),
-            
-            workoutTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
-            repsField.centerYAnchor.constraint(equalTo: centerYAnchor),
-            weightField.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            workoutTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            repsField.leadingAnchor.constraint(equalTo: workoutTextField.trailingAnchor),
-            weightField.leadingAnchor.constraint(equalTo: repsField.trailingAnchor)
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -157,6 +168,9 @@ final class WorkoutListViewController: UIViewController {
                     
                 case .tapBackground:
                     self.viewModel.noMode()
+                    
+                case .dismiss:
+                    self.viewModel.dismiss()
                 }
             }
             .store(in: &cancellables)
@@ -189,17 +203,18 @@ final class WorkoutListViewController: UIViewController {
                     self.contentView.hideKeyboard()
                     
                 case .fullPanel:
-                    break
+                    self.contentView.hideKeyboard()
                     
                 case .tipPanel:
-                    self.view.endEditing(true)
+                    self.contentView.hideKeyboard()
                 }
             }
             .store(in: &cancellables)
     }
     
     private func setupUI() {
-        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
+//        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton]
+        navigationItem.rightBarButtonItems = [contentView.addWorkoutButton, contentView.dismissButton]
         navigationItem.leftBarButtonItems   = [contentView.updateButton]
         navigationItem.titleView            = contentView.upwardImageView
     }
