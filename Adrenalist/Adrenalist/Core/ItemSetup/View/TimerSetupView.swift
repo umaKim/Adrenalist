@@ -73,8 +73,10 @@ final class TimerSetupView: UIView {
         addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
-            verticalStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            verticalStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
         ])
     }
     
