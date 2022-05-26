@@ -89,9 +89,8 @@ final class WorkoutSetupView: UIView {
         NSLayoutConstraint.activate([
             verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
             verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            
+            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
         ])
     }
     
