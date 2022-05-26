@@ -68,7 +68,15 @@ final class WorkoutListCell: UICollectionViewCell, ShakeableProtocol {
     private var uuid: UUID?
     
     func configure(with workout: Item, mode: UpdateMode?) {
-        let image = workout.isDone ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
+        var image: UIImage?
+        
+        switch workout.type {
+        case .workout:
+            image = workout.isDone ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
+        case .timer:
+            image = workout.isDone ? UIImage(systemName: "clock.fill") : UIImage(systemName: "clock")
+        }
+        
         circleButton.setImage(image, for: .normal)
         titleLabel.text = workout.title
         
@@ -137,7 +145,7 @@ final class WorkoutListCell: UICollectionViewCell, ShakeableProtocol {
             
             titleLabel.leadingAnchor.constraint(equalTo: circleButton.trailingAnchor, constant: 8),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 5),
+            titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.width / 5),
             
             repsLabel.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 8),
             repsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
