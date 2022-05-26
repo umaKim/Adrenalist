@@ -10,7 +10,7 @@ import CombineCocoa
 import UIKit
 
 enum WorkoutListViewAction {
-    case addWorkoutButtonDidTap
+    case addWorkoutButtonDidTap(String?, String?, String?)
     case edit
     case delete
     case tapBackground
@@ -18,6 +18,9 @@ enum WorkoutListViewAction {
 }
 
 final class WorkoutListView: UIView {
+    
+    private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
+    private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
     
     private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     private(set) lazy var updateButton = UIBarButtonItem(title: "",
@@ -37,12 +40,10 @@ final class WorkoutListView: UIView {
         self?.recognizer?.isEnabled = true
     })
     
-    private(set) lazy var addWorkoutButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.addWorkout), style: .done, target: nil, action: nil)
-    
-    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .done, target: nil, action: nil)
-    
-    private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
-    private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
+    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.xmark),
+                                                          style: .done,
+                                                          target: nil,
+                                                          action: nil)
     
     private(set) lazy var suggestedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -69,7 +70,7 @@ final class WorkoutListView: UIView {
     
     func showKeyboard(_ frame: CGRect) {
         self.recognizer?.isEnabled = true
-        UIView.animate(withDuration: 1) {
+        UIView.animate(withDuration: 0.3) {
             self.inputAccessoryBottomAnchor?.constant = frame.height * -1 + 34
             self.layoutIfNeeded()
         }
@@ -77,7 +78,9 @@ final class WorkoutListView: UIView {
     
     func hideKeyboard() {
         endEditing(true)
-        UIView.animate(withDuration: 0.5) {
+        self.recognizer?.isEnabled = false
+        
+        UIView.animate(withDuration: 0.3) {
             self.inputAccessoryBottomAnchor?.constant = 0
             self.layoutIfNeeded()
         }
@@ -96,11 +99,13 @@ final class WorkoutListView: UIView {
     }
     
     private func bind() {
-        addWorkoutButton
-            .tapPublisher
-            .sink {[weak self] in
-                guard let self = self else { return }
-                self.actionSubject.send(.addWorkoutButtonDidTap)
+        inputAccessory
+            .actionPublisher
+            .sink {[weak self] action in
+                switch action {
+                case .addButton(let workout, let reps, let weight):
+                    self?.actionSubject.send(.addWorkoutButtonDidTap(workout, reps, weight))
+                }
             }
             .store(in: &cancellables)
         
@@ -146,8 +151,6 @@ final class WorkoutListView: UIView {
             
             inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
             inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-//            inputAccessory.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -200)
         ])
         
         inputAccessoryBottomAnchor = inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)

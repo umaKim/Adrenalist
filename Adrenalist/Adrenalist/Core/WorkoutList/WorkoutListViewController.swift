@@ -55,21 +55,14 @@ final class WorkoutListViewController: UIViewController {
         self.present(vc, animated: true)
     }
     
-    private func presentItemSetupModal() {
-        let vm = ItemSetupViewModel(collectionViewType: .mainWorkout)
-        let vc = ItemSetupViewController(viewModel: vm)
-        vc.delegate = self
-        self.present(vc, animated: true)
-    }
-    
     private func bind() {
         contentView
             .actionPublisher
             .sink {[weak self] action in
                 guard let self = self else { return }
                 switch action {
-                case .addWorkoutButtonDidTap:
-                    self.presentItemSetupModal()
+                case .addWorkoutButtonDidTap(let workout, let reps, let weight):
+                    self.viewModel.addWorkout(for: workout, reps, weight)
                     
                 case .edit:
                     self.viewModel.editMode()
@@ -96,6 +89,7 @@ final class WorkoutListViewController: UIViewController {
                     
                 case .reloadWorkouts:
                     self.contentView.workoutListCollectionView.reloadData()
+                    self.scrollToLast()
                     
                 case.modeChanged(let mode):
                     self.mode = mode
@@ -123,8 +117,13 @@ final class WorkoutListViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    private func scrollToLast() {
+        let lastItemIndex = IndexPath(item: viewModel.workouts.count - 1, section: 0)
+        contentView.workoutListCollectionView.scrollToItem(at: lastItemIndex, at: .bottom, animated: true)
+    }
+    
     private func setupUI() {
-        navigationItem.rightBarButtonItems  = [contentView.addWorkoutButton, contentView.dismissButton]
+        navigationItem.rightBarButtonItems  = [contentView.dismissButton]
         navigationItem.leftBarButtonItems   = [contentView.updateButton]
         navigationItem.titleView            = contentView.upwardImageView
     }
@@ -158,6 +157,7 @@ extension WorkoutListViewController: WorkoutListCellDelegate {
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
         presentItemSetupModalForUpdate(at: indexPath, type: .mainWorkout)
+        viewModel.noMode()
     }
     
     func workoutListDidTapdelete(id: UUID) {
@@ -181,6 +181,7 @@ extension WorkoutListViewController: SuggestionListCellDelegate {
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
         presentItemSetupModalForUpdate(at: indexPath, type: .suggestion)
+        viewModel.noMode()
     }
     
     func suggestionDidTapDelete(id: UUID) {
@@ -195,7 +196,7 @@ extension WorkoutListViewController: SuggestionListCellDelegate {
     }
 }
 
-//MARK: - ItemSetupViewControllerDelegate
+////MARK: - ItemSetupViewControllerDelegate
 extension WorkoutListViewController: ItemSetupViewControllerDelegate {
     func dismiss() {
         self.dismiss(animated: true)

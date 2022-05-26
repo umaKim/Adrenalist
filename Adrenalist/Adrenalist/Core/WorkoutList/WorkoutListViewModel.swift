@@ -154,6 +154,16 @@ final class WorkoutListViewModel  {
         updateWorkoutToDo()
     }
     
+    func addWorkout(for workout: String?, _ reps: String?, _ weight: String?) {
+        workoutManager.appendWorkoutToDos(Item(uuid: UUID(),
+                                               timer: nil,
+                                               title: workout ?? "",
+                                               reps: Int(reps ?? ""),
+                                               weight: Double(weight ?? ""),
+                                               isDone: false,
+                                               type: .workout))
+    }
+    
     //MARK: - Private Methods
     private func updateWorkoutToDo() {
         workoutManager.updateWorkoutToDos(workouts)
