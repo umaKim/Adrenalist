@@ -55,6 +55,7 @@
 		3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD522829278A00DA830E /* ItemSetupContainerView.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
+		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		3555CD522829278A00DA830E /* ItemSetupContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupContainerView.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
+		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,7 @@
 				3555CD26281C69A100DA830E /* Constant.swift */,
 				3555CD452821903400DA830E /* UIViewController+Ext.swift */,
 				35DD525C283E7F090031A912 /* KeyboardHelper.swift */,
+				35F16C76283F7EB90005352C /* UIScreen+Ext.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
+				35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */,
 				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift in Sources */,
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
