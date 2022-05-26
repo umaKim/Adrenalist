@@ -145,7 +145,6 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     /// Sets up floating news panel
     private func setUpFloatingPanel(with panelState: PassthroughSubject<FloatingPanelState, Never>) {
         let viewModel = WorkoutListViewModel(panelState: panelState)
-        
         vc = WorkoutListViewController(viewModel: viewModel)
         panel = FloatingPanelController()
         panel?.delegate = self
@@ -161,10 +160,10 @@ extension MainViewController: FloatingPanelControllerDelegate  {
         
         viewModel
             .listenerPublisher
-            .sink { noti in
+            .sink {[weak self] noti in
                 switch noti {
                 case .dismiss:
-                    self.panel?.move(to: .tip, animated: true)
+                    self?.panel?.move(to: .tip, animated: true)
                 }
             }
             .store(in: &cancellables)
@@ -178,10 +177,11 @@ extension MainViewController: FloatingPanelControllerDelegate  {
     private func animateAlpha(isShown: Bool) {
         UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {[unowned self] in
             vc?.contentView.updateButton.tintColor          = .pinkishRed.withAlphaComponent(isShown ? 0 : 1)
-            vc?.contentView.addWorkoutButton.tintColor      = .pinkishRed.withAlphaComponent(isShown ? 0 : 1)
+            vc?.contentView.dismissButton.tintColor         = .pinkishRed.withAlphaComponent(isShown ? 0 : 1)
             vc?.contentView.suggestedCollectionView.alpha   = isShown ? 0 : 1
             vc?.contentView.workoutListCollectionView.alpha = isShown ? 0 : 1
             vc?.contentView.upwardImageView.alpha           = isShown ? 1 : 0
+            vc?.contentView.upwardImageView.tintColor       = .pinkishRed
         }, completion: { _ in })
     }
     
