@@ -19,13 +19,13 @@ final class ItemSetupContainerView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<ItemSetupContainerViewAction, Never>()
     
-    private let workoutView = WorkoutSetupView()
-    private let timerView = TimerSetupView()
+    private let workoutView     = WorkoutSetupView()
+    private let timerView       = TimerSetupView()
     
     private lazy var segmentController = UISegmentedControl(items: [ItemType.workout.rawValue, ItemType.timer.rawValue])
     
-    private lazy var confirmButton = AdrenalistButton(title: "Confirm")
-    private lazy var cancelButton = AdrenalistButton(title: "Cancel")
+    private lazy var confirmButton  = AdrenalistButton(title: "Confirm")
+    private lazy var cancelButton   = AdrenalistButton(title: "Cancel")
 
     private lazy var switcher = CurrentValueSubject<Bool, Never>(true)
     
@@ -66,7 +66,6 @@ final class ItemSetupContainerView: UIView {
         layer.cornerRadius = 12
         
         backgroundColor = .gray
-//        segmentController.selectedSegmentIndex = 0
         
         let buttonStack = UIStackView(arrangedSubviews: [cancelButton, confirmButton])
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
@@ -75,30 +74,25 @@ final class ItemSetupContainerView: UIView {
         buttonStack.axis = .horizontal
         buttonStack.spacing = 16
         
-        [timerView, workoutView, segmentController, buttonStack].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)
-        }
+        let totalStack = UIStackView(arrangedSubviews: [timerView, workoutView, segmentController, buttonStack])
+        totalStack.translatesAutoresizingMaskIntoConstraints = false
+        totalStack.distribution = .fillProportionally
+        totalStack.alignment = .fill
+        totalStack.axis = .vertical
+        totalStack.spacing = 8
+        
+        addSubview(totalStack)
         
         NSLayoutConstraint.activate([
-            timerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
-            timerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
-            timerView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            timerView.bottomAnchor.constraint(equalTo: segmentController.topAnchor),
+            segmentController.widthAnchor.constraint(equalToConstant: UIScreen.main.width/2),
             
-            workoutView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
-            workoutView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
-            workoutView.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            workoutView.bottomAnchor.constraint(equalTo: segmentController.topAnchor),
+            totalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 6),
+            totalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -6),
+            totalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            totalStack.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             
-            segmentController.centerXAnchor.constraint(equalTo: centerXAnchor),
-            segmentController.bottomAnchor.constraint(equalTo: buttonStack.topAnchor),
-            
-            buttonStack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            buttonStack.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 1.5),
-            heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2.5),
+            widthAnchor.constraint(equalToConstant: UIScreen.main.width / 1.5),
+            heightAnchor.constraint(equalToConstant: UIScreen.main.width / 2.2),
         ])
     }
     

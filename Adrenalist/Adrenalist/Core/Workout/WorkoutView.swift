@@ -92,6 +92,20 @@ final class WorkoutView: UIView {
         setupUI()
     }
     
+    //MARK: - Public Methods
+    public func updatePulse(_ duration: CFTimeInterval) {
+        circularView.animatePulse(duration)
+    }
+    
+    public func updateOutline(_ strokeEnd: CGFloat) {
+        circularView.animateOutlineStroke(strokeEnd)
+    }
+    
+    public func updateInline(_ strokeEnd: CGFloat) {
+        circularView.animateInlineStroke(strokeEnd)
+    }
+    
+    //MARK: - Private Methods
     private func bind() {
         calendarButton
             .tapPublisher
@@ -117,18 +131,6 @@ final class WorkoutView: UIView {
     @objc
     private func didTap() {
         self.actionSubject.send(.doubleTap)
-    }
-    
-    public func updatePulse(_ duration: CFTimeInterval) {
-        circularView.animatePulse(duration)
-    }
-    
-    public func updateOutline(_ strokeEnd: CGFloat) {
-        circularView.animateOutlineStroke(strokeEnd)
-    }
-    
-    public func updateInline(_ strokeEnd: CGFloat) {
-        circularView.animateInlineStroke(strokeEnd)
     }
     
     private func setupUI() {

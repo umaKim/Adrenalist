@@ -74,8 +74,8 @@ final class WorkoutViewController: UIViewController {
     
     private func setupUI() {
         navigationController?.navigationBar.tintColor = .pinkishRed
-        navigationItem.leftBarButtonItems = [contentView.settingButton]
-        navigationItem.rightBarButtonItems = [contentView.calendarButton]
+        navigationItem.leftBarButtonItems   = [contentView.settingButton]
+        navigationItem.rightBarButtonItems  = [contentView.calendarButton]
     }
     
     required init?(coder: NSCoder) {

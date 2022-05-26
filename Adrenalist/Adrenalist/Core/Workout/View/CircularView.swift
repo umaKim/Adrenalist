@@ -10,11 +10,15 @@ import Combine
 
 final class CircularView: UIView {
     
-    private let circularPath = UIBezierPath(arcCenter: .zero, radius: 150, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
-    private let pulsingLayer = CAShapeLayer()
-    private let outlineStrokeLayer = CAShapeLayer()
-    private let trackLayer = CAShapeLayer()
-    private let timerInsideStrokeLayer = CAShapeLayer()
+    private let circularPath            = UIBezierPath(arcCenter: .zero,
+                                                       radius: 150,
+                                                       startAngle: 0,
+                                                       endAngle: 2 * CGFloat.pi,
+                                                       clockwise: true)
+    private let pulsingLayer            = CAShapeLayer()
+    private let outlineStrokeLayer      = CAShapeLayer()
+    private let trackLayer              = CAShapeLayer()
+    private let timerInsideStrokeLayer  = CAShapeLayer()
     
     init() {
         super.init(frame: .zero)
