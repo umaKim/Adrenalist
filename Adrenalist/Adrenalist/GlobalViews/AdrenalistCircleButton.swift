@@ -20,8 +20,6 @@ final class AdrenalistCircleButton: UIButton {
         
         var configuration = Configuration.plain()
         configuration.image = image
-//        configuration.buttonSize = .medium
-//        configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         self.configuration = configuration
     }
     
@@ -36,18 +34,14 @@ final class AdrenalistImageButton: UIButton {
     ) {
         super.init(frame: .zero)
         tintColor = .pinkishRed
-//        setImage(image, for: .normal)
-//        imageEdgeInsets
         
         var configuration = Configuration.plain()
         configuration.image = image
-//        configuration.buttonSize = .medium
-//        configuration.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         self.configuration = configuration
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let biggerFrame = bounds.insetBy(dx: -30, dy: -30)
+        let biggerFrame = bounds.insetBy(dx: -10, dy: -10)
         return biggerFrame.contains(point)
     }
     
