@@ -105,10 +105,7 @@ final class WorkoutViewModel {
     }
     
     private func updateCurrentIndex() {
-        guard var currentIndex = currentIndex else {
-            return
-        }
-
+        guard var currentIndex = currentIndex else { return }
         currentIndex += 1
         self.currentIndex = currentIndex
     }
@@ -138,7 +135,7 @@ final class WorkoutViewModel {
     
     private var progressPulse: CGFloat {
         if items.isEmpty { return 0 }
-        let finishedWorkout = CGFloat(items.filter({$0.isDone}).count)
+        let finishedWorkout = CGFloat(items.filter({!$0.isDone}).count)
         let totalWorkout = CGFloat(items.count)
         return 0.2 >= finishedWorkout / totalWorkout ? 0.2 : finishedWorkout / totalWorkout
     }
