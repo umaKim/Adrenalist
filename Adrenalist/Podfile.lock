@@ -1,0 +1,16 @@
+PODS:
+  - ScrollableDatepicker (2.2.0)
+
+DEPENDENCIES:
+  - ScrollableDatepicker (~> 2.2)
+
+SPEC REPOS:
+  trunk:
+    - ScrollableDatepicker
+
+SPEC CHECKSUMS:
+  ScrollableDatepicker: 0f14e38bcd3517e6632220af11e47d29e0f982db
+
+PODFILE CHECKSUM: 2a7e0713bd9f3f9649aac7b8068b56f54565be23
+
+COCOAPODS: 1.11.0.beta.2
