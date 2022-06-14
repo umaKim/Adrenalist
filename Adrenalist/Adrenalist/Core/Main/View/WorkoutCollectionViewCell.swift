@@ -25,12 +25,12 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
     }
     
-    func configure(_ panelState: PassthroughSubject<FloatingPanelState, Never>) {
-        setupUI(panelState)
+    func configure() {
+        setupUI()
     }
     
-    private func setupUI(_ panelState: PassthroughSubject<FloatingPanelState, Never>) {
-        let viewModel = WorkoutViewModel()
+    private func setupUI() {
+        let viewModel = WorkoutListViewModel()
         viewModel
             .transitionPublisher
             .sink { trans in
@@ -43,7 +43,7 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
             }
             .store(in: &cancellables)
         
-        let nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
+        let nav = UINavigationController(rootViewController: WorkoutListViewController(viewModel: viewModel))
         guard let myListView = nav.view else { return }
         contentView.addSubview(myListView)
         
