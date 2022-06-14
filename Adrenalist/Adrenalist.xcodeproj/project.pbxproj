@@ -19,19 +19,14 @@
 		351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C5BC828190D4100FE9C0F /* WorkoutView.swift */; };
 		351C5BCB28190D6200FE9C0F /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C5BCA28190D6200FE9C0F /* WorkoutViewController.swift */; };
 		3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C84F28190E410089A0C4 /* WorkoutViewModel.swift */; };
-		3548C85528190E8D0089A0C4 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85428190E8D0089A0C4 /* WorkoutHistoryView.swift */; };
 		3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85628190ECF0089A0C4 /* SettingCollectionViewCell.swift */; };
 		3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */; };
 		3548C85B28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */; };
 		3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C85D28190FA90089A0C4 /* FloatingPanel */; };
 		3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C862281910D90089A0C4 /* CombineCocoa */; };
-		3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C864281913130089A0C4 /* WorkoutHistoryViewController.swift */; };
-		3548C867281913490089A0C4 /* WorkoutHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */; };
 		3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C8682819137A0089A0C4 /* SettingViewModel.swift */; };
 		3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86A2819137F0089A0C4 /* SettingView.swift */; };
 		3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C86D281926A30089A0C4 /* FSCalendar */; };
-		3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */; };
-		3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */; };
 		3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C878281A86960089A0C4 /* WorkoutListViewController.swift */; };
 		3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */; };
 		3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */; };
@@ -53,12 +48,17 @@
 		3555CD4E28239F2B00DA830E /* WorkoutSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4D28239F2B00DA830E /* WorkoutSetupView.swift */; };
 		3555CD5028239F4000DA830E /* TimerSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4F28239F4000DA830E /* TimerSetupView.swift */; };
 		3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD522829278A00DA830E /* ItemSetupContainerView.swift */; };
+		35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F53285899DA009C3B9D /* MyDatepicker.swift */; };
+		35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F5528589DA9009C3B9D /* Date+Ext.swift */; };
+		35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F572858A403009C3B9D /* MyDatePickerCell.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
+		D5837C7A8BDDC0707BF575C0 /* Pods_Adrenalist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adrenalist.release.xcconfig"; path = "Target Support Files/Pods-Adrenalist/Pods-Adrenalist.release.xcconfig"; sourceTree = "<group>"; };
 		351C5BA728190B7000FE9C0F /* Adrenalist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adrenalist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C5BAA28190B7000FE9C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,16 +73,11 @@
 		351C5BC828190D4100FE9C0F /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		351C5BCA28190D6200FE9C0F /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
 		3548C84F28190E410089A0C4 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
-		3548C85428190E8D0089A0C4 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		3548C85628190ECF0089A0C4 /* SettingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCollectionViewCell.swift; sourceTree = "<group>"; };
 		3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCollectionViewCell.swift; sourceTree = "<group>"; };
 		3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		3548C864281913130089A0C4 /* WorkoutHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryViewController.swift; sourceTree = "<group>"; };
-		3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryViewModel.swift; sourceTree = "<group>"; };
 		3548C8682819137A0089A0C4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3548C86A2819137F0089A0C4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryHeaderView.swift; sourceTree = "<group>"; };
-		3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		3548C878281A86960089A0C4 /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
 		3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewModel.swift; sourceTree = "<group>"; };
 		3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListCell.swift; sourceTree = "<group>"; };
@@ -104,9 +99,14 @@
 		3555CD4D28239F2B00DA830E /* WorkoutSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupView.swift; sourceTree = "<group>"; };
 		3555CD4F28239F4000DA830E /* TimerSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSetupView.swift; sourceTree = "<group>"; };
 		3555CD522829278A00DA830E /* ItemSetupContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupContainerView.swift; sourceTree = "<group>"; };
+		35632F53285899DA009C3B9D /* MyDatepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatepicker.swift; sourceTree = "<group>"; };
+		35632F5528589DA9009C3B9D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		35632F572858A403009C3B9D /* MyDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatePickerCell.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
+		94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Adrenalist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adrenalist.debug.xcconfig"; path = "Target Support Files/Pods-Adrenalist/Pods-Adrenalist.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +117,7 @@
 				3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
+				D5837C7A8BDDC0707BF575C0 /* Pods_Adrenalist.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +129,8 @@
 			children = (
 				351C5BA928190B7000FE9C0F /* Adrenalist */,
 				351C5BA828190B7000FE9C0F /* Products */,
+				8B1759E6EDC59B6EE6B97AAF /* Pods */,
+				B23B2637FFB88AFD0F053ECC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,7 +164,6 @@
 				3548C84C28190E130089A0C4 /* Setting */,
 				3548C84D28190E190089A0C4 /* Workout */,
 				3548C877281A868A0089A0C4 /* WorkoutList */,
-				3548C84E28190E250089A0C4 /* WorkoutHistory */,
 				3555CD4728219BCA00DA830E /* About */,
 				3555CD302820E1DF00DA830E /* ItemSetup */,
 			);
@@ -210,30 +212,12 @@
 			path = Workout;
 			sourceTree = "<group>";
 		};
-		3548C84E28190E250089A0C4 /* WorkoutHistory */ = {
-			isa = PBXGroup;
-			children = (
-				3548C866281913490089A0C4 /* WorkoutHistoryViewModel.swift */,
-				3548C864281913130089A0C4 /* WorkoutHistoryViewController.swift */,
-				3548C85428190E8D0089A0C4 /* WorkoutHistoryView.swift */,
-				3548C87128192CA10089A0C4 /* View */,
-			);
-			path = WorkoutHistory;
-			sourceTree = "<group>";
-		};
 		3548C85128190E510089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				35632F53285899DA009C3B9D /* MyDatepicker.swift */,
+				35632F572858A403009C3B9D /* MyDatePickerCell.swift */,
 				351C5BC628190D1A00FE9C0F /* CircularView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		3548C87128192CA10089A0C4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3548C86F28192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift */,
-				3548C87228192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -273,6 +257,7 @@
 				3555CD452821903400DA830E /* UIViewController+Ext.swift */,
 				35DD525C283E7F090031A912 /* KeyboardHelper.swift */,
 				35F16C76283F7EB90005352C /* UIScreen+Ext.swift */,
+				35632F5528589DA9009C3B9D /* Date+Ext.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -329,6 +314,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8B1759E6EDC59B6EE6B97AAF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */,
+				2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B23B2637FFB88AFD0F053ECC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -336,9 +338,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 351C5BBB28190B7100FE9C0F /* Build configuration list for PBXNativeTarget "Adrenalist" */;
 			buildPhases = (
+				3B65DF5762EDBF3020CB5B49 /* [CP] Check Pods Manifest.lock */,
 				351C5BA328190B7000FE9C0F /* Sources */,
 				351C5BA428190B7000FE9C0F /* Frameworks */,
 				351C5BA528190B7000FE9C0F /* Resources */,
+				D43D24CC814425341456BD10 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -404,6 +408,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3B65DF5762EDBF3020CB5B49 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Adrenalist-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D43D24CC814425341456BD10 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		351C5BA328190B7000FE9C0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -413,8 +459,6 @@
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
 				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
 				3555CD2F282004F200DA830E /* ItemSetupViewController.swift in Sources */,
-				3548C867281913490089A0C4 /* WorkoutHistoryViewModel.swift in Sources */,
-				3548C85528190E8D0089A0C4 /* WorkoutHistoryView.swift in Sources */,
 				3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */,
 				351C5BBF28190BCC00FE9C0F /* MainView.swift in Sources */,
 				351C5BCB28190D6200FE9C0F /* WorkoutViewController.swift in Sources */,
@@ -429,13 +473,15 @@
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
 				35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */,
-				3548C87028192C8D0089A0C4 /* WorkoutHistoryHeaderView.swift in Sources */,
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
 				3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
 				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
+				35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */,
 				35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */,
+				35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */,
+				35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
 				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
 				3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */,
@@ -444,8 +490,6 @@
 				3555CD5028239F4000DA830E /* TimerSetupView.swift in Sources */,
 				3555CD4928219BD100DA830E /* AboutView.swift in Sources */,
 				3555CD4B28219BD900DA830E /* AboutViewController.swift in Sources */,
-				3548C87328192CAB0089A0C4 /* WorkoutHistoryTableViewCell.swift in Sources */,
-				3548C865281913130089A0C4 /* WorkoutHistoryViewController.swift in Sources */,
 				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
 				3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */,
 				3555CD2D281CD5DA00DA830E /* Item.swift in Sources */,
@@ -586,6 +630,7 @@
 		};
 		351C5BBC28190B7100FE9C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -613,6 +658,7 @@
 		};
 		351C5BBD28190B7100FE9C0F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
