@@ -25,7 +25,15 @@ enum Constant {
 extension UIColor {
     static let pinkishRed = UIColor(red: 223/255, green: 46/255, blue: 111/255, alpha: 1)
     static let purpleBlue = UIColor(red: 86/255, green: 98/255, blue: 255/255, alpha: 1)
-    
+    static let vaguePurpleBlue = UIColor(red: 86/255, green: 98/255, blue: 255/255, alpha: 0.15)
 //    rgba(23, 23, 28, 1)
     static let darkNavy = UIColor(red: 23/255, green: 23/255, blue: 28/255, alpha: 1)
+    static let navyGray = UIColor(red: 44/255, green: 45/255, blue: 53/255, alpha: 1)
+    static let lightGray = UIColor(red: 187/256, green: 193/256, blue: 195/256, alpha: 0.2)
+    
+    
+//    rgba(187, 193, 195, 1)
+//    rgba(44, 45, 53, 1)
+    
+//    rgba(86, 98, 255, 0.15)
 }
