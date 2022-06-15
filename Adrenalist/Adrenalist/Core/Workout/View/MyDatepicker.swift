@@ -14,6 +14,7 @@ struct MyScrollableDatepickerModel: Equatable {
 
 protocol MyScrollableDatepickerDelegate: AnyObject {
     func datepicker(_ datepicker: MyScrollableDatepicker, didSelectDate date: MyScrollableDatepickerModel)
+    func datepicker(_ datepicker: MyScrollableDatepicker, didScroll index: IndexPath)
 }
 
 class MyScrollableDatepicker: UIView {
@@ -62,20 +63,20 @@ class MyScrollableDatepicker: UIView {
     }
     public var dates = [MyScrollableDatepickerModel]()
     
-    public func initialDateSet() {
+    public func initialUISetup() {
         collectionView.reloadData()
         let today = MyScrollableDatepickerModel(date: Date().stripTime(), isSelected: false)
         guard let index =  dates.firstIndex(of: today)?.description else { return }
         let indexInt = Int(index) ?? 0
         let indexPath = IndexPath(row: Int(indexInt), section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
     
     public func updateDateSet(with date: MyScrollableDatepickerModel) {
         let index = dates.firstIndex(of: date)?.description ?? "0"
         let indexInt = Int(index) ?? 0
         
-        //TODO: Need to simplify this area
+        //TODO: Need to simplify(Refactor) this area
         dates.forEach { date in
             if date.isSelected {
                 let selectedIndex = dates.firstIndex(of: date)?.description ?? "0"
@@ -107,7 +108,6 @@ class MyScrollableDatepicker: UIView {
         var dates = [MyScrollableDatepickerModel]()
         for day in 1...36500 {
             let secondsInDay = 86400
-//            dates.append(Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime())
             let date = MyScrollableDatepickerModel(date: Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime(),
                                                    isSelected: false)
             dates.append(date)
@@ -129,19 +129,13 @@ extension MyScrollableDatepicker: UICollectionViewDataSource {
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyScrollableDatepickerCell.identifier,
-                                                      for: indexPath) as! MyScrollableDatepickerCell
+        guard
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyScrollableDatepickerCell.identifier,
+                                                            for: indexPath) as? MyScrollableDatepickerCell
+        else {return UICollectionViewCell()}
 
         let date = dates[indexPath.row]
-//        let isWeekendDate = isWeekday(date: date)
-//        let isSelectedDate = isSelected(date: date)
-
         cell.setup(date: date)
-
-//        if let configuration = cellConfiguration {
-//            configuration(cell, isWeekendDate, isSelectedDate)
-//        }
-
         return cell
     }
 
@@ -160,7 +154,6 @@ extension MyScrollableDatepicker: UICollectionViewDataSource {
 extension MyScrollableDatepicker: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
         delegate?.datepicker(self, didSelectDate: dates[indexPath.row])
     }
 }
@@ -168,9 +161,17 @@ extension MyScrollableDatepicker: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension MyScrollableDatepicker: UICollectionViewDelegateFlowLayout {
-
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 68, height: 80)
+    }
+}
+
+extension MyScrollableDatepicker: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        for cell in collectionView.visibleCells {
+            guard let index = collectionView.indexPath(for: cell) else { return }
+            delegate?.datepicker(self, didScroll: index)
+        }
     }
 }
 
@@ -234,7 +235,7 @@ public struct Configuration {
 
     // MARK: - Methods
 
-public func calculateDayStyle(isWeekend: Bool, isSelected: Bool) -> DayStyleConfiguration {
+    public func calculateDayStyle(isWeekend: Bool, isSelected: Bool) -> DayStyleConfiguration {
         var style = defaultDayStyle
 
         if isWeekend {
@@ -247,7 +248,6 @@ public func calculateDayStyle(isWeekend: Bool, isSelected: Bool) -> DayStyleConf
 
         return style
     }
-
 }
 
 
