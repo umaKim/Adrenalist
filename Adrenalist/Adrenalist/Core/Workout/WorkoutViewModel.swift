@@ -1,5 +1,5 @@
 //
-//  WorkoutViewModel.swift
+//  WorkoutListViewModel.swift
 //  Adrenalist
 //
 //  Created by 김윤석 on 2022/04/27.
@@ -9,12 +9,12 @@ import Combine
 import CoreFoundation
 import UIKit
 
-enum WorkoutTransition {
+enum WorkoutListTransition {
     case setting
     case calendar
 }
 
-enum WorkoutViewModelNotification {
+enum WorkoutListViewModelNotification {
     case updateInlineStrokeEnd(CGFloat)
     case updateOutlineStrokeEnd(CGFloat)
     case updatePulse(CGFloat)
@@ -22,12 +22,91 @@ enum WorkoutViewModelNotification {
     case updateNextWorkout(Item?)
 }
 
-final class WorkoutViewModel {
+final class WorkoutListViewModel {
     private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
-    private let transitionSubject = PassthroughSubject<WorkoutTransition, Never>()
+    private let transitionSubject = PassthroughSubject<WorkoutListTransition, Never>()
     
     private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
-    private let notifySubject = PassthroughSubject<WorkoutViewModelNotification, Never>()
+    private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
+    
+    private var cancellables: Set<AnyCancellable>
+    
+//    private(set) var model = [WorkoutModel]()
+    
+    private(set) var favorites = [WorkoutModel]()
+    private(set) var workouts = [WorkoutModel]()
+    
+    init() {
+        self.cancellables = .init()
+        
+        ["Bench Press",
+         "pull up",
+         "nice",
+         "Incline Bench press"]
+            .forEach { text in
+                workouts.append(WorkoutModel(title: text,
+                                          reps: 20,
+                                          weight: 200,
+                                          timer: 1000,
+                                          isFavorite: nil))
+            }
+        
+        workouts.append(WorkoutModel(title: "squat",
+                                  reps: 20,
+                                  weight: 200,
+                                  timer: nil,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "squat",
+                                  reps: 20,
+                                  weight: 200,
+                                  timer: nil,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+        
+        workouts.append(WorkoutModel(title: "break",
+                                  reps: nil,
+                                  weight: nil,
+                                  timer: 1000,
+                                  isFavorite: nil))
+    }
+}
+
+final class WorkoutListViewModel2 {
+    private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
+    private let transitionSubject = PassthroughSubject<WorkoutListTransition, Never>()
+    
+    private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
+    private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
     
     private var cancellables: Set<AnyCancellable>
     
@@ -59,7 +138,7 @@ final class WorkoutViewModel {
             let currentIndex = currentIndex,
             currentIndex < items.count
         else { return }
-
+        
         switch items[currentIndex].type {
         case .workout:
             self.completeCurrentWorkout()
@@ -146,7 +225,7 @@ final class WorkoutViewModel {
         let total = CGFloat(items.count)
         return numberOfDone / total
     }
-   
+    
     
     private func startTimer() {
         if isTimerGoingOn {
@@ -173,14 +252,14 @@ final class WorkoutViewModel {
     @objc
     private func timerRun() {
         onGoingTime += 1
-
+        
         guard
             let currentIndex = currentIndex,
             let countUpTo = items[currentIndex].timer
         else { return }
-
+        
         notifySubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
-
+        
         if onGoingTime == countUpTo + 1 {
             timer?.invalidate()
             timer = nil
