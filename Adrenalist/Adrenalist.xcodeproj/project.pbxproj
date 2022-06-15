@@ -51,6 +51,8 @@
 		35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F53285899DA009C3B9D /* MyDatepicker.swift */; };
 		35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F5528589DA9009C3B9D /* Date+Ext.swift */; };
 		35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F572858A403009C3B9D /* MyDatePickerCell.swift */; };
+		35632F5A2859DBFB009C3B9D /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */; };
+		35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -102,6 +104,8 @@
 		35632F53285899DA009C3B9D /* MyDatepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatepicker.swift; sourceTree = "<group>"; };
 		35632F5528589DA9009C3B9D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		35632F572858A403009C3B9D /* MyDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatePickerCell.swift; sourceTree = "<group>"; };
+		35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
+		35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutlistCollectionViewCell.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 				3548C84F28190E410089A0C4 /* WorkoutViewModel.swift */,
 				351C5BCA28190D6200FE9C0F /* WorkoutViewController.swift */,
 				351C5BC828190D4100FE9C0F /* WorkoutView.swift */,
+				35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */,
+				35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */,
 				3548C85128190E510089A0C4 /* View */,
 			);
 			path = Workout;
@@ -483,6 +489,7 @@
 				35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */,
 				35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
+				35632F5A2859DBFB009C3B9D /* FavoriteCollectionViewCell.swift in Sources */,
 				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
 				3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */,
 				3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */,
@@ -495,6 +502,7 @@
 				3555CD2D281CD5DA00DA830E /* Item.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
+				35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
 				3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */,
 			);
