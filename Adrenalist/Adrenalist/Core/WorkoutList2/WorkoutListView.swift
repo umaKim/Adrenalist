@@ -9,7 +9,7 @@ import Combine
 import CombineCocoa
 import UIKit
 
-enum WorkoutListViewAction {
+enum WorkoutListView2Action {
     case addWorkoutButtonDidTap(String?, String?, String?)
     case edit
     case delete
@@ -17,10 +17,10 @@ enum WorkoutListViewAction {
     case dismiss
 }
 
-final class WorkoutListView: UIView {
+final class WorkoutListView2: UIView {
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
-    private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
+    private let actionSubject = PassthroughSubject<WorkoutListView2Action, Never>()
     
     private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     private(set) lazy var updateButton = UIBarButtonItem(title: "",

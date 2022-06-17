@@ -10,16 +10,16 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController: UIViewController {
+final class WorkoutListViewController2: UIViewController {
     
-    private(set) lazy var contentView = WorkoutListView()
+    private(set) lazy var contentView = WorkoutListView2()
     
-    private let viewModel: WorkoutListViewModel
+    private let viewModel: WorkoutListViewModel2
     private var mode: UpdateMode?
     
     private var cancellables: Set<AnyCancellable>
     
-    init(viewModel: WorkoutListViewModel) {
+    init(viewModel: WorkoutListViewModel2) {
         self.cancellables = .init()
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -149,7 +149,7 @@ final class WorkoutListViewController: UIViewController {
 }
 
 //MARK: - WorkoutListCellDelegate
-extension WorkoutListViewController: WorkoutListCellDelegate {
+extension WorkoutListViewController2: WorkoutListCellDelegate {
     func workoutListDidTapEdit(id: UUID) {
         guard
             let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
@@ -173,7 +173,7 @@ extension WorkoutListViewController: WorkoutListCellDelegate {
 }
 
 //MARK: - SuggestionListCellDelegate
-extension WorkoutListViewController: SuggestionListCellDelegate {
+extension WorkoutListViewController2: SuggestionListCellDelegate {
     func suggestionDidTapEdit(id: UUID) {
         guard
             let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
@@ -197,14 +197,14 @@ extension WorkoutListViewController: SuggestionListCellDelegate {
 }
 
 ////MARK: - ItemSetupViewControllerDelegate
-extension WorkoutListViewController: ItemSetupViewControllerDelegate {
+extension WorkoutListViewController2: ItemSetupViewControllerDelegate {
     func dismiss() {
         self.dismiss(animated: true)
     }
 }
 
 //MARK: - UICollectionView Drop Delegate
-extension WorkoutListViewController: UICollectionViewDropDelegate {
+extension WorkoutListViewController2: UICollectionViewDropDelegate {
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: NSString.self)
     }
@@ -258,7 +258,7 @@ extension WorkoutListViewController: UICollectionViewDropDelegate {
 }
 
 //MARK: - UICollectionView Drag Delegate
-extension WorkoutListViewController: UICollectionViewDragDelegate {
+extension WorkoutListViewController2: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let item = collectionView == contentView.suggestedCollectionView ? viewModel.suggestions[indexPath.row] : viewModel.workouts[indexPath.row]
         let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
@@ -285,7 +285,7 @@ extension WorkoutListViewController: UICollectionViewDragDelegate {
 }
 
 //MARK: - UICollectionViewDataSource
-extension WorkoutListViewController: UICollectionViewDataSource {
+extension WorkoutListViewController2: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionView == contentView.suggestedCollectionView ? viewModel.suggestions.count : viewModel.workouts.count
     }
@@ -306,7 +306,7 @@ extension WorkoutListViewController: UICollectionViewDataSource {
 }
 
 //MARK: - UICollectionViewDelegate
-extension WorkoutListViewController: UICollectionViewDelegate {
+extension WorkoutListViewController2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView === contentView.workoutListCollectionView {
             viewModel.didTapWorkoutCell(at: indexPath.item)
@@ -317,7 +317,7 @@ extension WorkoutListViewController: UICollectionViewDelegate {
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
-extension WorkoutListViewController: UICollectionViewDelegateFlowLayout {
+extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == contentView.suggestedCollectionView {
             return .init(width: UIScreen.main.bounds.width / 2.5, height: 40)

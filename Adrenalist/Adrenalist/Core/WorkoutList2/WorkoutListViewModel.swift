@@ -9,7 +9,7 @@ import FloatingPanel
 import UIKit
 import Combine
 
-enum WorkoutListViewModelNotification {
+enum WorkoutListViewModel2Notification {
     case reloadWorkouts
     case reloadSuggestions
     case modeChanged(UpdateMode?)
@@ -29,10 +29,10 @@ enum WorkoutListViewModelListener {
     case dismiss
 }
 
-final class WorkoutListViewModel  {
+final class WorkoutListViewModel2  {
     
     private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
-    private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
+    private let notifySubject = PassthroughSubject<WorkoutListViewModel2Notification, Never>()
     
     private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
     private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
