@@ -21,7 +21,7 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     
     private lazy var titleLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "Bench "
+        lb.text = "Bench"
         lb.font = .systemFont(ofSize: 15)
         lb.textColor = .white
         return lb
@@ -45,6 +45,13 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         titleLabel.sizeToFit()
         let horizontalPadding: CGFloat = 14 * 2
         return titleLabel.frame.width + horizontalPadding + 20
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.text = nil
+        starImageView.image = nil
     }
     
     private func setupUI() {
