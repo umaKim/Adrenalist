@@ -28,7 +28,6 @@ final class WorkoutListViewController: UIViewController {
         super.loadView()
         view = contentView
         
-        
         bind()
         setupUI()
     }
@@ -36,54 +35,19 @@ final class WorkoutListViewController: UIViewController {
     private func bind() {
         contentView
             .actionPublisher
-            .sink {[weak self] action in
-                guard let self = self else {return }
+            .sink { action in
                 switch action {
-                case .didTapCalendar:
-                    //                    self.viewModel.didTapCalendar()
-                    break
-                    
-                case .didTapSetting:
-                    //                    self.viewModel.didTapSetting()
-                    break
-                    
-                case .doubleTap:
-                    //                    self.viewModel.didDoubleTap()
-                    break
-                    
-                case .didTap(let date):
-                    print(date)
-                    
                 case .didTapAdd:
                     print("didTapAdd")
+                    let vc = UINavigationController(rootViewController: WorkoutSetupViewController())
+                    vc.modalPresentationStyle = .pageSheet
+                    self.present(vc, animated: true)
                     
                 case .didTapEdit:
                     print("didTapEdit")
                     
                 case .titleCalendarDidTap(_):
                     break
-                }
-            }
-            .store(in: &cancellables)
-        
-        viewModel
-            .notifyPublisher
-            .sink { listen in
-                switch listen {
-                case .updateInlineStrokeEnd(let value):
-                    self.contentView.updateInline(value)
-                    
-                case .updateOutlineStrokeEnd(let value):
-                    self.contentView.updateOutline(value)
-                    
-                case .updatePulse(let value):
-                    self.contentView.updatePulse(value)
-                    
-                case .updateToCurrentWorkout(let workout):
-                    self.contentView.updateWorkout = workout
-                    
-                case .updateNextWorkout(let nextWorkout):
-                    self.contentView.nextWorkout = nextWorkout
                 }
             }
             .store(in: &cancellables)
@@ -112,6 +76,12 @@ final class WorkoutListViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WorkoutListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("collectionView DidTap")
     }
 }
 
@@ -161,13 +131,5 @@ extension WorkoutListViewController: UICollectionViewDelegateFlowLayout {
         }
         
         return .init(width: 0, height: 0)
-    }
-}
-
-extension Date {
-   func getFormattedDate(format: String) -> String {
-        let dateformat = DateFormatter()
-        dateformat.dateFormat = format
-        return dateformat.string(from: self)
     }
 }

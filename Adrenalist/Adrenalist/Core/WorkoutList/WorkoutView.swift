@@ -4,17 +4,13 @@
 //
 //  Created by 김윤석 on 2022/04/27.
 //
-import ScrollableDatepicker
+
+//import ScrollableDatepicker
 import CombineCocoa
 import Combine
 import UIKit.UIView
 
 enum WorkoutListViewAction {
-    case doubleTap
-    case didTapCalendar
-    case didTapSetting
-    case didTap(MyScrollableDatepickerModel)
-    
     case didTapAdd
     case didTapEdit
     case titleCalendarDidTap(String)
@@ -36,6 +32,10 @@ final class WorkoutListView: UIView {
             UIAction(title: "삭제", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { (_) in
             })
         ]
+    }
+    
+    func act() {
+        
     }
     
     private(set) lazy var addButton: UIBarButtonItem = {
@@ -72,12 +72,7 @@ final class WorkoutListView: UIView {
         return cv
     }()
     
-    private lazy var dividerView: UIView = {
-        let uv = UIView()
-        uv.backgroundColor = .lightGray
-        uv.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-        return uv
-    }()
+    private lazy var dividerView = AdrenalistDivider()
     
     private(set) lazy var favoritesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -86,13 +81,11 @@ final class WorkoutListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        //        cv.dataSource = self
-        //        cv.delegate = self
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .black
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        cv.backgroundColor = .red
         return cv
     }()
     
@@ -103,69 +96,12 @@ final class WorkoutListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        //        cv.dataSource = self
-        //        cv.delegate = self
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .black
+        cv.backgroundColor = .blue
         return cv
     }()
-    
-    private let circularView = CircularView()
-    
-    private var workoutLabel: UILabel = {
-        let lb = UILabel()
-        lb.textColor = .white
-        lb.font = UIFont.systemFont(ofSize: 42, weight: .heavy)
-        return lb
-    }()
-    
-    private var nextLabel:  UILabel = {
-        let lb = UILabel()
-        lb.textColor = .systemGray3
-        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
-        return lb
-    }()
-    
-    private var repsLabel: UILabel = {
-        let lb = UILabel()
-        lb.textColor = .white
-        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
-        return lb
-    }()
-    
-    private var weightLabel: UILabel = {
-        let lb = UILabel()
-        lb.textColor = .white
-        lb.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
-        return lb
-    }()
-    
-    var updateWorkout: Item? {
-        didSet {
-            guard let updateWorkout = updateWorkout else { return }
-            self.workoutLabel.text = updateWorkout.title
-            
-            if let reps = updateWorkout.reps {
-                self.repsLabel.text = "\(reps) Reps"
-            }
-            
-            if let timer = updateWorkout.timer {
-                self.repsLabel.text = "\(timer) sec"
-            }
-            
-            if let weight = updateWorkout.weight {
-                self.weightLabel.text = "\(weight) Kg"
-            }
-        }
-    }
-    
-    var nextWorkout: Item? {
-        didSet{
-            self.nextLabel.text = nextWorkout?.title
-        }
-    }
     
     private var cancellables: Set<AnyCancellable>
     
@@ -182,52 +118,12 @@ final class WorkoutListView: UIView {
         setupUI()
     }
     
-    //MARK: - Public Methods
-    public func updatePulse(_ duration: CFTimeInterval) {
-        circularView.animatePulse(duration)
-    }
-    
-    public func updateOutline(_ strokeEnd: CGFloat) {
-        circularView.animateOutlineStroke(strokeEnd)
-    }
-    
-    public func updateInline(_ strokeEnd: CGFloat) {
-        circularView.animateInlineStroke(strokeEnd)
-    }
-    
     //MARK: - Private Methods
     private func bind() {
-        //        calendarButton
-        //            .tapPublisher
-        //            .sink {[weak self] _ in
-        //                guard let self = self else {return }
-        //                self.actionSubject.send(.didTapCalendar)
-        //            }
-        //            .store(in: &cancellables)
-        
-        //        settingButton
-        //            .tapPublisher
-        //            .sink {[weak self] _ in
-        //                guard let self = self else {return }
-        //                self.actionSubject.send(.didTapSetting)
-        //            }
-        //            .store(in: &cancellables)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        tapGesture.numberOfTapsRequired = 2
-        addGestureRecognizer(tapGesture)
-        
-//        editButton
-//            .tapPublisher
-//            .sink { [weak self] _ in
-//                self?.actionSubject.send(.didTapAdd)
-//            }
-//            .store(in: &cancellables)
-        
         addButton
             .tapPublisher
             .sink { [weak self] _ in
-                self?.actionSubject.send(.didTapEdit)
+                self?.actionSubject.send(.didTapAdd)
             }
             .store(in: &cancellables)
         
@@ -240,14 +136,10 @@ final class WorkoutListView: UIView {
             .store(in: &cancellables)
     }
     
-    @objc
-    private func didTap() {
-        self.actionSubject.send(.doubleTap)
-    }
-    
     private func setupUI() {
         backgroundColor = .black
         
+//        favoritesCollectionView, dividerView,
         let cvStackView = UIStackView(arrangedSubviews: [favoritesCollectionView, dividerView, workoutlistCollectionView])
         cvStackView.axis = .vertical
         cvStackView.distribution = .fill
@@ -295,10 +187,16 @@ extension WorkoutListView: MyScrollableDatepickerDelegate {
     }
 }
 
-struct WorkoutModel {
-    let title: String
-    let reps: Int?
-    let weight: Double?
-    let timer: TimeInterval?
-    let isFavorite: Bool?
+final class AdrenalistDivider: UIView {
+    
+    init() {
+        super.init(frame: .zero)
+        
+        backgroundColor = .lightGray
+        heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
