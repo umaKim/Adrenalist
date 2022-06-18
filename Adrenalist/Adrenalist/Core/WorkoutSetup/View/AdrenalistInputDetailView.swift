@@ -15,11 +15,11 @@ enum AdrenalistInputDetailViewAction {
 class AdrenalistInputDetailView: UIView {
     
     private let reps = AdrenalistTextInputView(title: "Reps", placeholder: "reps")
-    private let divider1 = AdrenalistDivider()
+    private let divider1 = AdrenalistDividerView()
     private let weight = AdrenalistTextInputView(title: "weight", placeholder: "weight")
-    private let divider2 = AdrenalistDivider()
+    private let divider2 = AdrenalistDividerView()
     private let time = AdrenalistTextInputView(title: "time", placeholder: "time")
-    private let divider3 = AdrenalistDivider()
+    private let divider3 = AdrenalistDividerView()
     private let set = AdrenalistInputStepperView(title: "Set", value: 0)
     
     init() {
@@ -32,7 +32,7 @@ class AdrenalistInputDetailView: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = .darkNavy
+        backgroundColor = .grey2
         
         layer.cornerRadius = 20
         
