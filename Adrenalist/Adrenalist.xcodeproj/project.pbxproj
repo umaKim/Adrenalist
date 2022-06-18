@@ -61,6 +61,7 @@
 		35632FE5285CA5BF009C3B9D /* AdrenalistInputDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FE4285CA5BF009C3B9D /* AdrenalistInputDetailView.swift */; };
 		35632FE8285CAD99009C3B9D /* AdrenalistInputStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FE7285CAD99009C3B9D /* AdrenalistInputStepperView.swift */; };
 		35632FEA285CADB7009C3B9D /* AdrenalistTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FE9285CADB7009C3B9D /* AdrenalistTextInputView.swift */; };
+		35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -122,6 +123,7 @@
 		35632FE4285CA5BF009C3B9D /* AdrenalistInputDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistInputDetailView.swift; sourceTree = "<group>"; };
 		35632FE7285CAD99009C3B9D /* AdrenalistInputStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistInputStepperView.swift; sourceTree = "<group>"; };
 		35632FE9285CADB7009C3B9D /* AdrenalistTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTextInputView.swift; sourceTree = "<group>"; };
+		35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistDividerView.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				3555CD3A2821729800DA830E /* AdrenalistButton.swift */,
 				3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */,
 				35DD525A283E7E3E0031A912 /* InputView.swift */,
+				35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */,
 			);
 			path = GlobalViews;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
 				35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */,
+				35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */,
 				35632F95285B3696009C3B9D /* WorkoutSetupView.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
 				3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */,
