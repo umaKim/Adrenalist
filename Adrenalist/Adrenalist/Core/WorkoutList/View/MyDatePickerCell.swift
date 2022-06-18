@@ -10,7 +10,6 @@ import UIKit.UICollectionViewCell
 final class MyScrollableDatepickerCell: UICollectionViewCell {
     static let identifier = "MyScrollableDatepickerCell"
     
-//    private lazy var dateLabel: UILabel = UILabel()
     private lazy var dayLabel: UILabel = {
        let lb = UILabel()
         lb.textColor = .white
@@ -59,14 +58,10 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
 
         formatter.dateFormat = "dd"
         dateLabel.text = formatter.string(from: date.date)
-//        dateLabel.font = style.dateTextFont ?? dateLabel.font
-//        dateLabel.textColor = style.dateTextColor ?? dateLabel.textColor
         dateLabel.textColor = .white
 
         formatter.dateFormat = "EEE"
         dayLabel.text = formatter.string(from: date.date).uppercased()
-//        dayLabel.font = style.weekDayTextFont ?? dayLabel.font
-//        dayLabel.textColor = style.weekDayTextColor ?? dayLabel.textColor
         dayLabel.textColor = .white
         
         backgroundColor = date.date == Date().stripTime() ? .purpleBlue : .darkNavy
@@ -74,27 +69,29 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
         if date.isSelected {
             layer.borderColor = UIColor.purpleBlue.cgColor
         }
+        
+        self.dot.isHidden = false
+//        !date.isDot
     }
     
     private func setupUI() {
         layer.cornerRadius = 16
         layer.borderWidth = 1
         
-        [dateLabel, dayLabel, dot].forEach { uv in
+        let sv = UIStackView(arrangedSubviews: [dayLabel, dateLabel, dot])
+        sv.distribution = .fill
+        sv.alignment = .center
+        sv.axis = .vertical
+        sv.spacing = 2
+        
+        [sv].forEach { uv in
             addSubview(uv)
             uv.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            
-            dayLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dayLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: 2),
-            
-            dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
-            dot.centerXAnchor.constraint(equalTo: centerXAnchor),
-            dot.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -2),
+            sv.centerXAnchor.constraint(equalTo: centerXAnchor),
+            sv.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         
         
