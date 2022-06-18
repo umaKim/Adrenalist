@@ -54,7 +54,7 @@ final class WorkoutListView2: UIView {
     private(set) lazy var suggestedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
@@ -62,13 +62,15 @@ final class WorkoutListView2: UIView {
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
+        cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
         return cv
     }()
     
     private(set) lazy var workoutListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+//        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
 //        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
@@ -142,13 +144,24 @@ final class WorkoutListView2: UIView {
     
     private func setupUI() {
         backgroundColor = .black
-        addSubview(suggestedCollectionView)
-        addSubview(workoutListCollectionView)
+//        addSubview(suggestedCollectionView)
+//        addSubview(workoutListCollectionView)
 //        addSubview(inputAccessory)
-        addSubview(calendarView)
+//        addSubview(calendarView)
         
-        suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
-        workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
+//        workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        let cvStackView = UIStackView(arrangedSubviews: [suggestedCollectionView, AdrenalistDividerView(), workoutListCollectionView])
+        cvStackView.axis = .vertical
+        cvStackView.distribution = .fill
+        cvStackView.alignment = .fill
+        cvStackView.spacing = 2
+        
+        [calendarView, cvStackView].forEach { uv in
+            uv.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(uv)
+        }
         
         NSLayoutConstraint.activate([
             calendarView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -156,15 +169,20 @@ final class WorkoutListView2: UIView {
             calendarView.trailingAnchor.constraint(equalTo: trailingAnchor),
             calendarView.heightAnchor.constraint(equalToConstant: 80),
             
-            suggestedCollectionView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
-            suggestedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            suggestedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
+//            suggestedCollectionView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
+//            suggestedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            suggestedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
+//
+//            workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
+//            workoutListCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//            workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
-            workoutListCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            cvStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
+            cvStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            cvStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            cvStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
             
 //            inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
 //            inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
