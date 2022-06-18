@@ -29,11 +29,15 @@ extension UIColor {
 //    rgba(23, 23, 28, 1)
     static let darkNavy = UIColor(red: 23/255, green: 23/255, blue: 28/255, alpha: 1)
     static let navyGray = UIColor(red: 44/255, green: 45/255, blue: 53/255, alpha: 1)
+    static let lightDarkNavy = UIColor(red: 27/255, green: 27/255, blue: 31/255, alpha: 1)
     static let lightGray = UIColor(red: 187/256, green: 193/256, blue: 195/256, alpha: 0.2)
-    
+    static let grey2 = UIColor(red: 44/255, green: 45/255, blue: 53/255, alpha: 1)
+//    rgba(44, 45, 53, 1)
     
 //    rgba(187, 193, 195, 1)
 //    rgba(44, 45, 53, 1)
     
 //    rgba(86, 98, 255, 0.15)
+
+//    rgba(27, 27, 31, 1)
 }
