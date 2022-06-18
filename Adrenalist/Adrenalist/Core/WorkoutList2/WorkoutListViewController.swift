@@ -56,65 +56,78 @@ final class WorkoutListViewController2: UIViewController {
     }
     
     private func bind() {
-        contentView
-            .actionPublisher
-            .sink {[weak self] action in
-                guard let self = self else { return }
-                switch action {
-                case .addWorkoutButtonDidTap(let workout, let reps, let weight):
-                    self.viewModel.addWorkout(for: workout, reps, weight)
-                    
-                case .edit:
-                    self.viewModel.editMode()
-                    
-                case .delete:
-                    self.viewModel.deleteMode()
-                    
-                case .tapBackground:
-                    self.viewModel.noMode()
-                    
-                case .dismiss:
-                    self.viewModel.dismiss()
-                }
-            }
-            .store(in: &cancellables)
+//        contentView
+//            .actionPublisher
+//            .sink {[weak self] action in
+//                guard let self = self else { return }
+//                switch action {
+//                case .addWorkoutButtonDidTap(let workout, let reps, let weight):
+//                    self.viewModel.addWorkout(for: workout, reps, weight)
+//                    
+//                case .edit:
+//                    self.viewModel.editMode()
+//                    
+//                case .delete:
+//                    self.viewModel.deleteMode()
+//                    
+//                case .tapBackground:
+//                    self.viewModel.noMode()
+//                    
+//                case .dismiss:
+//                    self.viewModel.dismiss()
+//                }
+//            }
+//            .store(in: &cancellables)
         
-        viewModel
-            .notifyPublisher
-            .sink {[weak self] noti in
-                guard let self = self else {return }
-                switch noti {
-                case .reloadSuggestions:
-                    self.contentView.suggestedCollectionView.reloadData()
-                    
-                case .reloadWorkouts:
-                    self.contentView.workoutListCollectionView.reloadData()
-                    self.scrollToLast()
-                    
-                case.modeChanged(let mode):
-                    self.mode = mode
-                    self.contentView.suggestedCollectionView.reloadData()
-                    self.contentView.workoutListCollectionView.reloadData()
-                    
-                case .delete(let index):
-                    self.contentView.workoutListCollectionView.performBatchUpdates {
-                        let indexPath = IndexPath(row: index, section: 0)
-                        self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
-                    }
-                case .showKeyboard(let frame):
-                    self.contentView.showKeyboard(frame)
-                    
-                case .hideKeyboard:
-                    self.contentView.hideKeyboard()
-                    
-                case .fullPanel:
-                    self.contentView.hideKeyboard()
-                    
-                case .tipPanel:
-                    self.contentView.hideKeyboard()
-                }
-            }
-            .store(in: &cancellables)
+//        viewModel
+//            .notifyPublisher
+//            .sink {[weak self] noti in
+//                guard let self = self else {return }
+//                switch noti {
+//                case .reloadSuggestions:
+//                    self.contentView.suggestedCollectionView.reloadData()
+//
+//                case .reloadWorkouts:
+//                    self.contentView.workoutListCollectionView.reloadData()
+//                    self.scrollToLast()
+//
+//                case.modeChanged(let mode):
+//                    self.mode = mode
+//                    self.contentView.suggestedCollectionView.reloadData()
+//                    self.contentView.workoutListCollectionView.reloadData()
+//
+//                case .delete(let index):
+//                    self.contentView.workoutListCollectionView.performBatchUpdates {
+//                        let indexPath = IndexPath(row: index, section: 0)
+//                        self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
+//                    }
+//                case .showKeyboard(let frame):
+//                    self.contentView.showKeyboard(frame)
+//
+//                case .hideKeyboard:
+//                    self.contentView.hideKeyboard()
+//
+//                case .fullPanel:
+//                    self.contentView.hideKeyboard()
+//
+//                case .tipPanel:
+//                    self.contentView.hideKeyboard()
+//                }
+//            }
+//            .store(in: &cancellables)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        contentView.calendarView.setDates
+        contentView.calendarView.initialUISetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
     
     private func scrollToLast() {
@@ -287,19 +300,22 @@ extension WorkoutListViewController2: UICollectionViewDragDelegate {
 //MARK: - UICollectionViewDataSource
 extension WorkoutListViewController2: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == contentView.suggestedCollectionView ? viewModel.suggestions.count : viewModel.workouts.count
+//        return collectionView == contentView.suggestedCollectionView ? viewModel.suggestions.count : viewModel.workouts.count
+        return collectionView == contentView.suggestedCollectionView ? viewModel.favorites.count : viewModel.workoutList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SuggestionListCell.identifier, for: indexPath) as? SuggestionListCell else {return UICollectionViewCell() }
-            cell.configure(with: viewModel.suggestions[indexPath.item], mode: self.mode)
-            cell.delegate = self
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath) as? FavoriteCollectionViewCell else {return UICollectionViewCell() }
+//            cell.configure(with: viewModel.suggestions[indexPath.item], mode: self.mode)
+//            cell.delegate = self
+            cell.configure(with: viewModel.favorites[indexPath.item])
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutListCell.identifier, for: indexPath) as? WorkoutListCell else {return UICollectionViewCell()}
-            cell.configure(with: viewModel.workouts[indexPath.item], mode: self.mode)
-            cell.delegate = self
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier, for: indexPath) as? WorkoutlistCollectionViewCell else {return UICollectionViewCell()}
+//            cell.configure(with: viewModel.workouts[indexPath.item], mode: self.mode)
+//            cell.delegate = self
+            cell.configure(with: viewModel.workoutList[indexPath.item])
             return cell
         }
     }
@@ -320,16 +336,20 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
 extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == contentView.suggestedCollectionView {
-            return .init(width: UIScreen.main.bounds.width / 2.5, height: 40)
+//            return .init(width: UIScreen.main.bounds.width / 2.5, height: 40)
+            let width = viewModel.favorites[indexPath.item].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
+            let height: CGFloat = 39
+            
+            return CGSize(width: width, height: height)
         } else {
             return .init(width: UIScreen.main.bounds.width - 50, height: 60)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView === contentView.suggestedCollectionView{
-            return .init(top: 0, left: 16, bottom: 0, right: 16)
-        }
-        return .init(top: 16, left: 0, bottom: 0, right: 0)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        if collectionView === contentView.suggestedCollectionView{
+//            return .init(top: 0, left: 16, bottom: 0, right: 16)
+//        }
+//        return .init(top: 16, left: 0, bottom: 0, right: 0)
+//    }
 }

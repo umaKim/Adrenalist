@@ -44,13 +44,22 @@ final class WorkoutListView2: UIView {
                                                           style: .done,
                                                           target: nil,
                                                           action: nil)
+    public lazy var calendarView: MyScrollableDatepicker = {
+        let cv = MyScrollableDatepicker()
+        cv.delegate = self
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        return cv
+    }()
     
     private(set) lazy var suggestedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-        cv.register(SuggestionListCell.self, forCellWithReuseIdentifier: SuggestionListCell.identifier)
+//        cv.register(SuggestionListCell.self, forCellWithReuseIdentifier: SuggestionListCell.identifier)
+        cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         return cv
@@ -59,14 +68,16 @@ final class WorkoutListView2: UIView {
     private(set) lazy var workoutListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
+//        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
+        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
-    private(set) lazy var inputAccessory = InputView()
+//    private(set) lazy var inputAccessory = InputView()
     
     func showKeyboard(_ frame: CGRect) {
         self.recognizer?.isEnabled = true
@@ -99,15 +110,15 @@ final class WorkoutListView2: UIView {
     }
     
     private func bind() {
-        inputAccessory
-            .actionPublisher
-            .sink {[weak self] action in
-                switch action {
-                case .addButton(let workout, let reps, let weight):
-                    self?.actionSubject.send(.addWorkoutButtonDidTap(workout, reps, weight))
-                }
-            }
-            .store(in: &cancellables)
+//        inputAccessory
+//            .actionPublisher
+//            .sink {[weak self] action in
+//                switch action {
+//                case .addButton(let workout, let reps, let weight):
+//                    self?.actionSubject.send(.addWorkoutButtonDidTap(workout, reps, weight))
+//                }
+//            }
+//            .store(in: &cancellables)
         
         dismissButton
             .tapPublisher
@@ -133,33 +144,55 @@ final class WorkoutListView2: UIView {
         backgroundColor = .black
         addSubview(suggestedCollectionView)
         addSubview(workoutListCollectionView)
-        addSubview(inputAccessory)
+//        addSubview(inputAccessory)
+        addSubview(calendarView)
         
         suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
         workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         NSLayoutConstraint.activate([
-            suggestedCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            calendarView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            calendarView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            calendarView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            calendarView.heightAnchor.constraint(equalToConstant: 80),
+            
+            suggestedCollectionView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
             suggestedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             suggestedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
             
             workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
-            workoutListCollectionView.bottomAnchor.constraint(equalTo: inputAccessory.topAnchor),
+            workoutListCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
-            inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
         
-        inputAccessoryBottomAnchor = inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        inputAccessoryBottomAnchor?.isActive = true
+//        inputAccessoryBottomAnchor = inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+//        inputAccessoryBottomAnchor?.isActive = true
     }
     
     private var inputAccessoryBottomAnchor: NSLayoutConstraint?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WorkoutListView2: MyScrollableDatepickerDelegate {
+    func datepicker(
+        _ datepicker: MyScrollableDatepicker,
+        didScroll index: IndexPath
+    ) {
+//        calendarTitleButton.setTitle("\( datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", for: .normal)
+    }
+    
+    func datepicker(
+        _ datepicker: MyScrollableDatepicker,
+        didSelectDate date: MyScrollableDatepickerModel
+    ) {
+        datepicker.updateDateSet(with: date)
     }
 }

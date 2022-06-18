@@ -46,10 +46,13 @@ final class WorkoutListViewModel2  {
     
     private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
     
-    private(set) var panelState: PassthroughSubject<FloatingPanelState, Never>
+    private(set) var panelState = PassthroughSubject<FloatingPanelState, Never>()
     
-    init(panelState: PassthroughSubject<FloatingPanelState, Never>) {
-        self.panelState = panelState
+    private(set) var favorites = [WorkoutModel]()
+    private(set) var workoutList = [WorkoutModel]()
+    
+    init() {
+//        self.panelState = panelState
         self.cancellables = .init()
         bind()
     }
@@ -57,22 +60,113 @@ final class WorkoutListViewModel2  {
     private var keyboardHelper: KeyboardHelper?
     
     private func bind() {
-        workoutManager
-            .$itemToDos
-            .sink { workouts in
-                self.workouts = workouts
-                self.notifySubject.send(.reloadWorkouts)
-            }
-            .store(in: &cancellables)
+//        workoutManager
+//            .$itemToDos
+//            .sink { workouts in
+//                self.workouts = workouts
+//                self.notifySubject.send(.reloadWorkouts)
+//            }
+//            .store(in: &cancellables)
+//
+//        workoutManager
+//            .$suggestions
+//            .sink { [weak self] suggestions in
+//                guard let self = self else {return }
+//                self.suggestions = suggestions
+//                self.notifySubject.send(.reloadSuggestions)
+//            }
+//            .store(in: &cancellables)
         
-        workoutManager
-            .$suggestions
-            .sink { [weak self] suggestions in
-                guard let self = self else {return }
-                self.suggestions = suggestions
-                self.notifySubject.send(.reloadSuggestions)
+        workouts = [
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout)
+        ]
+        
+        suggestions = [
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout),
+            .init(title: "", isDone: true, type: .workout)
+        ]
+        
+        ["Bench Press",
+         "pull up",
+         "nice",
+         "Incline Bench press",
+         "Bench Press",
+          "pull up",
+          "nice",
+          "Incline Bench press",
+         "Bench Press",
+          "pull up",
+          "nice",
+          "Incline Bench press"]
+            .forEach { text in
+                workoutList.append(WorkoutModel(title: text,
+                                          reps: 20,
+                                          weight: 200,
+                                          timer: 1000,
+                                          isFavorite: nil))
             }
-            .store(in: &cancellables)
+        
+        ["Bench Press",
+         "pull up",
+         "nice",
+         "Incline Bench press",
+         "Bench Press",
+          "pull up",
+          "nice",
+          "Incline Bench press",
+         "Bench Press",
+          "pull up",
+          "nice",
+          "Incline Bench press"]
+            .forEach { text in
+                favorites.append(WorkoutModel(title: text,
+                                          reps: 20,
+                                          weight: 200,
+                                          timer: 1000,
+                                          isFavorite: nil))
+            }
         
         mode
             .sink {[weak self] mode in
