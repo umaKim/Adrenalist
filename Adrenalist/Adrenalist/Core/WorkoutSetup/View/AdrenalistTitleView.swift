@@ -18,16 +18,13 @@ final class AdrenalistTitleView: UIView {
     
     private let titleTextField: UITextField = {
         let tf = UITextField()
-        tf.backgroundColor = .blue
-        tf.text = "titleTextField"
-        tf.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        tf.placeholder = "titleTextField"
         return tf
     }()
     
     private let starButton: UIButton = {
         let bt = UIButton()
         bt.setImage(UIImage(systemName: "star"), for: .normal)
-        bt.backgroundColor = .gray
         bt.widthAnchor.constraint(equalToConstant: 32).isActive = true
         bt.heightAnchor.constraint(equalToConstant: 32).isActive = true
         return bt
@@ -62,6 +59,8 @@ final class AdrenalistTitleView: UIView {
             .sink { _ in
                 self.starStatus.toggle()
                 self.actionSubject.send(.isStarButtonSelected(self.starStatus))
+                let image: UIImage? = self.starStatus ? .init(systemName: "star.fill") : .init(systemName: "star")
+                self.starButton.setImage(image, for: .normal)
             }
             .store(in: &cancellables)
     }
@@ -69,7 +68,7 @@ final class AdrenalistTitleView: UIView {
     private func setupUI() {
         layer.cornerRadius = 20
         
-        backgroundColor = .darkNavy
+        backgroundColor = .grey2
         
         let sv = UIStackView(arrangedSubviews: [titleTextField, starButton])
         sv.axis = .horizontal
