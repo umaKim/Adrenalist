@@ -40,9 +40,8 @@ class WorkoutSetupViewController: UIViewController {
     }
     
     private func setupUI() {
+        
         navigationItem.leftBarButtonItems = [contentView.cancelButton]
         navigationItem.rightBarButtonItems = [contentView.doneButton]
-        
-        view.backgroundColor = .red
     }
 }
