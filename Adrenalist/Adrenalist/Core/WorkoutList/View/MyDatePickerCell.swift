@@ -93,7 +93,5 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
             sv.centerXAnchor.constraint(equalTo: centerXAnchor),
             sv.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-        
-        
     }
 }

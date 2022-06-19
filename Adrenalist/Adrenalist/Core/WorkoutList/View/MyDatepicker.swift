@@ -10,6 +10,7 @@ import UIKit.UICollectionView
 struct MyScrollableDatepickerModel: Equatable {
     let date: Date
     let isSelected: Bool
+    let isDot: Bool
 }
 
 protocol MyScrollableDatepickerDelegate: AnyObject {
@@ -65,7 +66,7 @@ class MyScrollableDatepicker: UIView {
     
     public func initialUISetup() {
         collectionView.reloadData()
-        let today = MyScrollableDatepickerModel(date: Date().stripTime(), isSelected: false)
+        let today = MyScrollableDatepickerModel(date: Date().stripTime(), isSelected: false, isDot: false)
         guard let index =  dates.firstIndex(of: today)?.description else { return }
         let indexInt = Int(index) ?? 0
         let indexPath = IndexPath(row: Int(indexInt), section: 0)
@@ -81,13 +82,13 @@ class MyScrollableDatepicker: UIView {
             if date.isSelected {
                 let selectedIndex = dates.firstIndex(of: date)?.description ?? "0"
                 let indexInt = Int(selectedIndex) ?? 0
-                self.dates[indexInt] = MyScrollableDatepickerModel(date: date.date, isSelected: false)
+                self.dates[indexInt] = MyScrollableDatepickerModel(date: date.date, isSelected: false, isDot: false)
                 let indexPath = IndexPath(row: indexInt, section: 0)
                 collectionView.reloadItems(at: [indexPath])
             }
         }
         
-        let newDate = MyScrollableDatepickerModel(date: date.date, isSelected: true)
+        let newDate = MyScrollableDatepickerModel(date: date.date, isSelected: true, isDot: false)
         dates[indexInt] = newDate
         let indexPath = IndexPath(row: indexInt, section: 0)
         collectionView.reloadItems(at: [indexPath])
@@ -98,6 +99,7 @@ class MyScrollableDatepicker: UIView {
             collectionView.reloadData()
         }
     }
+    
     public var configuration = Configuration() {
         didSet {
             collectionView.reloadData()
@@ -109,15 +111,11 @@ class MyScrollableDatepicker: UIView {
         for day in 1...36500 {
             let secondsInDay = 86400
             let date = MyScrollableDatepickerModel(date: Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime(),
-                                                   isSelected: false)
+                                                   isSelected: false, isDot: false)
             dates.append(date)
         }
         self.dates = dates
     }
-    
-//    public func updateDates(_ dates: [MyScrollableDatepickerModel]) {
-//        self.dates = dates
-//    }
 }
 
 // MARK: - UICollectionViewDataSource
