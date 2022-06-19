@@ -18,6 +18,7 @@ class AdrenalistTextInputView: UIView {
     private let textField: UITextField = {
        let tf = UITextField()
         tf.textColor = .white
+        tf.widthAnchor.constraint(equalToConstant: 100).isActive = true
         return tf
     }()
     
@@ -46,7 +47,6 @@ class AdrenalistTextInputView: UIView {
         }
         
         NSLayoutConstraint.activate([
-//            sv.centerXAnchor.constraint(equalTo: centerXAnchor),
             sv.centerYAnchor.constraint(equalTo: centerYAnchor),
             sv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             sv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
