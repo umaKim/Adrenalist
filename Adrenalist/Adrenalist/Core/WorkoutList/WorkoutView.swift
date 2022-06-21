@@ -11,9 +11,12 @@ import Combine
 import UIKit.UIView
 
 enum WorkoutListViewAction {
+    case changeOrder
+    case postponeToTommorow
+    case delete
+    
     case didTapAdd
-    case didTapEdit
-    case titleCalendarDidTap(String)
+    case titleCalendarDidTap
 }
 
 final class WorkoutListView: UIView {
@@ -21,21 +24,46 @@ final class WorkoutListView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListViewAction, Never>()
     
-    private(set) lazy var editButton = UIBarButtonItem(title: "Edit", image: nil, primaryAction: nil, menu: UIMenu(options: .displayInline, children: menuItems))
+//    private(set) lazy var editButton = UIBarButtonItem(title: "Edit",
+//                                                       image: nil,
+//                                                       primaryAction: nil,
+//                                                       menu: UIMenu(options: .displayInline,
+//                                                                    children: menuItems))
+    private(set) lazy var editButton: UIBarButtonItem = {
+        let bt = UIBarButtonItem(title: "Edit",
+                                 image: nil,
+                                 primaryAction: nil,
+                                 menu: UIMenu(options: .displayInline,
+                                              children: menuItems))
+        bt.tintColor = .white
+        return bt
+    }()
+    
+    func isAddButtonHidden(_ isHidden: Bool) {
+        self.addButton.customView?.isHidden = isHidden
+    }
     
     private var menuItems: [UIAction] {
         return [
-            UIAction(title: "순서 변경", image: UIImage(systemName: "sun.max"), handler: { (_) in
+            UIAction(title: "순서 변경",
+                     image: nil,
+                     handler: { (_) in
+                self.actionSubject.send(.changeOrder)
             }),
-            UIAction(title: "내일로 미루기", image: UIImage(systemName: "moon"), handler: { (_) in
+            
+            UIAction(title: "내일로 미루기",
+                     image: nil,
+                     handler: { (_) in
+                self.actionSubject.send(.postponeToTommorow)
             }),
-            UIAction(title: "삭제", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { (_) in
+            
+            UIAction(title: "삭제",
+                     image: nil,
+                     attributes: .destructive,
+                     handler: { (_) in
+                self.actionSubject.send(.delete)
             })
         ]
-    }
-    
-    func act() {
-        
     }
     
     private(set) lazy var addButton: UIBarButtonItem = {
@@ -46,33 +74,18 @@ final class WorkoutListView: UIView {
     
     private(set) lazy var calendarTitleButton: UIButton = {
         let bt = UIButton()
+        bt.setTitle(Date().getFormattedDate(format: "yyyy년 MM월"), for: .normal)
         bt.widthAnchor.constraint(equalToConstant: 100).isActive = true
         return bt
     }()
     
     public lazy var calendarView: MyScrollableDatepicker = {
         let cv = MyScrollableDatepicker()
-        
-        cv.selectedDate = Date()
         cv.delegate = self
-        
-        // weekend customization
-        var configuration = Configuration()
-        
-        configuration.weekendDayStyle.dateTextColor = UIColor(red: 242.0/255.0, green: 93.0/255.0, blue: 28.0/255.0, alpha: 1.0)
-        configuration.weekendDayStyle.dateTextFont = UIFont.boldSystemFont(ofSize: 20)
-        configuration.weekendDayStyle.weekDayTextColor = UIColor(red: 242.0/255.0, green: 93.0/255.0, blue: 28.0/255.0, alpha: 1.0)
-        
-        // selected date customization
-        configuration.selectedDayStyle.backgroundColor = UIColor(white: 0.9, alpha: 1)
-        configuration.daySizeCalculation = .numberOfVisibleItems(5)
-        
-        cv.configuration = configuration
-        
         return cv
     }()
     
-    private lazy var dividerView = AdrenalistDivider()
+    private lazy var dividerView = AdrenalistDividerView()
     
     private(set) lazy var favoritesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -83,9 +96,8 @@ final class WorkoutListView: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.showsHorizontalScrollIndicator = false
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        cv.backgroundColor = .red
+        cv.backgroundColor = .black
         return cv
     }()
     
@@ -93,13 +105,11 @@ final class WorkoutListView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
-        cv.showsHorizontalScrollIndicator = false
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = .blue
+        cv.backgroundColor = .black
         return cv
     }()
     
@@ -108,7 +118,6 @@ final class WorkoutListView: UIView {
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
-        
         bind()
     }
     
@@ -130,8 +139,7 @@ final class WorkoutListView: UIView {
         calendarTitleButton
             .tapPublisher
             .sink { _ in
-                print("tapped cAlendar")
-                //                self.actionSubject.send(.titleCalendarDidTap(<#T##String#>))
+                self.actionSubject.send(.titleCalendarDidTap)
             }
             .store(in: &cancellables)
     }
@@ -139,7 +147,6 @@ final class WorkoutListView: UIView {
     private func setupUI() {
         backgroundColor = .black
         
-//        favoritesCollectionView, dividerView,
         let cvStackView = UIStackView(arrangedSubviews: [favoritesCollectionView, dividerView, workoutlistCollectionView])
         cvStackView.axis = .vertical
         cvStackView.distribution = .fill
@@ -152,7 +159,6 @@ final class WorkoutListView: UIView {
         }
         
         NSLayoutConstraint.activate([
-            
             calendarView.centerXAnchor.constraint(equalTo: centerXAnchor),
             calendarView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             calendarView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -162,7 +168,7 @@ final class WorkoutListView: UIView {
             cvStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
             cvStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cvStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cvStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            cvStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -184,19 +190,5 @@ extension WorkoutListView: MyScrollableDatepickerDelegate {
         didSelectDate date: MyScrollableDatepickerModel
     ) {
         datepicker.updateDateSet(with: date)
-    }
-}
-
-final class AdrenalistDivider: UIView {
-    
-    init() {
-        super.init(frame: .zero)
-        
-        backgroundColor = .lightGray
-        heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
