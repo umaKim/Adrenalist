@@ -10,14 +10,26 @@ import UIKit
 import Combine
 
 enum WorkoutListViewModel2Notification {
-    case reloadWorkouts
-    case reloadSuggestions
-    case modeChanged(UpdateMode?)
-    case delete(Int)
-    case showKeyboard(CGRect)
-    case hideKeyboard
-    case fullPanel
-    case tipPanel
+//    case reloadWorkouts
+//    case reloadSuggestions
+//    case modeChanged(UpdateMode?)
+//    case delete(Int)
+//    case showKeyboard(CGRect)
+//    case hideKeyboard
+//    case fullPanel
+//    case tipPanel
+    
+    case reorder
+    case postpone
+    case delete
+    case normal
+}
+
+enum WorkoutListCellMode {
+    case reorder
+    case psotpone
+    case delete
+    case normal
 }
 
 enum UpdateMode {
@@ -44,7 +56,7 @@ final class WorkoutListViewModel2  {
     
     private let workoutManager = ItemManager.shared
     
-    private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
+//    private(set) var mode = CurrentValueSubject<UpdateMode?, Never>(nil)
     
     private(set) var panelState = PassthroughSubject<FloatingPanelState, Never>()
     
@@ -141,11 +153,14 @@ final class WorkoutListViewModel2  {
           "nice",
           "Incline Bench press"]
             .forEach { text in
-                workoutList.append(WorkoutModel(title: text,
-                                          reps: 20,
-                                          weight: 200,
-                                          timer: 1000,
-                                          isFavorite: nil))
+                workoutList.append(WorkoutModel(
+                    mode: .normal,
+                    title: text,
+                    reps: 20,
+                    weight: 200,
+                    timer: 1000,
+                    isFavorite: nil,
+                    isSelected: false))
             }
         
         ["Bench Press",
@@ -161,42 +176,70 @@ final class WorkoutListViewModel2  {
           "nice",
           "Incline Bench press"]
             .forEach { text in
-                favorites.append(WorkoutModel(title: text,
-                                          reps: 20,
-                                          weight: 200,
-                                          timer: 1000,
-                                          isFavorite: nil))
+                favorites.append(WorkoutModel(mode: .normal,
+                                              title: text,
+                                              reps: 20,
+                                              weight: 200,
+                                              timer: 1000,
+                                              isFavorite: nil, isSelected: false))
             }
         
-        mode
-            .sink {[weak self] mode in
-                guard let self = self else {return }
-                self.notifySubject.send(.modeChanged(mode))
-            }
-            .store(in: &cancellables)
+//        mode
+//            .sink {[weak self] mode in
+//                guard let self = self else {return }
+//                self.notifySubject.send(.modeChanged(mode))
+//            }
+//            .store(in: &cancellables)
         
-        panelState
-            .sink { state in
-                switch state {
-                case .tip:
-                    self.notifySubject.send(.tipPanel)
-                    
-                case .full:
-                    self.notifySubject.send(.fullPanel)
-                    
-                default:
-                    break
-                }
-            }
-            .store(in: &cancellables)
+//        panelState
+//            .sink { state in
+//                switch state {
+//                case .tip:
+//                    self.notifySubject.send(.tipPanel)
+//
+//                case .full:
+//                    self.notifySubject.send(.fullPanel)
+//
+//                default:
+//                    break
+//                }
+//            }
+//            .store(in: &cancellables)
         
-        keyboardHelper = KeyboardHelper { [unowned self] animation, keyboardFrame, duration in
-            switch animation {
-            case .keyboardWillShow:
-                self.notifySubject.send(.showKeyboard(keyboardFrame))
-            case .keyboardWillHide:
-                self.notifySubject.send(.hideKeyboard)
-            }
+//        keyboardHelper = KeyboardHelper { [unowned self] animation, keyboardFrame, duration in
+//            switch animation {
+//            case .keyboardWillShow:
+//                self.notifySubject.send(.showKeyboard(keyboardFrame))
+//            case .keyboardWillHide:
+//                self.notifySubject.send(.hideKeyboard)
+//            }
+//        }
+    }
+    
+    func updateMode(type: WorkoutListCellMode) {
+        var workouts = [WorkoutModel]()
+        
+        workoutList.forEach { model in
+            workouts.append(.init(mode: type,
+                                  title: model.title,
+                                  reps: model.reps,
+                                  weight: model.weight,
+                                  timer: model.timer,
+                                  isFavorite: model.isFavorite,
+                                  isSelected: model.isSelected))
+        }
+        
+        workoutList = workouts
+        
+        switch type {
+        case .reorder:
+            self.notifySubject.send(.reorder)
+        case .psotpone:
+            self.notifySubject.send(.postpone)
+        case .delete:
+            self.notifySubject.send(.delete)
+        case .normal:
+            self.notifySubject.send(.normal)
         }
     }
     
@@ -205,15 +248,15 @@ final class WorkoutListViewModel2  {
     }
     
     func editMode() {
-        mode.value = .edit
+//        mode.value = .edit
     }
     
     func deleteMode() {
-        mode.value = .delete
+//        mode.value = .delete
     }
     
     func noMode() {
-        mode.value = nil
+//        mode.value = nil
     }
     
     func didTapWorkoutCell(at index: Int) {
