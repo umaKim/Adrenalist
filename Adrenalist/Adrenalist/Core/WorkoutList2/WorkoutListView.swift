@@ -10,11 +10,18 @@ import CombineCocoa
 import UIKit
 
 enum WorkoutListView2Action {
-    case addWorkoutButtonDidTap(String?, String?, String?)
-    case edit
+//    case addWorkoutButtonDidTap(String?, String?, String?)
+//    case edit
+    
+//    case tapBackground
+    case add
+    
+    case tapTitleCalendar(UIViewController)
+    
+    case reorder
+    case postpone
     case delete
-    case tapBackground
-    case dismiss
+    case bottomNavigationBarDidTapCancel
 }
 
 final class WorkoutListView2: UIView {
@@ -22,28 +29,46 @@ final class WorkoutListView2: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListView2Action, Never>()
     
-    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
-    private(set) lazy var updateButton = UIBarButtonItem(title: "",
-                                                         image: UIImage(systemName: Constant.ButtonImage.editting),
-                                                         menu: UIMenu(options: .displayInline,
-                                                                      children: [edit, delete]))
+//    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     
-    private lazy var edit = UIAction(title: "Update",
-                                     handler: {[weak self] _ in
-        self?.actionSubject.send(.edit)
-        self?.recognizer?.isEnabled = true
+    private(set) lazy var calendarTitleButton: UIButton = {
+        let bt = UIButton()
+        bt.setTitle(Date().getFormattedDate(format: "yyyy년 MM월"), for: .normal)
+        bt.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        return bt
+    }()
+    
+    private(set) lazy var editButton = UIBarButtonItem(title: "Edit",
+                                                       image: nil,
+                                                       menu: UIMenu(options: .displayInline,
+                                                                    children: [reorder,
+                                                                               postpone,
+                                                                               delete]))
+    
+    private lazy var reorder = UIAction(title: "Reoder",
+                                        handler: {[weak self] _ in
+        self?.actionSubject.send(.reorder)
+        self?.bottomNavigationView.show(.move)
+    })
+    
+    private lazy var postpone = UIAction(title: "Postpone",
+                                         handler: {[weak self] _ in
+        self?.actionSubject.send(.postpone)
+        self?.bottomNavigationView.show(.done)
     })
     
     private lazy var delete = UIAction(title: "Delete",
                                        handler: {[weak self] _ in
         self?.actionSubject.send(.delete)
-        self?.recognizer?.isEnabled = true
+        self?.bottomNavigationView.show(.delete)
     })
     
-    private(set) lazy var dismissButton = UIBarButtonItem(image: UIImage(systemName: Constant.ButtonImage.xmark),
-                                                          style: .done,
-                                                          target: nil,
-                                                          action: nil)
+    private(set) lazy var addButton = UIBarButtonItem(image:
+                                                        UIImage(systemName: "plus"),
+                                                      style: .done,
+                                                      target: nil,
+                                                      action: nil)
+    
     public lazy var calendarView: MyScrollableDatepicker = {
         let cv = MyScrollableDatepicker()
         cv.delegate = self
@@ -54,11 +79,9 @@ final class WorkoutListView2: UIView {
     private(set) lazy var suggestedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-//        cv.register(SuggestionListCell.self, forCellWithReuseIdentifier: SuggestionListCell.identifier)
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
@@ -69,37 +92,22 @@ final class WorkoutListView2: UIView {
     private(set) lazy var workoutListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-//        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-//        cv.register(WorkoutListCell.self, forCellWithReuseIdentifier: WorkoutListCell.identifier)
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
-//    private(set) lazy var inputAccessory = InputView()
+    private lazy var startButton = AdrenalistTextRectangleButton(title: "Start")
     
-    func showKeyboard(_ frame: CGRect) {
-        self.recognizer?.isEnabled = true
-        UIView.animate(withDuration: 0.3) {
-            self.inputAccessoryBottomAnchor?.constant = frame.height * -1 + 34
-            self.layoutIfNeeded()
-        }
+    func isStartButtonHidden(_ isHidden: Bool) {
+        self.startButton.isHidden = isHidden
     }
     
-    func hideKeyboard() {
-        endEditing(true)
-        self.recognizer?.isEnabled = false
-        
-        UIView.animate(withDuration: 0.3) {
-            self.inputAccessoryBottomAnchor?.constant = 0
-            self.layoutIfNeeded()
-        }
-    }
-    
-    private var recognizer: UITapGestureRecognizer?
+    private lazy var bottomNavigationView = AdrenalistBottomNavigationBarView(configurator: .init(height: 110,
+                                                                                                  backgroundColor: .lightDarkNavy))
     
     private var cancellables: Set<AnyCancellable>
     
@@ -112,56 +120,69 @@ final class WorkoutListView2: UIView {
     }
     
     private func bind() {
-//        inputAccessory
-//            .actionPublisher
-//            .sink {[weak self] action in
-//                switch action {
-//                case .addButton(let workout, let reps, let weight):
-//                    self?.actionSubject.send(.addWorkoutButtonDidTap(workout, reps, weight))
-//                }
-//            }
-//            .store(in: &cancellables)
-        
-        dismissButton
+        calendarTitleButton
             .tapPublisher
-            .sink { [weak self] in
-                self?.actionSubject.send(.dismiss)
+        
+            .sink {[unowned self] _ in
+                self.actionSubject.send(.tapTitleCalendar(self.bottomSheetViewController))
             }
             .store(in: &cancellables)
-            
-        recognizer = UITapGestureRecognizer(target: self, action: #selector(tapBackground))
-        addGestureRecognizer(recognizer ?? UITapGestureRecognizer())
-    }
-   
-    @objc
-    private func tapBackground() {
-        actionSubject.send(.tapBackground)
-        recognizer?.isEnabled = false
         
-        self.hideKeyboard()
-        self.endEditing(true)
+        addButton
+            .tapPublisher
+            .sink { [weak self] in
+                self?.actionSubject.send(.add)
+            }
+            .store(in: &cancellables)
+        
+        bottomNavigationView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .move:
+                    print("move")
+                    break
+                    
+                case .delete:
+                    print("delete")
+                    break
+                    
+                case .done:
+                    print("done")
+                    break
+                    
+                case .cancel:
+                    self.actionSubject.send(.bottomNavigationBarDidTapCancel)
+                    break
+                }
+            }
+            .store(in: &cancellables)
     }
+    
     
     private func setupUI() {
         backgroundColor = .black
-//        addSubview(suggestedCollectionView)
-//        addSubview(workoutListCollectionView)
-//        addSubview(inputAccessory)
-//        addSubview(calendarView)
         
-//        suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
-//        workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        suggestedCollectionView.autoresizingMask   = [.flexibleWidth, .flexibleHeight]
+        workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        let cvStackView = UIStackView(arrangedSubviews: [suggestedCollectionView, AdrenalistDividerView(), workoutListCollectionView])
+        let cvStackView = UIStackView(arrangedSubviews: [suggestedCollectionView,
+                                                         AdrenalistDividerView(),
+                                                         workoutListCollectionView])
         cvStackView.axis = .vertical
         cvStackView.distribution = .fill
         cvStackView.alignment = .fill
         cvStackView.spacing = 2
         
-        [calendarView, cvStackView].forEach { uv in
+        [calendarView,
+         cvStackView,
+         startButton,
+        ].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
         }
+        
+        addSubview(bottomNavigationView)
         
         NSLayoutConstraint.activate([
             calendarView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -169,30 +190,29 @@ final class WorkoutListView2: UIView {
             calendarView.trailingAnchor.constraint(equalTo: trailingAnchor),
             calendarView.heightAnchor.constraint(equalToConstant: 80),
             
-//            suggestedCollectionView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
-//            suggestedCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            suggestedCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            suggestedCollectionView.heightAnchor.constraint(equalToConstant: 60),
-//
-//            workoutListCollectionView.topAnchor.constraint(equalTo: suggestedCollectionView.bottomAnchor),
-//            workoutListCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-//            workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
             cvStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
             cvStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cvStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cvStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            cvStackView.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -2),
             
-//            inputAccessory.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            inputAccessory.trailingAnchor.constraint(equalTo: trailingAnchor),
+            startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
         
-//        inputAccessoryBottomAnchor = inputAccessory.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-//        inputAccessoryBottomAnchor?.isActive = true
+        
     }
     
-    private var inputAccessoryBottomAnchor: NSLayoutConstraint?
+    private var bottomSheetViewController: UIViewController {
+        let viewControllerToPresent = ContentViewController()
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
+        return viewControllerToPresent
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -204,7 +224,7 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         _ datepicker: MyScrollableDatepicker,
         didScroll index: IndexPath
     ) {
-//        calendarTitleButton.setTitle("\( datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", for: .normal)
+        calendarTitleButton.setTitle("\( datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", for: .normal)
     }
     
     func datepicker(
