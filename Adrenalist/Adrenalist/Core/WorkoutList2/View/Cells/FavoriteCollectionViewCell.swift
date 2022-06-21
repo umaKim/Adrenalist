@@ -20,15 +20,20 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let lb = UILabel()
-        lb.text = "Bench"
+        let lb = UILabel(frame: .zero)
         lb.font = .systemFont(ofSize: 15)
         lb.textColor = .white
+        lb.sizeToFit()
         return lb
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+       
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setupUI()
     }
     
@@ -40,18 +45,10 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         titleLabel.text = model.title
     }
     
-    func calculateCellWidth(text: String) -> CGFloat {
-        titleLabel.text = text
-        titleLabel.sizeToFit()
-        let horizontalPadding: CGFloat = 14 * 2
-        return titleLabel.frame.width + horizontalPadding + 20
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         titleLabel.text = nil
-        starImageView.image = nil
     }
     
     private func setupUI() {
@@ -64,14 +61,16 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         stackView.spacing = 3
         stackView.distribution = .fill
         stackView.alignment = .center
-        
+
         [stackView]
             .forEach { uv in
                 uv.translatesAutoresizingMaskIntoConstraints = false
                 addSubview(uv)
             }
-        
+
         NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor)
