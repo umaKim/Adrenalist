@@ -7,10 +7,19 @@
 
 import Foundation
 
+struct WorkoutResponse {
+    var date: Date
+    var mode: WorkoutListCellMode
+    var workouts: [WorkoutModel]
+}
+
 struct WorkoutModel {
-    let title: String
-    let reps: Int?
-    let weight: Double?
-    let timer: TimeInterval?
-    let isFavorite: Bool?
+    var mode: WorkoutListCellMode
+    
+    var title: String
+    var reps: Int?
+    var weight: Double?
+    var timer: TimeInterval?
+    var isFavorite: Bool?
+    var isSelected: Bool?
 }
