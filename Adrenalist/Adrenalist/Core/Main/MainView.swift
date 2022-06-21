@@ -14,12 +14,12 @@ final class MainView: UIView {
         layout.minimumLineSpacing = 0
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(SettingCollectionViewCell.self, forCellWithReuseIdentifier: SettingCollectionViewCell.identifier)
         cv.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.identifier)
         cv.register(WorkoutHistoryCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier)
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.isScrollEnabled = false
         return cv
     }()
     
