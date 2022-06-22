@@ -31,6 +31,7 @@ final class MainViewController: UIViewController {
         view = contentView
         
         setupCollectionView()
+        
     }
     
     private func bind() {
@@ -56,7 +57,27 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.item {
         case 0:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.identifier, for: indexPath) as? WorkoutCollectionViewCell else {return UICollectionViewCell()}
+            guard
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier,
+                                                              for: indexPath) as? WorkoutHistoryCollectionViewCell
+            else {return UICollectionViewCell()}
+            cell.configure()
+            cell.action
+                .sink { action in
+                    switch action {
+                    case .workout:
+                        self.scrollTo(index: 1)
+                    }
+                }
+                .store(in: &cancellables)
+            return cell
+            
+        case 1:
+            
+            guard
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.identifier,
+                                                              for: indexPath) as? WorkoutCollectionViewCell
+            else {return UICollectionViewCell()}
             cell.configure()
             cell.action
                 .sink { action in
@@ -69,19 +90,6 @@ extension MainViewController: UICollectionViewDataSource {
                         
                     case .calendar:
                         self.scrollTo(index: 2)
-                    }
-                }
-                .store(in: &cancellables)
-            return cell
-            
-        case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier, for: indexPath) as? WorkoutHistoryCollectionViewCell else {return UICollectionViewCell()}
-            cell.configure()
-            cell.action
-                .sink { action in
-                    switch action {
-                    case .workout:
-                        self.scrollTo(index: 1)
                     }
                 }
                 .store(in: &cancellables)
