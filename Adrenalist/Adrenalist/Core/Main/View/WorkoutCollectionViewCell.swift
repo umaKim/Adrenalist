@@ -39,6 +39,8 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
                     self.action.send(.setting)
                 case .calendar:
                     self.action.send(.calendar)
+                case .workoutList:
+                    self.action.send(.setting)
                 }
             }
             .store(in: &cancellables)
