@@ -31,4 +31,6 @@ extension UIColor {
     static let lightDarkNavy = UIColor(red: 27/255, green: 27/255, blue: 31/255, alpha: 1)
     static let lightGray = UIColor(red: 187/256, green: 193/256, blue: 195/256, alpha: 0.2)
     static let grey2 = UIColor(red: 44/255, green: 45/255, blue: 53/255, alpha: 1)
+    static let brightGrey = UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 0.7)
+//    rgba(217, 217, 217, 0.7)
 }
