@@ -39,6 +39,7 @@ enum UpdateMode {
 
 enum WorkoutListViewModelListener {
     case dismiss
+    case moveToCircularView
 }
 
 final class WorkoutListViewModel2  {
@@ -241,6 +242,10 @@ final class WorkoutListViewModel2  {
         case .normal:
             self.notifySubject.send(.normal)
         }
+    }
+    
+    func moveToCircularView() {
+        listenerSubject.send(.moveToCircularView)
     }
     
     func dismiss() {

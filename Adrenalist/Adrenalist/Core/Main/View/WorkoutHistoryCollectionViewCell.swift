@@ -29,28 +29,56 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        let viewModel = WorkoutHistoryViewModel()
+        //        let viewModel = WorkoutHistoryViewModel()
+        //        viewModel
+        //            .transitionPublisher
+        //            .sink { trans in
+        //                switch trans {
+        //                case .workout:
+        //                    self.action.send(.workout)
+        //                }
+        //            }
+        //            .store(in: &cancellables)
+        //
+        //        let vc =  WorkoutHistoryViewController(viewModel: viewModel)
+        //        let nav = UINavigationController(rootViewController: vc)
+        //        guard let myHistoryView = nav.view else { return }
+        //        contentView.addSubview(myHistoryView)
+        //
+        //        NSLayoutConstraint.activate([
+        //            myHistoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+        //            myHistoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        //            myHistoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
+        //            myHistoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        //        ])
+        
+        let viewModel = WorkoutListViewModel2()
+        let vc = WorkoutListViewController2(viewModel: viewModel)
+        let nav = UINavigationController(rootViewController: vc)
+        
+        guard let myView = nav.view else {return }
+        contentView.addSubview(myView)
+        
+        NSLayoutConstraint.activate([
+            myView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            myView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            myView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            myView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+        
         viewModel
-            .transitionPublisher
-            .sink { trans in
-                switch trans {
-                case .workout:
+            .listenerPublisher
+            .sink { listen in
+                switch listen {
+                case .moveToCircularView:
                     self.action.send(.workout)
+                    break
+                    
+                case .dismiss:
+                    break
                 }
             }
             .store(in: &cancellables)
-        
-        let vc =  WorkoutHistoryViewController(viewModel: viewModel)
-        let nav = UINavigationController(rootViewController: vc)
-        guard let myHistoryView = nav.view else { return }
-        contentView.addSubview(myHistoryView)
-        
-        NSLayoutConstraint.activate([
-            myHistoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            myHistoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            myHistoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            myHistoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
     }
     
     required init?(coder: NSCoder) {

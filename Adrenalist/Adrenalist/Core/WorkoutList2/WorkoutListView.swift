@@ -10,10 +10,10 @@ import CombineCocoa
 import UIKit
 
 enum WorkoutListView2Action {
-//    case addWorkoutButtonDidTap(String?, String?, String?)
-//    case edit
+    //    case addWorkoutButtonDidTap(String?, String?, String?)
+    //    case edit
     
-//    case tapBackground
+    //    case tapBackground
     case add
     
     case tapTitleCalendar(UIViewController)
@@ -22,6 +22,7 @@ enum WorkoutListView2Action {
     case postpone
     case delete
     case bottomNavigationBarDidTapCancel
+    case start
 }
 
 final class WorkoutListView2: UIView {
@@ -29,7 +30,7 @@ final class WorkoutListView2: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListView2Action, Never>()
     
-//    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
+    //    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     
     private(set) lazy var calendarTitleButton: UIButton = {
         let bt = UIButton()
@@ -155,6 +156,13 @@ final class WorkoutListView2: UIView {
                     self.actionSubject.send(.bottomNavigationBarDidTapCancel)
                     break
                 }
+            }
+            .store(in: &cancellables)
+        
+        startButton
+            .tapPublisher
+            .sink { _ in
+                self.actionSubject.send(.start)
             }
             .store(in: &cancellables)
     }

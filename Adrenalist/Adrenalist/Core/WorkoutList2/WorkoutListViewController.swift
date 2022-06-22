@@ -86,6 +86,9 @@ final class WorkoutListViewController2: UIViewController {
                     
                 case .bottomNavigationBarDidTapCancel:
                     self.viewModel.updateMode(type: .normal)
+                    
+                case .start:
+                    self.viewModel.moveToCircularView()
                 }
             }
             .store(in: &cancellables)
