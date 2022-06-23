@@ -34,11 +34,13 @@ final class CircularView: UIView {
 extension CircularView {
     func animatePulse(_ duration: CGFloat) {
         let animation = CABasicAnimation(keyPath: "transform.scale")
-        if(duration == 0) {
-            animation.toValue = 1.0
-        } else {
-            animation.toValue = 1.5
-        }
+//        if(duration == 0) {
+//            animation.toValue = 1.0
+//        } else {
+//            animation.toValue = 1.5
+//        }
+        
+        animation.toValue = duration == 0 ? 1.0 : 1.5
         
         animation.fromValue = 1.25
         animation.duration = CFTimeInterval(duration)

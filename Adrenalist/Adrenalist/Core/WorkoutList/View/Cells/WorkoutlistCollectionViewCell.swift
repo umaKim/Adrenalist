@@ -59,7 +59,7 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         self.cancellables = .init()
         super.init(frame: frame)
         
-        setupUI()
+//        setupUI()
         backgroundColor = .navyGray
     }
     
@@ -70,33 +70,33 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        switch model?.mode {
-        case .normal:
-            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
-                self.checkCircleButton.isHidden = true
-                self.moveableMarkView.isHidden = true
-            } completion: { _ in }
-
-        case .reorder:
-            UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews) {
-                self.checkCircleButton.isHidden = true
-                self.moveableMarkView.isHidden = false
-            } completion: { _ in }
-            
-        case .psotpone:
-            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
-                self.checkCircleButton.isHidden = false
-                self.moveableMarkView.isHidden = true
-            } completion: { _ in }
-            
-        case .delete:
-            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
-                self.checkCircleButton.isHidden = false
-                self.moveableMarkView.isHidden = true
-            } completion: { _ in }
-        case .none:
-            break
-        }
+//        switch model?.mode {
+//        case .normal:
+//            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
+//                self.checkCircleButton.isHidden = true
+//                self.moveableMarkView.isHidden = true
+//            } completion: { _ in }
+//
+//        case .reorder:
+//            UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews) {
+//                self.checkCircleButton.isHidden = true
+//                self.moveableMarkView.isHidden = false
+//            } completion: { _ in }
+//            
+//        case .psotpone:
+//            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
+//                self.checkCircleButton.isHidden = false
+//                self.moveableMarkView.isHidden = true
+//            } completion: { _ in }
+//            
+//        case .delete:
+//            UIView.animate(withDuration: 1, delay: 0, options: .curveLinear) {
+//                self.checkCircleButton.isHidden = false
+//                self.moveableMarkView.isHidden = true
+//            } completion: { _ in }
+//        case .none:
+//            break
+//        }
     }
     
     required init?(coder: NSCoder) {

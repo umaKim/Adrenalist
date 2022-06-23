@@ -104,8 +104,8 @@ class AdrenalistBottomNavigationBarView: UIView {
     
     private func bind() {
         cancelButton.tapPublisher.sink { _ in
-            self.hideBottomNavigationView()
             self.actionSubject.send(.cancel)
+            self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
         

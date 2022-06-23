@@ -29,11 +29,6 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-       
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
         setupUI()
     }
     
@@ -43,6 +38,7 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     
     func configure(with model: WorkoutModel) {
         titleLabel.text = model.title
+        
     }
     
     override func prepareForReuse() {

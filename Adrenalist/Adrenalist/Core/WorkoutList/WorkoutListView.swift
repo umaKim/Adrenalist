@@ -23,6 +23,8 @@ enum WorkoutListView2Action {
     case delete
     case bottomNavigationBarDidTapCancel
     case start
+    
+    case didSelectDate(MyScrollableDatepickerModel)
 }
 
 final class WorkoutListView2: UIView {
@@ -33,18 +35,29 @@ final class WorkoutListView2: UIView {
     //    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
     
     private(set) lazy var calendarTitleButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        var container = AttributeContainer()
+        container.font = UIFont.boldSystemFont(ofSize: 17)
+        // 1
+        config.attributedTitle = AttributedString("\(Date().getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
+        config.image = UIImage(systemName: "chevron.down")
+        config.imagePlacement = .trailing
+        config.imagePadding = 6.2
+        config.baseForegroundColor = .white
+        
         let bt = UIButton()
-        bt.setTitle(Date().getFormattedDate(format: "yyyy년 MM월"), for: .normal)
-        bt.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        bt.configuration = config
         return bt
     }()
     
-    private(set) lazy var editButton = UIBarButtonItem(title: "Edit",
-                                                       image: nil,
-                                                       menu: UIMenu(options: .displayInline,
-                                                                    children: [reorder,
-                                                                               postpone,
-                                                                               delete]))
+    private(set) lazy var editButton: UIBarButtonItem = {
+        let bt = UIBarButtonItem(title: "Edit", image: nil, menu: UIMenu(options: .displayInline,
+                                                                         children: [reorder,
+                                                                                    postpone,
+                                                                                    delete]))
+        bt.tintColor = .white
+        return bt
+    }()
     
     private lazy var reorder = UIAction(title: "Reoder",
                                         handler: {[weak self] _ in
@@ -64,11 +77,15 @@ final class WorkoutListView2: UIView {
         self?.bottomNavigationView.show(.delete)
     })
     
-    private(set) lazy var addButton = UIBarButtonItem(image:
-                                                        UIImage(systemName: "plus"),
-                                                      style: .done,
-                                                      target: nil,
-                                                      action: nil)
+    private(set) lazy var addButton: UIBarButtonItem = {
+        let bt = UIBarButtonItem(image:
+                                    UIImage(systemName: "plus"),
+                                 style: .done,
+                                 target: nil,
+                                 action: nil)
+        bt.tintColor = .white
+        return bt
+    }()
     
     public lazy var calendarView: MyScrollableDatepicker = {
         let cv = MyScrollableDatepicker()
@@ -77,6 +94,16 @@ final class WorkoutListView2: UIView {
         return cv
     }()
     
+    func setDates(min: Int, max: Int) {
+        calendarView.setDates(min: min, max: max)
+    }
+    
+    func initialUISetup() {
+        calendarView.initialUISetup()
+    }
+    
+    private let divider = AdrenalistDividerView()
+    
     private(set) lazy var suggestedCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -84,11 +111,17 @@ final class WorkoutListView2: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+//        cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
         return cv
     }()
+    
+    func isFavoriteEmpty(_ isEmpty: Bool) {
+        self.divider.isHidden = isEmpty
+        self.suggestedCollectionView.isHidden = isEmpty
+    }
     
     private(set) lazy var workoutListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -123,7 +156,6 @@ final class WorkoutListView2: UIView {
     private func bind() {
         calendarTitleButton
             .tapPublisher
-        
             .sink {[unowned self] _ in
                 self.actionSubject.send(.tapTitleCalendar(self.bottomSheetViewController))
             }
@@ -175,7 +207,7 @@ final class WorkoutListView2: UIView {
         workoutListCollectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let cvStackView = UIStackView(arrangedSubviews: [suggestedCollectionView,
-                                                         AdrenalistDividerView(),
+                                                         divider,
                                                          workoutListCollectionView])
         cvStackView.axis = .vertical
         cvStackView.distribution = .fill
@@ -204,10 +236,10 @@ final class WorkoutListView2: UIView {
             cvStackView.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -2),
             
             startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            startButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            startButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
-        
-        
     }
     
     private var bottomSheetViewController: UIViewController {
@@ -232,7 +264,17 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         _ datepicker: MyScrollableDatepicker,
         didScroll index: IndexPath
     ) {
-        calendarTitleButton.setTitle("\( datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", for: .normal)
+        var container = AttributeContainer()
+        container.font = UIFont.boldSystemFont(ofSize: 17)
+
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
+        config.image = UIImage(systemName: "chevron.down")
+        config.imagePlacement = .trailing
+        config.imagePadding = 6.2
+        config.baseForegroundColor = .white
+
+        calendarTitleButton.configuration = config
     }
     
     func datepicker(
@@ -240,5 +282,6 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         didSelectDate date: MyScrollableDatepickerModel
     ) {
         datepicker.updateDateSet(with: date)
+        self.actionSubject.send(.didSelectDate(date))
     }
 }

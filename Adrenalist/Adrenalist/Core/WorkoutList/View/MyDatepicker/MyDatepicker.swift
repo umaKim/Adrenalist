@@ -21,8 +21,7 @@ protocol MyScrollableDatepickerDelegate: AnyObject {
 class MyScrollableDatepicker: UIView {
     public weak var delegate: MyScrollableDatepickerDelegate?
     
-    lazy var collectionView: UICollectionView = {
-        
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
         layout.scrollDirection = .horizontal
@@ -106,14 +105,26 @@ class MyScrollableDatepicker: UIView {
         }
     }
     
-    public var setDates: Void {
+//    public var setDates: Void {
+//        var dates = [MyScrollableDatepickerModel]()
+//        for day in 1...36500 {
+//            let secondsInDay = 86400
+//            let date = MyScrollableDatepickerModel(date: Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime(),
+//                                                   isSelected: false, isDot: false)
+//            dates.append(date)
+//        }
+//        self.dates = dates
+//    }
+    
+    public func setDates(min: Int, max: Int) {
         var dates = [MyScrollableDatepickerModel]()
-        for day in 1...36500 {
+        for day in min...max {
             let secondsInDay = 86400
             let date = MyScrollableDatepickerModel(date: Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime(),
                                                    isSelected: false, isDot: false)
             dates.append(date)
         }
+        
         self.dates = dates
     }
 }

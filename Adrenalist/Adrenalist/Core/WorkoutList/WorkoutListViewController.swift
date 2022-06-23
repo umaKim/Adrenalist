@@ -35,12 +35,12 @@ final class WorkoutListViewController2: UIViewController {
     }
     
     private func presentItemSetupModalForUpdate(at indexPath: IndexPath, type: CollectionViewType) {
-        var targetItem: Item?
+        var targetItem: WorkoutModel?
         switch type {
         case .suggestion:
-            targetItem = viewModel.suggestions[indexPath.row]
+            targetItem = viewModel.favorites[indexPath.row]
         case .mainWorkout:
-            targetItem = viewModel.workouts[indexPath.row]
+            targetItem = viewModel.workoutList[indexPath.row]
         }
         
         guard
@@ -69,17 +69,14 @@ final class WorkoutListViewController2: UIViewController {
                 case .reorder:
                     //TODO: change cell to be reorder mode
                     self.viewModel.updateMode(type: .reorder)
-                    break
                     
                 case .postpone:
                     //TODO: change cell to be postpone mode
                     self.viewModel.updateMode(type: .psotpone)
-                    break
                     
                 case .delete:
                     //TODO: change Cell to be delete mode
                     self.viewModel.updateMode(type: .delete)
-                    break
                     
                 case .tapTitleCalendar(let sheet):
                     self.present(sheet, animated: true)
@@ -88,7 +85,11 @@ final class WorkoutListViewController2: UIViewController {
                     self.viewModel.updateMode(type: .normal)
                     
                 case .start:
-                    self.viewModel.moveToCircularView()
+//                    self.viewModel.moveToCircularView()
+                    break
+                
+                case .didSelectDate(let date):
+                    self.viewModel.didSelectDate(date.date)
                 }
             }
             .store(in: &cancellables)
@@ -97,27 +98,41 @@ final class WorkoutListViewController2: UIViewController {
             .notifyPublisher
             .sink { noti in
                 switch noti {
-                case .delete:
-                    self.contentView.workoutListCollectionView.reloadData()
-                    break
+//                case .delete:
+//                    self.contentView.workoutListCollectionView.reloadData()
+//                    break
+//                    
+//                case .postpone:
+//                    self.contentView.workoutListCollectionView.reloadData()
+//                    break
+//                    
+//                case .reorder:
+//                    self.contentView.workoutListCollectionView.reloadData()
+//                    break
+//                    
+//                case .normal:
+//                    self.contentView.workoutListCollectionView.reloadData()
+//                    
+                case .reloadFavorites:
+                    self.contentView.suggestedCollectionView.reloadData()
                     
-                case .postpone:
+                case .reloadWorkoutList:
                     self.contentView.workoutListCollectionView.reloadData()
-                    break
                     
-                case .reorder:
-                    self.contentView.workoutListCollectionView.reloadData()
-                    break
+                case .isFavoriteEmpty(let isEmpty):
+                    self.contentView.isFavoriteEmpty(isEmpty)
                     
-                case .normal:
-                    self.contentView.workoutListCollectionView.reloadData()
+                case .isWorkoutListEmpty(let isEmpty):
+                    self.contentView.isStartButtonHidden(isEmpty)
                 }
             }
             .store(in: &cancellables)
     }
     
     private func showWorkoutSetupViewController(for title: String) {
-        let vc = WorkoutSetupViewController()
+        let vm = WorkoutSetupViewModel()
+        let vc = WorkoutSetupViewController(viewModel: vm)
+        vc.delegate = self
         vc.title = title
         let nav = UINavigationController(rootViewController: vc)
         self.present(nav, animated: true)
@@ -126,12 +141,12 @@ final class WorkoutListViewController2: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        contentView.calendarView.setDates
-        contentView.calendarView.initialUISetup()
+        contentView.setDates(min: 1, max: 36500)
+        contentView.initialUISetup()
     }
     
     private func scrollToLast() {
-        let lastItemIndex = IndexPath(item: viewModel.workouts.count - 1, section: 0)
+        let lastItemIndex = IndexPath(item: viewModel.workoutList.count - 1, section: 0)
         contentView.workoutListCollectionView.scrollToItem(at: lastItemIndex, at: .bottom, animated: true)
     }
     
@@ -165,17 +180,17 @@ final class WorkoutListViewController2: UIViewController {
 extension WorkoutListViewController2: WorkoutListCellDelegate {
     func workoutListDidTapEdit(id: UUID) {
         guard
-            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
+            let itemIndex = viewModel.workoutList.firstIndex(where: {$0.uuid == id})
         else { return }
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
         presentItemSetupModalForUpdate(at: indexPath, type: .mainWorkout)
-        viewModel.noMode()
+//        viewModel.noMode()
     }
     
     func workoutListDidTapdelete(id: UUID) {
         guard
-            let itemIndex = viewModel.workouts.firstIndex(where: {$0.uuid == id})
+            let itemIndex = viewModel.workoutList.firstIndex(where: {$0.uuid == id})
         else { return }
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
@@ -189,17 +204,17 @@ extension WorkoutListViewController2: WorkoutListCellDelegate {
 extension WorkoutListViewController2: SuggestionListCellDelegate {
     func suggestionDidTapEdit(id: UUID) {
         guard
-            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
+            let itemIndex = viewModel.favorites.firstIndex(where: {$0.uuid == id})
         else { return }
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
         presentItemSetupModalForUpdate(at: indexPath, type: .suggestion)
-        viewModel.noMode()
+//        viewModel.noMode()
     }
     
     func suggestionDidTapDelete(id: UUID) {
         guard
-            let itemIndex = viewModel.suggestions.firstIndex(where: {$0.uuid == id})
+            let itemIndex = viewModel.favorites.firstIndex(where: {$0.uuid == id})
         else { return }
         
         let indexPath = IndexPath(row: itemIndex, section: 0)
@@ -273,7 +288,7 @@ extension WorkoutListViewController2: UICollectionViewDropDelegate {
 //MARK: - UICollectionView Drag Delegate
 extension WorkoutListViewController2: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = collectionView == contentView.suggestedCollectionView ? viewModel.suggestions[indexPath.row] : viewModel.workouts[indexPath.row]
+        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row] : viewModel.workoutList[indexPath.row]
         let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
@@ -281,7 +296,7 @@ extension WorkoutListViewController2: UICollectionViewDragDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        let item = collectionView == contentView.suggestedCollectionView ? viewModel.suggestions[indexPath.row] : viewModel.workouts[indexPath.row]
+        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row] : viewModel.workoutList[indexPath.row]
         let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
@@ -306,13 +321,36 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier, for: indexPath) as? FavoriteCollectionViewCell else {return UICollectionViewCell() }
-            //            cell.configure(with: viewModel.suggestions[indexPath.item], mode: self.mode)
-            //            cell.delegate = self
-            cell.configure(with: viewModel.favorites[indexPath.item])
+//            if indexPath.item == viewModel.favorites.count - 1 {
+//                return UICollectionViewCell()
+//
+//                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteLastCollectionViewCell.identifier,
+//                                                              for: indexPath) as? FavoriteLastCollectionViewCell
+//                else { return UICollectionViewCell() }
+//                cell.configure()
+//                cell.backgroundColor = .red
+//                return cell
+//
+//            } else {
+                guard
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier,
+                                                                  for: indexPath) as? FavoriteCollectionViewCell
+                else {return UICollectionViewCell() }
+            
+//            if indexPath.item == viewModel.favorites.count - 1 {
+//                cell.configureLast()
+//            } else {
+                cell.configure(with: viewModel.favorites[indexPath.item])
+//            }
+                
             return cell
+//            }
+            
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier, for: indexPath) as? WorkoutlistCollectionViewCell else {return UICollectionViewCell()}
+            guard
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier,
+                                                                for: indexPath) as? WorkoutlistCollectionViewCell
+            else {return UICollectionViewCell()}
             //            cell.configure(with: viewModel.workouts[indexPath.item], mode: self.mode)
             //            cell.delegate = self
             cell.configure(with: viewModel.workoutList[indexPath.item])
@@ -335,6 +373,9 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
             self.showWorkoutSetupViewController(for: "Edit")
         } else {
             //            viewModel.didTapSuggestion(at: indexPath.item)
+            if indexPath.item == viewModel.favorites.count - 1 {
+                print("Tap last item")
+            }
         }
     }
 }
@@ -343,20 +384,37 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
 extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == contentView.suggestedCollectionView {
-            //            return .init(width: UIScreen.main.bounds.width / 2.5, height: 40)
-            let width = viewModel.favorites[indexPath.item].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
-            let height: CGFloat = 39
+//            if indexPath.item == viewModel.favorites.count - 1 {
+//                return CGSize(width: 22, height: 22)
+//            } else {
+                let width = viewModel.favorites[indexPath.item].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
+                let height: CGFloat = 39
+                return CGSize(width: width, height: height)
+//            }
             
-            return CGSize(width: width, height: height)
         } else {
             return .init(width: UIScreen.main.bounds.width - 32, height: 78)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if collectionView === contentView.suggestedCollectionView{
+        if collectionView === contentView.suggestedCollectionView {
             return .init(top: 0, left: 16, bottom: 0, right: 16)
         }
         return .init(top: 16, left: 0, bottom: 16, right: 0)
+    }
+}
+
+
+extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
+    func WorkoutSetupDidTapDone() {
+        self.dismiss(animated: true) {
+            self.viewModel.fetchFavorites()
+            self.viewModel.fetchWorkoutList(of: Date().stripTime())
+        }
+    }
+    
+    func WorkoutSetupDidTapCancel() {
+        self.dismiss()
     }
 }

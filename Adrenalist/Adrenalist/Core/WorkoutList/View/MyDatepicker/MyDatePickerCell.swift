@@ -70,8 +70,7 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
             layer.borderColor = UIColor.purpleBlue.cgColor
         }
         
-        self.dot.isHidden = false
-//        !date.isDot
+        self.dot.isHidden = !date.isDot
     }
     
     private func setupUI() {

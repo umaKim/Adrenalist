@@ -9,25 +9,33 @@ import Combine
 import CoreFoundation
 import UIKit
 
-enum WorkoutListTransition {
+enum WorkoutTransition {
     case setting
     case calendar
+    case workoutList
 }
 
-enum WorkoutListViewModelNotification {
+enum WorkoutViewModelNotification {
+    
 }
 
-final class WorkoutListViewModel {
+final class WorkoutViewModel {
     private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
-    private let transitionSubject = PassthroughSubject<WorkoutListTransition, Never>()
+    private let transitionSubject = PassthroughSubject<WorkoutTransition, Never>()
     
     private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
-    private let notifySubject = PassthroughSubject<WorkoutListViewModelNotification, Never>()
+    private let notifySubject = PassthroughSubject<WorkoutViewModelNotification, Never>()
     
     private var cancellables: Set<AnyCancellable>
     
     private(set) var favorites = [WorkoutModel]()
     private(set) var workouts = [WorkoutModel]()
+    
+    private(set) var isCanlendarBottomSheetPresented: Bool = false
+    
+    func setCalendarBottomSheetPresent(_ isPresent: Bool) {
+        self.isCanlendarBottomSheetPresented = isPresent
+    }
     
     init() {
         self.cancellables = .init()
@@ -37,19 +45,20 @@ final class WorkoutListViewModel {
          "nice",
          "Incline Bench press",
          "Bench Press",
-          "pull up",
-          "nice",
-          "Incline Bench press",
+         "pull up",
+         "nice",
+         "Incline Bench press",
          "Bench Press",
-          "pull up",
-          "nice",
-          "Incline Bench press"]
+         "pull up",
+         "nice",
+         "Incline Bench press"]
             .forEach { text in
-                workouts.append(WorkoutModel(title: text,
-                                          reps: 20,
-                                          weight: 200,
-                                          timer: 1000,
-                                          isFavorite: nil))
+                workouts.append(WorkoutModel(mode: .normal, title: text,
+                                             reps: 20,
+                                             weight: 200,
+                                             timer: 1000,
+                                             isFavorite: nil,
+                                             isDone: false))
             }
         
         ["Bench Press",
@@ -57,22 +66,36 @@ final class WorkoutListViewModel {
          "nice",
          "Incline Bench press",
          "Bench Press",
-          "pull up",
-          "nice",
-          "Incline Bench press",
+         "pull up",
+         "nice",
+         "Incline Bench press",
          "Bench Press",
-          "pull up",
-          "nice",
-          "Incline Bench press"]
+         "pull up",
+         "nice",
+         "Incline Bench press"]
             .forEach { text in
-                favorites.append(WorkoutModel(title: text,
-                                          reps: 20,
-                                          weight: 200,
-                                          timer: 1000,
-                                          isFavorite: nil))
+                favorites.append(WorkoutModel(mode: .normal, title: text,
+                                              reps: 20,
+                                              weight: 200,
+                                              timer: 1000,
+                                              isFavorite: nil,
+                                              isDone: false))
             }
     }
+    
+    func backToWorkoutList() {
+        self.transitionSubject.send(.workoutList)
+    }
+    
+    func didTapSkip() {
+        print("Skip")
+    }
+    
+    func didTapNext() {
+        print("next")
+    }
 }
+
 //
 //final class WorkoutListViewModel2 {
 //    private(set) lazy var transitionPublisher = transitionSubject.eraseToAnyPublisher()
