@@ -12,6 +12,13 @@ import UIKit
 enum WorkoutSetupViewAction {
     case didTapDone
     case didTapCancel
+    
+    case titleDidChange(String)
+    case isFavorite(Bool)
+    case repsDidChange(String)
+    case weightDidChange(String)
+    case timeDidChange(String)
+    case setDidChange(String)
 }
 
 class WorkoutSetupView: UIView {
@@ -29,32 +36,10 @@ class WorkoutSetupView: UIView {
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
+        backgroundColor = .darkNavy
         
         bind()
         setupUI()
-    }
-    
-    private func setupUI() {
-        backgroundColor = .darkNavy
-        
-        
-        [titleTextFieldView, adrenalistInputDetailView]
-            .forEach { uv in
-                uv.translatesAutoresizingMaskIntoConstraints = false
-                addSubview(uv)
-            }
-        
-        NSLayoutConstraint.activate([
-            titleTextFieldView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            titleTextFieldView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleTextFieldView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleTextFieldView.heightAnchor.constraint(equalToConstant: 64),
-            
-            adrenalistInputDetailView.topAnchor.constraint(equalTo: titleTextFieldView.bottomAnchor, constant: 32),
-            adrenalistInputDetailView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            adrenalistInputDetailView.heightAnchor.constraint(equalToConstant: 244)
-        ])
     }
     
     private func bind() {
@@ -71,6 +56,58 @@ class WorkoutSetupView: UIView {
                 self.actionSubject.send(.didTapCancel)
             }
             .store(in: &cancellables)
+        
+        titleTextFieldView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .titleTextFieldDidChange(let text):
+                    self.actionSubject.send(.titleDidChange(text))
+                    
+                case .isStarButtonSelected(let isFavorite):
+                    self.actionSubject.send(.isFavorite(isFavorite))
+                }
+            }
+            .store(in: &cancellables)
+        
+        adrenalistInputDetailView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .repsDidChange(let text):
+                    self.actionSubject.send(.repsDidChange(text))
+                    
+                case .weightDidChange(let text):
+                    self.actionSubject.send(.weightDidChange(text))
+                    
+                case .timeDidChange(let text):
+                    self.actionSubject.send(.timeDidChange(text))
+                    
+                case .setDidChange(let text):
+                    self.actionSubject.send(.setDidChange(text))
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func setupUI() {
+        [titleTextFieldView, adrenalistInputDetailView]
+            .forEach { uv in
+                uv.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(uv)
+            }
+        
+        NSLayoutConstraint.activate([
+            titleTextFieldView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 31.5),
+            titleTextFieldView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleTextFieldView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            titleTextFieldView.heightAnchor.constraint(equalToConstant: 64),
+            
+            adrenalistInputDetailView.topAnchor.constraint(equalTo: titleTextFieldView.bottomAnchor, constant: 32),
+            adrenalistInputDetailView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            adrenalistInputDetailView.heightAnchor.constraint(equalToConstant: 244)
+        ])
     }
     
     required init?(coder: NSCoder) {
