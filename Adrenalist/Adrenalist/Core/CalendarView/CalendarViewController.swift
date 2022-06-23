@@ -9,6 +9,15 @@ import FSCalendar
 import UIKit
 
 final class ContentViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate {
+    private lazy var grabberView: UIView = {
+       let uv = UIView()
+        uv.backgroundColor = .systemGray
+        uv.heightAnchor.constraint(equalToConstant: 5).isActive = true
+        uv.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        uv.layer.cornerRadius = 2.5
+        return uv
+    }()
+    
     private let calendar = FSCalendar()
     
     override func viewDidLoad() {
@@ -49,21 +58,25 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
     
     private func setupUI() {
         view.backgroundColor = .darkNavy
-        view.addSubview(calendar)
         
         let sv = UIStackView(arrangedSubviews: [calendar])
         sv.distribution = .fill
         sv.alignment = .fill
+        sv.axis = .vertical
+        sv.spacing = 12
         
-        [sv].forEach { uv in
+        [grabberView, sv].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(uv)
         }
         
         NSLayoutConstraint.activate([
+            grabberView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            grabberView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            
+            sv.topAnchor.constraint(equalTo: grabberView.bottomAnchor, constant: 12),
             sv.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             sv.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            sv.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             sv.heightAnchor.constraint(equalToConstant: 300)
         ])
     }
