@@ -9,11 +9,11 @@ import Foundation
 
 struct WorkoutResponse {
     var date: Date
-    var mode: WorkoutListCellMode
     var workouts: [WorkoutModel]
 }
 
-struct WorkoutModel {
+struct WorkoutModel: Codable, Hashable {
+    var uuid = UUID()
     var mode: WorkoutListCellMode
     
     var title: String
@@ -22,4 +22,5 @@ struct WorkoutModel {
     var timer: TimeInterval?
     var isFavorite: Bool?
     var isSelected: Bool?
+    var isDone: Bool
 }
