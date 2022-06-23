@@ -4,8 +4,13 @@
 //
 //  Created by 김윤석 on 2022/06/17.
 //
-
+import Combine
+import CombineCocoa
 import UIKit
+
+enum AdrenalistTextInputViewAction {
+    case textFieldDidChange(String)
+}
 
 class AdrenalistTextInputView: UIView {
     
@@ -22,15 +27,31 @@ class AdrenalistTextInputView: UIView {
         return tf
     }()
     
+    private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
+    private let actionSubject = PassthroughSubject<AdrenalistTextInputViewAction, Never>()
+    
+    private var cancellables: Set<AnyCancellable>
+    
     init(
         title: String,
         placeholder: String
     ) {
         self.titleLabel.text = title
         self.textField.placeholder = placeholder
+        self.cancellables = .init()
         super.init(frame: .zero)
         
+        bind()
         setupUI()
+    }
+    
+    private func bind() {
+        textField.textPublisher
+            .compactMap({$0})
+            .sink { text in
+            self.actionSubject.send(.textFieldDidChange(text))
+        }
+        .store(in: &cancellables)
     }
     
     private func setupUI() {
