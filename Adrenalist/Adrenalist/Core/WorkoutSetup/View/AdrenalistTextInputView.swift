@@ -27,6 +27,10 @@ class AdrenalistTextInputView: UIView {
         return tf
     }()
     
+    func setupValue(_ text: String) {
+        self.textField.text = text
+    }
+    
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<AdrenalistTextInputViewAction, Never>()
     

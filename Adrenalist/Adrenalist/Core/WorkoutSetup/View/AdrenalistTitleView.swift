@@ -30,6 +30,10 @@ final class AdrenalistTitleView: UIView {
         return bt
     }()
     
+    func setupTitleTextField(_ text: String) {
+        self.titleTextField.text = text
+    }
+    
     private var starStatus: Bool = false
     
     private var cancellables: Set<AnyCancellable>

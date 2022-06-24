@@ -32,6 +32,18 @@ class AdrenalistInputDetailView: UIView {
     
     private let set = AdrenalistInputStepperView(title: "Set", value: 0)
     
+    func setupReps(_ reps: Int) {
+        self.reps.setupValue("\(reps)")
+    }
+    
+    func setupWeight(_ weight: Double) {
+        self.weight.setupValue("\(weight)")
+    }
+    
+    func setupTime(_ timer: TimeInterval) {
+        self.weight.setupValue("\(timer)")
+    }
+    
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
