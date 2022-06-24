@@ -75,6 +75,31 @@ class WorkoutSetupViewController: UIViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        //        viewModel
+        //            .workout
+        //            .receive(on: RunLoop.main)
+        //            .compactMap({$0})
+        //            .sink { model in
+        //                self.contentView.setUpReceivedModel(model: model)
+        //        }
+        //        .store(in: &cancellables)
+        //
+        viewModel
+            .notifyPublisher
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { noti in
+                switch noti {
+                case .update(let model):
+                    self.contentView.setUpReceivedModel(model: model)
+                }
+            }
+            .store(in: &cancellables)
+        
+        if let workout = viewModel.workout {
+            contentView.setUpReceivedModel(model: workout)
+        }
     }
     
     private func setupUI() {

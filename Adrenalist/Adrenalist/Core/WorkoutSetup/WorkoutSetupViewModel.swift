@@ -8,7 +8,16 @@
 import Combine
 import Foundation
 
+enum WorkoutSetupViewModelNotification{
+    case update(WorkoutModel)
+}
+
 class WorkoutSetupViewModel {
+    
+//    private(set) var workout = PassthroughSubject<WorkoutModel?, Never>()
+    
+    private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
+    private let notifySubject = PassthroughSubject<WorkoutSetupViewModelNotification, Never>()
     
     private(set) var workout: WorkoutModel?
     
@@ -26,6 +35,11 @@ class WorkoutSetupViewModel {
     ) {
         self.workout = workout
         self.cancellables = .init()
+        
+//        guard
+//            let workout = workout
+//        else { return }
+//        self.notifySubject.send(.update(workout))
     }
     
     func setTitle(_ text: String) {

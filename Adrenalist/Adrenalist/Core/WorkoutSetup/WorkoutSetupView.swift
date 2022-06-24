@@ -42,6 +42,13 @@ class WorkoutSetupView: UIView {
         setupUI()
     }
     
+    func setUpReceivedModel(model: WorkoutModel) {
+        titleTextFieldView.setupTitleTextField(model.title)
+        adrenalistInputDetailView.setupReps(model.reps ?? 0)
+        adrenalistInputDetailView.setupWeight(model.weight ?? 0)
+        adrenalistInputDetailView.setupTime(model.timer ?? 0)
+    }
+    
     private func bind() {
         doneButton
             .tapPublisher
