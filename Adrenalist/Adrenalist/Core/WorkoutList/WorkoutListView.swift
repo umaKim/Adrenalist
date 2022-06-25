@@ -16,7 +16,7 @@ enum WorkoutListView2Action {
     //    case tapBackground
     case add
     
-    case tapTitleCalendar(UIViewController)
+    case tapTitleCalendar(ContentViewController)
     
     case reorder
     case postpone
@@ -87,6 +87,13 @@ final class WorkoutListView2: UIView {
         return bt
     }()
     
+    private(set) lazy var moveToCircularButton: UIBarButtonItem = {
+        let bt = UIBarButtonItem(image: UIImage(systemName: "chevron.right"),
+                                 style: .plain, target: nil, action: nil)
+        bt.tintColor = .white
+        return bt
+    }()
+    
     public lazy var calendarView: MyScrollableDatepicker = {
         let cv = MyScrollableDatepicker()
         cv.delegate = self
@@ -94,8 +101,8 @@ final class WorkoutListView2: UIView {
         return cv
     }()
     
-    func setDates(min: Int, max: Int) {
-        calendarView.setDates(min: min, max: max)
+    func setDates(min: Int, max: Int, dates: [Date]) {
+        calendarView.setDates(min: min, max: max, dotDates: dates)
     }
     
     func initialUISetup() {
@@ -111,7 +118,7 @@ final class WorkoutListView2: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
-//        cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
+        //        cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -134,11 +141,11 @@ final class WorkoutListView2: UIView {
         return cv
     }()
     
-    private lazy var startButton = AdrenalistTextRectangleButton(title: "Start")
+//    private lazy var startButton = AdrenalistTextRectangleButton(title: "Start")
     
-    func isStartButtonHidden(_ isHidden: Bool) {
-        self.startButton.isHidden = isHidden
-    }
+//    func isStartButtonHidden(_ isHidden: Bool) {
+//        self.startButton.isHidden = isHidden
+//    }
     
     private lazy var bottomNavigationView = AdrenalistBottomNavigationBarView(configurator: .init(height: 110,
                                                                                                   backgroundColor: .lightDarkNavy))
@@ -191,7 +198,14 @@ final class WorkoutListView2: UIView {
             }
             .store(in: &cancellables)
         
-        startButton
+//        startButton
+//            .tapPublisher
+//            .sink { _ in
+//                self.actionSubject.send(.start)
+//            }
+//            .store(in: &cancellables)
+        
+        moveToCircularButton
             .tapPublisher
             .sink { _ in
                 self.actionSubject.send(.start)
@@ -216,7 +230,7 @@ final class WorkoutListView2: UIView {
         
         [calendarView,
          cvStackView,
-         startButton,
+//         startButton,
         ].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
@@ -233,16 +247,16 @@ final class WorkoutListView2: UIView {
             cvStackView.topAnchor.constraint(equalTo: calendarView.bottomAnchor),
             cvStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cvStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            cvStackView.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -2),
+            cvStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             
-            startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            startButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            startButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+//            startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//            startButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+//            startButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
-    private var bottomSheetViewController: UIViewController {
+    private var bottomSheetViewController: ContentViewController {
         let viewControllerToPresent = ContentViewController()
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium()]
@@ -266,14 +280,14 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
     ) {
         var container = AttributeContainer()
         container.font = UIFont.boldSystemFont(ofSize: 17)
-
+        
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
         config.image = UIImage(systemName: "chevron.down")
         config.imagePlacement = .trailing
         config.imagePadding = 6.2
         config.baseForegroundColor = .white
-
+        
         calendarTitleButton.configuration = config
     }
     
