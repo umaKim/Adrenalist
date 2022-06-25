@@ -25,15 +25,25 @@ class WorkoutSetupView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutSetupViewAction, Never>()
     
-    private(set) lazy var doneButton = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: nil)
-    private(set) lazy var cancelButton: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+    private(set) lazy var doneButton: UIBarButtonItem = {
+        let bt = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: nil)
+        bt.tintColor = .purpleBlue
+        return bt
+    }()
+    
+    private(set) lazy var cancelButton: UIBarButtonItem = {
+       let bt = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: nil)
+        bt.tintColor = .purpleBlue
+        return bt
+    }()
     
     private let titleTextFieldView = AdrenalistTitleView()
-    private let adrenalistInputDetailView = AdrenalistInputDetailView()
+    private let adrenalistInputDetailView: AdrenalistInputDetailView
     
     private var cancellables: Set<AnyCancellable>
     
-    init() {
+    init(type: WorkoutSetupType) {
+        self.adrenalistInputDetailView = AdrenalistInputDetailView(type: type)
         self.cancellables = .init()
         super.init(frame: .zero)
         backgroundColor = .darkNavy
