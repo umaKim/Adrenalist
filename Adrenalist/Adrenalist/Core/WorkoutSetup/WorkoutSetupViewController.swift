@@ -10,13 +10,13 @@ import Combine
 import UIKit
 
 protocol WorkoutSetupViewControllerDelegate: AnyObject {
-    func WorkoutSetupDidTapDone()
+    func WorkoutSetupDidTapDone(with model: WorkoutModel?, for type: WorkoutSetupType, set: Int)
     func WorkoutSetupDidTapCancel()
 }
 
 class WorkoutSetupViewController: UIViewController {
     
-    private let contentView = WorkoutSetupView()
+    private let contentView: WorkoutSetupView
     
     private let viewModel: WorkoutSetupViewModel
     
@@ -26,6 +26,7 @@ class WorkoutSetupViewController: UIViewController {
     
     init(viewModel: WorkoutSetupViewModel) {
         self.viewModel = viewModel
+        self.contentView = WorkoutSetupView(type: viewModel.type)
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,8 +53,10 @@ class WorkoutSetupViewController: UIViewController {
                     self.delegate?.WorkoutSetupDidTapCancel()
                     
                 case .didTapDone:
-                    self.viewModel.doneDidTap()
-                    self.delegate?.WorkoutSetupDidTapDone()
+                    self.viewModel.doneButtonDidTap()
+                    self.delegate?.WorkoutSetupDidTapDone(with: self.viewModel.workout,
+                                                          for: self.viewModel.type,
+                                                          set: self.viewModel.set)
                     
                 case .titleDidChange(let text):
                     self.viewModel.setTitle(text)
@@ -76,24 +79,11 @@ class WorkoutSetupViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        //        viewModel
-        //            .workout
-        //            .receive(on: RunLoop.main)
-        //            .compactMap({$0})
-        //            .sink { model in
-        //                self.contentView.setUpReceivedModel(model: model)
-        //        }
-        //        .store(in: &cancellables)
-        //
         viewModel
             .notifyPublisher
-            .subscribe(on: DispatchQueue.global())
             .receive(on: DispatchQueue.main)
             .sink { noti in
-                switch noti {
-                case .update(let model):
-                    self.contentView.setUpReceivedModel(model: model)
-                }
+                
             }
             .store(in: &cancellables)
         
@@ -103,7 +93,6 @@ class WorkoutSetupViewController: UIViewController {
     }
     
     private func setupUI() {
-        navigationController?.navigationBar.backgroundColor = .green
         navigationItem.leftBarButtonItems = [contentView.cancelButton]
         navigationItem.rightBarButtonItems = [contentView.doneButton]
     }
