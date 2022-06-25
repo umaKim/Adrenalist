@@ -53,11 +53,11 @@ final class WorkoutViewModel {
          "nice",
          "Incline Bench press"]
             .forEach { text in
-                workouts.append(WorkoutModel(mode: .normal, title: text,
+                workouts.append(WorkoutModel(title: text,
                                              reps: 20,
                                              weight: 200,
                                              timer: 1000,
-                                             isFavorite: nil,
+                                             isFavorite: false,
                                              isDone: false))
             }
         
@@ -74,11 +74,11 @@ final class WorkoutViewModel {
          "nice",
          "Incline Bench press"]
             .forEach { text in
-                favorites.append(WorkoutModel(mode: .normal, title: text,
+                favorites.append(WorkoutModel(title: text,
                                               reps: 20,
                                               weight: 200,
                                               timer: 1000,
-                                              isFavorite: nil,
+                                              isFavorite: false,
                                               isDone: false))
             }
     }

@@ -21,16 +21,20 @@ class AdrenalistInputDetailView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<AdrenalistInputDetailViewAction, Never>()
     
-    private let reps = AdrenalistTextInputView(title: "Reps", placeholder: "reps")
+    private let reps = AdrenalistTextInputView(title: "Reps", placeholder: "reps", keyboardType: .numberPad)
     private let divider1 = AdrenalistDividerView()
     
-    private let weight = AdrenalistTextInputView(title: "weight", placeholder: "weight")
+    private lazy var weight = AdrenalistTextInputView(title: "weight",
+                                                 placeholder: "weight",
+                                                      keyboardType: .numberPad)
     private let divider2 = AdrenalistDividerView()
     
-    private let time = AdrenalistTextInputView(title: "time", placeholder: "time")
+    private let time = AdrenalistTextInputView(title: "time",
+                                               placeholder: "time",
+                                               keyboardType: .numberPad)
     private let divider3 = AdrenalistDividerView()
     
-    private let set = AdrenalistInputStepperView(title: "Set", value: 0)
+    private let set = AdrenalistInputStepperView(title: "Set", value: 1)
     
     func setupReps(_ reps: Int) {
         self.reps.setupValue("\(reps)")
@@ -44,9 +48,21 @@ class AdrenalistInputDetailView: UIView {
         self.weight.setupValue("\(timer)")
     }
     
-    init() {
+    private let type: WorkoutSetupType
+    
+    init(type: WorkoutSetupType) {
+        self.type = type
         self.cancellables = .init()
         super.init(frame: .zero)
+        
+        switch type {
+        case .edit:
+            self.set.isHidden = true
+            
+        case .add:
+            self.set.isHidden = false
+        }
+        
         bind()
         setupUI()
     }
@@ -81,6 +97,14 @@ class AdrenalistInputDetailView: UIView {
             }
         }
         .store(in: &cancellables)
+        
+        set.actionPublisher.sink { action in
+            switch action {
+            case .valueDidChange(let value):
+                self.actionSubject.send(.setDidChange(value))
+            }
+        }
+        .store(in: &cancellables)
     }
     
     private func setupUI() {
@@ -104,7 +128,7 @@ class AdrenalistInputDetailView: UIView {
             sv.leadingAnchor.constraint(equalTo: leadingAnchor),
             sv.trailingAnchor.constraint(equalTo: trailingAnchor),
             sv.topAnchor.constraint(equalTo: topAnchor),
-            sv.bottomAnchor.constraint(equalTo: bottomAnchor)
+//            sv.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }

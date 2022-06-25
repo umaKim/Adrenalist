@@ -30,7 +30,7 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        let viewModel = WorkoutListViewModel()
+        let viewModel = WorkoutViewModel()
         viewModel
             .transitionPublisher
             .sink { trans in
@@ -45,7 +45,7 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
             }
             .store(in: &cancellables)
         
-        let nav = UINavigationController(rootViewController: WorkoutListViewController(viewModel: viewModel))
+        let nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
         guard let myListView = nav.view else { return }
         contentView.addSubview(myListView)
         
