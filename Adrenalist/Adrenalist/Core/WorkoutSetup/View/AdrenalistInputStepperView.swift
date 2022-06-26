@@ -4,10 +4,18 @@
 //
 //  Created by 김윤석 on 2022/06/17.
 //
-
+import Combine
+import CombineCocoa
 import UIKit
 
+enum AdrenalistInputStepperViewAction {
+    case valueDidChange(String)
+}
+
 class AdrenalistInputStepperView: UIView {
+    
+    private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
+    private let actionSubject = PassthroughSubject<AdrenalistInputStepperViewAction, Never>()
     
     private let titleLabel: UILabel = {
        let lb = UILabel()
@@ -39,21 +47,49 @@ class AdrenalistInputStepperView: UIView {
         return bt
     }()
     
+    private var currentValue = CurrentValueSubject<Int, Never>(0)
+    private var value: Int = 0
+    
+    private var cancellables: Set<AnyCancellable>
+    
     init(
         title: String,
         value: Int
     ) {
         self.titleLabel.text = title
-        self.valueLabel.text = "\(value)"
+        self.currentValue = CurrentValueSubject<Int, Never>(value)
+        self.value = value
+        self.cancellables = .init()
         super.init(frame: .zero)
         
+        bind()
         setupUI()
+    }
+    
+    private func bind() {
+        addButton.tapPublisher.sink { _ in
+            self.value += 1
+            self.currentValue.send(self.value)
+        }
+        .store(in: &cancellables)
+        
+        subButton.tapPublisher.sink { _ in
+            self.value -= 1
+            self.currentValue.send(self.value)
+        }
+        .store(in: &cancellables)
+        
+        currentValue.sink { value in
+            self.actionSubject.send(.valueDidChange("\(value)"))
+            self.valueLabel.text = "\(value)"
+        }
+        .store(in: &cancellables)
     }
     
     private func setupUI() {
         layer.cornerRadius = 20
         
-        let hv = UIStackView(arrangedSubviews: [addButton ,valueLabel, subButton])
+        let hv = UIStackView(arrangedSubviews: [subButton ,valueLabel, addButton])
         hv.axis = .horizontal
         hv.alignment = .firstBaseline
         hv.distribution = .equalCentering
@@ -71,7 +107,6 @@ class AdrenalistInputStepperView: UIView {
         }
         
         NSLayoutConstraint.activate([
-//            sv.centerXAnchor.constraint(equalTo: centerXAnchor),
             sv.centerYAnchor.constraint(equalTo: centerYAnchor),
             sv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             sv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
