@@ -15,7 +15,7 @@ enum ItemType: String, Codable {
 }
 
 enum ItemSetupViewAction {
-    case confirm(Item)
+    case confirm(WorkoutModel)
     case cancel
 }
 
@@ -41,8 +41,8 @@ final class ItemSetupView: UIView {
         setupUI()
     }
     
-    func updateUI(with item: Item?) {
-        containerView.updateUI(with: item)
+    func updateUI(with item: WorkoutModel?) {
+//        containerView.updateUI(with: item)
     }
     
     private func bind() {
