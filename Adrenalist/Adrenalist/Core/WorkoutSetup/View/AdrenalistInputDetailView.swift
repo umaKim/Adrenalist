@@ -45,7 +45,7 @@ class AdrenalistInputDetailView: UIView {
     }
     
     func setupTime(_ timer: TimeInterval) {
-        self.weight.setupValue("\(timer)")
+        self.time.setupValue("\(timer)")
     }
     
     private let type: WorkoutSetupType
