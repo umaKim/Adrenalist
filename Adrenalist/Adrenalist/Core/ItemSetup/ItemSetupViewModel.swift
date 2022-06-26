@@ -18,38 +18,38 @@ enum ItemSetupViewModelListen {
 }
 
 final class ItemSetupViewModel {
-    private let workoutManager = ItemManager.shared
+    private let workoutManager = Manager.shared
     
-    private(set) var workout: Item?
+    private(set) var workout: WorkoutModel?
     private var collectionViewType: CollectionViewType
     
     private var cancellables: Set<AnyCancellable>
     
-    init(workout: Item? = nil, collectionViewType: CollectionViewType) {
+    init(workout: WorkoutModel? = nil, collectionViewType: CollectionViewType) {
         self.workout = workout
         self.collectionViewType = collectionViewType
         self.cancellables = .init()
     }
     
-    func confirm(for workout: Item) {
-        if self.workout != nil {
-            switch collectionViewType {
-            case .suggestion:
-                var suggestions = workoutManager.suggestions
-                guard let index = suggestions.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
-                suggestions[index] = workout
-                workoutManager.updateSuggestions(suggestions)
-                
-            case .mainWorkout:
-                var workouts = workoutManager.itemToDos
-                guard let index = workouts.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
-                workouts[index] = workout
-                workoutManager.updateWorkoutToDos(workouts)
-            }
-            
-        } else {
-            workoutManager.appendWorkoutToDos(workout)
-        }
+    func confirm(for workout: WorkoutModel) {
+//        if self.workout != nil {
+//            switch collectionViewType {
+//            case .suggestion:
+//                var suggestions = workoutManager.suggestions
+//                guard let index = suggestions.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
+//                suggestions[index] = workout
+//                workoutManager.updateSuggestions(suggestions)
+//
+//            case .mainWorkout:
+//                var workouts = workoutManager.itemToDos
+//                guard let index = workouts.firstIndex(where: {$0.uuid == workout.uuid}) else {return }
+//                workouts[index] = workout
+//                workoutManager.updateWorkoutToDos(workouts)
+//            }
+//
+//        } else {
+//            workoutManager.appendWorkoutToDos(workout)
+//        }
     }
     
     private func update() {
