@@ -10,6 +10,11 @@ import UIKit.UICollectionViewCell
 
 enum WorkoutHistoryCollectionViewCellAction {
     case workout
+    case present(UIViewController)
+    case dismiss
+    
+    case push(UIViewController)
+    case pop
 }
 
 final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
@@ -22,10 +27,11 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         self.cancellables = .init()
         super.init(frame: frame)
+        setupUI()
     }
     
     func configure() {
-        setupUI()
+        
     }
     
     private func setupUI() {
@@ -34,6 +40,7 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
         let nav = UINavigationController(rootViewController: vc)
         
         guard let myView = nav.view else {return }
+//        guard let myView = vc.view else {return }
         contentView.addSubview(myView)
         
         NSLayoutConstraint.activate([
@@ -51,8 +58,17 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
                     self.action.send(.workout)
                     break
                     
+                case .present(let vc):
+                    self.action.send(.present(vc))
+                    
                 case .dismiss:
-                    break
+                    self.action.send(.dismiss)
+                    
+                case .push(let vc):
+                    self.action.send(.push(vc))
+                    
+                case .pop:
+                    self.action.send(.pop)
                 }
             }
             .store(in: &cancellables)
