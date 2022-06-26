@@ -32,8 +32,6 @@ final class WorkoutListView2: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListView2Action, Never>()
     
-    //    private(set) lazy var upwardImageView = UIImageView(image: UIImage(systemName: Constant.ButtonImage.upArrow))
-    
     private(set) lazy var calendarTitleButton: UIButton = {
         var config = UIButton.Configuration.plain()
         var container = AttributeContainer()
@@ -109,6 +107,10 @@ final class WorkoutListView2: UIView {
         calendarView.initialUISetup()
     }
     
+    func scrollToDate(_ date: Date) {
+        calendarView.scrollToDate(date)
+    }
+    
     private let divider = AdrenalistDividerView()
     
     private(set) lazy var suggestedCollectionView: UICollectionView = {
@@ -118,7 +120,7 @@ final class WorkoutListView2: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
-        //        cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
+        cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -140,12 +142,6 @@ final class WorkoutListView2: UIView {
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
-    
-//    private lazy var startButton = AdrenalistTextRectangleButton(title: "Start")
-    
-//    func isStartButtonHidden(_ isHidden: Bool) {
-//        self.startButton.isHidden = isHidden
-//    }
     
     private lazy var bottomNavigationView = AdrenalistBottomNavigationBarView(configurator: .init(height: 110,
                                                                                                   backgroundColor: .lightDarkNavy))
@@ -213,7 +209,6 @@ final class WorkoutListView2: UIView {
             .store(in: &cancellables)
     }
     
-    
     private func setupUI() {
         backgroundColor = .black
         
@@ -230,7 +225,6 @@ final class WorkoutListView2: UIView {
         
         [calendarView,
          cvStackView,
-//         startButton,
         ].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
@@ -248,11 +242,6 @@ final class WorkoutListView2: UIView {
             cvStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             cvStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             cvStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            
-//            startButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            startButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-//            startButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-//            startButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
@@ -283,6 +272,7 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         
         var config = UIButton.Configuration.plain()
         config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
+        print("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))")
         config.image = UIImage(systemName: "chevron.down")
         config.imagePlacement = .trailing
         config.imagePadding = 6.2
@@ -296,6 +286,7 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         didSelectDate date: MyScrollableDatepickerModel
     ) {
         datepicker.updateDateSet(with: date)
+        bottomSheetViewController.update(with: date.date)
         self.actionSubject.send(.didSelectDate(date))
     }
 }
