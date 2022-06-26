@@ -122,8 +122,7 @@ class WorkoutSetupView: UIView {
             
             adrenalistInputDetailView.topAnchor.constraint(equalTo: titleTextFieldView.bottomAnchor, constant: 32),
             adrenalistInputDetailView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            adrenalistInputDetailView.heightAnchor.constraint(equalToConstant: 244)
+            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
