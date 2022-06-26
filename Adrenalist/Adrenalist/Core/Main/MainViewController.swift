@@ -13,12 +13,11 @@ final class MainViewController: UIViewController {
     private let contentView = MainView()
     private var cancellables: Set<AnyCancellable>
     
-    private var vc: WorkoutListViewController?
+    private var vc: WorkoutViewController?
     
     init() {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
-        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -31,15 +30,12 @@ final class MainViewController: UIViewController {
         view = contentView
         
         setupCollectionView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-    }
-    
-    private func bind() {
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        contentView.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     private func setupCollectionView() {
@@ -60,13 +56,25 @@ extension MainViewController: UICollectionViewDataSource {
             guard
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier,
                                                               for: indexPath) as? WorkoutHistoryCollectionViewCell
-            else {return UICollectionViewCell()}
+            else { return UICollectionViewCell() }
             cell.configure()
             cell.action
                 .sink { action in
                     switch action {
                     case .workout:
                         self.scrollTo(index: 1)
+                        
+                    case .present(let vc):
+                        self.present(vc, animated: true)
+                        
+                    case .dismiss:
+                        self.dismiss(animated: true)
+                        
+                    case .push(let vc):
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        
+                    case .pop:
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
                 .store(in: &cancellables)
@@ -101,7 +109,9 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     private func scrollTo(index: Int) {
-        contentView.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: true)
+        contentView.collectionView.scrollToItem(at: IndexPath(row: index, section: 0),
+                                                at: .centeredHorizontally,
+                                                animated: true)
     }
 }
 
