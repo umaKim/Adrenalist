@@ -51,7 +51,7 @@ final class Manager {
         static let workoutResponse = "workoutResponse"
     }
     
-    func save(_ workoutResponse: [WorkoutResponse]) {
+    private func save(_ workoutResponse: [WorkoutResponse]) {
         do {
             let encoder = JSONEncoder()
             let encodedFavorties = try encoder.encode(workoutResponse)
@@ -61,7 +61,7 @@ final class Manager {
         }
     }
     
-    func retrieve() -> AnyPublisher<[WorkoutResponse], Error> {
+    private func retrieve() -> AnyPublisher<[WorkoutResponse], Error> {
         guard
             let data = defaults.object(forKey: Key.workoutResponse) as? Data
         else { return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()}
@@ -73,5 +73,31 @@ final class Manager {
         } catch {
             return Fail(error: error).eraseToAnyPublisher()
         }
+    }
+    
+    public func updateByAdding(_ workoutResponse: WorkoutResponse) {
+        self.workoutResponses.append(workoutResponse)
+        self.save(self.workoutResponses)
+    }
+    
+    public func updateByReplacing(_ workoutResponses: [WorkoutResponse]) {
+        self.workoutResponses = workoutResponses
+        self.save(self.workoutResponses)
+    }
+    
+    @Published private(set) var workoutResponses = [WorkoutResponse]()
+    
+    private var cancellables: Set<AnyCancellable>
+    
+    init() {
+        self.cancellables = .init()
+        
+        retrieve().sink { completion in
+            
+        } receiveValue: { responses in
+            self.workoutResponses = responses
+        }
+        .store(in: &cancellables)
+
     }
 }
