@@ -67,6 +67,7 @@
 		35A6DBF028684B1700D6FFF9 /* FavoriteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */; };
 		35A6DBF228684B2100D6FFF9 /* FavoriteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */; };
 		35A6DBF428684B2C00D6FFF9 /* FavoriteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */; };
+		35A6DBF62869D7DC00D6FFF9 /* ModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF52869D7DC00D6FFF9 /* ModeView.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -132,6 +133,7 @@
 		35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewController.swift; sourceTree = "<group>"; };
 		35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewModel.swift; sourceTree = "<group>"; };
 		35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailView.swift; sourceTree = "<group>"; };
+		35A6DBF52869D7DC00D6FFF9 /* ModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeView.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				35DD525A283E7E3E0031A912 /* InputView.swift */,
 				35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */,
 				35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */,
+				35A6DBF52869D7DC00D6FFF9 /* ModeView.swift */,
 			);
 			path = GlobalViews;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				35632F95285B3696009C3B9D /* WorkoutSetupView.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
 				35632FE8285CAD99009C3B9D /* AdrenalistInputStepperView.swift in Sources */,
+				35A6DBF62869D7DC00D6FFF9 /* ModeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
