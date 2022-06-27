@@ -35,9 +35,6 @@
 		3555CD27281C69A100DA830E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD26281C69A100DA830E /* Constant.swift */; };
 		3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD29281C747100DA830E /* SuggestionListCell.swift */; };
 		3555CD2D281CD5DA00DA830E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD2C281CD5DA00DA830E /* Item.swift */; };
-		3555CD2F282004F200DA830E /* ItemSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD2E282004F200DA830E /* ItemSetupViewController.swift */; };
-		3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD312820E88A00DA830E /* ItemSetupView.swift */; };
-		3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD33282136B100DA830E /* ItemSetupViewModel.swift */; };
 		3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD36282169D600DA830E /* AdrenalistLabel.swift */; };
 		3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */; };
 		3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD3A2821729800DA830E /* AdrenalistButton.swift */; };
@@ -45,9 +42,6 @@
 		3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD452821903400DA830E /* UIViewController+Ext.swift */; };
 		3555CD4928219BD100DA830E /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4828219BD100DA830E /* AboutView.swift */; };
 		3555CD4B28219BD900DA830E /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4A28219BD900DA830E /* AboutViewController.swift */; };
-		3555CD4E28239F2B00DA830E /* WorkoutSetupView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4D28239F2B00DA830E /* WorkoutSetupView2.swift */; };
-		3555CD5028239F4000DA830E /* TimerSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD4F28239F4000DA830E /* TimerSetupView.swift */; };
-		3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD522829278A00DA830E /* ItemSetupContainerView.swift */; };
 		35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F53285899DA009C3B9D /* MyDatepicker.swift */; };
 		35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F5528589DA9009C3B9D /* Date+Ext.swift */; };
 		35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F572858A403009C3B9D /* MyDatePickerCell.swift */; };
@@ -64,6 +58,15 @@
 		35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */; };
 		35632FF7285F1EB3009C3B9D /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */; };
 		35632FF9285F393B009C3B9D /* AdrenalistBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */; };
+		35632FFB285F4336009C3B9D /* AdrenalistTextRectangleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */; };
+		35632FFE285F59B1009C3B9D /* DGBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 35632FFD285F59B1009C3B9D /* DGBottomSheet */; };
+		35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */ = {isa = PBXBuildFile; productRef = 35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */; };
+		35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */; };
+		35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */; };
+		35A6DBED2865868B00D6FFF9 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEC2865868B00D6FFF9 /* Manager.swift */; };
+		35A6DBF028684B1700D6FFF9 /* FavoriteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */; };
+		35A6DBF228684B2100D6FFF9 /* FavoriteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */; };
+		35A6DBF428684B2C00D6FFF9 /* FavoriteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -99,9 +102,6 @@
 		3555CD26281C69A100DA830E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		3555CD29281C747100DA830E /* SuggestionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionListCell.swift; sourceTree = "<group>"; };
 		3555CD2C281CD5DA00DA830E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		3555CD2E282004F200DA830E /* ItemSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupViewController.swift; sourceTree = "<group>"; };
-		3555CD312820E88A00DA830E /* ItemSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupView.swift; sourceTree = "<group>"; };
-		3555CD33282136B100DA830E /* ItemSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupViewModel.swift; sourceTree = "<group>"; };
 		3555CD36282169D600DA830E /* AdrenalistLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistLabel.swift; sourceTree = "<group>"; };
 		3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistCircleButton.swift; sourceTree = "<group>"; };
 		3555CD3A2821729800DA830E /* AdrenalistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistButton.swift; sourceTree = "<group>"; };
@@ -109,9 +109,6 @@
 		3555CD452821903400DA830E /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		3555CD4828219BD100DA830E /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		3555CD4A28219BD900DA830E /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		3555CD4D28239F2B00DA830E /* WorkoutSetupView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupView2.swift; sourceTree = "<group>"; };
-		3555CD4F28239F4000DA830E /* TimerSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerSetupView.swift; sourceTree = "<group>"; };
-		3555CD522829278A00DA830E /* ItemSetupContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupContainerView.swift; sourceTree = "<group>"; };
 		35632F53285899DA009C3B9D /* MyDatepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatepicker.swift; sourceTree = "<group>"; };
 		35632F5528589DA9009C3B9D /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		35632F572858A403009C3B9D /* MyDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatePickerCell.swift; sourceTree = "<group>"; };
@@ -128,6 +125,13 @@
 		35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistDividerView.swift; sourceTree = "<group>"; };
 		35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistBottomSheet.swift; sourceTree = "<group>"; };
+		35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTextRectangleButton.swift; sourceTree = "<group>"; };
+		35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistBottomNavigationBarView.swift; sourceTree = "<group>"; };
+		35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLastCollectionViewCell.swift; sourceTree = "<group>"; };
+		35A6DBEC2865868B00D6FFF9 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewController.swift; sourceTree = "<group>"; };
+		35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewModel.swift; sourceTree = "<group>"; };
+		35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailView.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */,
+				35632FFE285F59B1009C3B9D /* DGBottomSheet in Frameworks */,
+				35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
 				D5837C7A8BDDC0707BF575C0 /* Pods_Adrenalist.framework in Frameworks */,
@@ -186,14 +192,14 @@
 		3548C84928190DF10089A0C4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				35A6DBEE28684AF100D6FFF9 /* FavoriteDetail */,
 				3548C84A28190DFC0089A0C4 /* Main */,
 				3548C84C28190E130089A0C4 /* Setting */,
 				35632F93285B3687009C3B9D /* WorkoutSetup */,
-				3548C84D28190E190089A0C4 /* WorkoutList */,
-				3548C877281A868A0089A0C4 /* WorkoutList2 */,
+				3548C877281A868A0089A0C4 /* WorkoutList */,
+				3548C84D28190E190089A0C4 /* Workout */,
 				3555CD4728219BCA00DA830E /* About */,
-				3555CD302820E1DF00DA830E /* ItemSetup */,
-				35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */,
+				35632FFF285F6260009C3B9D /* CalendarView */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -213,8 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				3548C85628190ECF0089A0C4 /* SettingCollectionViewCell.swift */,
-				3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */,
 				3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */,
+				3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -229,7 +235,7 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		3548C84D28190E190089A0C4 /* WorkoutList */ = {
+		3548C84D28190E190089A0C4 /* Workout */ = {
 			isa = PBXGroup;
 			children = (
 				3548C84F28190E410089A0C4 /* WorkoutViewModel.swift */,
@@ -237,15 +243,12 @@
 				351C5BC828190D4100FE9C0F /* WorkoutView.swift */,
 				3548C85128190E510089A0C4 /* View */,
 			);
-			path = WorkoutList;
+			path = Workout;
 			sourceTree = "<group>";
 		};
 		3548C85128190E510089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				35632F92285B3618009C3B9D /* Cells */,
-				35632F53285899DA009C3B9D /* MyDatepicker.swift */,
-				35632F572858A403009C3B9D /* MyDatePickerCell.swift */,
 				351C5BC628190D1A00FE9C0F /* CircularView.swift */,
 			);
 			path = View;
@@ -255,11 +258,12 @@
 			isa = PBXGroup;
 			children = (
 				3555CCE3281C0D1D00DA830E /* WhatToDoManager.swift */,
+				35A6DBEC2865868B00D6FFF9 /* Manager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		3548C877281A868A0089A0C4 /* WorkoutList2 */ = {
+		3548C877281A868A0089A0C4 /* WorkoutList */ = {
 			isa = PBXGroup;
 			children = (
 				3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */,
@@ -267,15 +271,18 @@
 				3548C87F281A87050089A0C4 /* WorkoutListView.swift */,
 				3548C87E281A86FD0089A0C4 /* View */,
 			);
-			path = WorkoutList2;
+			path = WorkoutList;
 			sourceTree = "<group>";
 		};
 		3548C87E281A86FD0089A0C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				35A6DBE92863FD4D00D6FFF9 /* MyDatepicker */,
+				35632F92285B3618009C3B9D /* Cells */,
 				3555CD29281C747100DA830E /* SuggestionListCell.swift */,
 				3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */,
 				35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */,
+				35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,17 +308,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		3555CD302820E1DF00DA830E /* ItemSetup */ = {
-			isa = PBXGroup;
-			children = (
-				3555CD33282136B100DA830E /* ItemSetupViewModel.swift */,
-				3555CD2E282004F200DA830E /* ItemSetupViewController.swift */,
-				3555CD312820E88A00DA830E /* ItemSetupView.swift */,
-				3555CD4C28239F2200DA830E /* View */,
-			);
-			path = ItemSetup;
-			sourceTree = "<group>";
-		};
 		3555CD35282169B000DA830E /* GlobalViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +319,7 @@
 				3555CD3C282172AE00DA830E /* AdrenalistTextField.swift */,
 				35DD525A283E7E3E0031A912 /* InputView.swift */,
 				35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */,
+				35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */,
 			);
 			path = GlobalViews;
 			sourceTree = "<group>";
@@ -336,20 +333,11 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		3555CD4C28239F2200DA830E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				3555CD522829278A00DA830E /* ItemSetupContainerView.swift */,
-				3555CD4D28239F2B00DA830E /* WorkoutSetupView2.swift */,
-				3555CD4F28239F4000DA830E /* TimerSetupView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		35632F92285B3618009C3B9D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */,
+				35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */,
 				35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */,
 			);
 			path = Cells;
@@ -375,6 +363,33 @@
 				35632FE7285CAD99009C3B9D /* AdrenalistInputStepperView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		35632FFF285F6260009C3B9D /* CalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */,
+			);
+			path = CalendarView;
+			sourceTree = "<group>";
+		};
+		35A6DBE92863FD4D00D6FFF9 /* MyDatepicker */ = {
+			isa = PBXGroup;
+			children = (
+				35632F53285899DA009C3B9D /* MyDatepicker.swift */,
+				35632F572858A403009C3B9D /* MyDatePickerCell.swift */,
+			);
+			path = MyDatepicker;
+			sourceTree = "<group>";
+		};
+		35A6DBEE28684AF100D6FFF9 /* FavoriteDetail */ = {
+			isa = PBXGroup;
+			children = (
+				35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */,
+				35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */,
+				35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */,
+			);
+			path = FavoriteDetail;
 			sourceTree = "<group>";
 		};
 		8B1759E6EDC59B6EE6B97AAF /* Pods */ = {
@@ -416,6 +431,8 @@
 				3548C85D28190FA90089A0C4 /* FloatingPanel */,
 				3548C862281910D90089A0C4 /* CombineCocoa */,
 				3548C86D281926A30089A0C4 /* FSCalendar */,
+				35632FFD285F59B1009C3B9D /* DGBottomSheet */,
+				35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */,
 			);
 			productName = Adrenalist;
 			productReference = 351C5BA728190B7000FE9C0F /* Adrenalist.app */;
@@ -449,6 +466,8 @@
 				3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */,
+				35A6DBE4285F6C2E00D6FFF9 /* XCRemoteSwiftPackageReference "SheetPresentationController" */,
 			);
 			productRefGroup = 351C5BA828190B7000FE9C0F /* Products */;
 			projectDirPath = "";
@@ -521,11 +540,9 @@
 				3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */,
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
 				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
-				3555CD2F282004F200DA830E /* ItemSetupViewController.swift in Sources */,
 				3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */,
 				351C5BBF28190BCC00FE9C0F /* MainView.swift in Sources */,
 				351C5BCB28190D6200FE9C0F /* WorkoutViewController.swift in Sources */,
-				3555CD4E28239F2B00DA830E /* WorkoutSetupView2.swift in Sources */,
 				35632F97285B369D009C3B9D /* WorkoutSetupViewController.swift in Sources */,
 				351C5BAB28190B7000FE9C0F /* AppDelegate.swift in Sources */,
 				3548C85B28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift in Sources */,
@@ -540,8 +557,8 @@
 				35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */,
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
-				3555CD532829278A00DA830E /* ItemSetupContainerView.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
+				35A6DBED2865868B00D6FFF9 /* Manager.swift in Sources */,
 				35632FF7285F1EB3009C3B9D /* CalendarViewController.swift in Sources */,
 				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
 				35632FE3285CA590009C3B9D /* AdrenalistTitleView.swift in Sources */,
@@ -550,17 +567,21 @@
 				35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */,
 				35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */,
 				35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */,
+				35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
 				35632F5A2859DBFB009C3B9D /* FavoriteCollectionViewCell.swift in Sources */,
 				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
-				3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */,
+				35632FFB285F4336009C3B9D /* AdrenalistTextRectangleButton.swift in Sources */,
 				35632FF9285F393B009C3B9D /* AdrenalistBottomSheet.swift in Sources */,
 				3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */,
+				35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */,
 				3555CD27281C69A100DA830E /* Constant.swift in Sources */,
-				3555CD5028239F4000DA830E /* TimerSetupView.swift in Sources */,
+				35A6DBF428684B2C00D6FFF9 /* FavoriteDetailView.swift in Sources */,
+				35A6DBF228684B2100D6FFF9 /* FavoriteDetailViewModel.swift in Sources */,
 				3555CD4928219BD100DA830E /* AboutView.swift in Sources */,
 				35632FEA285CADB7009C3B9D /* AdrenalistTextInputView.swift in Sources */,
 				3555CD4B28219BD900DA830E /* AboutViewController.swift in Sources */,
+				35A6DBF028684B1700D6FFF9 /* FavoriteDetailViewController.swift in Sources */,
 				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
 				35632FE5285CA5BF009C3B9D /* AdrenalistInputDetailView.swift in Sources */,
 				3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */,
@@ -571,7 +592,6 @@
 				35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */,
 				35632F95285B3696009C3B9D /* WorkoutSetupView.swift in Sources */,
 				3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */,
-				3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */,
 				35632FE8285CAD99009C3B9D /* AdrenalistInputStepperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -808,6 +828,22 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/donggyushin/DGBottomSheet";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		35A6DBE4285F6C2E00D6FFF9 /* XCRemoteSwiftPackageReference "SheetPresentationController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/karolpiateknet/SheetPresentationController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -825,6 +861,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		35632FFD285F59B1009C3B9D /* DGBottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */;
+			productName = DGBottomSheet;
+		};
+		35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35A6DBE4285F6C2E00D6FFF9 /* XCRemoteSwiftPackageReference "SheetPresentationController" */;
+			productName = SheetPresentationController;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
