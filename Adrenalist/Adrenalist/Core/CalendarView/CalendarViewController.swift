@@ -37,15 +37,23 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
     
+//        workoutManager
+//            .retrieve()
+//            .sink { completion in
+//
+//        } receiveValue: { responses in
+//            self.workouts = responses
+//            self.calendar.reloadData()
+//        }
+//        .store(in: &cancellables)
+        
         workoutManager
-            .retrieve()
-            .sink { completion in
-            
-        } receiveValue: { responses in
-            self.workouts = responses
-            self.calendar.reloadData()
-        }
-        .store(in: &cancellables)
+            .$workoutResponses
+            .sink { responses in
+                self.workouts = responses
+                self.calendar.reloadData()
+            }
+            .store(in: &cancellables)
     }
     
     required init?(coder: NSCoder) {
