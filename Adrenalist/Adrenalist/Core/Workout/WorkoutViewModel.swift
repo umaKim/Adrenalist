@@ -37,6 +37,8 @@ final class WorkoutViewModel {
 //    private(set) var favorites = [WorkoutModel]()
     private(set) var workouts = [WorkoutResponse]()
     
+    private var selectedDate: Date = Date().stripTime()
+    
     private(set) var todayWorkouts = [WorkoutModel]()
     
 //    private(set) var isCanlendarBottomSheetPresented: Bool = false
@@ -44,6 +46,8 @@ final class WorkoutViewModel {
 //    func setCalendarBottomSheetPresent(_ isPresent: Bool) {
 //        self.isCanlendarBottomSheetPresented = isPresent
 //    }
+    
+    private var workoutDate: Date = Date()
     
     private let workoutManager = Manager.shared
     
@@ -55,12 +59,51 @@ final class WorkoutViewModel {
     init() {
         self.cancellables = .init()
         
+//        workoutManager
+//            .$workoutResponses
+//            .sink { responses in
+//                self.workouts = responses
+//            }
+//            .store(in: &cancellables)
+//
+//        workoutManager
+//            .$selectedDate
+//            .sink { date in
+//                self.selectedDate = date
+//                self.getTodayWorkout()
+//                self.setCurrentIndex()
+//            }
+//            .store(in: &cancellables)
+        
         workoutManager
-            .$workoutResponses
-            .sink { responses in
+            .$selectedWorkouts
+            .receive(on: RunLoop.main)
+            .sink { responses, date in
                 self.workouts = responses
+                self.selectedDate = date
+                self.getTodayWorkout()
+                self.setCurrentIndex()
+                self.sendViewUpdate()
             }
             .store(in: &cancellables)
+    }
+    
+    private func updateWorkout() {
+        guard let index = workouts.firstIndex(where:{$0.date == selectedDate}) else {return }
+        workouts[index] = WorkoutResponse(date: selectedDate,
+                                          mode: workouts[index].mode,
+                                          workouts: todayWorkouts)
+        workoutManager.updateByReplacing(workouts)
+    }
+    
+    private func getTodayWorkout() {
+        todayWorkouts = workouts.filter({$0.date == selectedDate}).flatMap({$0.workouts})
+    }
+    
+    private func setCurrentIndex() {
+        currentIndex = todayWorkouts.firstIndex(where: {$0.isDone == false})
+//        else { return }
+//        currentIndex = index
     }
     
     func backToWorkoutList() {
@@ -76,13 +119,17 @@ final class WorkoutViewModel {
         
         guard
             let currentIndex = currentIndex,
-            currentIndex < workouts.count
+            currentIndex < todayWorkouts.count
         else { return }
         
-        if todayWorkouts[currentIndex].timer == nil {
+        if todayWorkouts[currentIndex].timer == nil ||
+            todayWorkouts[currentIndex].timer == 0 {
+            
             self.completeCurrentWorkout()
+            
             //TODO: update with new api
-//            self.workoutManager.updateWorkoutToDos(items)
+            self.updateWorkout()
+            
             self.sendViewUpdate()
         } else {
             self.startTimer()
@@ -97,8 +144,10 @@ final class WorkoutViewModel {
             onGoingTime = 0
             notifySubject.send(.updateInlineStrokeEnd(onGoingTime))
             completeCurrentWorkout()
+            
             //TODO: update with new api
-//            workoutManager.updateWorkoutToDos(items)
+            updateWorkout()
+            
             sendViewUpdate()
             return
         }
@@ -130,7 +179,7 @@ final class WorkoutViewModel {
             onGoingTime = 0
             notifySubject.send(.updateInlineStrokeEnd(onGoingTime))
             completeCurrentWorkout()
-//            workoutManager.updateWorkoutToDos(items)
+            updateWorkout()
             sendViewUpdate()
         }
     }
