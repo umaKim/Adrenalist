@@ -10,7 +10,7 @@ import UIKit.UICollectionViewCell
 
 enum WorkoutHistoryCollectionViewCellAction {
     case workout
-    case present(UIViewController)
+    case present(UINavigationController)
     case dismiss
     
     case push(UIViewController)
@@ -40,7 +40,6 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
         let nav = UINavigationController(rootViewController: vc)
         
         guard let myView = nav.view else {return }
-//        guard let myView = vc.view else {return }
         contentView.addSubview(myView)
         
         NSLayoutConstraint.activate([
