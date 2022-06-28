@@ -99,7 +99,7 @@ class MyScrollableDatepicker: UIView {
     }
     
     private func updateCellSelection(with dateModel: MyScrollableDatepickerModel, isSelected: Bool) {
-        guard let selectedIndex = dates.firstIndex(of: dateModel) else { return }
+        guard let selectedIndex = dates.firstIndex(where: {dateModel.date == $0.date}) else {return }
         dates[selectedIndex] = MyScrollableDatepickerModel(date: dateModel.date,
                                                    isSelected: isSelected,
                                                    isDot: dateModel.isDot)
