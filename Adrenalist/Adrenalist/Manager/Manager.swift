@@ -75,29 +75,53 @@ final class Manager {
         }
     }
     
-    public func updateByAdding(_ workoutResponse: WorkoutResponse) {
-        self.workoutResponses.append(workoutResponse)
-        self.save(self.workoutResponses)
-    }
+//    public func updateByAdding(_ workoutResponse: WorkoutResponse) {
+////        self.workoutResponses.append(workoutResponse)
+//        self.save(workoutResponse)
+//    }
     
     public func updateByReplacing(_ workoutResponses: [WorkoutResponse]) {
-        self.workoutResponses = workoutResponses
-        self.save(self.workoutResponses)
+//        self.workoutResponses = workoutResponses
+        self.save(workoutResponses)
     }
     
-    @Published private(set) var workoutResponses = [WorkoutResponse]()
+    public func updateCetainWorkouts(_ workouts: [WorkoutModel]) {
+        
+    }
+    
+//    private(set) var workoutRes = PassthroughSubject<([WorkoutResponse], Date), Never>()
+    
+//    @Published private(set) var workoutResponses = [WorkoutResponse]()
+    
+//    private(set) var selectedWorkouts = PassthroughSubject<([WorkoutResponse], selectedDate), Never>()
+    
+    typealias selectedDate = Date
+    
+    @Published private(set) var selectedWorkouts: ([WorkoutResponse], selectedDate) = ([], Date().stripTime())
+    
+//    @Published private(set) var selectedDate = Date().stripTime()
+//
+//    func setSelectedDate(_ date: Date) {
+//        selectedDate = date
+//    }
+    
+    func sendSelectedDateWorkout(_ workouts: [WorkoutResponse], date: Date) {
+//        self.selectedWorkouts.send((workouts, date))
+        self.selectedWorkouts = (workouts, date)
+    }
     
     private var cancellables: Set<AnyCancellable>
     
     init() {
         self.cancellables = .init()
         
-        retrieve().sink { completion in
-            
-        } receiveValue: { responses in
-            self.workoutResponses = responses
-        }
-        .store(in: &cancellables)
+        retrieve()
+            .receive(on: RunLoop.main)
+            .sink { completion in
 
+            } receiveValue: { responses in
+                self.sendSelectedDateWorkout(responses, date: Date().stripTime())
+            }
+            .store(in: &cancellables)
     }
 }
