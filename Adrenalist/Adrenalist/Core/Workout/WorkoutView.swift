@@ -71,6 +71,18 @@ final class WorkoutView: UIView {
         setupUI()
     }
     
+    func updatePulse(_ value: CGFloat) {
+        circularView.animatePulse(value)
+    }
+    
+    func updateOutline(_ value: CGFloat) {
+        circularView.animateOutlineStroke(value)
+    }
+    
+    func updateInterline(_ value: CGFloat) {
+        circularView.animateInlineStroke(value)
+    }
+    
     //MARK: - Private Methods
     private func bind() {
         backButton
