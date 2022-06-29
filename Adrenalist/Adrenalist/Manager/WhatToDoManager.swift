@@ -65,7 +65,9 @@ final class ItemManager {
     }
 
     private func retrieve(_ type: DataType) -> AnyPublisher<[WorkoutModel], Error> {
-        guard let data = defaults.object(forKey: type.rawValue) as? Data else {
+        guard
+            let data = defaults.object(forKey: type.rawValue) as? Data
+        else {
             return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
         }
 
@@ -118,14 +120,12 @@ final class ItemManager {
 
 final class WorkoutManager {
     static let shared = WorkoutManager()
-    
+
     private let defaults = UserDefaults.standard
-    
+
     @Published private(set) var favorites: [WorkoutModel] = []
     @Published private(set) var workoutList: [WorkoutModel] = []
-    
-    
-    
+
     //------->
     func saveWorkoutList(_ workout: WorkoutResponse) {
         do {
@@ -136,12 +136,12 @@ final class WorkoutManager {
             print(error)
         }
     }
-    
+
     func retrieveWorkoutList(of date: Date) -> AnyPublisher<[WorkoutModel], Error> {
         guard let data = defaults.object(forKey: date.description) as? Data else {
             return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
         }
-        
+
         do {
             let decoder = JSONDecoder()
             let workouts = try decoder.decode([WorkoutModel].self, from: data)
@@ -150,7 +150,7 @@ final class WorkoutManager {
             return Fail(error: error).eraseToAnyPublisher()
         }
     }
-    
+
     func saveFavorite(of workouts: [WorkoutModel])   {
         do {
             let encoder = JSONEncoder()
@@ -160,12 +160,12 @@ final class WorkoutManager {
             print(error)
         }
     }
-    
+
     func retrieveFavorites() -> AnyPublisher<[WorkoutModel], Error> {
         guard let data = defaults.object(forKey: "favorites") as? Data else {
             return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
         }
-        
+
         do {
             let decoder = JSONDecoder()
             let workouts = try decoder.decode([WorkoutModel].self, from: data)
@@ -174,8 +174,8 @@ final class WorkoutManager {
             return Fail(error: error).eraseToAnyPublisher()
         }
     }
-    
+
     init() {
-        
+
     }
 }
