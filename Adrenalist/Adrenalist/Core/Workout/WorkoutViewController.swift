@@ -36,7 +36,7 @@ final class WorkoutViewController: UIViewController {
             .actionPublisher
             .sink { action in
                 switch action {
-                
+                    
                 case .back:
                     self.viewModel.backToWorkoutList()
                     
@@ -49,28 +49,30 @@ final class WorkoutViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.notifyPublisher.sink { noti in
-            switch noti {
-            
-            case .updateInlineStrokeEnd(let value):
-                self.contentView.updateInterline(value)
-                
-            case .updatePulse(let value):
-                self.contentView.updatePulse(value)
-                
-            case .updateOutlineStrokeEnd(let value):
-                self.contentView.updateOutline(value)
-                
-            case .updateToCurrentWorkout(let currentWorkout):
-                print(currentWorkout)
-                break
-                
-            case .updateNextWorkout(let nextWorkout):
-                print(nextWorkout)
-                break
+        viewModel
+            .notifyPublisher
+            .sink { noti in
+                switch noti {
+                    
+                case .updateInlineStrokeEnd(let value):
+                    self.contentView.updateInterline(value)
+                    
+                case .updatePulse(let value):
+                    self.contentView.updatePulse(value)
+                    
+                case .updateOutlineStrokeEnd(let value):
+                    self.contentView.updateOutline(value)
+                    
+                case .updateToCurrentWorkout(let currentWorkout):
+                    print(currentWorkout)
+                    break
+                    
+                case .updateNextWorkout(let nextWorkout):
+                    print(nextWorkout)
+                    break
+                }
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
