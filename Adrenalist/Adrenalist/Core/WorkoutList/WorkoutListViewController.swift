@@ -8,14 +8,9 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController2: UIViewController, ContentViewControllerDelegate {
-    func contentViewControllerDidTapDismiss() {
-        viewModel.dismiss()
-    }
-    
-    func didSelectDate(_ date: Date) {
-        contentView.scrollToDate(date)
-        viewModel.didSelectDate(date.stripTime())
+final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionViewCellDelegate {
+    func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
+        viewModel.updateIsComplete(isTapped, at: indexPathRow)
     }
     
     private(set) lazy var contentView = WorkoutListView2()
@@ -111,6 +106,9 @@ final class WorkoutListViewController2: UIViewController, ContentViewControllerD
                 
                 case .didSelectDate(let date):
                     self.viewModel.didSelectDate(date.date)
+                    
+                case .bottomSheetDidTapDelete:
+                    self.viewModel.deleteSelectedItems()
                 }
             }
             .store(in: &cancellables)
@@ -355,6 +353,8 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
                                                                 for: indexPath) as? WorkoutlistCollectionViewCell
             else {return UICollectionViewCell()}
             cell.configure(with: viewModel.workoutList[indexPath.item], mode: viewModel.mode)
+            cell.delegate = self
+            cell.tag = indexPath.item
             return cell
         }
     }
@@ -416,5 +416,16 @@ extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
     
     func WorkoutSetupDidTapCancel() {
         self.viewModel.dismiss()
+    }
+}
+
+extension WorkoutListViewController2:  ContentViewControllerDelegate {
+    func contentViewControllerDidTapDismiss() {
+        viewModel.dismiss()
+    }
+    
+    func didSelectDate(_ date: Date) {
+        contentView.scrollToDate(date)
+        viewModel.didSelectDate(date.stripTime())
     }
 }
