@@ -7,10 +7,16 @@
 import Combine
 import UIKit
 
+protocol WorkoutlistCollectionViewCellDelegate: AnyObject {
+    func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int)
+}
+
 final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     static let identifier = "WorkoutlistCollectionViewCell"
     
     private lazy var modeView = ModeView(mode: .normal)
+    
+    weak var delegate: WorkoutlistCollectionViewCellDelegate?
     
     private lazy var titleLabel: UILabel = {
        let lb = UILabel()
@@ -45,6 +51,7 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setupUI()
+        bind()
         backgroundColor = .navyGray
     }
     
@@ -58,9 +65,14 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     
     private var model: WorkoutModel?
     
-    func configure(with model: WorkoutModel, mode: WorkoutListCellMode) {
+    func configure(
+        with model: WorkoutModel,
+        mode: WorkoutListCellMode
+    ) {
         self.model = model
-        self.isChecked = model.isSelected
+//        self.isChecked = model.isSelected
+        self.isChecked = model.isSelected ?? false || model.isDone
+        
         self.titleLabel.text = model.title
         
         if let reps = model.reps{
@@ -71,15 +83,15 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
             self.weightLabel.text = "\(weight) Kg"
         }
         
-        if let timer = model.timer {
+        if let timer = model.timer, timer != 0 {
             self.timerLabel.text = "\(timer) sec"
         }
         
-        self.modeView.updateMode(mode)
+        self.modeView.updateMode(mode, isComplete: model.isDone)
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-                self.modeView.isHidden = mode == .normal
+//                self.modeView.isHidden = mode == .normal
             } completion: { _ in }
         }
     }
@@ -90,7 +102,8 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
             .sink { action in
                 switch action {
                 case .tapCheckButton(let isTapped):
-                    break
+                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(isTapped,
+                                                                               indexPathRow: self.tag)
                 }
             }
             .store(in: &cancellables)
