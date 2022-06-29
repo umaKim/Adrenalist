@@ -20,6 +20,6 @@ struct WorkoutModel: Codable, Hashable {
     var weight: Double?
     var timer: TimeInterval?
     var isFavorite: Bool
-    var isSelected: Bool?
+    var isSelected: Bool
     var isDone: Bool
 }
