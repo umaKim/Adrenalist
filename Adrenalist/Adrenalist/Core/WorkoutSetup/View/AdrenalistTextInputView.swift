@@ -22,6 +22,7 @@ class AdrenalistTextInputView: UIView {
     
     private let textField: UITextField = {
        let tf = UITextField()
+        tf.textAlignment = .right
         tf.textColor = .white
         tf.widthAnchor.constraint(equalToConstant: 100).isActive = true
         return tf
@@ -36,17 +37,50 @@ class AdrenalistTextInputView: UIView {
     
     private var cancellables: Set<AnyCancellable>
     
-    init(
-        title: String,
-        placeholder: String
-    ) {
-        self.titleLabel.text = title
-        self.textField.placeholder = placeholder
+    init() {
         self.cancellables = .init()
         super.init(frame: .zero)
         
         bind()
         setupUI()
+    }
+    
+    convenience init(
+        title: String,
+        placeholder: String,
+        keyboardType: UIKeyboardType
+    ) {
+        self.init()
+        self.titleLabel.text = title
+        self.textField.placeholder = placeholder
+        self.textField.keyboardType = keyboardType
+    }
+    
+    private var action: ((UITextField) -> Void)?
+    
+    convenience init(title: String,
+                     placeholder: String,
+                     completion: @escaping (UITextField) -> Void
+    ) {
+        self.init()
+        self.titleLabel.text = title
+        self.textField.placeholder = placeholder
+        self.action = completion
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(textFieldDidTap))
+        textField.addGestureRecognizer(gesture)
+        
+//        createPickerView()
+//        dismissPickerView()
+    }
+    
+    @objc
+    private func textFieldDidTap() {
+
+        guard
+            let action = action
+        else { return }
+        action(textField)
     }
     
     private func bind() {
@@ -83,6 +117,44 @@ class AdrenalistTextInputView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+//    let fruits = ["사과", "배", "포도", "망고", "딸기", "바나나", "파인애플"]
 }
 
-
+//extension AdrenalistTextInputView: UIPickerViewDelegate, UIPickerViewDataSource {
+//    func createPickerView() {
+//        let pickerView = UIPickerView()
+//        pickerView.typ
+//        pickerView.delegate = self
+//        textField.inputView = pickerView
+//    }
+//
+//    func dismissPickerView() {
+//        let toolBar = UIToolbar()
+//        toolBar.sizeToFit()
+//        let button = UIBarButtonItem(title: "선택", style: .plain, target: nil, action: nil)
+//        toolBar.setItems([button], animated: true)
+//        toolBar.isUserInteractionEnabled = true
+//        textField.inputAccessoryView = toolBar
+//    }
+//
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//           return 1
+//       }
+//
+//
+//       func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//           return fruits.count
+//       }
+//
+//
+//       func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//          return fruits[row]
+//       }
+//
+//
+//       func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//           textField.text = fruits[row]
+//       }
+//
+//}
