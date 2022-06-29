@@ -10,30 +10,19 @@ import UIKit
 import Combine
 
 enum WorkoutListViewModel2Notification {
-    //    case reloadWorkouts
-    //    case reloadSuggestions
-    //    case modeChanged(UpdateMode?)
-    //    case delete(Int)
-    //    case showKeyboard(CGRect)
-    //    case hideKeyboard
-    //    case fullPanel
-    //    case tipPanel
-    
-//    case reorder
-//    case postpone
-//    case delete
-//    case normal
-    
     case isWorkoutListEmpty(Bool)
     case isFavoriteEmpty(Bool)
     case reloadWorkoutList
     case reloadFavorites
+    case calendarDidSelect(Date)
+    case setDates(Int, Int, [Date])
 }
 
 enum WorkoutListCellMode: Codable {
     case reorder
     case psotpone
     case delete
+    case complete
     case normal
 }
 
@@ -43,7 +32,12 @@ enum UpdateMode {
 }
 
 enum WorkoutListViewModelListener {
+    case present(UINavigationController)
     case dismiss
+    
+    case push(UIViewController)
+    case pop
+    
     case moveToCircularView
 }
 
@@ -55,210 +49,191 @@ final class WorkoutListViewModel2  {
     private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
     private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
     
-    //    private(set) lazy var suggestions: [Item] = []
-    //    private(set) lazy var workouts: [Item] = []
-    
     private var cancellables: Set<AnyCancellable>
     
-    private let workoutManager = WorkoutManager.shared
-    
-    //    private(set) var panelState = PassthroughSubject<FloatingPanelState, Never>()
+    private let favoriteManager = FavoriteManager.shared
+    private let workoutManager = Manager.shared
     
     private(set) var favorites = [WorkoutModel]()
     private(set) var workoutList = [WorkoutModel]()
     
+    private(set) var workoutResponses = [WorkoutResponse]()
+    
+    private(set) var mode: WorkoutListCellMode
+    
+    @Published private(set) var selectedDate: Date = Date().stripTime()
+    
+    func setupMode(_ mode: WorkoutListCellMode) {
+        self.mode = mode
+    }
+    
+    func updateIsComplete(_ isComplete: Bool, at index: Int) {
+        
+        switch mode {
+        case .reorder:
+            break
+            
+        case .psotpone:
+            self.workoutList[index].isSelected = isComplete
+            
+        case .delete:
+            self.workoutList[index].isSelected = isComplete
+            
+        case .complete:
+            self.workoutList[index].isDone = isComplete
+            
+        case .normal:
+            break
+        }
+        
+    }
+    
     init() {
+        self.mode = .complete
         self.cancellables = .init()
-        bind()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.fetchFavorites()
-            self.fetchWorkoutList(of: Date().stripTime())
-//        }
+        fetchFavorites()
+        fetchWorkoutResponse()
+        
+//        $selectedDate
+//            .sink { date in
+//                self.workoutManager.setSelectedDate(date)
+//            }
+//            .store(in: &cancellables)
     }
     
-    func fetchFavorites() {
-        workoutManager
-            .retrieveFavorites()
-            .receive(on: RunLoop.main)
+    private func fetchFavorites() {
+        favoriteManager
+            .retrieve()
             .sink { completion in
                 switch completion {
                 case .finished:
-                    self.notifySubject.send(.isFavoriteEmpty(self.favorites.isEmpty))
+                    //                    self.appendLastFavorite()
                     self.notifySubject.send(.reloadFavorites)
+                    
                 case .failure(let error):
-                    break
+                    print(error.localizedDescription)
                 }
-            } receiveValue: { workouts in
-                self.favorites = workouts
+            } receiveValue: { favorites in
+                self.favorites = favorites
             }
             .store(in: &cancellables)
     }
     
-    func fetchWorkoutList(of date: Date) {
+    private func appendLastFavorite() {
+        favorites.append(WorkoutModel(title: "Last", isFavorite: false, isSelected: false, isDone: false))
+    }
+    
+    private func fetchWorkoutResponse() {
+//        workoutManager
+//            .retrieve()
+//            .sink { completion in
+//                switch completion {
+//                case .finished:
+//                    self.fetchWorkoutList(of: self.selectedDate)
+//                    self.notifySubject.send(.reloadWorkoutList)
+//
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//
+//            } receiveValue: { responses in
+//                self.workoutResponses = responses
+//            }
+//            .store(in: &cancellables)
+        
+//        workoutManager
+//            .$workoutResponses
+//            .sink { responses in
+//                self.workoutResponses = responses
+//                self.fetchWorkoutList(of: self.selectedDate)
+//                self.notifySubject.send(.reloadWorkoutList)
+//            }
+//            .store(in: &cancellables)
+        
         workoutManager
-            .retrieveWorkoutList(of: date)
+            .$selectedWorkouts
             .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    self.notifySubject.send(.isWorkoutListEmpty(self.workoutList.isEmpty))
-                    self.notifySubject.send(.reloadWorkoutList)
-                case .failure(let error):
-                    break
-                }
-            } receiveValue: { workouts in
-                self.workoutList = workouts
-            }
-            .store(in: &cancellables)
+            .sink { responses, date in
+                self.workoutResponses = responses
+                self.fetchWorkoutList(of: self.selectedDate)
+                self.notifySubject.send(.setDates(1, 36500, self.workoutDates))
+                self.notifySubject.send(.reloadWorkoutList)
+        }
+        .store(in: &cancellables)
     }
     
-    //    private var keyboardHelper: KeyboardHelper?
     
-    private func bind() {
-//        ["Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press",
-//         "Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press",
-//         "Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press"]
-//            .forEach { text in
-//                workoutList.append(WorkoutModel(
-//                    mode: .normal,
-//                    title: text,
-//                    reps: 20,
-//                    weight: 200,
-//                    timer: 1000,
-//                    isFavorite: nil,
-//                    isSelected: false, isDone: false))
-//            }
-//        
-//        ["Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press",
-//         "Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press",
-//         "Bench Press",
-//         "pull up",
-//         "nice",
-//         "Incline Bench press"]
-//            .forEach { text in
-//                favorites.append(WorkoutModel(mode: .normal,
-//                                              title: text,
-//                                              reps: 20,
-//                                              weight: 200,
-//                                              timer: 1000,
-//                                              isFavorite: nil, isSelected: false, isDone: false))
-//                
-//            }
-//        
-//        favorites.append(WorkoutModel(mode: .normal, title: "Last", isDone: false))
+    private func fetchWorkoutList(of date: Date) {
+        self.workoutList = workoutResponses
+            .filter({ $0.date == date.stripTime()})
+            .flatMap({$0.workouts})
+    }
+    
+    var workoutDates: [Date] {
+        workoutResponses.map({$0.date.stripTime()})
     }
     
     func updateMode(type: WorkoutListCellMode) {
+        self.mode = type
+        
         var workouts = [WorkoutModel]()
         
         workoutList.forEach { model in
-            workouts.append(.init(mode: type,
-                                  title: model.title,
-                                  reps: model.reps,
-                                  weight: model.weight,
-                                  timer: model.timer,
-                                  isFavorite: model.isFavorite,
-                                  isSelected: model.isSelected,
-                                  isDone: model.isDone))
+            workouts.append(.init(
+                title: model.title,
+                reps: model.reps,
+                weight: model.weight,
+                timer: model.timer,
+                isFavorite: model.isFavorite,
+                isSelected: model.isSelected,
+                isDone: model.isDone))
         }
         
         workoutList = workouts
         
-        switch type {
-        case .reorder:
-            self.notifySubject.send(.reloadWorkoutList)
-        case .psotpone:
-            self.notifySubject.send(.reloadWorkoutList)
-        case .delete:
-            self.notifySubject.send(.reloadWorkoutList)
-        case .normal:
-            self.notifySubject.send(.reloadWorkoutList)
-        }
+        notifySubject.send(.reloadWorkoutList)
     }
     
-    //    func moveToCircularView() {
-    //        listenerSubject.send(.moveToCircularView)
-    //    }
-    //
-    //    func dismiss() {
-    //        listenerSubject.send(.dismiss)
-    //    }
-    //
-    //    func editMode() {
-    ////        mode.value = .edit
-    //    }
-    //
-    //    func deleteMode() {
-    ////        mode.value = .delete
-    //    }
-    //
-    //    func noMode() {
-    ////        mode.value = nil
-    //    }
-    //
-    //    func didTapWorkoutCell(at index: Int) {
-    //        workouts[index].isDone.toggle()
-    //        updateWorkoutToDo()
-    //    }
+    func moveToCircularView() {
+        listenerSubject.send(.moveToCircularView)
+    }
     
-    //    func didTapSuggestion(at index: Int) {
-    //        let tappedItem = suggestions[index]
-    //        let item = Item(uuid: UUID(),
-    //                        timer: tappedItem.timer,
-    //                        title: tappedItem.title,
-    //                        reps: tappedItem.reps,
-    //                        weight: tappedItem.weight,
-    //                        isDone: tappedItem.isDone,
-    //                        type: tappedItem.type)
-    //        workouts.append(item)
-    //        updateWorkoutToDo()
-    //        checkIfWorkoutIsFinished()
-    //    }
+    func presentThis(_ vc: UINavigationController) {
+        self.listenerSubject.send(.present(vc))
+    }
+    
+    func dismiss() {
+        self.listenerSubject.send(.dismiss)
+    }
+    
+    func pushThis(_ vc: UIViewController) {
+        self.listenerSubject.send(.push(vc))
+    }
+    
+    func pop() {
+        self.listenerSubject.send(.pop)
+    }
     
     func deleteSuggestion(at index: Int, completion: () -> Void) {
         favorites.remove(at: index)
         completion()
-        updateSuggestions()
+        updateSuggestionsPersistance()
         checkIfWorkoutIsFinished()
     }
     
     func deleteWorkout(at index: Int, completion: () -> Void) {
         workoutList.remove(at: index)
         completion()
-        updateWorkoutToDo()
+        updateWorkoutPersistance()
     }
     
-    //    func addWorkout(for workout: String?, _ reps: String?, _ weight: String?) {
-    //        workoutManager.appendWorkoutToDos(WorkoutModel(uuid: UUID(),
-    //                                               timer: nil,
-    //                                               title: workout ?? "",
-    //                                               reps: Int(reps ?? ""),
-    //                                               weight: Double(weight ?? ""),
-    //                                               isDone: false,
-    //                                               type: .workout))
-    //    }
+    func deleteSelectedItems() {
+        self.workoutList.removeAll(where: {$0.isSelected == true })
+        print(workoutList)
+        self.notifySubject.send(.reloadWorkoutList)
+    }
     
     //MARK: - Private Methods
-    private func updateWorkoutToDo() {
-        //        workoutManager.updateWorkoutToDos(workoutList)
-        //        workoutManager.saveWorkoutList(WorkoutResponse(date: <#T##Date#>, workouts: <#T##[WorkoutModel]#>))
-    }
-    
     private func checkIfWorkoutIsFinished() {
         let finished = workoutList.filter({$0.isDone})
         let unfinished = workoutList.filter({!$0.isDone})
@@ -268,9 +243,24 @@ final class WorkoutListViewModel2  {
         }
     }
     
-    private func updateSuggestions() {
-        //        workoutManager.updateSuggestions(favorites)
-        workoutManager.saveFavorite(of: favorites)
+    private func updateSuggestionsPersistance() {
+        favoriteManager.save(favorites)
+    }
+    
+    private func updateWorkoutPersistance() {
+        guard
+            let index = workoutResponses.firstIndex(where: {$0.date == self.selectedDate.stripTime()})
+        else {
+            makeNewResponse(with: workoutList)
+            return
+        }
+        self.workoutResponses[index] = WorkoutResponse(date: workoutResponses[index].date,
+                                                       mode: workoutResponses[index].mode,
+                                                       workouts: workoutList)
+//        workoutManager.save(workoutResponses)
+        self.workoutManager.updateByReplacing(workoutResponses)
+        self.workoutManager.sendSelectedDateWorkout(workoutResponses,
+                                                    date: selectedDate)
     }
     
     //MARK: - Public Methods
@@ -297,11 +287,11 @@ final class WorkoutListViewModel2  {
                 if collectionView === currentCollectionView {
                     self.favorites.remove(at: sourceIndexPath.row)
                     self.favorites.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
-                    self.updateWorkoutToDo()
+                    self.updateSuggestionsPersistance()
                 } else {
                     self.workoutList.remove(at: sourceIndexPath.row)
                     self.workoutList.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
-                    self.updateSuggestions()
+                    self.updateWorkoutPersistance()
                 }
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [dIndexPath])
@@ -328,16 +318,15 @@ final class WorkoutListViewModel2  {
                 
                 if collectionView === currentCollectionView {
                     guard let item = item.dragItem.localObject as? WorkoutModel else { return }
-                    //                    let newItem = Item(uuid: UUID(), timer: item.timer, title: item.title, reps: item.reps, weight: item.weight, isDone: item.isDone, type: item.type)
-                    let newItem = WorkoutModel(uuid: UUID(), mode: item.mode, title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
-                    self.workoutList.insert(newItem, at: indexPath.row)
-                    self.updateWorkoutToDo()
+                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
+                    self.favorites.insert(newItem, at: indexPath.row)
+                    self.updateSuggestionsPersistance()
                     
                 } else {
                     guard let item = item.dragItem.localObject as? WorkoutModel else { return }
-                    let newItem = WorkoutModel(uuid: UUID(), mode: item.mode, title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
-                    self.favorites.insert(newItem, at: indexPath.row)
-                    self.updateSuggestions()
+                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
+                    self.workoutList.insert(newItem, at: indexPath.row)
+                    self.updateWorkoutPersistance()
                 }
                 indexPaths.append(indexPath)
             }
@@ -346,6 +335,75 @@ final class WorkoutListViewModel2  {
     }
     
     func didSelectDate(_ date: Date) {
-        self.fetchWorkoutList(of: date)
+        self.selectedDate = date.stripTime()
+        self.fetchWorkoutList(of: selectedDate)
+        self.notifySubject.send(.calendarDidSelect(self.selectedDate))
+        self.notifySubject.send(.reloadWorkoutList)
+    }
+    
+    func setupWorkout(with model: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
+        guard let model = model else { return }
+        
+        if model.isFavorite {
+            let favoriteModel = WorkoutModel(uuid: UUID(),
+                                             title: model.title,
+                                             reps: model.reps,
+                                             weight: model.weight,
+                                             timer: model.timer,
+                                             isFavorite: model.isFavorite,
+                                             isSelected: model.isSelected,
+                                             isDone: false)
+            if favorites.isEmpty == false {
+                favorites.removeLast()
+            }
+            favorites.append(favoriteModel)
+            appendLastFavorite()
+            favoriteManager.save(favorites)
+        }
+        
+        let newArray = Array(repeating: model, count: set)
+        
+        guard
+            let responsesIndex = workoutResponses.firstIndex(where: {$0.date == self.selectedDate})
+        else {
+            makeNewResponse(with: newArray)
+            workoutList.append(contentsOf: newArray)
+            return
+        }
+        
+        var selectedResponse = workoutResponses[responsesIndex]
+        
+        switch type {
+        case .edit:
+            guard
+                let selectedIndex = selectedResponse.workouts.firstIndex(where: {$0.uuid == model.uuid})
+            else { return }
+            workoutList[selectedIndex] = model
+            selectedResponse.workouts[selectedIndex] = model
+            
+        case .add:
+            workoutList.append(contentsOf: newArray)
+            selectedResponse.workouts = workoutList
+        }
+        
+        workoutResponses[responsesIndex] = selectedResponse
+        
+        workoutManager.updateByReplacing(workoutResponses)
+        workoutManager.sendSelectedDateWorkout(workoutResponses, date: selectedDate)
+//        workoutManager.save(workoutResponses)
+    }
+    
+    private func makeNewResponse(with models: [WorkoutModel]) {
+//        workoutResponses.append(WorkoutResponse(date: self.selectedDate,
+//                                                mode: .normal,
+//                                                workouts: models))
+//        workoutManager.save(workoutResponses)
+//        workoutManager.updateByAdding(WorkoutResponse(date: self.selectedDate,
+//                                                      mode: .normal,
+//                                                      workouts: models))
+        workoutResponses.append(WorkoutResponse(date: self.selectedDate,
+                                                mode: .normal,
+                                                workouts: models))
+        workoutManager.updateByReplacing(workoutResponses)
     }
 }
