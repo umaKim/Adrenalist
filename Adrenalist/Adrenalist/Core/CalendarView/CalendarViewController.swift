@@ -14,7 +14,7 @@ protocol ContentViewControllerDelegate: AnyObject {
     func contentViewControllerDidTapDismiss()
 }
 
-final class ContentViewController: UIViewController, FSCalendarDataSource, FSCalendarDelegate {
+final class ContentViewController: UIViewController {
     private lazy var grabberView: UIView = {
         let uv = UIView()
         uv.backgroundColor = .systemGray
@@ -34,6 +34,8 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
     
     weak var delegate: ContentViewControllerDelegate?
     
+    private var workoutResponses: [WorkoutResponse] = []
+    
     var selectedDate: Date = Date().stripTime()
     
     private let workoutManager = Manager.shared
@@ -52,11 +54,19 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
 //            }
 //            .store(in: &cancellables)
         
-        workoutManager.$selectedWorkouts.sink { responses, date in
-            self.workouts = responses
-            self.calendar.reloadData()
-        }
-        .store(in: &cancellables)
+//        workoutManager.$selectedWorkouts.sink { responses, date in
+//            self.workouts = responses
+//            self.calendar.reloadData()
+//        }
+//        .store(in: &cancellables)
+        
+//        workoutManager.$workoutlist.sink { workouts in
+//            self.workouts = workouts
+//            self.calendar.reloadData()
+//        }
+//        .store(in: &cancellables)
+        
+        self.workoutResponses = workoutManager.workoutResponses
         
         dismissButton
             .tapPublisher
@@ -70,7 +80,7 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var workouts: [WorkoutResponse] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,14 +93,6 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
         self.selectedDate = date.stripTime()
         self.calendar.select(self.selectedDate)
         self.calendar.reloadData()
-    }
-    
-    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        workouts.contains(where: {$0.date == date}) ? 1 : 0
-    }
-    
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        delegate?.didSelectDate(date.stripTime())
     }
     
     private func setupCalendar() {
@@ -121,7 +123,21 @@ final class ContentViewController: UIViewController, FSCalendarDataSource, FSCal
         
         calendar.select(self.selectedDate)
     }
+}
+
+//MARK: -
+extension ContentViewController: FSCalendarDataSource, FSCalendarDelegate  {
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        workoutResponses.contains(where: {$0.date == date}) ? 1 : 0
+    }
     
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        delegate?.didSelectDate(date.stripTime())
+    }
+}
+
+//MARK: - UI
+extension ContentViewController {
     private func setupUI() {
         view.backgroundColor = .darkNavy
         
