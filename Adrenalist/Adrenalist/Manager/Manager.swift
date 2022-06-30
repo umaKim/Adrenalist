@@ -17,7 +17,19 @@ final class FavoriteManager {
         static let favorites = "favorites"
     }
     
-    func save(_ workouts: [WorkoutModel]) {
+    @Published private(set) var favorites = [WorkoutModel]()
+    
+    func setFavorites(_ favorites: [WorkoutModel]) {
+        self.favorites = favorites
+        self.save(favorites)
+    }
+    
+    func addFavorites(_ favorite: WorkoutModel) {
+        self.favorites.append(favorite)
+        self.save(favorites)
+    }
+    
+    private func save(_ workouts: [WorkoutModel]) {
         do {
             let encoder = JSONEncoder()
             let encodedFavorties = try encoder.encode(workouts)
@@ -27,7 +39,7 @@ final class FavoriteManager {
         }
     }
     
-    func retrieve() -> AnyPublisher<[WorkoutModel], Error> {
+    private func retrieve() -> AnyPublisher<[WorkoutModel], Error> {
         guard
             let data = defaults.object(forKey: Key.favorites) as? Data
         else { return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()}
@@ -40,6 +52,20 @@ final class FavoriteManager {
             return Fail(error: error).eraseToAnyPublisher()
         }
     }
+    
+    private var cancellables: Set<AnyCancellable>
+    
+    private init() {
+        self.cancellables = .init()
+        
+        retrieve()
+            .sink { completion in
+                
+            } receiveValue: { favorites in
+                self.favorites = favorites
+            }
+            .store(in: &cancellables)
+    }
 }
 
 final class Manager {
@@ -49,6 +75,35 @@ final class Manager {
     
     enum Key {
         static let workoutResponse = "workoutResponse"
+    }
+    
+    @Published private(set) var selectedDate = Date().stripTime()
+    @Published private(set) var workoutlist = [WorkoutModel]()
+    private(set) var workoutResponses = [WorkoutResponse]()
+    
+    func selectedWorkoutlist(of date: Date) {
+        self.selectedDate = date.stripTime()
+        self.workoutlist = workoutResponses.filter({$0.date == date.stripTime()}).flatMap({$0.workouts})
+    }
+    
+    func setWorkoutlist(with workoutlist: [WorkoutModel]) {
+        self.workoutlist = workoutlist
+        self.setResponse(with: workoutlist)
+    }
+    
+    func addWorkout(with workout: WorkoutModel) {
+        self.workoutlist.append(workout)
+        self.setResponse(with: workoutlist)
+    }
+    
+    private func setResponse(with workoutlist: [WorkoutModel]) {
+        if let index = workoutResponses.firstIndex(where: {$0.date == selectedDate.stripTime()}) {
+            self.workoutResponses[index].workouts = workoutlist
+        } else {
+            let newResponse = WorkoutResponse(date: selectedDate, mode: .normal, workouts: workoutlist)
+            self.workoutResponses.append(newResponse)
+        }
+        self.save(workoutResponses)
     }
     
     private func save(_ workoutResponse: [WorkoutResponse]) {
@@ -75,52 +130,17 @@ final class Manager {
         }
     }
     
-//    public func updateByAdding(_ workoutResponse: WorkoutResponse) {
-////        self.workoutResponses.append(workoutResponse)
-//        self.save(workoutResponse)
-//    }
-    
-    public func updateByReplacing(_ workoutResponses: [WorkoutResponse]) {
-//        self.workoutResponses = workoutResponses
-        self.save(workoutResponses)
-    }
-    
-    public func updateCetainWorkouts(_ workouts: [WorkoutModel]) {
-        
-    }
-    
-//    private(set) var workoutRes = PassthroughSubject<([WorkoutResponse], Date), Never>()
-    
-//    @Published private(set) var workoutResponses = [WorkoutResponse]()
-    
-//    private(set) var selectedWorkouts = PassthroughSubject<([WorkoutResponse], selectedDate), Never>()
-    
-    typealias selectedDate = Date
-    
-    @Published private(set) var selectedWorkouts: ([WorkoutResponse], selectedDate) = ([], Date().stripTime())
-    
-//    @Published private(set) var selectedDate = Date().stripTime()
-//
-//    func setSelectedDate(_ date: Date) {
-//        selectedDate = date
-//    }
-    
-    func sendSelectedDateWorkout(_ workouts: [WorkoutResponse], date: Date) {
-//        self.selectedWorkouts.send((workouts, date))
-        self.selectedWorkouts = (workouts, date)
-    }
-    
     private var cancellables: Set<AnyCancellable>
     
-    init() {
+    private init() {
         self.cancellables = .init()
         
         retrieve()
-            .receive(on: RunLoop.main)
             .sink { completion in
-
+                
             } receiveValue: { responses in
-                self.sendSelectedDateWorkout(responses, date: Date().stripTime())
+                self.workoutResponses = responses
+                self.selectedWorkoutlist(of: self.selectedDate)
             }
             .store(in: &cancellables)
     }
