@@ -11,13 +11,6 @@ import Combine
 import UIKit.UIView
 
 enum WorkoutViewAction {
-    //    case changeOrder
-    //    case postponeToTommorow
-    //    case delete
-    
-    //    case didTapAdd
-    //    case titleCalendarDidTap
-    
     case didTapSkip
     case didTapAction
     case back
@@ -27,8 +20,6 @@ final class WorkoutView: UIView {
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutViewAction, Never>()
-    
-    //    private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
     
     private(set) lazy var backButton: UIBarButtonItem = {
         let bt = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
