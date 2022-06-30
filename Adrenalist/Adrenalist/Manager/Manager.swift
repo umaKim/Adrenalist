@@ -78,12 +78,17 @@ final class Manager {
     }
     
     @Published private(set) var selectedDate = Date().stripTime()
+    @Published private(set) var workoutDates = [Date]()
     @Published private(set) var workoutlist = [WorkoutModel]()
     private(set) var workoutResponses = [WorkoutResponse]()
     
+    
+    
     func selectedWorkoutlist(of date: Date) {
         self.selectedDate = date.stripTime()
-        self.workoutlist = workoutResponses.filter({$0.date == date.stripTime()}).flatMap({$0.workouts})
+        self.workoutlist = workoutResponses
+            .filter({$0.date == date.stripTime()})
+            .flatMap({$0.workouts})
     }
     
     func setWorkoutlist(with workoutlist: [WorkoutModel]) {
@@ -94,6 +99,10 @@ final class Manager {
     func addWorkout(with workout: WorkoutModel) {
         self.workoutlist.append(workout)
         self.setResponse(with: workoutlist)
+    }
+    
+    private func setWorkoutDates() {
+        self.workoutDates = workoutResponses.compactMap({$0.date})
     }
     
     private func setResponse(with workoutlist: [WorkoutModel]) {
@@ -141,6 +150,7 @@ final class Manager {
             } receiveValue: { responses in
                 self.workoutResponses = responses
                 self.selectedWorkoutlist(of: self.selectedDate)
+                self.setWorkoutDates()
             }
             .store(in: &cancellables)
     }
