@@ -5,6 +5,8 @@
 //  Created by 김윤석 on 2022/06/27.
 //
 
+import CombineCocoa
+import Combine
 import UIKit
 
 enum ModeViewAction {
@@ -59,32 +61,69 @@ final class ModeView: UIView {
         checkButton.isHidden = true
     }
     
-    func updateMode(_ mode: WorkoutListCellMode) {
-        switch mode {
-        case .reorder:
-            showMoveableImageView()
-            
-        case .psotpone:
-            showCheckButton()
+    @Published private var mode: WorkoutListCellMode = .normal
+    
+    func updateMode(_ mode: WorkoutListCellMode, isComplete: Bool? = nil) {
+        self.mode = mode
         
-        case .delete:
-            showCheckButton()
-        
-        case .normal:
-            hideAll()
+        if let isComplete = isComplete {
+            self.isCheckButtonTapped = isComplete
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        print("layoutSubviews")
+        
+//        switch mode {
+//        case .reorder:
+//            showMoveableImageView()
+//
+//        case .psotpone:
+//            showCheckButton()
+//
+//        case .delete:
+//            showCheckButton()
+//
+//        case .normal:
+//            hideAll()
+//        }
     }
     
     private var isCheckButtonTapped = false
     
     private func bind() {
-        checkButton.tapPublisher.sink { _ in
-            self.isCheckButtonTapped.toggle()
-            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
-                                      for: .normal)
-            self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
-        }
-        .store(in: &cancellables)
+        checkButton
+            .tapPublisher
+            .sink { _ in
+                self.isCheckButtonTapped.toggle()
+                self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
+                                          for: .normal)
+                self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
+            }
+            .store(in: &cancellables)
+        
+        $mode
+            .sink { mode in
+                switch mode {
+                case .reorder:
+                    self.showMoveableImageView()
+                    
+                case .psotpone:
+                    self.showCheckButton()
+                
+                case .delete:
+                    self.showCheckButton()
+                
+                case .normal:
+                    self.hideAll()
+                    
+                case .complete:
+                    self.showCheckButton()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
