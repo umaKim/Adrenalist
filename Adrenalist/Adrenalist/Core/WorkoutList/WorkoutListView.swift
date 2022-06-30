@@ -10,10 +10,6 @@ import CombineCocoa
 import UIKit
 
 enum WorkoutListView2Action {
-    //    case addWorkoutButtonDidTap(String?, String?, String?)
-    //    case edit
-    
-    //    case tapBackground
     case add
     
     case tapTitleCalendar(ContentViewController)
@@ -25,6 +21,8 @@ enum WorkoutListView2Action {
     case start
     
     case didSelectDate(MyScrollableDatepickerModel)
+    
+    case bottomSheetDidTapDelete
 }
 
 final class WorkoutListView2: UIView {
@@ -111,6 +109,10 @@ final class WorkoutListView2: UIView {
         calendarView.scrollToDate(date)
     }
     
+    func dismissCalendarView() {
+        
+    }
+    
     private let divider = AdrenalistDividerView()
     
     private(set) lazy var suggestedCollectionView: UICollectionView = {
@@ -160,7 +162,7 @@ final class WorkoutListView2: UIView {
         calendarTitleButton
             .tapPublisher
             .sink {[unowned self] _ in
-                self.actionSubject.send(.tapTitleCalendar(self.bottomSheetViewController))
+                self.actionSubject.send(.tapTitleCalendar(self.calendarViewController))
             }
             .store(in: &cancellables)
         
@@ -180,7 +182,7 @@ final class WorkoutListView2: UIView {
                     break
                     
                 case .delete:
-                    print("delete")
+                    self.actionSubject.send(.bottomSheetDidTapDelete)
                     break
                     
                 case .done:
@@ -193,13 +195,6 @@ final class WorkoutListView2: UIView {
                 }
             }
             .store(in: &cancellables)
-        
-//        startButton
-//            .tapPublisher
-//            .sink { _ in
-//                self.actionSubject.send(.start)
-//            }
-//            .store(in: &cancellables)
         
         moveToCircularButton
             .tapPublisher
@@ -245,17 +240,7 @@ final class WorkoutListView2: UIView {
         ])
     }
     
-    private var bottomSheetViewController: ContentViewController {
-        let viewControllerToPresent = ContentViewController()
-        if let sheet = viewControllerToPresent.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.largestUndimmedDetentIdentifier = .medium
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-        }
-        return viewControllerToPresent
-    }
+    private(set) lazy var calendarViewController = ContentViewController()
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -267,26 +252,35 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         _ datepicker: MyScrollableDatepicker,
         didScroll index: IndexPath
     ) {
-        var container = AttributeContainer()
-        container.font = UIFont.boldSystemFont(ofSize: 17)
-        
-        var config = UIButton.Configuration.plain()
-        config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
-        print("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))")
-        config.image = UIImage(systemName: "chevron.down")
-        config.imagePlacement = .trailing
-        config.imagePadding = 6.2
-        config.baseForegroundColor = .white
-        
-        calendarTitleButton.configuration = config
+//        var container = AttributeContainer()
+//        container.font = UIFont.boldSystemFont(ofSize: 17)
+//
+//        var config = UIButton.Configuration.plain()
+//        config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
+//        print("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))")
+//        config.image = UIImage(systemName: "chevron.down")
+//        config.imagePlacement = .trailing
+//        config.imagePadding = 6.2
+//        config.baseForegroundColor = .white
+//
+//        calendarTitleButton.configuration = config
     }
     
     func datepicker(
         _ datepicker: MyScrollableDatepicker,
         didSelectDate date: MyScrollableDatepickerModel
     ) {
+        updateCalendarTitleButton(date.date)
         datepicker.updateDateSet(with: date)
-        bottomSheetViewController.update(with: date.date)
-        self.actionSubject.send(.didSelectDate(date))
+        
+//        guard let btVC = bottomSheetViewController as? ContentViewController else {return }
+        calendarViewController.update(with: date.date)
+        actionSubject.send(.didSelectDate(date))
+    }
+    
+    private func updateCalendarTitleButton(_ date: Date) {
+        var container = AttributeContainer()
+        container.font = UIFont.boldSystemFont(ofSize: 17)
+        calendarTitleButton.configuration?.attributedTitle = AttributedString("\(date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
     }
 }
