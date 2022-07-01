@@ -40,9 +40,10 @@ final class WorkoutListView2: UIView {
         config.imagePlacement = .trailing
         config.imagePadding = 6.2
         config.baseForegroundColor = .white
-        
+        config.titleAlignment = .center
         let bt = UIButton()
         bt.configuration = config
+        bt.widthAnchor.constraint(equalToConstant: 50).isActive = true
         return bt
     }()
     
