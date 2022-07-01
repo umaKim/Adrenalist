@@ -23,9 +23,16 @@ final class ModeView: UIView {
     private let moveableImageView = UIImageView(image: UIImage(systemName: "line.3.horizontal"))
     
     private let checkButton: UIButton = {
+//        var config = UIButton.Configuration.plain()
+//        config.imagePadding = 1
+//        config.contentInsets = NSDirectionalEdgeInsets(top: 5,
+//          leading: 5, bottom: 5, trailing: 5)
+//        let bt = UIButton(configuration: config)
         let bt = UIButton()
         bt.setImage(CheckButtonImage.circle, for: .normal)
         bt.tintColor = .purpleBlue
+//        bt.backgroundColor = .red
+        bt.setPreferredSymbolConfiguration(.init(pointSize: 27), forImageIn: .normal)
         return bt
     }()
     
@@ -68,27 +75,9 @@ final class ModeView: UIView {
         
         if let isComplete = isComplete {
             self.isCheckButtonTapped = isComplete
+            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
+                                      for: .normal)
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        print("layoutSubviews")
-        
-//        switch mode {
-//        case .reorder:
-//            showMoveableImageView()
-//
-//        case .psotpone:
-//            showCheckButton()
-//
-//        case .delete:
-//            showCheckButton()
-//
-//        case .normal:
-//            hideAll()
-//        }
     }
     
     private var isCheckButtonTapped = false
@@ -100,9 +89,21 @@ final class ModeView: UIView {
                 self.isCheckButtonTapped.toggle()
                 self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
                                           for: .normal)
+//                self.checkButton.configuration?.image = self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle
+
                 self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
             }
             .store(in: &cancellables)
+        
+//        self.checkButton.configurationUpdateHandler = { button in
+////            print(button.isSelected)
+////            print(button.isHighlighted)
+//            self.isCheckButtonTapped.toggle()
+//            button.configuration?.image = self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle
+////            button.configuration?.image?.withConfiguration(UIImage(systemName: self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
+////                                                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large)))
+//            self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
+//        }
         
         $mode
             .sink { mode in
@@ -136,19 +137,19 @@ final class ModeView: UIView {
         }
         
         NSLayoutConstraint.activate([
-            self.moveableImageView.widthAnchor.constraint(equalToConstant: 24),
-            self.moveableImageView.heightAnchor.constraint(equalToConstant: 24),
+//            self.moveableImageView.widthAnchor.constraint(equalToConstant: 50),
+//            self.moveableImageView.heightAnchor.constraint(equalToConstant: 50),
             self.moveableImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             self.moveableImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             self.moveableImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             self.moveableImageView.topAnchor.constraint(equalTo: topAnchor),
             
-            self.checkButton.widthAnchor.constraint(equalToConstant: 24),
-            self.checkButton.heightAnchor.constraint(equalToConstant: 24),
+//            self.checkButton.widthAnchor.constraint(equalToConstant: 50),
+//            self.checkButton.heightAnchor.constraint(equalToConstant: 50),
             self.checkButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             self.checkButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             self.checkButton.bottomAnchor.constraint(equalTo: bottomAnchor),
-            self.checkButton.topAnchor.constraint(equalTo: topAnchor)
+            self.checkButton.topAnchor.constraint(equalTo: topAnchor),
         ])
     }
     
