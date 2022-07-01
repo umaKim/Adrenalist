@@ -165,23 +165,24 @@ final class WorkoutListViewModel2  {
             
         case .complete:
             self.workoutList[index].isDone = isComplete
+            self.workoutManager.setWorkoutlist(with: workoutList)
             
         case .normal:
             break
         }
     }
     
-    func setupWorkout(with workout: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
-//        guard let workout = workout else { return }
+//    func setupWorkout(with workout: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
+////        guard let workout = workout else { return }
+////
+////        for _ in 1...set {
+////            workoutList.append(WorkoutModel(title: <#T##String#>,
+////                                            isFavorite: <#T##Bool#>,
+////                                            isSelected: <#T##Bool#>,
+////                                            isDone: <#T##Bool#>))
+////        }
+//    }
 //
-//        for _ in 1...set {
-//            workoutList.append(WorkoutModel(title: <#T##String#>,
-//                                            isFavorite: <#T##Bool#>,
-//                                            isSelected: <#T##Bool#>,
-//                                            isDone: <#T##Bool#>))
-//        }
-    }
-    
     func setupWorkout(with workouts: [WorkoutModel]) {
         self.workoutList.append(contentsOf: workouts)
         self.workoutManager.setWorkoutlist(with: workoutList)
