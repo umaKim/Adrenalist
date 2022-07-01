@@ -109,7 +109,7 @@ final class Manager {
         if let index = workoutResponses.firstIndex(where: {$0.date == selectedDate.stripTime()}) {
             self.workoutResponses[index].workouts = workoutlist
         } else {
-            let newResponse = WorkoutResponse(date: selectedDate, mode: .normal, workouts: workoutlist)
+            let newResponse = WorkoutResponse(date: selectedDate, mode: .complete, workouts: workoutlist)
             self.workoutResponses.append(newResponse)
         }
         self.save(workoutResponses)
