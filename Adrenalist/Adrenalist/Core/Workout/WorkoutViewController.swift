@@ -17,6 +17,7 @@ final class WorkoutViewController: UIViewController {
     
     private var cancellables: Set<AnyCancellable>
     
+    //MARK: - Init
     init(viewModel: WorkoutViewModel) {
         self.viewModel = viewModel
         self.cancellables = .init()
@@ -31,6 +32,13 @@ final class WorkoutViewController: UIViewController {
         setupUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Bind
+extension WorkoutViewController {
     private func bind() {
         contentView
             .actionPublisher
@@ -64,16 +72,18 @@ final class WorkoutViewController: UIViewController {
                     self.contentView.updateOutline(value)
                     
                 case .updateToCurrentWorkout(let currentWorkout):
-                    print(currentWorkout)
-                    break
+                    self.contentView.updateCurrentWorkoutLabel(currentWorkout?.title ?? "")
                     
                 case .updateNextWorkout(let nextWorkout):
-                    print(nextWorkout)
-                    break
+                    self.contentView.updateNextWorkoutLabel(nextWorkout?.title ?? "")
                 }
             }
             .store(in: &cancellables)
     }
+}
+
+//MARK: - Setup UI
+extension WorkoutViewController {
     
     private func setupUI() {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -82,7 +92,4 @@ final class WorkoutViewController: UIViewController {
         navigationItem.leftBarButtonItems = [contentView.backButton]
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
