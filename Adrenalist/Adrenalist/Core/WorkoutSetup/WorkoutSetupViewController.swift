@@ -29,6 +29,8 @@ class WorkoutSetupViewController: UIViewController {
         self.contentView = WorkoutSetupView(type: viewModel.type)
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
+        
+        self.title = viewModel.type.rawValue
     }
     
     required init?(coder: NSCoder) {
