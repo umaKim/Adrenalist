@@ -58,7 +58,7 @@ final class WorkoutListViewController2: UIViewController {
                 switch action {
                     
                 case .add:
-                    self.showWorkoutSetupViewController(for: .add)
+                    self.showWorkoutSetupViewController(for: .add, didSelect: WorkoutModel(title: "", isFavorite: false, isSelected: false, isDone: false))
                     
                 case .reorder:
                     //TODO: change cell to be reorder mode
@@ -122,7 +122,7 @@ final class WorkoutListViewController2: UIViewController {
             .store(in: &cancellables)
     }
     
-    private func showWorkoutSetupViewController(for type: WorkoutSetupType, didSelect model: WorkoutModel? = nil) {
+    private func showWorkoutSetupViewController(for type: WorkoutSetupType, didSelect model: WorkoutModel) {
         let vm = WorkoutSetupViewModel(workout: model, type: type)
         let vc = WorkoutSetupViewController(viewModel: vm)
         vc.delegate = self
@@ -332,9 +332,15 @@ extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
 
 //MARK: - WorkoutSetupViewControllerDelegate
 extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
-    func workoutSetupDidTapDone(with models: [WorkoutModel]) {
+    func workoutSetupDidTapDone(with models: [WorkoutModel], type: WorkoutSetupType) {
         self.viewModel.dismiss()
-        self.viewModel.setupWorkout(with: models)
+        switch type {
+        case .edit:
+            self.viewModel.editWorkout(with: models.first)
+        case .add:
+            self.viewModel.setupWorkout(with: models)
+        }
+        
         self.contentView.suggestedCollectionView.reloadData()
         self.contentView.workoutListCollectionView.reloadData()
         self.scrollToLast()

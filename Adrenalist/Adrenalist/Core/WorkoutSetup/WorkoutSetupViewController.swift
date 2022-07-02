@@ -10,7 +10,7 @@ import Combine
 import UIKit
 
 protocol WorkoutSetupViewControllerDelegate: AnyObject {
-    func workoutSetupDidTapDone(with models: [WorkoutModel])
+    func workoutSetupDidTapDone(with models: [WorkoutModel], type: WorkoutSetupType)
     func workoutSetupDidTapCancel()
 }
 
@@ -56,7 +56,6 @@ class WorkoutSetupViewController: UIViewController {
                     
                 case .didTapDone:
                     self.viewModel.doneButtonDidTap()
-//                    self.delegate?.workoutSetupDidTapDone(with: self.viewModel.workout)
                     
                 case .titleDidChange(let text):
                     self.viewModel.setTitle(text)
@@ -84,8 +83,8 @@ class WorkoutSetupViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { noti in
                 switch noti {
-                case .doneButtonDidTap(models: let models):
-                    self.delegate?.workoutSetupDidTapDone(with: models)
+                case .doneButtonDidTap(models: let models, type: let type):
+                    self.delegate?.workoutSetupDidTapDone(with: models, type: type)
                 }
             }
             .store(in: &cancellables)
