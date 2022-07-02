@@ -10,7 +10,9 @@ import FloatingPanel
 import Combine
 
 enum WorkoutCollectionViewCellAction {
-    case setting, workout ,calendar
+    case setting
+//    case workout
+//    case calendar
 }
 
 final class WorkoutCollectionViewCell: UICollectionViewCell {
@@ -35,10 +37,10 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
             .transitionPublisher
             .sink { trans in
                 switch trans {
-                case .setting:
-                    self.action.send(.setting)
-                case .calendar:
-                    self.action.send(.calendar)
+//                case .setting:
+//                    self.action.send(.setting)
+//                case .calendar:
+//                    self.action.send(.calendar)
                 case .workoutList:
                     self.action.send(.setting)
                 }

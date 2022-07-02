@@ -93,11 +93,11 @@ extension MainViewController: UICollectionViewDataSource {
                     case .setting:
                         self.scrollTo(index: 0)
                         
-                    case .workout:
-                        break
+//                    case .workout:
+//                        break
                         
-                    case .calendar:
-                        self.scrollTo(index: 2)
+//                    case .calendar:
+//                        self.scrollTo(index: 2)
                     }
                 }
                 .store(in: &cancellables)
