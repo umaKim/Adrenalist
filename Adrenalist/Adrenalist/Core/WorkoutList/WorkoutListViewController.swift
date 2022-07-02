@@ -8,10 +8,7 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionViewCellDelegate {
-    func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
-        viewModel.updateIsComplete(isTapped, at: indexPathRow)
-    }
+final class WorkoutListViewController2: UIViewController {
     
     private(set) lazy var contentView = WorkoutListView2()
     
@@ -35,28 +32,23 @@ final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionV
         setupUI()
         setupCollectionView()
     }
-//
-//    private func presentItemSetupModalForUpdate(at indexPath: IndexPath, type: CollectionViewType) {
-//        var targetItem: WorkoutModel?
-//        switch type {
-//        case .suggestion:
-//            targetItem = viewModel.favorites[indexPath.row]
-//        case .mainWorkout:
-//            targetItem = viewModel.workoutList[indexPath.row]
-//        }
-//
-//        guard
-//            let targetItem = targetItem
-//        else { return }
-//
-//        let vm = ItemSetupViewModel(workout: targetItem, collectionViewType: type)
-//        let vc = ItemSetupViewController(viewModel: vm)
-////        vc.delegate = self
-//        self.present(vc, animated: true)
-//    }
-    
+
     private func isRightBarButtonItemsHidden(_ isHidden: Bool) {
         navigationItem.rightBarButtonItems = isHidden ? nil: [contentView.moveToCircularButton, contentView.addButton]
+    }
+    
+    private func navSheet(_ vc: ContentViewController) -> UINavigationController {
+        vc.delegate = self
+        vc.selectedDate = self.viewModel.selectedDate
+        let nav = UINavigationController(rootViewController: vc)
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
+        return nav
     }
     
     private func bind() {
@@ -84,21 +76,11 @@ final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionV
                     self.isRightBarButtonItemsHidden(true)
                     
                 case .tapTitleCalendar(let vc):
-                    vc.delegate = self
-                    vc.selectedDate = self.viewModel.selectedDate
-                    let nav = UINavigationController(rootViewController: vc)
-                    if let sheet = nav.sheetPresentationController {
-                        sheet.detents = [.medium()]
-                        sheet.largestUndimmedDetentIdentifier = .medium
-                        sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                        sheet.prefersEdgeAttachedInCompactHeight = true
-                        sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-                    }
-                    
+                    let nav = self.navSheet(vc)
                     self.viewModel.presentThis(nav)
                     
                 case .bottomNavigationBarDidTapCancel:
-                    self.viewModel.updateMode(type: .normal)
+                    self.viewModel.updateMode(type: .complete)
                     self.isRightBarButtonItemsHidden(false)
                     
                 case .start:
@@ -109,6 +91,7 @@ final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionV
                     
                 case .bottomSheetDidTapDelete:
                     self.viewModel.deleteSelectedItems()
+                    self.isRightBarButtonItemsHidden(false)
                 }
             }
             .store(in: &cancellables)
@@ -127,10 +110,8 @@ final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionV
                     self.contentView.isFavoriteEmpty(isEmpty)
                     
                 case .isWorkoutListEmpty(let isEmpty):
-                    break
+                    self.contentView.isWorkoutEmpty(isEmpty)
                     
-                case .calendarDidSelect(let date):
-                    self.contentView.updateCalendarTitleButton(date)
                 case .setDates(let min, let max, let dates):
                     self.contentView.setDates(min: min,
                                               max: max,
@@ -187,59 +168,6 @@ final class WorkoutListViewController2: UIViewController, WorkoutlistCollectionV
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-////MARK: - WorkoutListCellDelegate
-//extension WorkoutListViewController2: WorkoutListCellDelegate {
-//    func workoutListDidTapEdit(id: UUID) {
-//        guard
-//            let itemIndex = viewModel.workoutList.firstIndex(where: {$0.uuid == id})
-//        else { return }
-//        
-//        let indexPath = IndexPath(row: itemIndex, section: 0)
-//        presentItemSetupModalForUpdate(at: indexPath, type: .mainWorkout)
-//    }
-//    
-//    func workoutListDidTapdelete(id: UUID) {
-//        guard
-//            let itemIndex = viewModel.workoutList.firstIndex(where: {$0.uuid == id})
-//        else { return }
-//        
-//        let indexPath = IndexPath(row: itemIndex, section: 0)
-//        viewModel.deleteWorkout(at: indexPath.row, completion: {
-//            self.contentView.workoutListCollectionView.deleteItems(at: [indexPath])
-//        })
-//    }
-//}
-
-////MARK: - SuggestionListCellDelegate
-//extension WorkoutListViewController2: SuggestionListCellDelegate {
-//    func suggestionDidTapEdit(id: UUID) {
-//        guard
-//            let itemIndex = viewModel.favorites.firstIndex(where: {$0.uuid == id})
-//        else { return }
-//
-//        let indexPath = IndexPath(row: itemIndex, section: 0)
-////        presentItemSetupModalForUpdate(at: indexPath, type: .suggestion)
-//    }
-//
-//    func suggestionDidTapDelete(id: UUID) {
-//        guard
-//            let itemIndex = viewModel.favorites.firstIndex(where: {$0.uuid == id})
-//        else { return }
-//
-//        let indexPath = IndexPath(row: itemIndex, section: 0)
-//        viewModel.deleteSuggestion(at: indexPath.row, completion: {
-//            self.contentView.suggestedCollectionView.deleteItems(at: [indexPath])
-//        })
-//    }
-//}
-
-//////MARK: - ItemSetupViewControllerDelegate
-//extension WorkoutListViewController2: ItemSetupViewControllerDelegate {
-//    func dismiss() {
-//        self.dismiss(animated: true)
-//    }
-//}
 
 //MARK: - UICollectionView Drop Delegate
 extension WorkoutListViewController2: UICollectionViewDropDelegate {
@@ -370,9 +298,7 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
                 let vm = FavoriteDetailViewModel()
                 let vc = FavoriteDetailViewController(viewModel: vm)
                 let nav = UINavigationController(rootViewController: vc)
-//                self.navigationController?.pushViewController(nav, animated: true)
                 present(nav, animated: true)
-//                self.viewModel.pushThis(vc)
             }
         }
     }
@@ -404,28 +330,45 @@ extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
+//MARK: - WorkoutSetupViewControllerDelegate
 extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
-    func WorkoutSetupDidTapDone(with model: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
+    func workoutSetupDidTapDone(with models: [WorkoutModel]) {
         self.viewModel.dismiss()
-        self.viewModel.setupWorkout(with: model, for: type, set: set)
+        self.viewModel.setupWorkout(with: models)
         self.contentView.suggestedCollectionView.reloadData()
         self.contentView.workoutListCollectionView.reloadData()
         self.scrollToLast()
     }
     
-    func WorkoutSetupDidTapCancel() {
+//    func workoutSetupDidTapDone(with model: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
+//        self.viewModel.dismiss()
+//        self.viewModel.setupWorkout(with: model, for: type, set: set)
+//        self.contentView.suggestedCollectionView.reloadData()
+//        self.contentView.workoutListCollectionView.reloadData()
+//        self.scrollToLast()
+//    }
+//
+    func workoutSetupDidTapCancel() {
         self.viewModel.dismiss()
     }
 }
 
-extension WorkoutListViewController2:  ContentViewControllerDelegate {
+//MARK: - ContentViewControllerDelegate
+extension WorkoutListViewController2: ContentViewControllerDelegate {
     func contentViewControllerDidTapDismiss() {
         viewModel.dismiss()
     }
     
     func didSelectDate(_ date: Date) {
         contentView.scrollToDate(date)
+        contentView.updateCalendarTitleButton(date)
         viewModel.didSelectDate(date.stripTime())
+    }
+}
+
+//MARK: - WorkoutlistCollectionViewCellDelegate
+extension WorkoutListViewController2: WorkoutlistCollectionViewCellDelegate {
+    func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
+        viewModel.updateIsComplete(isTapped, at: indexPathRow)
     }
 }
