@@ -10,6 +10,7 @@ import Combine
 import UIKit
 
 enum ModeViewAction {
+    case tapDeleteButton(Bool)
     case tapCheckButton(Bool)
 }
 
@@ -23,15 +24,17 @@ final class ModeView: UIView {
     private let moveableImageView = UIImageView(image: UIImage(systemName: "line.3.horizontal"))
     
     private let checkButton: UIButton = {
-//        var config = UIButton.Configuration.plain()
-//        config.imagePadding = 1
-//        config.contentInsets = NSDirectionalEdgeInsets(top: 5,
-//          leading: 5, bottom: 5, trailing: 5)
-//        let bt = UIButton(configuration: config)
         let bt = UIButton()
         bt.setImage(CheckButtonImage.circle, for: .normal)
         bt.tintColor = .purpleBlue
-//        bt.backgroundColor = .red
+        bt.setPreferredSymbolConfiguration(.init(pointSize: 27), forImageIn: .normal)
+        return bt
+    }()
+    
+    private let deleteButton: UIButton = {
+       let bt = UIButton()
+        bt.setImage(CheckButtonImage.delete, for: .normal)
+        bt.tintColor = .red
         bt.setPreferredSymbolConfiguration(.init(pointSize: 27), forImageIn: .normal)
         return bt
     }()
@@ -39,58 +42,92 @@ final class ModeView: UIView {
     enum CheckButtonImage {
         static let check = UIImage(systemName: "checkmark.circle.fill")
         static let circle = UIImage(systemName: "circle")
+        
+        static let delete = UIImage(systemName: "minus.circle")
+        static let deleteFill = UIImage(systemName: "minus.circle.fill")
     }
     
-    override init(frame: CGRect) {
+    init() {
         self.cancellables = .init()
-        super.init(frame: frame)
+        super.init(frame: .zero)
         bind()
         setupUI()
     }
     
-    convenience init (mode: WorkoutListCellMode) {
-        self.init(frame: .zero)
-        self.updateMode(mode)
+//    convenience init (mode: WorkoutListCellMode) {
+//        self.init(frame: .zero)
+////        self.updateMode(mode)
+//        
+//    }
+    
+    private func showDeleteButton() {
+        deleteButton.isHidden = false
+        checkButton.isHidden = true
     }
     
     private func showCheckButton() {
-        moveableImageView.isHidden = true
+//        moveableImageView.isHidden = true
+        deleteButton.isHidden = true
         checkButton.isHidden = false
     }
     
     private func showMoveableImageView() {
-        moveableImageView.isHidden = false
+//        moveableImageView.isHidden = false
         checkButton.isHidden = true
     }
     
     private func hideAll() {
-        moveableImageView.isHidden = true
+//        moveableImageView.isHidden = true
         checkButton.isHidden = true
     }
     
-    @Published private var mode: WorkoutListCellMode = .normal
+    @Published private var mode: WorkoutListCellMode = .complete
     
-    func updateMode(_ mode: WorkoutListCellMode, isComplete: Bool? = nil) {
+    func updateMode(_ mode: WorkoutListCellMode, of model: WorkoutModel) {
         self.mode = mode
         
-        if let isComplete = isComplete {
-            self.isCheckButtonTapped = isComplete
+//        if let isComplete = isComplete {
+//            self.isCheckButtonTapped = isComplete
+//            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
+//                                      for: .normal)
+//        }
+        
+        switch mode {
+        case .complete:
+            self.isCheckButtonTapped = model.isDone
             self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
                                       for: .normal)
+            
+        case .delete:
+            self.isDeleteButtonTapped = model.isSelected
+            self.deleteButton.setImage(self.isDeleteButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
+                                      for: .normal)
+            
+        default:
+            break
         }
     }
     
+    private var isDeleteButtonTapped = false
     private var isCheckButtonTapped = false
     
     private func bind() {
+        deleteButton
+            .tapPublisher
+            .sink { _ in
+                self.isDeleteButtonTapped.toggle()
+                self.deleteButton.setImage(self.isDeleteButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
+                                          for: .normal)
+                self.actionSubject.send(.tapDeleteButton(self.isDeleteButtonTapped))
+            }
+            .store(in: &cancellables)
+        
         checkButton
             .tapPublisher
             .sink { _ in
                 self.isCheckButtonTapped.toggle()
                 self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
                                           for: .normal)
-//                self.checkButton.configuration?.image = self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle
-
                 self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
             }
             .store(in: &cancellables)
@@ -115,10 +152,10 @@ final class ModeView: UIView {
                     self.showCheckButton()
                 
                 case .delete:
-                    self.showCheckButton()
+                    self.showDeleteButton()
                 
-                case .normal:
-                    self.hideAll()
+//                case .normal:
+//                    self.hideAll()
                     
                 case .complete:
                     self.showCheckButton()
@@ -128,24 +165,20 @@ final class ModeView: UIView {
     }
     
     private func setupUI() {
-        moveableImageView.tintColor = .purpleBlue
+        deleteButton.tintColor = .red
         checkButton.tintColor = .purpleBlue
         
-        [moveableImageView, checkButton].forEach { uv in
+        [deleteButton, checkButton].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
         }
         
         NSLayoutConstraint.activate([
-//            self.moveableImageView.widthAnchor.constraint(equalToConstant: 50),
-//            self.moveableImageView.heightAnchor.constraint(equalToConstant: 50),
-            self.moveableImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            self.moveableImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            self.moveableImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            self.moveableImageView.topAnchor.constraint(equalTo: topAnchor),
+            self.deleteButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            self.deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            self.deleteButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            self.deleteButton.topAnchor.constraint(equalTo: topAnchor),
             
-//            self.checkButton.widthAnchor.constraint(equalToConstant: 50),
-//            self.checkButton.heightAnchor.constraint(equalToConstant: 50),
             self.checkButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             self.checkButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             self.checkButton.bottomAnchor.constraint(equalTo: bottomAnchor),
