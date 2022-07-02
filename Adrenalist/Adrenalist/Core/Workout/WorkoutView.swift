@@ -21,6 +21,9 @@ final class WorkoutView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutViewAction, Never>()
     
+    private var cancellables: Set<AnyCancellable>
+    
+    //MARK: - UI Objects
     private(set) lazy var backButton: UIBarButtonItem = {
         let bt = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
         bt.tintColor = .white
@@ -41,25 +44,55 @@ final class WorkoutView: UIView {
         return bt
     }()
     
+    private lazy var finishButton: AdrenalistTextRectangleButton = {
+       let bt = AdrenalistTextRectangleButton(title: "Finish")
+        bt.widthAnchor.constraint(equalToConstant: UIScreen.main.width - 32).isActive = true
+        return bt
+    }()
+    
+    private lazy var currentWorkoutLabel: UILabel = {
+       let lb = UILabel()
+        lb.textColor = .white
+        lb.font = .boldSystemFont(ofSize: 34)
+        return lb
+    }()
+    
     private lazy var nextWorkoutLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "next"
         lb.textColor = .brightGrey
         return lb
     }()
     
-    private var cancellables: Set<AnyCancellable>
+    private lazy var resumeButtonStackView: UIStackView = {
+        let bt = UIStackView(arrangedSubviews: [skipButton, actionButton])
+        bt.axis = .horizontal
+        bt.alignment = .fill
+        bt.distribution = .fillProportionally
+        bt.spacing = 8
+        return bt
+    }()
     
+    //MARK: - Init
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
         bind()
+        setupUI()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        setupUI()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+//MARK: - Public Methods
+extension WorkoutView {
+    func updateCurrentWorkoutLabel(_ text: String) {
+        self.currentWorkoutLabel.text = text
+    }
+    
+    func updateNextWorkoutLabel(_ text: String) {
+        self.nextWorkoutLabel.text = "NEXT: \(text)"
     }
     
     func updatePulse(_ value: CGFloat) {
@@ -74,7 +107,24 @@ final class WorkoutView: UIView {
         circularView.animateInlineStroke(value)
     }
     
-    //MARK: - Private Methods
+    func showNextButton() {
+        self.skipButton.isHidden = false
+        self.actionButton.isHidden = false
+        
+        self.finishButton.isHidden = true
+    }
+    
+    func showFinishButton() {
+        self.skipButton.isHidden = true
+        self.actionButton.isHidden = true
+        
+        self.finishButton.isHidden = false
+    }
+}
+
+//MARK: - Private Methods
+extension WorkoutView {
+    
     private func bind() {
         backButton
             .tapPublisher
@@ -98,19 +148,15 @@ final class WorkoutView: UIView {
             .store(in: &cancellables)
     }
     
-    private lazy var resumeButtonStackView: UIStackView = {
-        let bt = UIStackView(arrangedSubviews: [skipButton, actionButton])
-        bt.axis = .horizontal
-        bt.alignment = .fill
-        bt.distribution = .fillProportionally
-        bt.spacing = 8
-        return bt
-    }()
-    
+}
+
+//MARK: - Setup UI
+extension WorkoutView {
     private func setupUI() {
         backgroundColor = .black
         
         [circularView,
+         currentWorkoutLabel,
          nextWorkoutLabel,
          resumeButtonStackView]
             .forEach { uv in
@@ -122,6 +168,9 @@ final class WorkoutView: UIView {
             circularView.centerXAnchor.constraint(equalTo: centerXAnchor),
             circularView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -UIScreen.main.height/15),
             
+            currentWorkoutLabel.centerXAnchor.constraint(equalTo: circularView.centerXAnchor),
+            currentWorkoutLabel.centerYAnchor.constraint(equalTo: circularView.centerYAnchor),
+            
             nextWorkoutLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             nextWorkoutLabel.centerYAnchor.constraint(equalTo: centerYAnchor,
                                                       constant: UIScreen.main.height / 4),
@@ -129,10 +178,6 @@ final class WorkoutView: UIView {
             resumeButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             resumeButtonStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
