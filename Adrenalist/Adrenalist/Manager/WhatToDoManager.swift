@@ -131,7 +131,8 @@ final class WorkoutManager {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(workout.workouts)
-            defaults.setValue(encodedFavorites, forKey: workout.date.description)
+            guard let date = workout.date else {return }
+            defaults.setValue(encodedFavorites, forKey: date.description)
         } catch {
             print(error)
         }

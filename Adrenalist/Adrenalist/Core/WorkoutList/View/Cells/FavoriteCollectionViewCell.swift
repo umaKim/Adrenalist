@@ -36,8 +36,8 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with model: WorkoutModel) {
-        titleLabel.text = model.title
+    func configure(with response: WorkoutResponse) {
+        titleLabel.text = response.name
         
     }
     

@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct WorkoutResponse: Codable {
-    var date: Date
-    var mode: WorkoutListCellMode
+struct WorkoutResponse: Codable, Hashable {
+    var uuid = UUID()
+    var name: String?
+    var date: Date?
     var workouts: [WorkoutModel]
 }
 
@@ -23,3 +24,12 @@ struct WorkoutModel: Codable, Hashable {
     var isSelected: Bool
     var isDone: Bool
 }
+
+//struct WorkoutContainer: Codable {
+//    var sets: [WorkoutSet]
+//}
+//
+//struct WorkoutSet: Codable {
+//    var name: String
+//    var set: [WorkoutModel]
+//}

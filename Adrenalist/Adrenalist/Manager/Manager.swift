@@ -8,8 +8,8 @@
 import Combine
 import Foundation
 
-final class FavoriteManager {
-    static let shared = FavoriteManager()
+final class FavoriteSetManager {
+    static let shared = FavoriteSetManager()
     
     private let defaults = UserDefaults.standard
     
@@ -17,19 +17,20 @@ final class FavoriteManager {
         static let favorites = "favorites"
     }
     
-    @Published private(set) var favorites = [WorkoutModel]()
+//    @Published private(set) var favorites = [WorkoutModel]()
+    @Published private(set) var favorites = [WorkoutResponse]()
     
-    func setFavorites(_ favorites: [WorkoutModel]) {
+    func setFavorites(_ favorites: [WorkoutResponse]) {
         self.favorites = favorites
         self.save(favorites)
     }
     
-    func addFavorites(_ favorite: WorkoutModel) {
+    func addFavorites(_ favorite: WorkoutResponse) {
         self.favorites.append(favorite)
         self.save(favorites)
     }
     
-    private func save(_ workouts: [WorkoutModel]) {
+    private func save(_ workouts: [WorkoutResponse]) {
         do {
             let encoder = JSONEncoder()
             let encodedFavorties = try encoder.encode(workouts)
@@ -39,14 +40,14 @@ final class FavoriteManager {
         }
     }
     
-    private func retrieve() -> AnyPublisher<[WorkoutModel], Error> {
+    private func retrieve() -> AnyPublisher<[WorkoutResponse], Error> {
         guard
             let data = defaults.object(forKey: Key.favorites) as? Data
         else { return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()}
         
         do {
             let decoder = JSONDecoder()
-            let workouts = try decoder.decode([WorkoutModel].self, from: data)
+            let workouts = try decoder.decode([WorkoutResponse].self, from: data)
             return Just(workouts).setFailureType(to: Error.self).eraseToAnyPublisher()
         } catch {
             return Fail(error: error).eraseToAnyPublisher()
@@ -109,7 +110,7 @@ final class Manager {
         if let index = workoutResponses.firstIndex(where: {$0.date == selectedDate.stripTime()}) {
             self.workoutResponses[index].workouts = workoutlist
         } else {
-            let newResponse = WorkoutResponse(date: selectedDate, mode: .complete, workouts: workoutlist)
+            let newResponse = WorkoutResponse(date: selectedDate, workouts: workoutlist)
             self.workoutResponses.append(newResponse)
         }
         self.save(workoutResponses)
