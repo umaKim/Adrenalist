@@ -19,6 +19,8 @@ final class ModeView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<ModeViewAction, Never>()
     
+    @Published private var mode: WorkoutListCellMode = .complete
+    
     private var cancellables: Set<AnyCancellable>
     
     private let moveableImageView = UIImageView(image: UIImage(systemName: "line.3.horizontal"))
@@ -45,6 +47,9 @@ final class ModeView: UIView {
         
         static let delete = UIImage(systemName: "minus.circle")
         static let deleteFill = UIImage(systemName: "minus.circle.fill")
+        
+        static let centerfill = UIImage(systemName: "smallcircle.fill.circle")
+        static let smallFill = UIImage(systemName: "smallcircle.fill.circle.fill")
     }
     
     init() {
@@ -54,43 +59,22 @@ final class ModeView: UIView {
         setupUI()
     }
     
-//    convenience init (mode: WorkoutListCellMode) {
-//        self.init(frame: .zero)
-////        self.updateMode(mode)
-//        
-//    }
-    
     private func showDeleteButton() {
-        deleteButton.isHidden = false
-        checkButton.isHidden = true
+        UIView.animate(withDuration: 1, delay: 0.5, options: .curveLinear) {
+            self.deleteButton.isHidden = false
+            self.checkButton.isHidden = true
+        } completion: { _ in }
     }
     
     private func showCheckButton() {
-//        moveableImageView.isHidden = true
-        deleteButton.isHidden = true
-        checkButton.isHidden = false
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut) {
+            self.deleteButton.isHidden = true
+            self.checkButton.isHidden = false
+        } completion: { _ in }
     }
-    
-    private func showMoveableImageView() {
-//        moveableImageView.isHidden = false
-        checkButton.isHidden = true
-    }
-    
-    private func hideAll() {
-//        moveableImageView.isHidden = true
-        checkButton.isHidden = true
-    }
-    
-    @Published private var mode: WorkoutListCellMode = .complete
     
     func updateMode(_ mode: WorkoutListCellMode, of model: WorkoutModel) {
         self.mode = mode
-        
-//        if let isComplete = isComplete {
-//            self.isCheckButtonTapped = isComplete
-//            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
-//                                      for: .normal)
-//        }
         
         switch mode {
         case .complete:
@@ -102,9 +86,10 @@ final class ModeView: UIView {
             self.isDeleteButtonTapped = model.isSelected
             self.deleteButton.setImage(self.isDeleteButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
                                       for: .normal)
-            
-        default:
-            break
+        case .createSet:
+            self.isCheckButtonTapped = model.isSelected
+            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.centerfill,
+                                      for: .normal)
         }
     }
     
@@ -125,39 +110,38 @@ final class ModeView: UIView {
         checkButton
             .tapPublisher
             .sink { _ in
-                self.isCheckButtonTapped.toggle()
-                self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
-                                          for: .normal)
-                self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
+               
+                
+                switch self.mode {
+                case .complete:
+                    self.isCheckButtonTapped.toggle()
+                    self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
+                                              for: .normal)
+                    self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
+                    
+                case .createSet:
+                    self.isCheckButtonTapped.toggle()
+                    self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.circle,
+                                              for: .normal)
+                    self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
+                    
+                case .delete:
+                    break
+                }
+                
             }
             .store(in: &cancellables)
-        
-//        self.checkButton.configurationUpdateHandler = { button in
-////            print(button.isSelected)
-////            print(button.isHighlighted)
-//            self.isCheckButtonTapped.toggle()
-//            button.configuration?.image = self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle
-////            button.configuration?.image?.withConfiguration(UIImage(systemName: self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
-////                                                                   withConfiguration: UIImage.SymbolConfiguration(scale: .large)))
-//            self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
-//        }
         
         $mode
             .sink { mode in
                 switch mode {
-                case .reorder:
-                    self.showMoveableImageView()
-                    
-                case .psotpone:
-                    self.showCheckButton()
-                
                 case .delete:
                     self.showDeleteButton()
                 
-//                case .normal:
-//                    self.hideAll()
-                    
                 case .complete:
+                    self.showCheckButton()
+                    
+                case .createSet:
                     self.showCheckButton()
                 }
             }
