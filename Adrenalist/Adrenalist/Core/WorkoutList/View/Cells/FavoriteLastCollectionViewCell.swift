@@ -24,8 +24,11 @@ final class FavoriteLastCollectionViewCell: UICollectionViewCell {
         
         imageView.tintColor = .brightGrey
         
-        addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        [imageView]
+            .forEach { uv in
+                uv.translatesAutoresizingMaskIntoConstraints = false
+                addSubview(uv)
+            }
         
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
