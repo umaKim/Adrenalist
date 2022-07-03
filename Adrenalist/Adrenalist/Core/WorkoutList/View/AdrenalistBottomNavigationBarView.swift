@@ -18,11 +18,15 @@ struct AdrenalistBottomNavigationBarViewConfigurator {
 }
 
 enum AdrenalistBottomNavigationBarViewType {
-    case done, move, delete, normal
+    case delete, normal, createSet
 }
 
 enum AdrenalistBottomNavigationBarViewAction {
-    case done, move, delete, cancel
+//    case done
+//    case move
+    case createSet
+    case delete
+    case cancel
 }
 
 class AdrenalistBottomNavigationBarView: UIView {
@@ -44,6 +48,13 @@ class AdrenalistBottomNavigationBarView: UIView {
        let bt = UIButton()
         bt.setTitle("Delete", for: .normal)
         bt.setTitleColor(.red, for: .normal)
+        return bt
+    }()
+    
+    private let createSetButton: UIButton = {
+       let bt = UIButton()
+        bt.setTitle("Create", for: .normal)
+        bt.setTitleColor(.purpleBlue, for: .normal)
         return bt
     }()
     
@@ -87,16 +98,20 @@ class AdrenalistBottomNavigationBarView: UIView {
         sv.addArrangedSubview(cancelButton)
         
         switch type {
-        case .done:
-            sv.addArrangedSubview(doneButton)
+//        case .done:
+//            sv.addArrangedSubview(doneButton)
             
-        case .move:
-            sv.addArrangedSubview(moveButton)
+//        case .move:
+//            sv.addArrangedSubview(moveButton)
             
         case .delete:
             sv.addArrangedSubview(deleteButton)
+            
         case .normal:
             break
+            
+        case .createSet:
+            sv.addArrangedSubview(createSetButton)
         }
         
         self.showBottomNavigationView()
@@ -109,15 +124,21 @@ class AdrenalistBottomNavigationBarView: UIView {
         }
         .store(in: &cancellables)
         
-        doneButton.tapPublisher.sink { _ in
-            self.actionSubject.send(.done)
-            self.hideBottomNavigationView()
-        }
-        .store(in: &cancellables)
+//        doneButton.tapPublisher.sink { _ in
+//            self.actionSubject.send(.done)
+//            self.hideBottomNavigationView()
+//        }
+//        .store(in: &cancellables)
+//
+//        moveButton.tapPublisher.sink { _ in
+//            self.actionSubject.send(.move)
+//            self.hideBottomNavigationView()
+//        }
+//        .store(in: &cancellables)
         
-        moveButton.tapPublisher.sink { _ in
-            self.actionSubject.send(.move)
-            self.hideBottomNavigationView()
+        createSetButton.tapPublisher.sink { _ in
+            self.actionSubject.send(.createSet)
+//            self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
         
