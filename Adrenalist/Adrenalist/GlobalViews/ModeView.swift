@@ -33,13 +33,7 @@ final class ModeView: UIView {
         return bt
     }()
     
-    private let deleteButton: UIButton = {
-       let bt = UIButton()
-        bt.setImage(CheckButtonImage.delete, for: .normal)
-        bt.tintColor = .red
-        bt.setPreferredSymbolConfiguration(.init(pointSize: 27), forImageIn: .normal)
-        return bt
-    }()
+    private var isCheckButtonTapped = false
     
     enum CheckButtonImage {
         static let check = UIImage(systemName: "checkmark.circle.fill")
@@ -59,20 +53,6 @@ final class ModeView: UIView {
         setupUI()
     }
     
-    private func showDeleteButton() {
-        UIView.animate(withDuration: 1, delay: 0.5, options: .curveLinear) {
-            self.deleteButton.isHidden = false
-            self.checkButton.isHidden = true
-        } completion: { _ in }
-    }
-    
-    private func showCheckButton() {
-        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut) {
-            self.deleteButton.isHidden = true
-            self.checkButton.isHidden = false
-        } completion: { _ in }
-    }
-    
     func updateMode(_ mode: WorkoutListCellMode, of model: WorkoutModel) {
         self.mode = mode
         
@@ -81,10 +61,9 @@ final class ModeView: UIView {
             self.isCheckButtonTapped = model.isDone
             self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
                                       for: .normal)
-            
         case .delete:
-            self.isDeleteButtonTapped = model.isSelected
-            self.deleteButton.setImage(self.isDeleteButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
+            self.isCheckButtonTapped = model.isSelected
+            self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
                                       for: .normal)
         case .createSet:
             self.isCheckButtonTapped = model.isSelected
@@ -93,42 +72,23 @@ final class ModeView: UIView {
         }
     }
     
-    private var isDeleteButtonTapped = false
-    private var isCheckButtonTapped = false
-    
     private func bind() {
-        deleteButton
-            .tapPublisher
-            .sink { _ in
-                self.isDeleteButtonTapped.toggle()
-                self.deleteButton.setImage(self.isDeleteButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
-                                          for: .normal)
-                self.actionSubject.send(.tapDeleteButton(self.isDeleteButtonTapped))
-            }
-            .store(in: &cancellables)
-        
         checkButton
             .tapPublisher
             .sink { _ in
-               
-                
+                self.isCheckButtonTapped.toggle()
                 switch self.mode {
                 case .complete:
-                    self.isCheckButtonTapped.toggle()
                     self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.check : CheckButtonImage.circle,
                                               for: .normal)
-                    self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
-                    
                 case .createSet:
-                    self.isCheckButtonTapped.toggle()
-                    self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.circle,
+                    self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.centerfill,
                                               for: .normal)
-                    self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
-                    
                 case .delete:
-                    break
+                    self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
+                                              for: .normal)
                 }
-                
+                self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
             }
             .store(in: &cancellables)
         
@@ -148,21 +108,26 @@ final class ModeView: UIView {
             .store(in: &cancellables)
     }
     
+    private func showDeleteButton() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
+            self.checkButton.tintColor = .red
+        } completion: { _ in }
+    }
+    
+    private func showCheckButton() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
+            self.checkButton.tintColor = .purpleBlue
+        } completion: { _ in }
+    }
+    
     private func setupUI() {
-        deleteButton.tintColor = .red
-        checkButton.tintColor = .purpleBlue
         
-        [deleteButton, checkButton].forEach { uv in
+        [checkButton].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
         }
         
         NSLayoutConstraint.activate([
-            self.deleteButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            self.deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor),
-            self.deleteButton.bottomAnchor.constraint(equalTo: bottomAnchor),
-            self.deleteButton.topAnchor.constraint(equalTo: topAnchor),
-            
             self.checkButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             self.checkButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             self.checkButton.bottomAnchor.constraint(equalTo: bottomAnchor),
