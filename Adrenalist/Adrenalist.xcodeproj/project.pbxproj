@@ -67,6 +67,7 @@
 		35A6DBF228684B2100D6FFF9 /* FavoriteDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */; };
 		35A6DBF428684B2C00D6FFF9 /* FavoriteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */; };
 		35A6DBF62869D7DC00D6FFF9 /* ModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF52869D7DC00D6FFF9 /* ModeView.swift */; };
+		35A6DBF928718F6300D6FFF9 /* AdrenalistTitleSetupModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBF828718F6200D6FFF9 /* AdrenalistTitleSetupModal.swift */; };
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -132,6 +133,7 @@
 		35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailViewModel.swift; sourceTree = "<group>"; };
 		35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailView.swift; sourceTree = "<group>"; };
 		35A6DBF52869D7DC00D6FFF9 /* ModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeView.swift; sourceTree = "<group>"; };
+		35A6DBF828718F6200D6FFF9 /* AdrenalistTitleSetupModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTitleSetupModal.swift; sourceTree = "<group>"; };
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		3548C84928190DF10089A0C4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				35A6DBF728718F4F00D6FFF9 /* Modal */,
 				3548C84A28190DFC0089A0C4 /* Main */,
 				3548C84C28190E130089A0C4 /* Setting */,
 				35632F93285B3687009C3B9D /* WorkoutSetup */,
@@ -392,6 +395,14 @@
 			path = FavoriteDetail;
 			sourceTree = "<group>";
 		};
+		35A6DBF728718F4F00D6FFF9 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				35A6DBF828718F6200D6FFF9 /* AdrenalistTitleSetupModal.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
 		8B1759E6EDC59B6EE6B97AAF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +564,7 @@
 				35DD525B283E7E3E0031A912 /* InputView.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
 				3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */,
+				35A6DBF928718F6300D6FFF9 /* AdrenalistTitleSetupModal.swift in Sources */,
 				3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */,
 				35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */,
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
