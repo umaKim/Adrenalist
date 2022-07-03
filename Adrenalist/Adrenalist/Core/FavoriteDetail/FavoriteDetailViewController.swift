@@ -16,6 +16,8 @@ class FavoriteDetailViewController: UIViewController, UIGestureRecognizerDelegat
     init(viewModel: FavoriteDetailViewModel) {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
+        
+        title = "Favorite Set"
     }
     
     required init?(coder: NSCoder) {
@@ -24,6 +26,8 @@ class FavoriteDetailViewController: UIViewController, UIGestureRecognizerDelegat
     
     override func loadView() {
         super.loadView()
+        view = contentView
+        
         bind()
         setupNavBar()
     }
@@ -33,6 +37,8 @@ class FavoriteDetailViewController: UIViewController, UIGestureRecognizerDelegat
             switch action {
             case .dismiss:
                 self.navigationController?.popViewController(animated: true)
+            case .add:
+                break
             }
         }
         .store(in: &cancellables)
