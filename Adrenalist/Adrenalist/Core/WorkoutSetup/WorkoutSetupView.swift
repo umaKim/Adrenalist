@@ -54,9 +54,9 @@ class WorkoutSetupView: UIView {
     
     func setUpReceivedModel(model: WorkoutModel) {
         titleTextFieldView.setupTitleTextField(model.title)
-        adrenalistInputDetailView.setupReps(model.reps ?? 0)
-        adrenalistInputDetailView.setupWeight(model.weight ?? 0)
-        adrenalistInputDetailView.setupTime(model.timer ?? 0)
+        adrenalistInputDetailView.setupReps(model.reps)
+        adrenalistInputDetailView.setupWeight(model.weight)
+        adrenalistInputDetailView.setupTime(model.timer)
     }
     
     private func bind() {

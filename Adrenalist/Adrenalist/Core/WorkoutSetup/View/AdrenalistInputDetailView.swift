@@ -36,15 +36,24 @@ class AdrenalistInputDetailView: UIView {
     
     private let set = AdrenalistInputStepperView(title: "Set", value: 1)
     
-    func setupReps(_ reps: Int) {
+    func setupReps(_ reps: Int?) {
+        guard reps != 0, let reps = reps
+        else { return }
+
         self.reps.setupValue("\(reps)")
     }
     
-    func setupWeight(_ weight: Double) {
+    func setupWeight(_ weight: Double?) {
+        guard weight != 0,let weight = weight
+        else { return }
+        
         self.weight.setupValue("\(weight)")
     }
     
-    func setupTime(_ timer: TimeInterval) {
+    func setupTime(_ timer: TimeInterval?) {
+        guard timer != 0, let timer = timer
+        else { return }
+
         self.time.setupValue("\(timer)")
     }
     
@@ -106,7 +115,10 @@ class AdrenalistInputDetailView: UIView {
         }
         .store(in: &cancellables)
     }
-    
+}
+
+//MARK: - Setup UI
+extension AdrenalistInputDetailView {
     private func setupUI() {
         backgroundColor = .grey2
         
