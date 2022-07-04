@@ -17,12 +17,14 @@ enum WorkoutListView2Action {
     case reorder
     case postpone
     case delete
+    case createSet
     case bottomNavigationBarDidTapCancel
     case start
     
     case didSelectDate(MyScrollableDatepickerModel)
     
     case bottomSheetDidTapDelete
+    case bottomSheetDidTapCreateSet
 }
 
 final class WorkoutListView2: UIView {
@@ -49,9 +51,7 @@ final class WorkoutListView2: UIView {
     
     private(set) lazy var editButton: UIBarButtonItem = {
         let bt = UIBarButtonItem(title: "Edit", image: nil, menu: UIMenu(options: .displayInline,
-                                                                         children: [reorder,
-                                                                                    postpone,
-                                                                                    delete]))
+                                                                         children: [createSet, delete]))
         bt.tintColor = .white
         return bt
     }()
@@ -66,10 +66,14 @@ final class WorkoutListView2: UIView {
                                          handler: {[weak self] _ in
         self?.actionSubject.send(.postpone)
         self?.bottomNavigationView.show(.done)
+    private lazy var createSet = UIAction(title: "Create Set", handler: {[weak self] _ in
+        self?.actionSubject.send(.createSet)
+        self?.bottomNavigationView.show(.createSet)
     })
     
     private lazy var delete = UIAction(title: "Delete",
                                        handler: {[weak self] _ in
+    private lazy var delete = UIAction(title: "Delete", handler: {[weak self] _ in
         self?.actionSubject.send(.delete)
         self?.bottomNavigationView.show(.delete)
     })

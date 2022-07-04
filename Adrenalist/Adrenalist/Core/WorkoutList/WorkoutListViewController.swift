@@ -68,6 +68,8 @@ final class WorkoutListViewController2: UIViewController {
                 case .postpone:
                     //TODO: change cell to be postpone mode
                     self.viewModel.updateMode(type: .psotpone)
+                case .createSet:
+                    self.viewModel.updateMode(type: .createSet)
                     self.isRightBarButtonItemsHidden(true)
                     
                 case .delete:

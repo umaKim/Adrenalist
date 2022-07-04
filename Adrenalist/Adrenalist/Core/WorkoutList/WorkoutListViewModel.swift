@@ -29,6 +29,7 @@ enum WorkoutListCellMode: Codable {
 enum UpdateMode {
     case edit
     case delete
+    case createSet
 }
 
 enum WorkoutListViewModelListener {
@@ -52,9 +53,11 @@ final class WorkoutListViewModel2  {
     private var cancellables: Set<AnyCancellable>
     
     private let favoriteManager = FavoriteManager.shared
+    private let favoriteSetManager = FavoriteSetManager.shared
     private let workoutManager = Manager.shared
     
     private(set) var favorites = [WorkoutModel]()
+    private(set) var favorites = [WorkoutResponse]()
     private(set) var workoutList = [WorkoutModel]()
     
     private(set) var mode: WorkoutListCellMode
@@ -62,6 +65,7 @@ final class WorkoutListViewModel2  {
     private(set) var selectedDate: Date = Date().stripTime()
     
     //MARK: - Init
+    private var setName: String = ""
     
     init() {
         self.mode = .complete
@@ -72,6 +76,10 @@ final class WorkoutListViewModel2  {
     }
     
     //MARK: - Public Methods
+}
+
+//MARK: - Public Methods
+extension WorkoutListViewModel2 {
     /// This method moves a cell from source indexPath to destination indexPath within the same collection view. It works for only 1 item. If multiple items selected, no reordering happens.
     ///
     /// - Parameters:
@@ -154,6 +162,7 @@ final class WorkoutListViewModel2  {
     }
     
     func setupMode(_ mode: WorkoutListCellMode) {
+    public func setupMode(_ mode: WorkoutListCellMode) {
         self.mode = mode
     }
     
@@ -174,6 +183,22 @@ final class WorkoutListViewModel2  {
             
         case .normal:
             break
+        case .createSet:
+            self.workoutList[index].isSelected = isSelected
+        }
+    }
+    
+    public func setSetName(_ text: String) {
+        self.setName = text
+    }
+    
+    public func createSet() {
+        let selectedWorkout = initializeSelectedWorkout(workoutList.filter({$0.isSelected}))
+        let newFavorite = WorkoutResponse(uuid: UUID(), name: setName, date: nil, workouts: selectedWorkout)
+        var temp = [newFavorite]
+        temp.append(contentsOf: favorites)
+        favoriteSetManager.setFavorites(temp)
+    }
         }
     }
     
@@ -187,6 +212,15 @@ final class WorkoutListViewModel2  {
 ////                                            isDone: <#T##Bool#>))
 ////        }
 //    }
+    public func setupWorkout(with workouts: [WorkoutModel]) {
+//        workouts.forEach { workout in
+//            if workout.isFavorite &&
+//                !self.favorites.contains(where: {
+//                    $0.title == workout.title &&
+//                    $0.timer == workout.timer &&
+//                    $0.weight == workout.weight &&
+//                    $0.reps == workout.reps
+//                }) {
 //
     func setupWorkout(with workouts: [WorkoutModel]) {
         self.workoutList.append(contentsOf: workouts)
