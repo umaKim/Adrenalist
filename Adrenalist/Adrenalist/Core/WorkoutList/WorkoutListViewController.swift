@@ -8,7 +8,25 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController2: UIViewController {
+final class WorkoutListViewController2: UIViewController, ModalViewControllerDelegate {
+    func modalDidTapCancel() {
+        print("cancel")
+        self.dismiss(animated: true)
+    }
+    
+    func modalDidTapConfirm() {
+        self.dismiss(animated: true) {
+            self.viewModel.createSet()
+            self.viewModel.updateMode(type: .complete)
+            self.contentView.dismissBottomNavigationView()
+            self.isRightBarButtonItemsHidden(false)
+        }
+    }
+    
+    func modalDidChangeText(_ text: String) {
+        print(text)
+        self.viewModel.setSetName(text)
+    }
     
     private(set) lazy var contentView = WorkoutListView2()
     
