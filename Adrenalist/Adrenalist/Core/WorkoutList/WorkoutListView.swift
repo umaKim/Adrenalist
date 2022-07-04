@@ -135,8 +135,19 @@ final class WorkoutListView2: UIView {
     }()
     
     func isFavoriteEmpty(_ isEmpty: Bool) {
-        self.divider.isHidden = isEmpty
-        self.suggestedCollectionView.isHidden = isEmpty
+        if isEmpty {
+            self.divider.isHidden = isEmpty
+            self.suggestedCollectionView.isHidden = isEmpty
+        } else {
+            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut) {
+                self.divider.isHidden = isEmpty
+                self.suggestedCollectionView.isHidden = isEmpty
+            } completion: { _ in }
+        }
+    }
+    
+    func isWorkoutEmpty(_ isEmpty: Bool) {
+        
     }
     
     private(set) lazy var workoutListCollectionView: UICollectionView = {
