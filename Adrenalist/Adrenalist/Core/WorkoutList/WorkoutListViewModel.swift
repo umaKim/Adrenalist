@@ -86,7 +86,6 @@ extension WorkoutListViewModel2 {
     ///   - coordinator: coordinator obtained from performDropWith: UICollectionViewDropDelegate method
     ///   - destinationIndexPath: indexpath of the collection view where the user drops the element
     ///   - collectionView: collectionView in which reordering needs to be done.
-    func reorderItems(coordinator: UICollectionViewDropCoordinator,
     public func reorderItems(coordinator: UICollectionViewDropCoordinator,
                       destinationIndexPath: IndexPath,
                       collectionView: UICollectionView,
@@ -127,7 +126,7 @@ extension WorkoutListViewModel2 {
     ///   - coordinator: coordinator obtained from performDropWith: UICollectionViewDropDelegate method
     ///   - destinationIndexPath: indexpath of the collection view where the user drops the element
     ///   - collectionView: collectionView in which reordering needs to be done.
-    func copyItems(coordinator: UICollectionViewDropCoordinator,
+    public func copyItems(coordinator: UICollectionViewDropCoordinator,
                    destinationIndexPath: IndexPath,
                    collectionView: UICollectionView,
                    currentCollectionView: UICollectionView
@@ -155,18 +154,17 @@ extension WorkoutListViewModel2 {
         })
     }
     
-    func didSelectDate(_ date: Date) {
+    public func didSelectDate(_ date: Date) {
         self.workoutManager.selectedWorkoutlist(of: date)
         self.notifySubject.send(.calendarDidSelect(self.selectedDate))
         self.notifySubject.send(.reloadWorkoutList)
     }
     
-    func setupMode(_ mode: WorkoutListCellMode) {
     public func setupMode(_ mode: WorkoutListCellMode) {
         self.mode = mode
     }
     
-    func updateIsComplete(_ isComplete: Bool, at index: Int) {
+    public func updateIsComplete(_ isSelected: Bool, at index: Int) {
         switch mode {
         case .reorder:
             break
@@ -227,7 +225,7 @@ extension WorkoutListViewModel2 {
         self.workoutManager.setWorkoutlist(with: workoutList)
     }
     
-    func updateMode(type: WorkoutListCellMode) {
+    public func updateMode(type: WorkoutListCellMode) {
         self.mode = type
         
         var workouts = [WorkoutModel]()
@@ -243,45 +241,45 @@ extension WorkoutListViewModel2 {
                 isDone: model.isDone))
         }
         
-        workoutList = workouts
+        workoutList = initializeSelectedWorkout(workouts)
         
         notifySubject.send(.reloadWorkoutList)
     }
     
-    func moveToCircularView() {
+    public func moveToCircularView() {
         listenerSubject.send(.moveToCircularView)
     }
     
-    func presentThis(_ vc: UINavigationController) {
+    public func presentThis(_ vc: UINavigationController) {
         self.listenerSubject.send(.present(vc))
     }
     
-    func dismiss() {
+    public func dismiss() {
         self.listenerSubject.send(.dismiss)
     }
     
-    func pushThis(_ vc: UIViewController) {
+    public func pushThis(_ vc: UIViewController) {
         self.listenerSubject.send(.push(vc))
     }
     
-    func pop() {
+    public func pop() {
         self.listenerSubject.send(.pop)
     }
     
-    func deleteSuggestion(at index: Int, completion: () -> Void) {
+    public func deleteSuggestion(at index: Int, completion: () -> Void) {
         favorites.remove(at: index)
         completion()
         updateSuggestionsPersistance()
         checkIfWorkoutIsFinished()
     }
     
-    func deleteWorkout(at index: Int, completion: () -> Void) {
+    public func deleteWorkout(at index: Int, completion: () -> Void) {
         workoutList.remove(at: index)
         completion()
         updateWorkoutPersistance()
     }
     
-    func deleteSelectedItems() {
+    public func deleteSelectedItems() {
         self.workoutList.removeAll(where: {$0.isSelected == true })
         self.notifySubject.send(.reloadWorkoutList)
     }
