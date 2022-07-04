@@ -79,6 +79,7 @@ final class WorkoutListViewModel2  {
     ///   - destinationIndexPath: indexpath of the collection view where the user drops the element
     ///   - collectionView: collectionView in which reordering needs to be done.
     func reorderItems(coordinator: UICollectionViewDropCoordinator,
+    public func reorderItems(coordinator: UICollectionViewDropCoordinator,
                       destinationIndexPath: IndexPath,
                       collectionView: UICollectionView,
                       currentCollectionView: UICollectionView
@@ -93,9 +94,13 @@ final class WorkoutListViewModel2  {
             }
             collectionView.performBatchUpdates({
                 if collectionView === currentCollectionView {
+                    if let lastFavorite = favorites.last,
+                       favorites[sourceIndexPath.row] == lastFavorite ||
+                       favorites[dIndexPath.row] == lastFavorite { return }
                     self.favorites.remove(at: sourceIndexPath.row)
                     self.favorites.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
                     self.updateSuggestionsPersistance()
+                    self.favorites.insert(item.dragItem.localObject as! WorkoutResponse, at: dIndexPath.row)
                 } else {
                     self.workoutList.remove(at: sourceIndexPath.row)
                     self.workoutList.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
