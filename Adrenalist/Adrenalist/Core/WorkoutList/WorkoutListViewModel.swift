@@ -14,21 +14,13 @@ enum WorkoutListViewModel2Notification {
     case isFavoriteEmpty(Bool)
     case reloadWorkoutList
     case reloadFavorites
-    case calendarDidSelect(Date)
+    case updateDeletedDate(Date)
     case setDates(Int, Int, [Date])
 }
 
 enum WorkoutListCellMode: Codable {
-    case reorder
-    case psotpone
     case delete
     case complete
-    case normal
-}
-
-enum UpdateMode {
-    case edit
-    case delete
     case createSet
 }
 
@@ -52,11 +44,9 @@ final class WorkoutListViewModel2  {
     
     private var cancellables: Set<AnyCancellable>
     
-    private let favoriteManager = FavoriteManager.shared
     private let favoriteSetManager = FavoriteSetManager.shared
     private let workoutManager = Manager.shared
     
-    private(set) var favorites = [WorkoutModel]()
     private(set) var favorites = [WorkoutResponse]()
     private(set) var workoutList = [WorkoutModel]()
     
@@ -64,9 +54,9 @@ final class WorkoutListViewModel2  {
     
     private(set) var selectedDate: Date = Date().stripTime()
     
-    //MARK: - Init
     private var setName: String = ""
     
+    //MARK: - Init
     init() {
         self.mode = .complete
         self.cancellables = .init()
@@ -74,8 +64,6 @@ final class WorkoutListViewModel2  {
         fetchFavorites()
         fetchWorkoutResponse()
     }
-    
-    //MARK: - Public Methods
 }
 
 //MARK: - Public Methods
@@ -105,8 +93,6 @@ extension WorkoutListViewModel2 {
                        favorites[sourceIndexPath.row] == lastFavorite ||
                        favorites[dIndexPath.row] == lastFavorite { return }
                     self.favorites.remove(at: sourceIndexPath.row)
-                    self.favorites.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
-                    self.updateSuggestionsPersistance()
                     self.favorites.insert(item.dragItem.localObject as! WorkoutResponse, at: dIndexPath.row)
                 } else {
                     self.workoutList.remove(at: sourceIndexPath.row)
@@ -137,15 +123,22 @@ extension WorkoutListViewModel2 {
                 let indexPath = IndexPath(row: destinationIndexPath.row + index, section: destinationIndexPath.section)
                 
                 if collectionView === currentCollectionView {
-                    guard let item = item.dragItem.localObject as? WorkoutModel else { return }
-                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
-                    self.favorites.insert(newItem, at: indexPath.row)
-                    self.updateSuggestionsPersistance()
-                    
+//                    guard let item = item.dragItem.localObject as? WorkoutModel else { return }
+//                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
+//                    self.favorites.insert(newItem, at: indexPath.row)
+//                    self.updateSuggestionsPersistance()
+//
+                    return 
                 } else {
-                    guard let item = item.dragItem.localObject as? WorkoutModel else { return }
-                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
-                    self.workoutList.insert(newItem, at: indexPath.row)
+//                    guard let item = item.dragItem.localObject as? WorkoutModel else { return }
+//                    let newItem = WorkoutModel(uuid: UUID(), title: item.title, reps: item.reps, weight: item.weight, timer: item.timer, isFavorite: item.isFavorite, isSelected: item.isSelected, isDone: item.isDone)
+//                    self.workoutList.insert(newItem, at: indexPath.row)
+//                    self.updateWorkoutPersistance()
+                    
+                    guard let item = item.dragItem.localObject as? WorkoutResponse else { return }
+                    let newItem = WorkoutResponse(uuid: UUID(), name: item.name, date: item.date, workouts: item.workouts)
+                    self.workoutList.insert(contentsOf: newItem.workouts, at: indexPath.row)
+                    //Need to save
                     self.updateWorkoutPersistance()
                 }
                 indexPaths.append(indexPath)
@@ -156,7 +149,6 @@ extension WorkoutListViewModel2 {
     
     public func didSelectDate(_ date: Date) {
         self.workoutManager.selectedWorkoutlist(of: date)
-        self.notifySubject.send(.calendarDidSelect(self.selectedDate))
         self.notifySubject.send(.reloadWorkoutList)
     }
     
@@ -166,12 +158,12 @@ extension WorkoutListViewModel2 {
     
     public func updateIsComplete(_ isSelected: Bool, at index: Int) {
         switch mode {
-        case .reorder:
-            break
-            
-        case .psotpone:
-            self.workoutList[index].isSelected = isComplete
-            
+//        case .reorder:
+//            break
+//            
+//        case .psotpone:
+//            self.workoutList[index].isSelected = isComplete
+//            
         case .delete:
             self.workoutList[index].isSelected = isSelected
             
@@ -179,8 +171,6 @@ extension WorkoutListViewModel2 {
             self.workoutList[index].isDone = isSelected
             self.workoutManager.setWorkoutlist(with: workoutList)
             
-        case .normal:
-            break
         case .createSet:
             self.workoutList[index].isSelected = isSelected
         }
