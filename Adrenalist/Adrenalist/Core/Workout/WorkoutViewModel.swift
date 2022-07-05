@@ -17,12 +17,10 @@ enum WorkoutTransition {
 
 enum WorkoutViewModelNotification {
     case updateInlineStrokeEnd(Double)
-    
     case updatePulse(CGFloat)
     case updateOutlineStrokeEnd(CGFloat)
     case updateToCurrentWorkout(WorkoutModel?)
     case updateNextWorkout(WorkoutModel?)
-    
 }
 
 final class WorkoutViewModel {
@@ -34,20 +32,7 @@ final class WorkoutViewModel {
     
     private var cancellables: Set<AnyCancellable>
     
-//    private(set) var favorites = [WorkoutModel]()
-    private(set) var workouts = [WorkoutResponse]()
-    
-    private var selectedDate: Date = Date().stripTime()
-    
-    private(set) var todayWorkouts = [WorkoutModel]()
-    
-//    private(set) var isCanlendarBottomSheetPresented: Bool = false
-//
-//    func setCalendarBottomSheetPresent(_ isPresent: Bool) {
-//        self.isCanlendarBottomSheetPresented = isPresent
-//    }
-    
-    private var workoutDate: Date = Date()
+    private(set) var workouts = [WorkoutModel]()
     
     private let workoutManager = Manager.shared
     
@@ -58,22 +43,6 @@ final class WorkoutViewModel {
     
     init() {
         self.cancellables = .init()
-        
-//        workoutManager
-//            .$workoutResponses
-//            .sink { responses in
-//                self.workouts = responses
-//            }
-//            .store(in: &cancellables)
-//
-//        workoutManager
-//            .$selectedDate
-//            .sink { date in
-//                self.selectedDate = date
-//                self.getTodayWorkout()
-//                self.setCurrentIndex()
-//            }
-//            .store(in: &cancellables)
         
         workoutManager
             .$selectedWorkouts
@@ -87,26 +56,11 @@ final class WorkoutViewModel {
             }
             .store(in: &cancellables)
     }
-    
-    private func updateWorkout() {
-        guard let index = workouts.firstIndex(where:{$0.date == selectedDate}) else {return }
-        workouts[index] = WorkoutResponse(date: selectedDate,
-                                          mode: workouts[index].mode,
-                                          workouts: todayWorkouts)
-        workoutManager.updateByReplacing(workouts)
-    }
-    
-    private func getTodayWorkout() {
-        todayWorkouts = workouts.filter({$0.date == selectedDate}).flatMap({$0.workouts})
-    }
-    
-    private func setCurrentIndex() {
-        currentIndex = todayWorkouts.firstIndex(where: {$0.isDone == false})
-//        else { return }
-//        currentIndex = index
-    }
-    
-    func backToWorkoutList() {
+}
+
+//MARK: - Public Methods
+extension WorkoutViewModel {
+    public func backToWorkoutList() {
         self.transitionSubject.send(.workoutList)
     }
     

@@ -53,10 +53,6 @@ class MyScrollableDatepicker: UIView {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     public var cellConfiguration: ((_ cell: MyScrollableDatepickerCell, _ isWeekend: Bool, _ isSelected: Bool) -> Void)? {
         didSet {
             collectionView.reloadData()

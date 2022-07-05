@@ -10,7 +10,6 @@ import Foundation
 
 final class WorkoutListViewController2: UIViewController, ModalViewControllerDelegate {
     func modalDidTapCancel() {
-        print("cancel")
         self.dismiss(animated: true)
     }
     
@@ -24,7 +23,6 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
     }
     
     func modalDidChangeText(_ text: String) {
-        print(text)
         self.viewModel.setSetName(text)
     }
     
@@ -98,10 +96,6 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                 case .tapTitleCalendar(let vc):
                     let nav = self.navSheet(vc)
                     self.viewModel.presentThis(nav)
-                    
-                case .bottomNavigationBarDidTapCancel:
-                    self.viewModel.updateMode(type: .complete)
-                    self.isRightBarButtonItemsHidden(false)
                     
                 case .start:
                     self.viewModel.moveToCircularView()

@@ -56,23 +56,11 @@ final class WorkoutListView2: UIView {
         return bt
     }()
     
-    private lazy var reorder = UIAction(title: "Reoder",
-                                        handler: {[weak self] _ in
-        self?.actionSubject.send(.reorder)
-        self?.bottomNavigationView.show(.move)
-    })
-    
-    private lazy var postpone = UIAction(title: "Postpone",
-                                         handler: {[weak self] _ in
-        self?.actionSubject.send(.postpone)
-        self?.bottomNavigationView.show(.done)
     private lazy var createSet = UIAction(title: "Create Set", handler: {[weak self] _ in
         self?.actionSubject.send(.createSet)
         self?.bottomNavigationView.show(.createSet)
     })
     
-    private lazy var delete = UIAction(title: "Delete",
-                                       handler: {[weak self] _ in
     private lazy var delete = UIAction(title: "Delete", handler: {[weak self] _ in
         self?.actionSubject.send(.delete)
         self?.bottomNavigationView.show(.delete)
@@ -98,7 +86,6 @@ final class WorkoutListView2: UIView {
     public lazy var calendarView: MyScrollableDatepicker = {
         let cv = MyScrollableDatepicker()
         cv.delegate = self
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
@@ -128,7 +115,6 @@ final class WorkoutListView2: UIView {
         cv.backgroundColor = .black
         cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.register(FavoriteLastCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteLastCollectionViewCell.identifier)
-        cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsHorizontalScrollIndicator = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
         return cv
@@ -268,18 +254,7 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         _ datepicker: MyScrollableDatepicker,
         didScroll index: IndexPath
     ) {
-//        var container = AttributeContainer()
-//        container.font = UIFont.boldSystemFont(ofSize: 17)
-//
-//        var config = UIButton.Configuration.plain()
-//        config.attributedTitle = AttributedString("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
-//        print("\(datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))")
-//        config.image = UIImage(systemName: "chevron.down")
-//        config.imagePlacement = .trailing
-//        config.imagePadding = 6.2
-//        config.baseForegroundColor = .white
-//
-//        calendarTitleButton.configuration = config
+        
     }
     
     func datepicker(
