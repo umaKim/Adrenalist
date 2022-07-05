@@ -83,8 +83,6 @@ final class Manager {
     @Published private(set) var workoutlist = [WorkoutModel]()
     private(set) var workoutResponses = [WorkoutResponse]()
     
-    
-    
     func selectedWorkoutlist(of date: Date) {
         self.selectedDate = date.stripTime()
         self.workoutlist = workoutResponses
@@ -107,9 +105,15 @@ final class Manager {
     }
     
     private func setResponse(with workoutlist: [WorkoutModel]) {
+        // when new Response still exist
         if let index = workoutResponses.firstIndex(where: {$0.date == selectedDate.stripTime()}) {
-            self.workoutResponses[index].workouts = workoutlist
+            if workoutlist.isEmpty {
+                self.workoutResponses.remove(at: index)
+            } else {
+                self.workoutResponses[index].workouts = workoutlist
+            }
         } else {
+            // when new Response is Required
             let newResponse = WorkoutResponse(date: selectedDate, workouts: workoutlist)
             self.workoutResponses.append(newResponse)
         }
