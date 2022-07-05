@@ -208,16 +208,6 @@ extension WorkoutListViewModel2 {
         workoutManager.setWorkoutlist(with: workoutList)
     }
     
-//    func setupWorkout(with workout: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
-////        guard let workout = workout else { return }
-////
-////        for _ in 1...set {
-////            workoutList.append(WorkoutModel(title: <#T##String#>,
-////                                            isFavorite: <#T##Bool#>,
-////                                            isSelected: <#T##Bool#>,
-////                                            isDone: <#T##Bool#>))
-////        }
-//    }
     public func setupWorkout(with workouts: [WorkoutModel]) {
 //        workouts.forEach { workout in
 //            if workout.isFavorite &&
