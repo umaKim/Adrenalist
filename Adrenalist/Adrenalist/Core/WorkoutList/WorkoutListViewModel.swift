@@ -173,10 +173,10 @@ extension WorkoutListViewModel2 {
             self.workoutList[index].isSelected = isComplete
             
         case .delete:
-            self.workoutList[index].isSelected = isComplete
+            self.workoutList[index].isSelected = isSelected
             
         case .complete:
-            self.workoutList[index].isDone = isComplete
+            self.workoutList[index].isDone = isSelected
             self.workoutManager.setWorkoutlist(with: workoutList)
             
         case .normal:
