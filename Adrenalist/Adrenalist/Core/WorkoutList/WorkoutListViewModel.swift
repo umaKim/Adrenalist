@@ -198,6 +198,14 @@ extension WorkoutListViewModel2 {
         favoriteSetManager.setFavorites(temp)
     }
         }
+    
+    public func editWorkout(with workout: WorkoutModel?) {
+        guard
+            let workout = workout,
+            let index = self.workoutList.firstIndex(where: {$0.uuid == workout.uuid})
+        else { return }
+        self.workoutList[index] = workout
+        workoutManager.setWorkoutlist(with: workoutList)
     }
     
 //    func setupWorkout(with workout: WorkoutModel?, for type: WorkoutSetupType, set: Int) {
