@@ -105,6 +105,10 @@ final class WorkoutListView2: UIView {
         
     }
     
+    func deleteDot(of date: Date) {
+        calendarView.removeDot(of: date)
+    }
+    
     private let divider = AdrenalistDividerView()
     
     private(set) lazy var suggestedCollectionView: UICollectionView = {

@@ -131,6 +131,9 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                                               max: max,
                                               dates: dates)
                     self.contentView.initialUISetup()
+                    
+                case .updateDeletedDate(let date):
+                    self.contentView.deleteDot(of: date)
                 }
             }
             .store(in: &cancellables)

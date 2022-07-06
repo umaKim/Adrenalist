@@ -43,6 +43,10 @@ class MyScrollableDatepicker: UIView {
         setupUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setupUI() {
         addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -129,6 +133,16 @@ class MyScrollableDatepicker: UIView {
         }
         
         self.dates = dateModels
+    }
+    
+    public func removeDot(of date: Date) {
+        guard let index = self.dates.firstIndex(where: {$0.date == date.stripTime()}) else {return }
+        dates[index] = MyScrollableDatepickerModel(date: date.stripTime(),
+                                                   isSelected: dates[index].isSelected,
+                                                   isDot: false)
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        collectionView.reloadItems(at: [indexPath])
     }
 }
 

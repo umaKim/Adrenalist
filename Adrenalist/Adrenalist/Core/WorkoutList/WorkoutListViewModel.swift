@@ -298,6 +298,7 @@ extension WorkoutListViewModel2 {
             .sink { workoutlist in
                 self.workoutList = workoutlist
                 self.notifySubject.send(.reloadWorkoutList)
+                self.notifySubject.send(.isWorkoutListEmpty(self.workoutList.isEmpty))
             }
             .store(in: &cancellables)
         
