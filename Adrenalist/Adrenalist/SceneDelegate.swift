@@ -26,6 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         window?.overrideUserInterfaceStyle = .dark
+        
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
