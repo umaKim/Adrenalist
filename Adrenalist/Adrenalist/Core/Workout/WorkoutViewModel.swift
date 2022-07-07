@@ -121,7 +121,7 @@ extension WorkoutViewModel {
         
         guard
             let currentIndex = currentIndex,
-            let countUpTo = todayWorkouts[currentIndex].timer
+            let countUpTo = workouts[currentIndex].timer
         else { return }
         
         notifySubject.send(.updateInlineStrokeEnd(onGoingTime/countUpTo))
@@ -141,9 +141,9 @@ extension WorkoutViewModel {
     private func completeCurrentWorkout() {
         let intendedIndex = currentIndex
         updateCurrentIndex()
-        for index in 0..<todayWorkouts.count {
+        for index in 0..<workouts.count {
             if index == intendedIndex {
-                todayWorkouts[index].isDone = true
+                workouts[index].isDone = true
                 return
             }
         }
@@ -155,54 +155,55 @@ extension WorkoutViewModel {
         self.currentIndex = currentIndex
     }
     
-    
     private func sendViewUpdate() {
+        notifySubject.send(.updateToCurrentWorkout(currentWorkout))
+        notifySubject.send(.updateNextWorkout(nextWorkout))
         notifySubject.send(.updatePulse(progressPulse))
         notifySubject.send(.updateOutlineStrokeEnd(progressOutline))
         notifySubject.send(.updateToCurrentWorkout(currentWorkout))
         notifySubject.send(.updateNextWorkout(nextWorkout))
     }
     
-    
     private var currentWorkout: WorkoutModel? {
-        for currentindex in 0..<todayWorkouts.count {
-            if todayWorkouts[currentindex].isDone == false {
+        for currentindex in 0..<workouts.count {
+            if workouts[currentindex].isDone == false {
                 self.currentIndex = currentindex
-                return todayWorkouts[currentindex]
+                return workouts[currentindex]
             }
         }
-        return todayWorkouts.last
+        return workouts.last
     }
     
     private var nextWorkout: WorkoutModel? {
-        if currentIndex == todayWorkouts.count ||
-            todayWorkouts.isEmpty
+        if currentIndex == workouts.count ||
+            workouts.isEmpty
         { return nil }
         
         var workOut: [WorkoutModel] = []
         guard var currentIndex = currentIndex else {return nil}
         currentIndex += 1
         
-        for index in currentIndex..<todayWorkouts.count {
-            workOut.append(todayWorkouts[index])
+        for index in currentIndex..<workouts.count {
+            workOut.append(workouts[index])
         }
         return workOut.filter { $0.isDone == false}.first
     }
     
     private var progressPulse: CGFloat {
-        if todayWorkouts.isEmpty { return 0 }
-        let finishedWorkout = CGFloat(todayWorkouts.filter({!$0.isDone}).count)
-        let totalWorkout = CGFloat(todayWorkouts.count)
+        if workouts.isEmpty { return 0 }
+        let finishedWorkout = CGFloat(workouts.filter({!$0.isDone}).count)
+        let totalWorkout = CGFloat(workouts.count)
         return 0.2 >= finishedWorkout / totalWorkout ? 0.2 : finishedWorkout / totalWorkout
     }
     
     private var progressOutline: CGFloat {
-        if todayWorkouts.isEmpty { return 0 }
-        let numberOfDone = CGFloat(todayWorkouts.filter({$0.isDone}).count)
-        let total = CGFloat(todayWorkouts.count)
+        if workouts.isEmpty { return 0 }
+        let numberOfDone = CGFloat(workouts.filter({$0.isDone}).count)
+        let total = CGFloat(workouts.count)
         return numberOfDone / total
     }
 }
+
 
 //
 //final class WorkoutListViewModel22 {
