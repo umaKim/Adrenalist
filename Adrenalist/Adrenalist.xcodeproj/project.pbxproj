@@ -61,6 +61,8 @@
 		357CBE122876FC0A00031348 /* AdrenalistTitleSetupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE112876FC0A00031348 /* AdrenalistTitleSetupModalView.swift */; };
 		357CBE142877065700031348 /* FavoriteDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE132877065700031348 /* FavoriteDetailCollectionViewCell.swift */; };
 		357CBE182877098A00031348 /* FavoriteSetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE172877098A00031348 /* FavoriteSetListViewController.swift */; };
+		357CBE1A2877117500031348 /* FavoriteSetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE192877117500031348 /* FavoriteSetListView.swift */; };
+		357CBE1C287711B200031348 /* FavoriteSetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE1B287711B200031348 /* FavoriteSetListViewModel.swift */; };
 		35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */ = {isa = PBXBuildFile; productRef = 35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */; };
 		35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */; };
 		35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */; };
@@ -130,6 +132,8 @@
 		357CBE112876FC0A00031348 /* AdrenalistTitleSetupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTitleSetupModalView.swift; sourceTree = "<group>"; };
 		357CBE132877065700031348 /* FavoriteDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		357CBE172877098A00031348 /* FavoriteSetListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSetListViewController.swift; sourceTree = "<group>"; };
+		357CBE192877117500031348 /* FavoriteSetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSetListView.swift; sourceTree = "<group>"; };
+		357CBE1B287711B200031348 /* FavoriteSetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSetListViewModel.swift; sourceTree = "<group>"; };
 		35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistBottomNavigationBarView.swift; sourceTree = "<group>"; };
 		35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLastCollectionViewCell.swift; sourceTree = "<group>"; };
 		35A6DBEC2865868B00D6FFF9 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
@@ -390,7 +394,9 @@
 		357CBE162877096500031348 /* FavoriteSetList */ = {
 			isa = PBXGroup;
 			children = (
+				357CBE1B287711B200031348 /* FavoriteSetListViewModel.swift */,
 				357CBE172877098A00031348 /* FavoriteSetListViewController.swift */,
+				357CBE192877117500031348 /* FavoriteSetListView.swift */,
 			);
 			path = FavoriteSetList;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 				3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */,
 				357CBE122876FC0A00031348 /* AdrenalistTitleSetupModalView.swift in Sources */,
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
+				357CBE1A2877117500031348 /* FavoriteSetListView.swift in Sources */,
 				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
 				3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */,
 				351C5BBF28190BCC00FE9C0F /* MainView.swift in Sources */,
@@ -583,6 +590,7 @@
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
 				3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */,
 				35632F99285B36A8009C3B9D /* WorkoutSetupViewModel.swift in Sources */,
+				357CBE1C287711B200031348 /* FavoriteSetListViewModel.swift in Sources */,
 				3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */,
 				35DD525B283E7E3E0031A912 /* InputView.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,

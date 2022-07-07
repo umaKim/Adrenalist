@@ -46,7 +46,7 @@ class WorkoutSetupView: UIView {
         self.adrenalistInputDetailView = AdrenalistInputDetailView(type: type)
         self.cancellables = .init()
         super.init(frame: .zero)
-        backgroundColor = .darkNavy
+        
         
         bind()
         setupUI()
@@ -80,9 +80,6 @@ class WorkoutSetupView: UIView {
                 switch action {
                 case .titleTextFieldDidChange(let text):
                     self.actionSubject.send(.titleDidChange(text))
-                    
-//                case .isStarButtonSelected(let isFavorite):
-//                    self.actionSubject.send(.isFavorite(isFavorite))
                 }
             }
             .store(in: &cancellables)
@@ -108,6 +105,8 @@ class WorkoutSetupView: UIView {
     }
     
     private func setupUI() {
+        backgroundColor = .darkNavy
+        
         [titleTextFieldView, adrenalistInputDetailView]
             .forEach { uv in
                 uv.translatesAutoresizingMaskIntoConstraints = false
