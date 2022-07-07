@@ -22,8 +22,6 @@ enum AdrenalistBottomNavigationBarViewType {
 }
 
 enum AdrenalistBottomNavigationBarViewAction {
-//    case done
-//    case move
     case createSet
     case delete
     case cancel
@@ -181,7 +179,7 @@ class AdrenalistBottomNavigationBarView: UIView {
         } completion: { _ in }
     }
     
-    private func hideBottomNavigationView() {
+    func hideBottomNavigationView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
             self.frame.origin = .init(x: 0, y: UIScreen.main.height)
         } completion: { _ in }
