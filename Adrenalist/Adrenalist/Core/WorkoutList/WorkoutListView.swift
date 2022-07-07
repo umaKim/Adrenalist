@@ -156,6 +156,10 @@ final class WorkoutListView2: UIView {
     
     private var cancellables: Set<AnyCancellable>
     
+    public func dismissBottomNavigationView() {
+        self.bottomNavigationView.hideBottomNavigationView()
+    }
+    
     init() {
         self.cancellables = .init()
         super.init(frame: .zero)
@@ -197,7 +201,9 @@ final class WorkoutListView2: UIView {
                     
                 case .cancel:
                     self.actionSubject.send(.bottomNavigationBarDidTapCancel)
-                    break
+                    
+                case .createSet:
+                    self.actionSubject.send(.bottomSheetDidTapCreateSet)
                 }
             }
             .store(in: &cancellables)

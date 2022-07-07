@@ -76,14 +76,6 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                 case .add:
                     self.showWorkoutSetupViewController(for: .add, didSelect: WorkoutModel(title: "", isFavorite: false, isSelected: false, isDone: false))
                     
-                case .reorder:
-                    //TODO: change cell to be reorder mode
-                    self.viewModel.updateMode(type: .reorder)
-                    self.isRightBarButtonItemsHidden(true)
-                    
-                case .postpone:
-                    //TODO: change cell to be postpone mode
-                    self.viewModel.updateMode(type: .psotpone)
                 case .createSet:
                     self.viewModel.updateMode(type: .createSet)
                     self.isRightBarButtonItemsHidden(true)
@@ -105,6 +97,18 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                     
                 case .bottomSheetDidTapDelete:
                     self.viewModel.deleteSelectedItems()
+                    self.isRightBarButtonItemsHidden(false)
+                    
+                case .bottomSheetDidTapCreateSet:
+                    //MARK: - Present pop up alert for set name
+//                    self.viewModel.createSet()
+                    let vc = ModalViewController()
+                    vc.delegate = self
+                    vc.modalPresentationStyle = .overFullScreen
+                    self.present(vc, animated: true)
+                    
+                case .bottomNavigationBarDidTapCancel:
+                    self.viewModel.updateMode(type: .complete)
                     self.isRightBarButtonItemsHidden(false)
                 }
             }
@@ -213,6 +217,7 @@ extension WorkoutListViewController2: UICollectionViewDropDelegate {
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         let destinationIndexPath: IndexPath
+        
         if let indexPath = coordinator.destinationIndexPath {
             destinationIndexPath = indexPath
         } else {
