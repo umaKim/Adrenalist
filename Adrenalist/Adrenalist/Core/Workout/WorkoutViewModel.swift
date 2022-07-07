@@ -10,8 +10,8 @@ import CoreFoundation
 import UIKit
 
 enum WorkoutTransition {
-    case setting
-    case calendar
+//    case setting
+//    case calendar
     case workoutList
 }
 
@@ -41,16 +41,15 @@ final class WorkoutViewModel {
     private var timer: Timer?
     private var onGoingTime: Double = 0
     
+    //MARK: - Init
     init() {
         self.cancellables = .init()
         
         workoutManager
-            .$selectedWorkouts
+            .$workoutlist
             .receive(on: RunLoop.main)
-            .sink { responses, date in
-                self.workouts = responses
-                self.selectedDate = date
-                self.getTodayWorkout()
+            .sink { models in
+                self.workouts = models
                 self.setCurrentIndex()
                 self.sendViewUpdate()
             }
@@ -64,30 +63,36 @@ extension WorkoutViewModel {
         self.transitionSubject.send(.workoutList)
     }
     
-    func didTapSkip() {
+    public func didTapSkip() {
         print("Skip")
     }
     
-    func didTapNext() {
-        print("next")
-        
+    public func didTapNext() {
         guard
             let currentIndex = currentIndex,
-            currentIndex < todayWorkouts.count
+            currentIndex < workouts.count
         else { return }
         
-        if todayWorkouts[currentIndex].timer == nil ||
-            todayWorkouts[currentIndex].timer == 0 {
+        if workouts[currentIndex].timer == nil ||
+            workouts[currentIndex].timer == 0 {
             
             self.completeCurrentWorkout()
-            
-            //TODO: update with new api
             self.updateWorkout()
-            
             self.sendViewUpdate()
         } else {
             self.startTimer()
         }
+    }
+}
+
+//MARK: - Private Methods
+extension WorkoutViewModel {
+    private func updateWorkout() {
+        workoutManager.setWorkoutlist(with: workouts)
+    }
+    
+    private func setCurrentIndex() {
+        currentIndex = workouts.firstIndex(where: {$0.isDone == false})
     }
     
     private func startTimer() {
