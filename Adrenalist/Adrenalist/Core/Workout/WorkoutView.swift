@@ -96,7 +96,7 @@ extension WorkoutView {
     }
     
     func updateNextWorkoutLabel(_ text: String) {
-        self.nextWorkoutLabel.text = "NEXT: \(text)"
+        self.nextWorkoutLabel.text = "\(text)"
     }
     
     func updatePulse(_ value: CGFloat) {
