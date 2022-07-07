@@ -53,13 +53,17 @@ final class WorkoutView: UIView {
     private lazy var currentWorkoutLabel: UILabel = {
        let lb = UILabel()
         lb.textColor = .white
+        lb.numberOfLines = 4
         lb.font = .boldSystemFont(ofSize: 34)
+        lb.textAlignment = .center
         return lb
     }()
     
     private lazy var nextWorkoutLabel: UILabel = {
         let lb = UILabel()
         lb.textColor = .brightGrey
+        lb.numberOfLines = 2
+        lb.textAlignment = .center
         return lb
     }()
     
@@ -170,6 +174,7 @@ extension WorkoutView {
             
             currentWorkoutLabel.centerXAnchor.constraint(equalTo: circularView.centerXAnchor),
             currentWorkoutLabel.centerYAnchor.constraint(equalTo: circularView.centerYAnchor),
+            currentWorkoutLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.width/2),
             
             nextWorkoutLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             nextWorkoutLabel.centerYAnchor.constraint(equalTo: centerYAnchor,
