@@ -56,9 +56,11 @@
 		35632FEA285CADB7009C3B9D /* AdrenalistTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FE9285CADB7009C3B9D /* AdrenalistTextInputView.swift */; };
 		35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */; };
 		35632FF7285F1EB3009C3B9D /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */; };
-		35632FF9285F393B009C3B9D /* AdrenalistBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */; };
 		35632FFB285F4336009C3B9D /* AdrenalistTextRectangleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */; };
 		35632FFE285F59B1009C3B9D /* DGBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 35632FFD285F59B1009C3B9D /* DGBottomSheet */; };
+		357CBE122876FC0A00031348 /* AdrenalistTitleSetupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE112876FC0A00031348 /* AdrenalistTitleSetupModalView.swift */; };
+		357CBE142877065700031348 /* FavoriteDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE132877065700031348 /* FavoriteDetailCollectionViewCell.swift */; };
+		357CBE182877098A00031348 /* FavoriteSetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CBE172877098A00031348 /* FavoriteSetListViewController.swift */; };
 		35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */ = {isa = PBXBuildFile; productRef = 35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */; };
 		35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */; };
 		35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */; };
@@ -124,8 +126,10 @@
 		35632FE9285CADB7009C3B9D /* AdrenalistTextInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTextInputView.swift; sourceTree = "<group>"; };
 		35632FEB285CE272009C3B9D /* AdrenalistDividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistDividerView.swift; sourceTree = "<group>"; };
 		35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistBottomSheet.swift; sourceTree = "<group>"; };
 		35632FFA285F4336009C3B9D /* AdrenalistTextRectangleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTextRectangleButton.swift; sourceTree = "<group>"; };
+		357CBE112876FC0A00031348 /* AdrenalistTitleSetupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistTitleSetupModalView.swift; sourceTree = "<group>"; };
+		357CBE132877065700031348 /* FavoriteDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		357CBE172877098A00031348 /* FavoriteSetListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSetListViewController.swift; sourceTree = "<group>"; };
 		35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistBottomNavigationBarView.swift; sourceTree = "<group>"; };
 		35A6DBEA2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteLastCollectionViewCell.swift; sourceTree = "<group>"; };
 		35A6DBEC2865868B00D6FFF9 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
@@ -284,7 +288,6 @@
 				35632F92285B3618009C3B9D /* Cells */,
 				3555CD29281C747100DA830E /* SuggestionListCell.swift */,
 				3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */,
-				35632FF8285F393B009C3B9D /* AdrenalistBottomSheet.swift */,
 				35A6DBE72860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift */,
 			);
 			path = View;
@@ -376,6 +379,22 @@
 			path = CalendarView;
 			sourceTree = "<group>";
 		};
+		357CBE152877095F00031348 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				357CBE132877065700031348 /* FavoriteDetailCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		357CBE162877096500031348 /* FavoriteSetList */ = {
+			isa = PBXGroup;
+			children = (
+				357CBE172877098A00031348 /* FavoriteSetListViewController.swift */,
+			);
+			path = FavoriteSetList;
+			sourceTree = "<group>";
+		};
 		35A6DBE92863FD4D00D6FFF9 /* MyDatepicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,6 +410,8 @@
 				35A6DBF128684B2100D6FFF9 /* FavoriteDetailViewModel.swift */,
 				35A6DBEF28684B1700D6FFF9 /* FavoriteDetailViewController.swift */,
 				35A6DBF328684B2C00D6FFF9 /* FavoriteDetailView.swift */,
+				357CBE162877096500031348 /* FavoriteSetList */,
+				357CBE152877095F00031348 /* View */,
 			);
 			path = FavoriteDetail;
 			sourceTree = "<group>";
@@ -399,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				35A6DBF828718F6200D6FFF9 /* AdrenalistTitleSetupModal.swift */,
+				357CBE112876FC0A00031348 /* AdrenalistTitleSetupModalView.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -549,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */,
+				357CBE122876FC0A00031348 /* AdrenalistTitleSetupModalView.swift in Sources */,
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
 				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
 				3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */,
@@ -580,11 +603,11 @@
 				35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */,
 				35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */,
 				35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */,
+				357CBE182877098A00031348 /* FavoriteSetListViewController.swift in Sources */,
 				351C5BC728190D1A00FE9C0F /* CircularView.swift in Sources */,
 				35632F5A2859DBFB009C3B9D /* FavoriteCollectionViewCell.swift in Sources */,
 				3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */,
 				35632FFB285F4336009C3B9D /* AdrenalistTextRectangleButton.swift in Sources */,
-				35632FF9285F393B009C3B9D /* AdrenalistBottomSheet.swift in Sources */,
 				3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */,
 				35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */,
 				3555CD27281C69A100DA830E /* Constant.swift in Sources */,
@@ -597,6 +620,7 @@
 				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
 				35632FE5285CA5BF009C3B9D /* AdrenalistInputDetailView.swift in Sources */,
 				3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */,
+				357CBE142877065700031348 /* FavoriteDetailCollectionViewCell.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
 				35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */,
