@@ -285,14 +285,20 @@ extension WorkoutListViewModel2 {
         self.notifySubject.send(.reloadWorkoutList)
         self.updateMode(type: .complete)
     }
-    
-    //MARK: - Private Methods
-    
+}
+
+//MARK: - Private Methods
+extension WorkoutListViewModel2 {
+   
     private func fetchFavorites() {
-        favoriteManager
+        favoriteSetManager
             .$favorites
+            .receive(on: RunLoop.main)
             .sink { favorites in
                 self.favorites = favorites
+                if favorites.isEmpty { self.favorites.append(.init(name: "lastTrailer", date: nil, workouts: [])) }
+                self.notifySubject.send(.reloadFavorites)
+                self.notifySubject.send(.isFavoriteEmpty(self.favorites.count == 1 || self.favorites.isEmpty))
             }
             .store(in: &cancellables)
     }
