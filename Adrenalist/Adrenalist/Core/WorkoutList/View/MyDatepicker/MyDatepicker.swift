@@ -64,7 +64,7 @@ class MyScrollableDatepicker: UIView {
     }
     public var dates = [MyScrollableDatepickerModel]()
     
-    public func scrollToDate(_ date: Date, animated: Bool = true, at position: UICollectionView.ScrollPosition = .left) {
+    public func scrollToDate(_ date: Date, animated: Bool = true, at position: UICollectionView.ScrollPosition = .centeredHorizontally) {
         
         clearSelected()
         
