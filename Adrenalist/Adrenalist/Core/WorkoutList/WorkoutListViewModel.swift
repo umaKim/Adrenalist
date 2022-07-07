@@ -89,6 +89,9 @@ extension WorkoutListViewModel2 {
             }
             collectionView.performBatchUpdates({
                 if collectionView === currentCollectionView {
+//                    self.favorites.remove(at: sourceIndexPath.row)
+//                    self.favorites.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
+//                    self.updateSuggestionsPersistance()
                     if let lastFavorite = favorites.last,
                        favorites[sourceIndexPath.row] == lastFavorite ||
                        favorites[dIndexPath.row] == lastFavorite { return }

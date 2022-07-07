@@ -81,8 +81,8 @@ class WorkoutSetupView: UIView {
                 case .titleTextFieldDidChange(let text):
                     self.actionSubject.send(.titleDidChange(text))
                     
-                case .isStarButtonSelected(let isFavorite):
-                    self.actionSubject.send(.isFavorite(isFavorite))
+//                case .isStarButtonSelected(let isFavorite):
+//                    self.actionSubject.send(.isFavorite(isFavorite))
                 }
             }
             .store(in: &cancellables)
