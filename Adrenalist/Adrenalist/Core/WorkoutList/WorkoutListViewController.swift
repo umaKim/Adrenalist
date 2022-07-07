@@ -320,7 +320,10 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
                 let vm = FavoriteDetailViewModel()
                 let vc = FavoriteDetailViewController(viewModel: vm)
                 let nav = UINavigationController(rootViewController: vc)
-                present(nav, animated: true)
+//                present(nav, animated: true)
+//                viewModel.pushThis(vc)
+                
+                viewModel.presentThis(nav)
             }
         }
     }
