@@ -187,7 +187,15 @@ extension WorkoutListViewModel2 {
         temp.append(contentsOf: favorites)
         favoriteSetManager.setFavorites(temp)
     }
+    
+    private func initializeSelectedWorkout(_ workouts: [WorkoutModel]) -> [WorkoutModel] {
+        var workouts = workouts
+        
+        for index in 0..<workouts.count {
+            workouts[index].isSelected = false
         }
+        return workouts
+    }
     
     public func editWorkout(with workout: WorkoutModel?) {
         guard
@@ -268,8 +276,11 @@ extension WorkoutListViewModel2 {
     }
     
     public func deleteSelectedItems() {
-        self.workoutList.removeAll(where: {$0.isSelected == true })
+        self.workoutList.removeAll(where: {$0.isSelected == true})
+        self.workoutManager.setWorkoutlist(with: workoutList)
+        if workoutList.isEmpty { notifySubject.send(.updateDeletedDate(selectedDate))}
         self.notifySubject.send(.reloadWorkoutList)
+        self.updateMode(type: .complete)
     }
     
     //MARK: - Private Methods
