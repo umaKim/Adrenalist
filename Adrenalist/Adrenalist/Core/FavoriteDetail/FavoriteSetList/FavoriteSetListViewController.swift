@@ -8,23 +8,6 @@
 import Combine
 import UIKit
 
-enum FavoriteSetListViewModelNotification {
-    
-}
-
-class FavoriteSetListViewModel {
-    
-    private lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
-    private let notifySubject = PassthroughSubject<FavoriteSetListViewModelNotification, Never>()
-    
-    private(set) var response: WorkoutResponse
-    
-    init(with response: WorkoutResponse) {
-        self.response = response
-        
-    }
-}
-
 class FavoriteSetListViewController: UIViewController {
     
     private let contentView = FavoriteSetListView()
@@ -43,6 +26,7 @@ class FavoriteSetListViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        self.title = viewModel.response.name
     }
     
     required init?(coder: NSCoder) {
@@ -81,45 +65,5 @@ extension FavoriteSetListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 16, left: 16, bottom: 16, right: 16)
-    }
-}
-
-enum FavoriteSetListViewAction {
-    
-}
-
-class FavoriteSetListView: UIView {
-    
-    private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
-    private let actionSubject = PassthroughSubject<FavoriteSetListViewAction, Never>()
-    
-    private(set) lazy var workoutListCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .black
-        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
-        return cv
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        [workoutListCollectionView].forEach { uv in
-            uv.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(uv)
-        }
-        
-        NSLayoutConstraint.activate([
-            workoutListCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            workoutListCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            workoutListCollectionView.topAnchor.constraint(equalTo: topAnchor),
-            workoutListCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
