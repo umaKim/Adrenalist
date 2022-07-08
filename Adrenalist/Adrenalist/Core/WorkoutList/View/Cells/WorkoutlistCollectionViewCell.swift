@@ -14,7 +14,7 @@ protocol WorkoutlistCollectionViewCellDelegate: AnyObject {
 final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     static let identifier = "WorkoutlistCollectionViewCell"
     
-    private lazy var modeView = ModeView(mode: .normal)
+    private lazy var modeView = ModeView()
     
     weak var delegate: WorkoutlistCollectionViewCellDelegate?
     
@@ -75,11 +75,11 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         
         self.titleLabel.text = model.title
         
-        if let reps = model.reps{
+        if let reps = model.reps, reps != 0 {
             self.repsLabel.text = "\(reps) x "
         }
         
-        if let weight = model.weight {
+        if let weight = model.weight, weight != 0 {
             self.weightLabel.text = "\(weight) Kg"
         }
         
@@ -87,7 +87,7 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
             self.timerLabel.text = "\(timer) sec"
         }
         
-        self.modeView.updateMode(mode, isComplete: model.isDone)
+        self.modeView.updateMode(mode, of: model)
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
@@ -129,7 +129,6 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         titleHStack.distribution = .fill
         titleHStack.alignment = .fill
         titleHStack.spacing = 16
-//        titleHStack.backgroundColor = .red
         
         let labelHStack = UIStackView(arrangedSubviews: [repsLabel, weightLabel])
         labelHStack.axis = .horizontal
@@ -141,18 +140,16 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         labelVStack.distribution = .fill
         labelVStack.alignment = .fill
         
-        [
-            titleHStack,
-            labelVStack
-        ].forEach { uv in
-            contentView.addSubview(uv)
-            uv.translatesAutoresizingMaskIntoConstraints = false
-        }
+        [titleHStack,labelVStack]
+            .forEach { uv in
+                contentView.addSubview(uv)
+                uv.translatesAutoresizingMaskIntoConstraints = false
+            }
         
         NSLayoutConstraint.activate([
             titleHStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleHStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            titleHStack.trailingAnchor.constraint(equalTo: contentView.centerXAnchor),
+            titleHStack.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 30),
             
             labelVStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             labelVStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
