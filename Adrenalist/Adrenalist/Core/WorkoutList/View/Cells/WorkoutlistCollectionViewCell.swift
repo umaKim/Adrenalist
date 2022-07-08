@@ -21,6 +21,7 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     private lazy var titleLabel: UILabel = {
        let lb = UILabel()
         lb.textColor = .white
+        lb.numberOfLines = 2
         lb.font = .boldSystemFont(ofSize: 17)
         return lb
     }()
