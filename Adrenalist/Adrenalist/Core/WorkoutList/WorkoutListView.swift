@@ -275,6 +275,7 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
         datepicker.updateDateSet(with: date)
         
 //        guard let btVC = bottomSheetViewController as? ContentViewController else {return }
+        datepicker.scrollToDate(date.date, at: .centeredHorizontally)
         calendarViewController.update(with: date.date)
         actionSubject.send(.didSelectDate(date))
     }
