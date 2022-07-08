@@ -14,8 +14,6 @@ enum WorkoutListView2Action {
     
     case tapTitleCalendar(ContentViewController)
     
-    case reorder
-    case postpone
     case delete
     case createSet
     case bottomNavigationBarDidTapCancel
@@ -36,7 +34,6 @@ final class WorkoutListView2: UIView {
         var config = UIButton.Configuration.plain()
         var container = AttributeContainer()
         container.font = UIFont.boldSystemFont(ofSize: 17)
-        // 1
         config.attributedTitle = AttributedString("\(Date().getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
         config.image = UIImage(systemName: "chevron.down")
         config.imagePlacement = .trailing
@@ -67,8 +64,7 @@ final class WorkoutListView2: UIView {
     })
     
     private(set) lazy var addButton: UIBarButtonItem = {
-        let bt = UIBarButtonItem(image:
-                                    UIImage(systemName: "plus"),
+        let bt = UIBarButtonItem(image:UIImage(systemName: "plus"),
                                  style: .done,
                                  target: nil,
                                  action: nil)
@@ -99,10 +95,6 @@ final class WorkoutListView2: UIView {
     
     func scrollToDate(_ date: Date) {
         calendarView.scrollToDate(date)
-    }
-    
-    func dismissCalendarView() {
-        
     }
     
     func deleteDot(of date: Date) {
@@ -147,7 +139,6 @@ final class WorkoutListView2: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
-        cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
     
@@ -187,17 +178,8 @@ final class WorkoutListView2: UIView {
             .actionPublisher
             .sink { action in
                 switch action {
-                case .move:
-                    print("move")
-                    break
-                    
                 case .delete:
                     self.actionSubject.send(.bottomSheetDidTapDelete)
-                    break
-                    
-                case .done:
-                    print("done")
-                    break
                     
                 case .cancel:
                     self.actionSubject.send(.bottomNavigationBarDidTapCancel)
@@ -273,14 +255,12 @@ extension WorkoutListView2: MyScrollableDatepickerDelegate {
     ) {
         updateCalendarTitleButton(date.date)
         datepicker.updateDateSet(with: date)
-        
-//        guard let btVC = bottomSheetViewController as? ContentViewController else {return }
         datepicker.scrollToDate(date.date, at: .centeredHorizontally)
         calendarViewController.update(with: date.date)
         actionSubject.send(.didSelectDate(date))
     }
     
-    private func updateCalendarTitleButton(_ date: Date) {
+    func updateCalendarTitleButton(_ date: Date) {
         var container = AttributeContainer()
         container.font = UIFont.boldSystemFont(ofSize: 17)
         calendarTitleButton.configuration?.attributedTitle = AttributedString("\(date.getFormattedDate(format: "yyyy년 MM월"))", attributes: container)
