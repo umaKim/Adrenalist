@@ -248,19 +248,46 @@ extension WorkoutListViewController2: UICollectionViewDropDelegate {
 //MARK: - UICollectionView Drag Delegate
 extension WorkoutListViewController2: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row] : viewModel.workoutList[indexPath.row]
-        let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = item
-        return [dragItem]
+//        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row].workouts[0] : viewModel.workoutList[indexPath.row]
+        
+        if collectionView == contentView.suggestedCollectionView {
+            let item = viewModel.favorites[indexPath.row]
+            if item == viewModel.favorites.last {print("no drag for favorites")
+                return [] }
+            let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
+            let dragItem = UIDragItem(itemProvider: itemProvider)
+            dragItem.localObject = item
+            print("suggestedCollectionView Drag")
+            return [dragItem]
+            
+        } else if collectionView == contentView.workoutListCollectionView {
+            let item = viewModel.workoutList[indexPath.row]
+            let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
+            let dragItem = UIDragItem(itemProvider: itemProvider)
+            dragItem.localObject = item
+            print("workoutListCollectionView Drag")
+            return [dragItem]
+        }
+       return []
     }
     
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row] : viewModel.workoutList[indexPath.row]
-        let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = item
-        return [dragItem]
+//        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row].workouts[0] : viewModel.workoutList[indexPath.row]
+//        let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
+//        let dragItem = UIDragItem(itemProvider: itemProvider)
+//        dragItem.localObject = item
+//        return [dragItem]
+        
+        if collectionView == contentView.suggestedCollectionView {
+            print("suggestedCollectionView Drop")
+            return []
+            
+        } else if collectionView == contentView.workoutListCollectionView {
+            print("workoutListCollectionView Drop")
+            return []
+        }
+        
+        return []
     }
     
     func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
@@ -281,6 +308,7 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
             
+            //MAKR: - Last Trailer
             if indexPath.item == viewModel.favorites.count - 1 {
                 guard
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteLastCollectionViewCell.identifier,
@@ -289,6 +317,7 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
                 return cell
                 
             } else {
+                //MARK: - usual favorites
                 guard
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier,
                                                                   for: indexPath) as? FavoriteCollectionViewCell
@@ -337,11 +366,11 @@ extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
                 return CGSize(width: FavoriteLastCollectionViewCell.preferredHeight,
                               height: FavoriteLastCollectionViewCell.preferredHeight)
             } else {
-                let width = viewModel.favorites[indexPath.item].title.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
+                guard let name = viewModel.favorites[indexPath.item].name else { return .init() }
+                let width = name.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
                 let height: CGFloat = 39
                 return CGSize(width: width, height: height)
             }
-            
         } else {
             return .init(width: UIScreen.main.bounds.width - 32, height: 78)
         }
