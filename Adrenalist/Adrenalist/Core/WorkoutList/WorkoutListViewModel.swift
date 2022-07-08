@@ -97,6 +97,7 @@ extension WorkoutListViewModel2 {
                        favorites[dIndexPath.row] == lastFavorite { return }
                     self.favorites.remove(at: sourceIndexPath.row)
                     self.favorites.insert(item.dragItem.localObject as! WorkoutResponse, at: dIndexPath.row)
+                    // update local
                 } else {
                     self.workoutList.remove(at: sourceIndexPath.row)
                     self.workoutList.insert(item.dragItem.localObject as! WorkoutModel, at: dIndexPath.row)
@@ -161,12 +162,6 @@ extension WorkoutListViewModel2 {
     
     public func updateIsComplete(_ isSelected: Bool, at index: Int) {
         switch mode {
-//        case .reorder:
-//            break
-//            
-//        case .psotpone:
-//            self.workoutList[index].isSelected = isComplete
-//            
         case .delete:
             self.workoutList[index].isSelected = isSelected
             
@@ -210,16 +205,6 @@ extension WorkoutListViewModel2 {
     }
     
     public func setupWorkout(with workouts: [WorkoutModel]) {
-//        workouts.forEach { workout in
-//            if workout.isFavorite &&
-//                !self.favorites.contains(where: {
-//                    $0.title == workout.title &&
-//                    $0.timer == workout.timer &&
-//                    $0.weight == workout.weight &&
-//                    $0.reps == workout.reps
-//                }) {
-//
-    func setupWorkout(with workouts: [WorkoutModel]) {
         self.workoutList.append(contentsOf: workouts)
         self.workoutManager.setWorkoutlist(with: workoutList)
     }
@@ -341,7 +326,7 @@ extension WorkoutListViewModel2 {
     }
     
     private func updateSuggestionsPersistance() {
-        favoriteManager.setFavorites(favorites)
+//        favoriteSetManager.setFavorites(favorites)
     }
     
     private func updateWorkoutPersistance() {
