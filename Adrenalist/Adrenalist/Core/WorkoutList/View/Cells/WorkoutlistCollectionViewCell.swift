@@ -105,6 +105,9 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
                 case .tapCheckButton(let isTapped):
                     self.delegate?.workoutlistCollectionViewCellDidTapComplete(isTapped,
                                                                                indexPathRow: self.tag)
+                case .tapDeleteButton(let isTapped):
+                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(isTapped,
+                                                                               indexPathRow: self.tag)
                 }
             }
             .store(in: &cancellables)
