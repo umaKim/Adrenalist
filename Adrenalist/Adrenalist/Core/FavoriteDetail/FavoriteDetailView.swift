@@ -24,7 +24,7 @@ class FavoriteDetailView: UIView {
         let cl = UICollectionViewFlowLayout()
         cl.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: cl)
-        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
+        cv.register(FavoriteDetailCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteDetailCollectionViewCell.identifier)
         return cv
     }()
     
@@ -56,6 +56,10 @@ class FavoriteDetailView: UIView {
     }
     
     private func setupUI() {
+        
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .darkNavy
+        
         [collectionView].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
