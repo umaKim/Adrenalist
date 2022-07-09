@@ -61,8 +61,9 @@ final class ModalViewController: UIViewController {
         NSLayoutConstraint.activate([
             modal.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             modal.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            modal.widthAnchor.constraint(equalToConstant: 200),
-            modal.heightAnchor.constraint(equalToConstant: 200),
+            modal.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            modal.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            modal.heightAnchor.constraint(equalToConstant: UIScreen.main.width - 32),
         ])
     }
 }
