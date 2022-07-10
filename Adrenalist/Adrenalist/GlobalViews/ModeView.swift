@@ -53,6 +53,11 @@ final class ModeView: UIView {
         setupUI()
     }
     
+    convenience init(_ mode: WorkoutListCellMode) {
+        self.init()
+        self.mode = mode
+    }
+    
     func updateMode(_ mode: WorkoutListCellMode, of model: WorkoutModel) {
         self.mode = mode
         
@@ -69,6 +74,9 @@ final class ModeView: UIView {
             self.isCheckButtonTapped = model.isSelected
             self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.centerfill,
                                       for: .normal)
+        case .none:
+            self.checkButton.isHidden = true
+            break
         }
     }
     
@@ -87,6 +95,8 @@ final class ModeView: UIView {
                 case .delete:
                     self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
                                               for: .normal)
+                case .none:
+                    self.checkButton.isHidden = true
                 }
                 self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
             }
@@ -103,6 +113,9 @@ final class ModeView: UIView {
                     
                 case .createSet:
                     self.showCheckButton()
+                    
+                case .none:
+                    break
                 }
             }
             .store(in: &cancellables)
