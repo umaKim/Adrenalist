@@ -11,6 +11,7 @@ import UIKit
 enum FavoriteDetailViewAction {
     case dismiss
     case add
+    case delete
 }
 
 class FavoriteDetailView: UIView {
@@ -19,12 +20,13 @@ class FavoriteDetailView: UIView {
     
     private(set) lazy var backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
     private(set) lazy var addButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .done, target: nil, action: nil)
+    private(set) lazy var deleteButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .done, target: nil, action: nil)
     
     private(set) lazy var collectionView: UICollectionView = {
         let cl = UICollectionViewFlowLayout()
         cl.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: cl)
-        cv.register(FavoriteDetailCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteDetailCollectionViewCell.identifier)
+        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
         return cv
     }()
     
@@ -49,10 +51,19 @@ class FavoriteDetailView: UIView {
                 self.actionSubject.send(.dismiss)
             }.store(in: &cancellables)
         
-        addButton.tapPublisher.sink { _ in
-            self.actionSubject.send(.add)
-        }
-        .store(in: &cancellables)
+        addButton
+            .tapPublisher
+            .sink { _ in
+                self.actionSubject.send(.add)
+            }
+            .store(in: &cancellables)
+        
+        deleteButton
+            .tapPublisher
+            .sink { _ in
+                self.actionSubject.send(.delete)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
