@@ -50,13 +50,9 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         self.cancellables = .init()
         super.init(frame: frame)
-        
-        setupUI()
         bind()
-        backgroundColor = .navyGray
+        setupUI()
     }
-    
-    private var isChecked: Bool?
     
     private var cancellables: Set<AnyCancellable>
     
@@ -71,8 +67,6 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         mode: WorkoutListCellMode
     ) {
         self.model = model
-//        self.isChecked = model.isSelected
-        self.isChecked = model.isSelected ?? false || model.isDone
         
         self.titleLabel.text = model.title
         
@@ -90,11 +84,16 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         
         self.modeView.updateMode(mode, of: model)
         
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-//                self.modeView.isHidden = mode == .normal
-            } completion: { _ in }
-        }
+//        DispatchQueue.main.async {
+//            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
+////                self.modeView.isHidden = mode == .normal
+//            } completion: { _ in }
+//        }
+    }
+    func configureFavoriteDetail(with model: WorkoutResponse
+    ) {
+        self.titleLabel.text = model.name
+        self.modeView.isHidden = true
     }
     
     private func bind() {
@@ -116,7 +115,6 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         model = nil
-//        modeView = .init(mode: .delete)
         titleLabel.text = nil
         repsLabel.text = nil
         weightLabel.text = nil

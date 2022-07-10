@@ -22,6 +22,7 @@ enum WorkoutListCellMode: Codable {
     case delete
     case complete
     case createSet
+    case none
 }
 
 enum WorkoutListViewModelListener {
@@ -156,9 +157,9 @@ extension WorkoutListViewModel2 {
         self.notifySubject.send(.reloadWorkoutList)
     }
     
-    public func setupMode(_ mode: WorkoutListCellMode) {
-        self.mode = mode
-    }
+//    public func setupMode(_ mode: WorkoutListCellMode) {
+//        self.mode = mode
+//    }
     
     public func updateIsComplete(_ isSelected: Bool, at index: Int) {
         switch mode {
@@ -171,6 +172,9 @@ extension WorkoutListViewModel2 {
             
         case .createSet:
             self.workoutList[index].isSelected = isSelected
+            
+        case .none:
+            break
         }
     }
     
