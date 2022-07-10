@@ -20,7 +20,7 @@ class FavoriteDetailViewController: UIViewController {
         self.cancellables = .init()
         super.init(nibName: nil, bundle: nil)
         
-        title = "Favorite Set"
+        title = "Favorite Sets"
     }
     
     required init?(coder: NSCoder) {
@@ -46,6 +46,9 @@ class FavoriteDetailViewController: UIViewController {
                 
             case .add:
                 break
+                
+            case .delete:
+                break
             }
         }
         .store(in: &cancellables)
@@ -61,7 +64,7 @@ class FavoriteDetailViewController: UIViewController {
     
     private func setupNavBar() {
         navigationItem.leftBarButtonItems = [contentView.backButton]
-        navigationItem.rightBarButtonItems = [contentView.addButton]
+        navigationItem.rightBarButtonItems = [contentView.deleteButton, contentView.addButton]
         navigationController?.navigationBar.tintColor = .white
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -74,9 +77,9 @@ extension FavoriteDetailViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteDetailCollectionViewCell.identifier, for: indexPath) as? FavoriteDetailCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier, for: indexPath) as? WorkoutlistCollectionViewCell
         else {return UICollectionViewCell() }
-        cell.configure(with: viewModel.favorites[indexPath.item])
+        cell.configureFavoriteDetail(with: viewModel.favorites[indexPath.item])
         return cell
     }
 }
