@@ -23,6 +23,7 @@ enum WorkoutListCellMode: Codable {
     case complete
     case createSet
     case none
+    case moveable
 }
 
 enum WorkoutListViewModelListener {
@@ -174,6 +175,9 @@ extension WorkoutListViewModel2 {
             self.workoutList[index].isSelected = isSelected
             
         case .none:
+            break
+            
+        default:
             break
         }
     }
