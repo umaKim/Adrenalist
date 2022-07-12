@@ -32,7 +32,11 @@ final class FavoriteLastCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
         ])
     }
     
