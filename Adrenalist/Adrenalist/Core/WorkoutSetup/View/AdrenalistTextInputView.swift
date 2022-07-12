@@ -58,9 +58,10 @@ class AdrenalistTextInputView: UIView {
     
     private var action: ((UITextField) -> Void)?
     
-    convenience init(title: String,
-                     placeholder: String,
-                     completion: @escaping (UITextField) -> Void
+    convenience init(
+        title: String,
+        placeholder: String,
+        completion: @escaping (UITextField) -> Void
     ) {
         self.init()
         self.titleLabel.text = title
@@ -69,14 +70,10 @@ class AdrenalistTextInputView: UIView {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(textFieldDidTap))
         textField.addGestureRecognizer(gesture)
-        
-//        createPickerView()
-//        dismissPickerView()
     }
     
     @objc
     private func textFieldDidTap() {
-
         guard
             let action = action
         else { return }

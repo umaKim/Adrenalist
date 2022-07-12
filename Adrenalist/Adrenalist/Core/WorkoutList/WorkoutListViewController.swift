@@ -101,7 +101,6 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                     
                 case .bottomSheetDidTapCreateSet:
                     //MARK: - Present pop up alert for set name
-//                    self.viewModel.createSet()
                     let vc = ModalViewController()
                     vc.delegate = self
                     vc.modalPresentationStyle = .overFullScreen
@@ -252,12 +251,10 @@ extension WorkoutListViewController2: UICollectionViewDragDelegate {
         
         if collectionView == contentView.suggestedCollectionView {
             let item = viewModel.favorites[indexPath.row]
-            if item == viewModel.favorites.last {print("no drag for favorites")
-                return [] }
+            if item == viewModel.favorites.last { return [] }
             let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
             let dragItem = UIDragItem(itemProvider: itemProvider)
             dragItem.localObject = item
-            print("suggestedCollectionView Drag")
             return [dragItem]
             
         } else if collectionView == contentView.workoutListCollectionView {
@@ -265,7 +262,6 @@ extension WorkoutListViewController2: UICollectionViewDragDelegate {
             let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
             let dragItem = UIDragItem(itemProvider: itemProvider)
             dragItem.localObject = item
-            print("workoutListCollectionView Drag")
             return [dragItem]
         }
        return []
@@ -349,9 +345,7 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
                 let vm = FavoriteDetailViewModel()
                 let vc = FavoriteDetailViewController(viewModel: vm)
                 let nav = UINavigationController(rootViewController: vc)
-//                present(nav, animated: true)
-//                viewModel.pushThis(vc)
-                
+                nav.modalPresentationStyle = .overFullScreen
                 viewModel.presentThis(nav)
             }
         }
@@ -395,7 +389,7 @@ extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
             self.viewModel.setupWorkout(with: models)
         }
         
-        self.contentView.suggestedCollectionView.reloadData()
+//        self.contentView.suggestedCollectionView.reloadData()
         self.contentView.workoutListCollectionView.reloadData()
         self.scrollToLast()
     }
