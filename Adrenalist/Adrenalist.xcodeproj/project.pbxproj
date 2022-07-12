@@ -75,11 +75,9 @@
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
-		D5837C7A8BDDC0707BF575C0 /* Pods_Adrenalist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adrenalist.release.xcconfig"; path = "Target Support Files/Pods-Adrenalist/Pods-Adrenalist.release.xcconfig"; sourceTree = "<group>"; };
 		351C5BA728190B7000FE9C0F /* Adrenalist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adrenalist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C5BAA28190B7000FE9C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,8 +143,6 @@
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
-		94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Adrenalist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Adrenalist.debug.xcconfig"; path = "Target Support Files/Pods-Adrenalist/Pods-Adrenalist.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +155,6 @@
 				35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
-				D5837C7A8BDDC0707BF575C0 /* Pods_Adrenalist.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,8 +166,6 @@
 			children = (
 				351C5BA928190B7000FE9C0F /* Adrenalist */,
 				351C5BA828190B7000FE9C0F /* Products */,
-				8B1759E6EDC59B6EE6B97AAF /* Pods */,
-				B23B2637FFB88AFD0F053ECC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -431,23 +424,6 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
-		8B1759E6EDC59B6EE6B97AAF /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */,
-				2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		B23B2637FFB88AFD0F053ECC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				94EA39C79AFA8B4C4629C7C8 /* Pods_Adrenalist.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,11 +431,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 351C5BBB28190B7100FE9C0F /* Build configuration list for PBXNativeTarget "Adrenalist" */;
 			buildPhases = (
-				3B65DF5762EDBF3020CB5B49 /* [CP] Check Pods Manifest.lock */,
 				351C5BA328190B7000FE9C0F /* Sources */,
 				351C5BA428190B7000FE9C0F /* Frameworks */,
 				351C5BA528190B7000FE9C0F /* Resources */,
-				D43D24CC814425341456BD10 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -528,48 +502,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3B65DF5762EDBF3020CB5B49 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Adrenalist-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D43D24CC814425341456BD10 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Adrenalist/Pods-Adrenalist-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		351C5BA328190B7000FE9C0F /* Sources */ = {
@@ -770,7 +702,6 @@
 		};
 		351C5BBC28190B7100FE9C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6D18FEB57126B74D1CDFB70 /* Pods-Adrenalist.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -798,7 +729,6 @@
 		};
 		351C5BBD28190B7100FE9C0F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2BD8AF962C0698E6E1B0A736 /* Pods-Adrenalist.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
