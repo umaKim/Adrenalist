@@ -33,8 +33,6 @@ class FavoriteDetailCollectionViewCell: UICollectionViewCell {
         
         backgroundColor = .navyGray
         
-//        contentView.backgroundColor = .red
-        
         [titleLabel].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
