@@ -36,6 +36,8 @@ final class ModeView: UIView {
     private var isCheckButtonTapped = false
     
     enum CheckButtonImage {
+        static let moveable = UIImage(systemName: "line.3.horizontal")
+        
         static let check = UIImage(systemName: "checkmark.circle.fill")
         static let circle = UIImage(systemName: "circle")
         
@@ -61,6 +63,10 @@ final class ModeView: UIView {
     func updateMode(_ mode: WorkoutListCellMode, of model: WorkoutModel) {
         self.mode = mode
         
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear) {
+            self.isHidden = false
+        } completion: { _ in }
+
         switch mode {
         case .complete:
             self.isCheckButtonTapped = model.isDone
@@ -74,8 +80,13 @@ final class ModeView: UIView {
             self.isCheckButtonTapped = model.isSelected
             self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.smallFill : CheckButtonImage.centerfill,
                                       for: .normal)
+        case .moveable:
+            self.checkButton.setImage(CheckButtonImage.moveable, for: .normal)
+        
         case .none:
-            self.checkButton.isHidden = true
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear) {
+                self.isHidden = true
+            } completion: { _ in }
             break
         }
     }
@@ -96,7 +107,10 @@ final class ModeView: UIView {
                     self.checkButton.setImage(self.isCheckButtonTapped ? CheckButtonImage.deleteFill : CheckButtonImage.delete,
                                               for: .normal)
                 case .none:
-                    self.checkButton.isHidden = true
+                    break
+                    
+                case .moveable:
+                    break
                 }
                 self.actionSubject.send(.tapCheckButton(self.isCheckButtonTapped))
             }
@@ -115,6 +129,10 @@ final class ModeView: UIView {
                     self.showCheckButton()
                     
                 case .none:
+                    break
+                    
+                case .moveable:
+                    self.showCheckButton()
                     break
                 }
             }
