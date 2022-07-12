@@ -37,7 +37,13 @@ class WorkoutSetupView: UIView {
         return bt
     }()
     
-    private let titleTextFieldView = AdrenalistTitleView()
+    private let contentScrollView: UIScrollView = {
+       let sv = UIScrollView()
+        sv.showsVerticalScrollIndicator = false
+        return sv
+    }()
+    private let contentView = UIView()
+    private let titleTextFieldView = AdrenalistTitleView(placeholder: "Workout")
     private let adrenalistInputDetailView: AdrenalistInputDetailView
     
     private var cancellables: Set<AnyCancellable>
@@ -46,7 +52,6 @@ class WorkoutSetupView: UIView {
         self.adrenalistInputDetailView = AdrenalistInputDetailView(type: type)
         self.cancellables = .init()
         super.init(frame: .zero)
-        
         
         bind()
         setupUI()
@@ -107,21 +112,39 @@ class WorkoutSetupView: UIView {
     private func setupUI() {
         backgroundColor = .darkNavy
         
-        [titleTextFieldView, adrenalistInputDetailView]
-            .forEach { uv in
-                uv.translatesAutoresizingMaskIntoConstraints = false
-                addSubview(uv)
-            }
+        addSubview(contentScrollView)
+        contentScrollView.addSubview(contentView)
+        
+        contentScrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        [titleTextFieldView, adrenalistInputDetailView].forEach { uv in
+            uv.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(uv)
+        }
         
         NSLayoutConstraint.activate([
-            titleTextFieldView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 31.5),
-            titleTextFieldView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleTextFieldView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            contentScrollView.topAnchor.constraint(equalTo: topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            
+            contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.height * 1.00005),
+            
+            titleTextFieldView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 31.5),
+            titleTextFieldView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleTextFieldView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             titleTextFieldView.heightAnchor.constraint(equalToConstant: 64),
             
             adrenalistInputDetailView.topAnchor.constraint(equalTo: titleTextFieldView.bottomAnchor, constant: 32),
-            adrenalistInputDetailView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            adrenalistInputDetailView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            adrenalistInputDetailView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
