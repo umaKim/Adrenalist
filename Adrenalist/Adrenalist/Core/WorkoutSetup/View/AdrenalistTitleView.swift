@@ -16,31 +16,23 @@ final class AdrenalistTitleView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<AdrenalistTitleViewAction, Never>()
     
-    private let titleTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "titleTextField"
-        return tf
-    }()
-    
-//    private let starButton: UIButton = {
-//        let bt = UIButton()
-//        bt.setImage(UIImage(systemName: "star"), for: .normal)
-//        bt.widthAnchor.constraint(equalToConstant: 32).isActive = true
-//        bt.heightAnchor.constraint(equalToConstant: 32).isActive = true
-//        return bt
-//    }()
+    private let titleTextField = UITextField()
     
     func setupTitleTextField(_ text: String) {
         self.titleTextField.text = text
     }
     
-    private var starStatus: Bool = false
+    func setupPlaceholder(_ text: String) {
+        self.titleTextField.placeholder = text
+    }
     
     private var cancellables: Set<AnyCancellable>
     
-    init() {
+    init(placeholder: String) {
         self.cancellables = .init()
         super.init(frame: .zero)
+        
+        titleTextField.placeholder = placeholder
         
         bind()
         setupUI()
@@ -57,16 +49,6 @@ final class AdrenalistTitleView: UIView {
                 self.actionSubject.send(.titleTextFieldDidChange(text ?? ""))
             }
             .store(in: &cancellables)
-        
-//        starButton
-//            .tapPublisher
-//            .sink { _ in
-//                self.starStatus.toggle()
-//                self.actionSubject.send(.isStarButtonSelected(self.starStatus))
-//                let image: UIImage? = self.starStatus ? .init(systemName: "star.fill") : .init(systemName: "star")
-//                self.starButton.setImage(image, for: .normal)
-//            }
-//            .store(in: &cancellables)
     }
     
     private func setupUI() {
