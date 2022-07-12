@@ -27,6 +27,7 @@ class FavoriteDetailView: UIView {
         cl.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: cl)
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
+        cv.contentInset = .init(top: 0, left: 0, bottom: UIScreen.main.height/5, right: 0)
         return cv
     }()
     

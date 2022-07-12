@@ -139,6 +139,7 @@ final class WorkoutListView2: UIView {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
         cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
+        cv.contentInset = .init(top: 0, left: 0, bottom: UIScreen.main.height / 4, right: 0)
         return cv
     }()
     
