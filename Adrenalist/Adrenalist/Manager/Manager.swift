@@ -45,6 +45,14 @@ final class FavoriteSetManager {
         self.save(favorites)
     }
     
+    func setWorkouts(with workouts: [WorkoutModel], of favorite: WorkoutResponse) {
+        guard
+            let index = favorites.firstIndex(of: favorite)
+        else { return }
+        favorites[index].workouts = workouts
+        self.save(favorites)
+    }
+    
     private func save(_ workouts: [WorkoutResponse]) {
         do {
             let encoder = JSONEncoder()
