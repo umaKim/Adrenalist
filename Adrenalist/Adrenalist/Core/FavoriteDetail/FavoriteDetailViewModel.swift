@@ -30,8 +30,8 @@ class FavoriteDetailViewModel {
             .receive(on: RunLoop.main)
             .sink { responses in
                 self.favorites = responses
+                self.notifySubject.send(.reload)
             }
             .store(in: &cancellables)
     }
-    
 }
