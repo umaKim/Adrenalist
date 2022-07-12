@@ -21,17 +21,22 @@ class AdrenalistInputDetailView: UIView {
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<AdrenalistInputDetailViewAction, Never>()
     
-    private let reps = AdrenalistTextInputView(title: "Reps", placeholder: "reps", keyboardType: .numberPad)
+    private let reps = AdrenalistTextInputView(title: "Reps",
+                                               placeholder: "reps",
+                                               keyboardType: .numberPad)
+    
     private let divider1 = AdrenalistDividerView()
     
-    private lazy var weight = AdrenalistTextInputView(title: "weight",
-                                                 placeholder: "weight",
+    private lazy var weight = AdrenalistTextInputView(title: "Weight",
+                                                      placeholder: "weight",
                                                       keyboardType: .numberPad)
+    
     private let divider2 = AdrenalistDividerView()
     
-    private let time = AdrenalistTextInputView(title: "time",
-                                               placeholder: "time",
+    private let time = AdrenalistTextInputView(title: "Timer",
+                                               placeholder: "timer",
                                                keyboardType: .numberPad)
+    
     private let divider3 = AdrenalistDividerView()
     
     private let set = AdrenalistInputStepperView(title: "Set", value: 1)
@@ -140,7 +145,6 @@ extension AdrenalistInputDetailView {
             sv.leadingAnchor.constraint(equalTo: leadingAnchor),
             sv.trailingAnchor.constraint(equalTo: trailingAnchor),
             sv.topAnchor.constraint(equalTo: topAnchor),
-//            sv.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
