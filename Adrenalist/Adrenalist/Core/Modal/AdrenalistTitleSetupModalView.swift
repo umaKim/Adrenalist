@@ -74,7 +74,6 @@ final class AdrenalistTitleSetupModalView: UIView {
     private func setupUI() {
         layer.cornerRadius = 20
         
-        backgroundColor = .blue
         let sv = UIStackView(arrangedSubviews: [setupTitle, titleTextField])
         sv.axis = .vertical
         sv.alignment = .fill

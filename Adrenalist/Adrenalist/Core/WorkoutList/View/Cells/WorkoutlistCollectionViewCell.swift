@@ -83,12 +83,6 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         }
         
         self.modeView.updateMode(mode, of: model)
-        
-//        DispatchQueue.main.async {
-//            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-////                self.modeView.isHidden = mode == .normal
-//            } completion: { _ in }
-//        }
     }
     func configureFavoriteDetail(with model: WorkoutResponse
     ) {
