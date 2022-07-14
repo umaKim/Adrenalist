@@ -88,7 +88,8 @@ extension CircularView {
     
     private func drawOutlineStrokeLayer() {
         outlineStrokeLayer.path = circularPath.cgPath
-        outlineStrokeLayer.strokeColor = UIColor(red: 234/255, green: 46/255, blue: 111/255, alpha: 1).cgColor
+        outlineStrokeLayer.strokeColor = UIColor.purpleBlue.cgColor
+//        UIColor(red: 234/255, green: 46/255, blue: 111/255, alpha: 1).cgColor
         outlineStrokeLayer.lineWidth = 20
         outlineStrokeLayer.fillColor = UIColor.clear.cgColor
         outlineStrokeLayer.lineCap = CAShapeLayerLineCap.round
@@ -113,7 +114,8 @@ extension CircularView {
     
     private func drawTrackLayer() {
         trackLayer.path = circularPath.cgPath
-        trackLayer.strokeColor = UIColor(red: 56/255, green: 25/255, blue: 49/255, alpha: 1).cgColor
+        trackLayer.strokeColor = UIColor.navyGray.cgColor
+//        UIColor(red: 56/255, green: 25/255, blue: 49/255, alpha: 1).cgColor
         trackLayer.lineWidth = 20
         trackLayer.fillColor = UIColor.black.cgColor
         trackLayer.lineCap = CAShapeLayerLineCap.round
@@ -125,7 +127,8 @@ extension CircularView {
         let circularPathforPulsingLayer = UIBezierPath(arcCenter: .zero, radius: 125, startAngle: 0, endAngle:  2 * CGFloat.pi, clockwise: true)
         pulsingLayer.path = circularPathforPulsingLayer.cgPath
         pulsingLayer.strokeColor = UIColor.clear.cgColor
-        pulsingLayer.fillColor = UIColor(red: 86/255, green: 30/255, blue: 63/255, alpha: 1).cgColor
+        pulsingLayer.fillColor = UIColor.purpleBlue.withAlphaComponent(0.3).cgColor
+//        UIColor(red: 86/255, green: 30/255, blue: 63/255, alpha: 1).cgColor
         pulsingLayer.lineCap = CAShapeLayerLineCap.round
         pulsingLayer.position = center
         layer.addSublayer(pulsingLayer)
