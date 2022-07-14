@@ -19,6 +19,7 @@ final class MainView: UIView {
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.isScrollEnabled = false
         return cv
     }()
     
