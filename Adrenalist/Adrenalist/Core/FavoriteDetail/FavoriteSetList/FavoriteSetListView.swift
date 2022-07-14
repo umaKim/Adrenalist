@@ -13,7 +13,7 @@ enum FavoriteSetListViewAction {
     case delete
     
     case bottomSheetDidTapDelete
-    case bottomSheetDidTapCreateSet
+    case bottomSheetDidTapCancel
 }
 
 class FavoriteSetListView: UIView {
@@ -38,7 +38,7 @@ class FavoriteSetListView: UIView {
     private lazy var bottomNavigationView = AdrenalistBottomNavigationBarView(configurator: .init(height: 110,
                                                                                                   backgroundColor: .lightDarkNavy))
     
-    public func dismissBottomNavigationView() {
+    private func dismissBottomNavigationView() {
         self.bottomNavigationView.hideBottomNavigationView()
     }
     
@@ -64,6 +64,7 @@ class FavoriteSetListView: UIView {
         
         deleteButton.tapPublisher.sink { _ in
             self.actionSubject.send(.delete)
+            self.bottomNavigationView.show(.delete)
         }
         .store(in: &cancellables)
         
@@ -75,7 +76,8 @@ class FavoriteSetListView: UIView {
                     self.actionSubject.send(.bottomSheetDidTapDelete)
                     
                 case .cancel:
-                    self.actionSubject.send(.bottomSheetDidTapCreateSet)
+                    self.actionSubject.send(.bottomSheetDidTapCancel)
+                    self.dismissBottomNavigationView()
                     
                 default:
                     break
