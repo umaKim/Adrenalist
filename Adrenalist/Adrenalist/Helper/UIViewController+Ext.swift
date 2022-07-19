@@ -7,11 +7,10 @@
 
 import UIKit.UIView
 
-extension UIView {
-    func addTapGestureToViewForKeyboardDismiss() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        addGestureRecognizer(tap)
+extension UIViewController {
+    var isModal: Bool {
+        return self.presentingViewController?.presentedViewController == self
+            || (self.navigationController != nil && self.navigationController?.presentingViewController?.presentedViewController == self.navigationController)
+            || self.tabBarController?.presentingViewController is UITabBarController
     }
 }
-
