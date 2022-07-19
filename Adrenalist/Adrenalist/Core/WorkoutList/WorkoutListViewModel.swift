@@ -275,7 +275,6 @@ extension WorkoutListViewModel2 {
         self.workoutList.removeAll(where: {$0.isSelected == true})
         self.workoutManager.setWorkoutlist(with: workoutList)
         if workoutList.isEmpty { notifySubject.send(.updateDeletedDate(selectedDate))}
-        self.notifySubject.send(.reloadWorkoutList)
         self.updateMode(type: .complete)
     }
 }
