@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35189DF22885B67C0030F987 /* Differ in Frameworks */ = {isa = PBXBuildFile; productRef = 35189DF12885B67C0030F987 /* Differ */; };
+		35189DF42886CE820030F987 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35189DF32886CE820030F987 /* FlowLayout.swift */; };
+		35189DF62886CF280030F987 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35189DF52886CF280030F987 /* UIView+Ext.swift */; };
 		351C5BAB28190B7000FE9C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C5BAA28190B7000FE9C0F /* AppDelegate.swift */; };
 		351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */; };
 		351C5BB428190B7100FE9C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 351C5BB328190B7100FE9C0F /* Assets.xcassets */; };
@@ -81,6 +84,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35189DF32886CE820030F987 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		35189DF52886CF280030F987 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		351C5BA728190B7000FE9C0F /* Adrenalist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Adrenalist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C5BAA28190B7000FE9C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		351C5BAC28190B7000FE9C0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +165,7 @@
 				35632FFE285F59B1009C3B9D /* DGBottomSheet in Frameworks */,
 				35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
+				35189DF22885B67C0030F987 /* Differ in Frameworks */,
 				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,9 +308,11 @@
 			children = (
 				3555CD26281C69A100DA830E /* Constant.swift */,
 				3555CD452821903400DA830E /* UIViewController+Ext.swift */,
+				35189DF52886CF280030F987 /* UIView+Ext.swift */,
 				35DD525C283E7F090031A912 /* KeyboardHelper.swift */,
 				35F16C76283F7EB90005352C /* UIScreen+Ext.swift */,
 				35632F5528589DA9009C3B9D /* Date+Ext.swift */,
+				35189DF32886CE820030F987 /* FlowLayout.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -463,6 +471,7 @@
 				3548C86D281926A30089A0C4 /* FSCalendar */,
 				35632FFD285F59B1009C3B9D /* DGBottomSheet */,
 				35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */,
+				35189DF12885B67C0030F987 /* Differ */,
 			);
 			productName = Adrenalist;
 			productReference = 351C5BA728190B7000FE9C0F /* Adrenalist.app */;
@@ -498,6 +507,7 @@
 				3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */,
 				35A6DBE4285F6C2E00D6FFF9 /* XCRemoteSwiftPackageReference "SheetPresentationController" */,
+				35189DF02885B67C0030F987 /* XCRemoteSwiftPackageReference "Differ" */,
 			);
 			productRefGroup = 351C5BA828190B7000FE9C0F /* Products */;
 			projectDirPath = "";
@@ -571,7 +581,9 @@
 				3555CD3D282172AE00DA830E /* AdrenalistTextField.swift in Sources */,
 				35A6DBEB2864024D00D6FFF9 /* FavoriteLastCollectionViewCell.swift in Sources */,
 				3555CD27281C69A100DA830E /* Constant.swift in Sources */,
+				35189DF62886CF280030F987 /* UIView+Ext.swift in Sources */,
 				35A6DBF428684B2C00D6FFF9 /* FavoriteDetailView.swift in Sources */,
+				35189DF42886CE820030F987 /* FlowLayout.swift in Sources */,
 				35A6DBF228684B2100D6FFF9 /* FavoriteDetailViewModel.swift in Sources */,
 				3555CD4928219BD100DA830E /* AboutView.swift in Sources */,
 				35632FEA285CADB7009C3B9D /* AdrenalistTextInputView.swift in Sources */,
@@ -798,6 +810,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		35189DF02885B67C0030F987 /* XCRemoteSwiftPackageReference "Differ" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tonyarnold/Differ.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
@@ -841,6 +861,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		35189DF12885B67C0030F987 /* Differ */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35189DF02885B67C0030F987 /* XCRemoteSwiftPackageReference "Differ" */;
+			productName = Differ;
+		};
 		3548C85D28190FA90089A0C4 /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
