@@ -84,8 +84,7 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
         
         self.modeView.updateMode(mode, of: model)
     }
-    func configureFavoriteDetail(with model: WorkoutResponse
-    ) {
+    func configureFavoriteDetail(with model: WorkoutResponse) {
         self.titleLabel.text = model.name
         self.modeView.isHidden = true
     }
