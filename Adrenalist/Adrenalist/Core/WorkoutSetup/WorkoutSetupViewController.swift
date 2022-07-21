@@ -80,7 +80,7 @@ class WorkoutSetupViewController: UIViewController {
         
         viewModel
             .notifyPublisher
-            .receive(on: DispatchQueue.main)
+            .receive(on: RunLoop.main)
             .sink { noti in
                 switch noti {
                 case .doneButtonDidTap(models: let models, type: let type):
