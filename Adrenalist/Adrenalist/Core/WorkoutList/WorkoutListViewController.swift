@@ -100,10 +100,10 @@ final class WorkoutListViewController2: UIViewController, ModalViewControllerDel
                     self.isRightBarButtonItemsHidden(false)
                     
                 case .bottomSheetDidTapCreateSet:
-                    //MARK: - Present pop up alert for set name
                     let vc = ModalViewController()
                     vc.delegate = self
-                    vc.modalPresentationStyle = .overFullScreen
+                    vc.modalPresentationStyle = .overCurrentContext
+                    vc.modalTransitionStyle = .crossDissolve
                     self.present(vc, animated: true)
                     
                 case .bottomNavigationBarDidTapCancel:
