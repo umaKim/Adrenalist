@@ -321,7 +321,7 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
                 cell.configure(with: viewModel.favorites[indexPath.item])
                 return cell
             }
-               
+            
         } else {
             guard
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier,
@@ -366,7 +366,7 @@ extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
                 return CGSize(width: width, height: height)
             }
         } else {
-            return .init(width: UIScreen.main.bounds.width - 32, height: 78)
+            return .init(width: UIScreen.main.width - 32, height: 78)
         }
     }
     
