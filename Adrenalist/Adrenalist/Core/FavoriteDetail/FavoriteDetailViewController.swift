@@ -70,6 +70,18 @@ class FavoriteDetailViewController: UIViewController {
     }
 }
 
+extension FavoriteDetailViewController: SetupFavoriteSetViewControllerDelegate {
+    func setupFavoriteDidTapDone() {
+        self.dismiss(animated: true) {
+//            self.contentView.collectionView.reloadData()
+        }
+    }
+    
+    func setupFavoriteDidTapCancel() {
+        self.dismiss(animated: true)
+    }
+}
+
 extension FavoriteDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.favorites.count - 1
