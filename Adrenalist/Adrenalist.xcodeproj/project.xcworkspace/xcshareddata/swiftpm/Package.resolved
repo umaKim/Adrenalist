@@ -10,12 +10,21 @@
       }
     },
     {
-      "identity" : "floatingpanel",
+      "identity" : "dgbottomsheet",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scenee/FloatingPanel.git",
+      "location" : "https://github.com/donggyushin/DGBottomSheet",
       "state" : {
-        "revision" : "fe30e60235c5cc753e2ee2a3eebc8e654971634d",
-        "version" : "2.5.2"
+        "branch" : "main",
+        "revision" : "38e991485b71e962444523edec476fc38d99eec1"
+      }
+    },
+    {
+      "identity" : "differ",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tonyarnold/Differ.git",
+      "state" : {
+        "revision" : "5520fda947f1f9777a806389c2ba587219bc0538",
+        "version" : "1.4.6"
       }
     },
     {
@@ -25,6 +34,15 @@
       "state" : {
         "revision" : "0fbdec5172fccb90f707472eeaea4ffe095278f6",
         "version" : "2.8.4"
+      }
+    },
+    {
+      "identity" : "sheetpresentationcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/karolpiateknet/SheetPresentationController",
+      "state" : {
+        "revision" : "0bc14d644fe718f4958de6839fa9c6851de5aa04",
+        "version" : "0.3.0"
       }
     }
   ],

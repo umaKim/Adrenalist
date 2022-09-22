@@ -25,7 +25,6 @@
 		3548C85728190ECF0089A0C4 /* SettingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85628190ECF0089A0C4 /* SettingCollectionViewCell.swift */; };
 		3548C85928190F570089A0C4 /* WorkoutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85828190F570089A0C4 /* WorkoutCollectionViewCell.swift */; };
 		3548C85B28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */; };
-		3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C85D28190FA90089A0C4 /* FloatingPanel */; };
 		3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C862281910D90089A0C4 /* CombineCocoa */; };
 		3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C8682819137A0089A0C4 /* SettingViewModel.swift */; };
 		3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86A2819137F0089A0C4 /* SettingView.swift */; };
@@ -166,7 +165,6 @@
 				35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 				35189DF22885B67C0030F987 /* Differ in Frameworks */,
-				3548C85E28190FA90089A0C4 /* FloatingPanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,7 +464,6 @@
 			);
 			name = Adrenalist;
 			packageProductDependencies = (
-				3548C85D28190FA90089A0C4 /* FloatingPanel */,
 				3548C862281910D90089A0C4 /* CombineCocoa */,
 				3548C86D281926A30089A0C4 /* FSCalendar */,
 				35632FFD285F59B1009C3B9D /* DGBottomSheet */,
@@ -502,7 +499,6 @@
 			);
 			mainGroup = 351C5B9E28190B7000FE9C0F;
 			packageReferences = (
-				3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */,
@@ -818,14 +814,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scenee/FloatingPanel.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
@@ -865,11 +853,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35189DF02885B67C0030F987 /* XCRemoteSwiftPackageReference "Differ" */;
 			productName = Differ;
-		};
-		3548C85D28190FA90089A0C4 /* FloatingPanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3548C85C28190FA90089A0C4 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
-			productName = FloatingPanel;
 		};
 		3548C862281910D90089A0C4 /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,7 +6,6 @@
 //
 
 import UIKit.UICollectionViewCell
-import FloatingPanel
 import Combine
 
 enum WorkoutCollectionViewCellAction {
