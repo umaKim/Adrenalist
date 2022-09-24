@@ -288,11 +288,8 @@ extension WorkoutListViewModel2 {
             .sink {[weak self] favorites in
                 guard let self = self else { return }
                 self.favorites = favorites
-                if favorites.isEmpty || !favorites.contains(where: {$0.name == "lastTrailer"}) { self.favorites.append(.init(name: "lastTrailer", date: nil, workouts: [])) }
-                print(favorites.isEmpty)
-                print(!favorites.contains(where: {$0.name == "lastTrailer"}))
                 self.notifySubject.send(.reloadFavorites)
-                self.notifySubject.send(.isFavoriteEmpty(self.favorites.count == 1 || self.favorites.isEmpty))
+                self.notifySubject.send(.isFavoriteEmpty(self.favorites.isEmpty))
             }
             .store(in: &cancellables)
     }

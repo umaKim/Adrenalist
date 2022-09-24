@@ -18,7 +18,6 @@ final class AdrenalistTextRectangleButton: UIButton {
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
         
-//        self.widthAnchor.constraint(equalToConstant: UIScreen.main.width - 32).isActive = true
         self.heightAnchor.constraint(equalToConstant: 64).isActive = true
     }
     
