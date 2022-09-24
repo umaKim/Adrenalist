@@ -143,3 +143,9 @@ extension FavoriteSetListViewController: WorkoutSetupViewControllerDelegate {
         dismiss(animated: true)
     }
 }
+
+extension FavoriteSetListViewController: WorkoutlistCollectionViewCellDelegate {
+    func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
+        viewModel.updateIsComplete(isTapped, at: indexPathRow)
+    }
+}
