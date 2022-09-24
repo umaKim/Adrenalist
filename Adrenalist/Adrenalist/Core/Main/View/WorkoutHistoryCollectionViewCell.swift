@@ -55,7 +55,6 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
                 switch listen {
                 case .moveToCircularView:
                     self.action.send(.workout)
-                    break
                     
                 case .present(let vc):
                     self.action.send(.present(vc))
