@@ -96,7 +96,9 @@ extension FavoriteSetListViewController: UICollectionViewDataSource {
         guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier, for: indexPath) as? WorkoutlistCollectionViewCell
         else {return UICollectionViewCell() }
-        cell.configure(with: viewModel.workoutList[indexPath.item], mode: .none)
+        cell.configure(with: viewModel.workoutList[indexPath.item], mode: viewModel.mode)
+        cell.delegate = self
+        cell.tag = indexPath.item
         return cell
     }
 }
