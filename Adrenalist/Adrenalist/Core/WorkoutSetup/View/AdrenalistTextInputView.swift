@@ -81,7 +81,8 @@ class AdrenalistTextInputView: UIView {
     }
     
     private func bind() {
-        textField.textPublisher
+        textField
+            .textPublisher
             .compactMap({$0})
             .sink { text in
             self.actionSubject.send(.textFieldDidChange(text))
