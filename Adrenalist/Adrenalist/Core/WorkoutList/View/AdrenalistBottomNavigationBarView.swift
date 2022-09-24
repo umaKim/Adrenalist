@@ -22,13 +22,14 @@ enum AdrenalistBottomNavigationBarViewScreenType {
 }
 
 enum AdrenalistBottomNavigationBarViewType {
-    case delete, normal, createSet
+    case delete, normal, createSet, done
 }
 
 enum AdrenalistBottomNavigationBarViewAction {
     case createSet
     case delete
     case cancel
+    case done
 }
 
 class AdrenalistBottomNavigationBarView: UIView {
@@ -107,20 +108,18 @@ class AdrenalistBottomNavigationBarView: UIView {
         sv.addArrangedSubview(cancelButton)
         
         switch type {
-//        case .done:
-//            sv.addArrangedSubview(doneButton)
-            
-//        case .move:
-//            sv.addArrangedSubview(moveButton)
-            
         case .delete:
             sv.addArrangedSubview(deleteButton)
             
         case .normal:
-            break
             
         case .createSet:
             sv.addArrangedSubview(createSetButton)
+            
+        case .done:
+            cancelButton.removeFromSuperview()
+            sv.addArrangedSubview(UIView())
+            sv.addArrangedSubview(doneButton)
         }
         
         self.showBottomNavigationView()
@@ -153,6 +152,12 @@ class AdrenalistBottomNavigationBarView: UIView {
         
         deleteButton.tapPublisher.sink { _ in
             self.actionSubject.send(.delete)
+            self.hideBottomNavigationView()
+        }
+        .store(in: &cancellables)
+        
+        doneButton.tapPublisher.sink { _ in
+            self.actionSubject.send(.done)
             self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
