@@ -17,6 +17,10 @@ struct AdrenalistBottomNavigationBarViewConfigurator {
     }
 }
 
+enum AdrenalistBottomNavigationBarViewScreenType {
+    case modal, overallFullScreen
+}
+
 enum AdrenalistBottomNavigationBarViewType {
     case delete, normal, createSet
 }
@@ -88,7 +92,14 @@ class AdrenalistBottomNavigationBarView: UIView {
         setupUI()
     }
     
-    func show(_ type: AdrenalistBottomNavigationBarViewType) {
+    private var screenType: AdrenalistBottomNavigationBarViewScreenType = .overallFullScreen
+    
+    func show(
+        _ type: AdrenalistBottomNavigationBarViewType,
+        _ screenType: AdrenalistBottomNavigationBarViewScreenType = .overallFullScreen
+    ) {
+        self.screenType = screenType
+        
         sv.subviews.forEach { uv in
             uv.removeFromSuperview()
         }
@@ -171,7 +182,16 @@ class AdrenalistBottomNavigationBarView: UIView {
         
         print(64 + bottomPadding! + 16)
         
-        let buttonHeight: CGFloat = 64
+        var buttonHeight: CGFloat = 0.0
+        
+        switch screenType {
+        case .modal:
+            buttonHeight = 64 * 2
+            
+        case .overallFullScreen:
+            buttonHeight = 64
+        }
+        
         let safeAreaPadding = bottomPadding
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
