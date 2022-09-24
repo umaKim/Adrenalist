@@ -71,6 +71,8 @@ class SetupFavoriteSetView: UIView {
         self.bottomNavigationView.hideBottomNavigationView()
     }
     
+    var isModal: Bool = false
+    
     override init(frame: CGRect) {
         self.cancellables = .init()
         super.init(frame: frame)
@@ -103,7 +105,8 @@ class SetupFavoriteSetView: UIView {
         
         deleteButton.tapPublisher.sink { _ in
             self.actionSubject.send(.delete)
-            self.bottomNavigationView.show(.delete)
+            self.bottomNavigationView.show(.delete,
+                                           self.isModal ? .modal : .overallFullScreen)
 //            self.showBottomNavigationView()
         }
         .store(in: &cancellables)
