@@ -333,6 +333,22 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
             return cell
         }
     }
+    
+//    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if collectionView == contentView.suggestedCollectionView {            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteFooterCell.identifier, for: indexPath) as? FavoriteFooterCell
+            view?.delegate = self
+            return view ?? UICollectionReusableView()
+        } else {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "UICollectionReusableView", for: indexPath)
+            return view
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: FavoriteFooterCell.preferredHeight,
+                      height: FavoriteFooterCell.preferredHeight)
+    }
 }
 
 //MARK: - UICollectionViewDelegate
@@ -340,14 +356,6 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView === contentView.workoutListCollectionView {
             self.showWorkoutSetupViewController(for: .edit, didSelect: viewModel.workoutList[indexPath.item])
-        } else {
-            if indexPath.item == viewModel.favorites.count - 1 {
-                let vm = FavoriteDetailViewModel()
-                let vc = FavoriteDetailViewController(viewModel: vm)
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .overFullScreen
-                viewModel.presentThis(nav)
-            }
         }
     }
 }
@@ -356,15 +364,10 @@ extension WorkoutListViewController2: UICollectionViewDelegate {
 extension WorkoutListViewController2: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == contentView.suggestedCollectionView {
-            if indexPath.item == viewModel.favorites.count - 1 {
-                return CGSize(width: FavoriteLastCollectionViewCell.preferredHeight,
-                              height: FavoriteLastCollectionViewCell.preferredHeight)
-            } else {
                 guard let name = viewModel.favorites[indexPath.item].name else { return .init() }
                 let width = name.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
                 let height: CGFloat = 39
                 return CGSize(width: width, height: height)
-            }
         } else {
             return .init(width: UIScreen.main.width - 32, height: 78)
         }
