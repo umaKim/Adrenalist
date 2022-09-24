@@ -31,6 +31,14 @@ class FavoriteSetListViewController: UIViewController {
         navigationItem.rightBarButtonItems = [contentView.deleteButton, contentView.addButton]
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        contentView.isModal = isModal
+        contentView.workoutListCollectionView.delegate = self
+        contentView.workoutListCollectionView.dataSource = self
+    }
+    
     private var cancellables: Set<AnyCancellable>
     
     private func bind() {
