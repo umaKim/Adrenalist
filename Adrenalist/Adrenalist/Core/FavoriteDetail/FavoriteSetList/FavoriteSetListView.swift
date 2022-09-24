@@ -46,6 +46,8 @@ class FavoriteSetListView: UIView {
         self.workoutListCollectionView.reloadData()
     }
     
+    var isModal: Bool = false
+    
     override init(frame: CGRect) {
         self.cancellables = .init()
         super.init(frame: frame)
@@ -64,7 +66,8 @@ class FavoriteSetListView: UIView {
         
         deleteButton.tapPublisher.sink { _ in
             self.actionSubject.send(.delete)
-            self.bottomNavigationView.show(.delete)
+            self.bottomNavigationView.show(.delete,
+                                           self.isModal ? .modal : .overallFullScreen)
         }
         .store(in: &cancellables)
         
