@@ -88,6 +88,14 @@ class AdrenalistTextInputView: UIView {
             self.actionSubject.send(.textFieldDidChange(text))
         }
         .store(in: &cancellables)
+        
+        textField
+            .didBeginEditingPublisher
+            .sink {[weak self] _ in
+                self?.textField.text = ""
+                self?.actionSubject.send(.textFieldDidChange(""))
+        }
+        .store(in: &cancellables)
     }
     
     private func setupUI() {
