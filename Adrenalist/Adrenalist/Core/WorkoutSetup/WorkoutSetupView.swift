@@ -19,6 +19,8 @@ enum WorkoutSetupViewAction {
     case weightDidChange(String)
     case timeDidChange(String)
     case setDidChange(String)
+    
+    case titleTextFieldViewDidTapDone
 }
 
 class WorkoutSetupView: UIView {
@@ -85,6 +87,9 @@ class WorkoutSetupView: UIView {
                 switch action {
                 case .titleTextFieldDidChange(let text):
                     self.actionSubject.send(.titleDidChange(text))
+                    
+                case .done:
+                    self.actionSubject.send(.titleTextFieldViewDidTapDone)
                 }
             }
             .store(in: &cancellables)

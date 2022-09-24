@@ -10,6 +10,7 @@ import UIKit
 enum AdrenalistTitleViewAction{
     case titleTextFieldDidChange(String)
 //    case isStarButtonSelected(Bool)
+    case done
 }
 
 final class AdrenalistTitleView: UIView {
@@ -49,9 +50,29 @@ final class AdrenalistTitleView: UIView {
                 self.actionSubject.send(.titleTextFieldDidChange(text ?? ""))
             }
             .store(in: &cancellables)
+        
+        doneBarButton
+            .tapPublisher
+            .sink { _ in
+                self.actionSubject.send(.done)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+    
+    func setDoneOnKeyboard() {
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        keyboardToolbar.items = [flexBarButton, doneBarButton]
+        self.titleTextField.inputAccessoryView = keyboardToolbar
     }
     
     private func setupUI() {
+        setDoneOnKeyboard()
+        
         layer.cornerRadius = 20
         
         backgroundColor = .grey2

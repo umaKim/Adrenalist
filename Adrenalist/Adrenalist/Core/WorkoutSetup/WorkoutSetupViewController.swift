@@ -74,6 +74,9 @@ class WorkoutSetupViewController: UIViewController {
                     
                 case .isFavorite(let isFavorite):
                     self.viewModel.setFavorite(isFavorite)
+                    
+                case .titleTextFieldViewDidTapDone:
+                    self.view.endEditing(true)
                 }
             }
             .store(in: &cancellables)
