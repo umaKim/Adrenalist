@@ -17,9 +17,6 @@ class FavoriteSetListViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view = contentView
-        
-        contentView.workoutListCollectionView.delegate = self
-        contentView.workoutListCollectionView.dataSource = self
     }
     
     init(viewModel: FavoriteSetListViewModel) {
