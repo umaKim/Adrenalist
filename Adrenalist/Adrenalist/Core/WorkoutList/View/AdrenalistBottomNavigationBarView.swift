@@ -112,6 +112,7 @@ class AdrenalistBottomNavigationBarView: UIView {
             sv.addArrangedSubview(deleteButton)
             
         case .normal:
+            sv.addArrangedSubview(UIView())
             
         case .createSet:
             sv.addArrangedSubview(createSetButton)
