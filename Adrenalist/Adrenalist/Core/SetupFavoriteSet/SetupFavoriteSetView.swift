@@ -19,6 +19,8 @@ enum SetupFavoriteSetViewAction {
     
     case bottomSheetDidTapDelete
     case bottomSheetDidTapCancel
+    
+    case titleTextFieldViewDidDismissKeyboard
 }
 
 class SetupFavoriteSetView: UIView {
@@ -89,6 +91,9 @@ class SetupFavoriteSetView: UIView {
             switch action {
             case .titleTextFieldDidChange(let text):
                 self.actionSubject.send(.titleTextFieldDidChange(text))
+                
+            case .done:
+                self.actionSubject.send(.titleTextFieldViewDidDismissKeyboard)
             }
         }
         .store(in: &cancellables)

@@ -75,6 +75,9 @@ class SetupFavoriteSetViewController: UIViewController {
                     
                 case .titleTextFieldDidChange(let text):
                     self.viewModel.setupSetName(text)
+                    
+                case .titleTextFieldViewDidDismissKeyboard:
+                    self.view.endEditing(true)
                 }
             }
             .store(in: &cancellables)
