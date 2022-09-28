@@ -45,6 +45,8 @@ class FavoriteDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private lazy var bottomNavigationView = AdrenalistBottomNavigationBarView(configurator: .init(height: 110,backgroundColor: .lightDarkNavy))
+    
     private func bind() {
         backButton
             .tapPublisher
@@ -62,9 +64,23 @@ class FavoriteDetailView: UIView {
         deleteButton
             .tapPublisher
             .sink { _ in
-                self.actionSubject.send(.delete)
+                self.bottomNavigationView.show(.done)
+                self.actionSubject.send(.deleteStatus)
             }
             .store(in: &cancellables)
+        
+        bottomNavigationView
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .done:
+                    self.actionSubject.send(.cancelDeleteAction)
+                    
+                default:
+                    break
+                }
+            }
+        .store(in: &cancellables)
     }
     
     private func setupUI() {
@@ -76,6 +92,8 @@ class FavoriteDetailView: UIView {
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
         }
+        
+        addSubview(bottomNavigationView)
         
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
