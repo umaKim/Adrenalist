@@ -28,8 +28,30 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
+        self.cancellables = .init()
         super.init(frame: frame)
         setupUI()
+        
+        $status
+            .sink { status in
+                switch status {
+                case .usual:
+                    self.starImageView.isHidden = false
+                    self.deleteButton.isHidden = true
+                    
+                case .delete:
+                    self.starImageView.isHidden = true
+                    self.deleteButton.isHidden = false
+                }
+            }
+            .store(in: &cancellables)
+        
+        deleteButton
+            .tapPublisher
+            .sink { _ in
+                self.delegate?.didTapDeleteButton(at: self.tag)
+            }
+            .store(in: &cancellables)
     }
     
     required init?(coder: NSCoder) {
