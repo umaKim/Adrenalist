@@ -53,6 +53,11 @@ final class FavoriteSetManager {
         self.save(favorites)
     }
     
+    func setWorkouts(favorites: [WorkoutResponse]) {
+        self.favorites = favorites
+        self.save(favorites)
+    }
+    
     private func save(_ workouts: [WorkoutResponse]) {
         do {
             let encoder = JSONEncoder()
