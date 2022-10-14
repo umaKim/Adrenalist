@@ -53,6 +53,11 @@ final class FavoriteSetManager {
         self.save(favorites)
     }
     
+    func delete(favoriteAt index: Int) {
+        self.favorites.remove(at: index)
+        self.save(favorites)
+    }
+    
     func setWorkouts(favorites: [WorkoutResponse]) {
         self.favorites = favorites
         self.save(favorites)
