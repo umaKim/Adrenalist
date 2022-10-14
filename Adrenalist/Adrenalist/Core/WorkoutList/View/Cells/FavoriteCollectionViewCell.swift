@@ -4,8 +4,16 @@
 //
 //  Created by 김윤석 on 2022/06/15.
 //
-
+import Combine
 import UIKit
+
+enum FavoriteCollectionViewCellStatus {
+    case delete, usual
+}
+
+protocol FavoriteCollectionViewCellDelegate: AnyObject {
+    func didTapDeleteButton(at index: Int)
+}
 
 final class FavoriteCollectionViewCell: UICollectionViewCell {
     static let identifier = "FavoriteCollectionViewCell"
@@ -19,6 +27,14 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         return uv
     }()
     
+    private lazy var deleteButton: UIButton = {
+       let bt = UIButton()
+        bt.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+        bt.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        bt.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        return bt
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let lb = UILabel(frame: .zero)
         lb.font = .systemFont(ofSize: 15)
@@ -26,6 +42,12 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         lb.sizeToFit()
         return lb
     }()
+    
+    @Published var status: FavoriteCollectionViewCellStatus = .usual
+    
+    private var cancellables: Set<AnyCancellable>
+    
+    weak var delegate: FavoriteCollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         self.cancellables = .init()
@@ -60,7 +82,6 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     
     func configure(with response: WorkoutResponse) {
         titleLabel.text = response.name
-        
     }
     
     override func prepareForReuse() {
@@ -74,7 +95,7 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         
         backgroundColor = .vaguePurpleBlue
         
-        let stackView = UIStackView(arrangedSubviews: [starImageView, titleLabel])
+        let stackView = UIStackView(arrangedSubviews: [starImageView, deleteButton, titleLabel])
         stackView.axis = .horizontal
         stackView.spacing = 3
         stackView.distribution = .fill
