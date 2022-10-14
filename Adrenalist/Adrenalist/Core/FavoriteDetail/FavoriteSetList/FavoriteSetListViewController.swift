@@ -54,7 +54,10 @@ class FavoriteSetListViewController: UIViewController {
                     
                 case .bottomSheetDidTapDelete:
                     self.viewModel.delete()
+                    self.viewModel.changeMode(.none)
                     
+                case .bottomSheetDidTapCancel:
+                    self.viewModel.changeMode(.none)
                 }
             }
             .store(in: &cancellables)

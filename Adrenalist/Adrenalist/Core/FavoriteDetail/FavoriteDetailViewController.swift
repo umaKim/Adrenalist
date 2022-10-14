@@ -32,7 +32,10 @@ class FavoriteDetailViewController: UIViewController {
         view = contentView
         
         contentView.collectionView.delegate = self
-        contentView.collectionView.dataSource = self
+//        contentView.collectionView.dataSource = self
+        
+        configureDataSource()
+        updateSections()
         
         bind()
         setupNavBar()
@@ -42,13 +45,25 @@ class FavoriteDetailViewController: UIViewController {
         contentView.actionPublisher.sink { action in
             switch action {
             case .dismiss:
-                self.dismiss(animated: true)
+//                self.dismiss(animated: true)
+                self.delegate?.favoriteDetailViewControllerDidTapDismiss()
                 
             case .add:
-                break
+                let vc = SetupFavoriteSetViewController(SetupFavoriteSetViewModel(type: .add))
+                vc.delegate = self
+                let nav = UINavigationController(rootViewController: vc)
+                self.present(nav, animated: true)
                 
-            case .delete:
-                break
+            case .deleteStatus:
+                self.viewModel.status = .delete
+                self.contentView.collectionView.reloadData()
+                
+            case .deleteItems:
+                print("deleteItems")
+                
+            case .cancelDeleteAction:
+                self.viewModel.status = .usual
+                self.contentView.collectionView.reloadData()
             }
         }
         .store(in: &cancellables)
@@ -56,7 +71,7 @@ class FavoriteDetailViewController: UIViewController {
         viewModel.notifyPublisher.sink { noti in
             switch noti {
             case .reload:
-                self.contentView.collectionView.reloadData()
+                self.updateSections()
             }
         }
         .store(in: &cancellables)
