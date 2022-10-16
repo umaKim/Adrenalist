@@ -102,7 +102,6 @@ class FavoriteDetailViewController: UIViewController {
 extension FavoriteDetailViewController: SetupFavoriteSetViewControllerDelegate {
     func setupFavoriteDidTapDone() {
         self.dismiss(animated: true) {
-//            self.contentView.collectionView.reloadData()
         }
     }
     
@@ -145,9 +144,17 @@ extension FavoriteDetailViewController {
 
 extension FavoriteDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vm = FavoriteSetListViewModel(with: viewModel.favorites[indexPath.item])
-        let vc = FavoriteSetListViewController(viewModel: vm)
-        navigationController?.pushViewController(vc, animated: true)
+        switch viewModel.status {
+        case .delete:
+            self.didTapDeleteButton(at: indexPath.item)
+            
+        case .usual:
+            let vm = SetupFavoriteSetViewModel(viewModel.favorites[indexPath.item], type: .edit)
+            let vc = SetupFavoriteSetViewController(vm)
+            vc.delegate = self
+            let nav = UINavigationController(rootViewController: vc)
+            present(nav, animated: true)
+        }
     }
 }
 
