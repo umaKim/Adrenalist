@@ -13,6 +13,7 @@ enum AdrenalistTitleSetupModalAction {
     case titleDidChange(String)
     case confirmDidTap
     case cancelDidTap
+    case titleTextFieldDidTapDone
 }
 
 final class AdrenalistTitleSetupModalView: UIView {
