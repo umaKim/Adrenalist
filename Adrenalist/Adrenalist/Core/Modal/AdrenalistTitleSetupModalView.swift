@@ -52,11 +52,15 @@ final class AdrenalistTitleSetupModalView: UIView {
     
     private func bind() {
         titleTextField
-            .textPublisher
-            .receive(on: RunLoop.main)
-            .compactMap({$0})
-            .sink { text in
-                self.actionSubject.send(.titleDidChange(text))
+            .actionPublisher
+            .sink { action in
+                switch action {
+                case .titleTextFieldDidChange(let text):
+                    self.actionSubject.send(.titleDidChange(text))
+                    
+                case .done:
+                    self.actionSubject.send(.titleTextFieldDidTapDone)
+                }
             }
             .store(in: &cancellables)
         
