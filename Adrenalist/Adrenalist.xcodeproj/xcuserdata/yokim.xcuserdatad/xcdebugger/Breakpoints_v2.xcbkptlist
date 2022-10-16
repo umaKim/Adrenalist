@@ -512,8 +512,59 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
+<<<<<<< Updated upstream
             landmarkName = "animateOutlineStroke(_:)"
             landmarkType = "7">
+=======
+            landmarkName = "animateInlineStroke(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C1FC211B-7F86-4940-BA06-C3E03B1610A3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E540F92C-9E72-4C0E-B1C2-2820A8C12BD3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/Workout/WorkoutViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D82C2F3-3B84-46A9-89AE-A9C5C939141E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/Workout/WorkoutViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "unknown"
+            landmarkType = "0">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -526,10 +577,59 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "232"
             endingLineNumber = "232"
             landmarkName = "unknown"
             landmarkType = "0">
+=======
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "98021227-EB13-4796-B9CE-A57F7807ACC0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "82A57195-F99D-458B-96E4-F6849A1EC9C7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "53399FDE-FB74-402D-AC8E-0DCAB9BD7A3A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -567,6 +667,23 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
+=======
+            uuid = "22834653-2635-45AD-A0ED-DFF2506A950A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "128"
+            endingLineNumber = "128">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+>>>>>>> Stashed changes
             uuid = "E8ACEA65-DCE6-426D-B60F-3C6DE74921BF"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -599,6 +716,23 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
+=======
+            uuid = "FCF0B399-BEA3-4A7E-9589-E7136BB379FA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+>>>>>>> Stashed changes
             uuid = "C9FE0B3E-F605-4A91-9332-145A86C45BAE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -622,10 +756,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "67"
             endingLineNumber = "67"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "91"
+            endingLineNumber = "91">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -638,10 +777,29 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "56"
             endingLineNumber = "56"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "314"
+            endingLineNumber = "314">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0582D395-A50F-45DB-80D0-A19E9716F28F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "74"
+            endingLineNumber = "74">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -782,10 +940,29 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "WorkoutListViewController2"
-            landmarkType = "21">
+<<<<<<< Updated upstream
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkType = "7">
+=======
+            startingLineNumber = "298"
+            endingLineNumber = "298">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "88FAC6A3-19CC-4E69-8059-80D6994B8D1E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "313"
+            endingLineNumber = "313">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -871,6 +1048,23 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
+=======
+            uuid = "366B8A7E-C3D3-438F-859F-5A7C23984DFB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+>>>>>>> Stashed changes
             uuid = "49FBA99E-2EC3-414F-A8BF-84E380F5E254"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1031,6 +1225,37 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
+=======
+            uuid = "2B688FDC-1C0E-40A9-8EFC-D5845294F7D3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CB0221E-439E-4918-9943-896C104B5209"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "183"
+            endingLineNumber = "183">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+>>>>>>> Stashed changes
             uuid = "9F05F382-7BAE-4F14-BF79-31DABB930F6E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1095,6 +1320,23 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
+=======
+            uuid = "79930D55-D87A-4575-8E8E-A01086182A99"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+>>>>>>> Stashed changes
             uuid = "9943584D-DE5D-4280-8359-C8240D90B798"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1118,8 +1360,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "239"
             endingLineNumber = "239"
+=======
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1150,8 +1397,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "229"
             endingLineNumber = "229"
+=======
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1166,8 +1418,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "233"
             endingLineNumber = "233"
+=======
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1182,8 +1439,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "269"
             endingLineNumber = "269"
+=======
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1198,8 +1460,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "270"
             endingLineNumber = "270"
+=======
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1214,8 +1481,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "345"
             endingLineNumber = "345"
+=======
+            startingLineNumber = "255"
+            endingLineNumber = "255"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1230,8 +1502,13 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "344"
             endingLineNumber = "344"
+=======
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+>>>>>>> Stashed changes
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1246,10 +1523,33 @@
             filePath = "Adrenalist/Core/Workout/WorkoutViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "322"
             endingLineNumber = "322"
             landmarkName = "unknown"
             landmarkType = "0">
+=======
+            startingLineNumber = "232"
+            endingLineNumber = "232"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D7E143E-CF4E-4B50-8C42-7BC9376ACA89"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/Main/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1262,10 +1562,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "101"
             endingLineNumber = "101"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "113"
+            endingLineNumber = "113">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1278,6 +1583,7 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "137"
             endingLineNumber = "137"
             landmarkName = "WorkoutListView2"
@@ -1329,6 +1635,24 @@
                   offsetFromSymbolStart = "32">
                </Location>
             </Locations>
+=======
+            startingLineNumber = "125"
+            endingLineNumber = "125">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D0C049D-6AD0-4CC5-BD99-2CB056D21E3D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1341,10 +1665,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "98"
             endingLineNumber = "98"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "110"
+            endingLineNumber = "110">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1357,10 +1686,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "81"
             endingLineNumber = "81"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "107"
+            endingLineNumber = "107">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1373,10 +1707,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "76"
             endingLineNumber = "76"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "102"
+            endingLineNumber = "102">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1389,10 +1728,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "74"
             endingLineNumber = "74"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "97"
+            endingLineNumber = "97">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1405,10 +1749,15 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "59"
             endingLineNumber = "59"
             landmarkName = "bind()"
             landmarkType = "7">
+=======
+            startingLineNumber = "77"
+            endingLineNumber = "77">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1606,22 +1955,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F18E545B-E5A9-46E3-9201-BCBE8A6D237E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "bind()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "661A0A5D-3099-4B35-A559-5A936E70CF7A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1677,9 +2010,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1805,9 +2138,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "workoutSetupDidTapDone(with:type:)"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "collectionView(_:layout:insetForSectionAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1822,9 +2155,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "bind()"
-            landmarkType = "7">
+            endingLineNumber = "71">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1854,9 +2185,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "bind()"
-            landmarkType = "7">
+            endingLineNumber = "68">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2061,9 +2390,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
+            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2077,6 +2406,7 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "291"
             endingLineNumber = "291"
             landmarkName = "fetchFavorites()"
@@ -2301,9 +2631,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2349,9 +2679,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "collectionView(_:performDropWith:)"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2365,10 +2695,14 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
-            landmarkType = "7">
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "unknown"
+            landmarkType = "0">
+=======
+            startingLineNumber = "159"
+            endingLineNumber = "159">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2381,10 +2715,14 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
+            startingLineNumber = "224"
+<<<<<<< Updated upstream
+            endingLineNumber = "224"
+            landmarkName = "collectionView(_:canHandle:)"
             landmarkType = "7">
+=======
+            endingLineNumber = "224">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2397,6 +2735,7 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "125"
             endingLineNumber = "125"
             landmarkName = "copyItems(coordinator:destinationIndexPath:collectionView:currentCollectionView:)"
@@ -2449,6 +2788,10 @@
             endingLineNumber = "83"
             landmarkName = "reorderItems(coordinator:destinationIndexPath:collectionView:currentCollectionView:)"
             landmarkType = "7">
+=======
+            startingLineNumber = "227"
+            endingLineNumber = "227">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2461,26 +2804,64 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
-            landmarkName = "collectionView(_:itemsForBeginning:at:)"
+<<<<<<< Updated upstream
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "collectionView(_:performDropWith:)"
             landmarkType = "7">
+=======
+            startingLineNumber = "234"
+            endingLineNumber = "234">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+<<<<<<< Updated upstream
             uuid = "6343FEE6-F752-447A-B0DC-3FDD4C01AD0B"
+=======
+            uuid = "6F2C4D63-8708-443C-A3F3-66DF30082852"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A46798CB-1D02-43F8-8F2B-12BA51FBC9EC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6851A6FE-7F36-404B-9329-581607F56125"
+>>>>>>> Stashed changes
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
-            landmarkType = "7">
+<<<<<<< Updated upstream
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "WorkoutListViewController2"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2493,10 +2874,14 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
-            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
             landmarkType = "7">
+=======
+            startingLineNumber = "123"
+            endingLineNumber = "123">
+>>>>>>> Stashed changes
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

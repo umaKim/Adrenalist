@@ -35,11 +35,14 @@ final class WorkoutView: UIView {
     private lazy var skipButton: AdrenalistTextRectangleButton = {
         let bt = AdrenalistTextRectangleButton(title: "SKIP", backgroundColor: .navyGray)
         bt.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.width/3.3).isActive = true
+        bt.isHidden = true
         return bt
     }()
     
     private lazy var actionButton: AdrenalistTextRectangleButton = {
         let bt = AdrenalistTextRectangleButton(title: "NEXT")
+//        bt.widthAnchor.constraint(greaterThanOrEqualToConstant: UIScreen.main.width / 1.7).isActive = true
+        bt.widthAnchor.constraint(greaterThanOrEqualToConstant: UIScreen.main.width - 32).isActive = true
         return bt
     }()
     
