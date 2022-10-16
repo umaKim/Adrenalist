@@ -34,4 +34,15 @@ class FavoriteDetailViewModel {
             }
             .store(in: &cancellables)
     }
+    
+    func retrieve() {
+        
+    }
+    
+    var status: FavoriteCollectionViewCellStatus = .usual
+    
+    public func deleteItem(at index: Int) {
+        favoriteSetManager.delete(favoriteAt: index)
+        notifySubject.send(.reload)
+    }
 }
