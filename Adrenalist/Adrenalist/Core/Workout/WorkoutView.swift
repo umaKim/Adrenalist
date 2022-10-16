@@ -40,7 +40,6 @@ final class WorkoutView: UIView {
     
     private lazy var actionButton: AdrenalistTextRectangleButton = {
         let bt = AdrenalistTextRectangleButton(title: "NEXT")
-        bt.widthAnchor.constraint(greaterThanOrEqualToConstant: UIScreen.main.width / 1.7).isActive = true
         return bt
     }()
     

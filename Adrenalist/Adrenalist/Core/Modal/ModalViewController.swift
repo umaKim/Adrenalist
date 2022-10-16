@@ -13,7 +13,6 @@ protocol ModalViewControllerDelegate: AnyObject {
     func modalDidTapCancel()
     func modalDidTapConfirm()
     func modalDidChangeText(_ text: String)
-//    func modalDidDismissKeyboard()
 }
 
 final class ModalViewController: UIViewController {

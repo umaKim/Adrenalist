@@ -8,24 +8,6 @@ import Combine
 import UIKit.UIViewController
 import Foundation
 
-final class WorkoutListViewController2: UIViewController, ModalViewControllerDelegate {
-    func modalDidTapCancel() {
-        self.dismiss(animated: true)
-    }
-    
-    func modalDidTapConfirm() {
-        self.dismiss(animated: true) {
-            self.viewModel.createSet()
-            self.viewModel.updateMode(type: .complete)
-            self.contentView.dismissBottomNavigationView()
-            self.isRightBarButtonItemsHidden(false)
-        }
-    }
-    
-    func modalDidChangeText(_ text: String) {
-        self.viewModel.setSetName(text)
-    }
-    
     private(set) lazy var contentView = WorkoutListView2()
     
     private let viewModel: WorkoutListViewModel2
@@ -196,22 +178,10 @@ extension WorkoutListViewController2: UICollectionViewDropDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        //        if collectionView === self.contentView.suggestedCollectionView {
-        //            if collectionView.hasActiveDrag {
-        //                return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        //            } else {
-        //                return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-        //            }
-        //        } else
-        //        {
         if collectionView.hasActiveDrag {
             return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
-        //        else {
         return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
-        //        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-        //            }
-        //        }
     }
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
@@ -247,11 +217,8 @@ extension WorkoutListViewController2: UICollectionViewDropDelegate {
 //MARK: - UICollectionView Drag Delegate
 extension WorkoutListViewController2: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-//        let item = collectionView == contentView.suggestedCollectionView ? viewModel.favorites[indexPath.row].workouts[0] : viewModel.workoutList[indexPath.row]
-        
         if collectionView == contentView.suggestedCollectionView {
             let item = viewModel.favorites[indexPath.row]
-            if item == viewModel.favorites.last { return [] }
             let itemProvider = NSItemProvider(object: item.uuid.uuidString as NSString)
             let dragItem = UIDragItem(itemProvider: itemProvider)
             dragItem.localObject = item
@@ -303,25 +270,12 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.contentView.suggestedCollectionView {
-            
-            //MAKR: - Last Trailer
-            if indexPath.item == viewModel.favorites.count - 1 {
-                guard
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteLastCollectionViewCell.identifier,
-                                                                  for: indexPath) as? FavoriteLastCollectionViewCell
-                else { return UICollectionViewCell() }
-                return cell
-                
-            } else {
-                //MARK: - usual favorites
                 guard
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier,
                                                                   for: indexPath) as? FavoriteCollectionViewCell
                 else { return UICollectionViewCell() }
                 cell.configure(with: viewModel.favorites[indexPath.item])
                 return cell
-            }
-            
         } else {
             guard
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier,
@@ -334,7 +288,6 @@ extension WorkoutListViewController2: UICollectionViewDataSource {
         }
     }
     
-//    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if collectionView == contentView.suggestedCollectionView {            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FavoriteFooterCell.identifier, for: indexPath) as? FavoriteFooterCell
             view?.delegate = self
