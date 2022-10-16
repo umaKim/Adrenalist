@@ -7,6 +7,8 @@
 import Combine
 import UIKit.UIViewController
 
+final class WorkoutListViewController2: UIViewController {
+   
     private(set) lazy var contentView = WorkoutListView2()
     
     private let viewModel: WorkoutListViewModel2
@@ -102,6 +104,14 @@ import UIKit.UIViewController
                     self.contentView.suggestedCollectionView.reloadData()
                     
                 case .reloadWorkoutList:
+//                    UIView.transition(with: self.contentView.workoutListCollectionView,
+//                                      duration: 0.5,
+//                                      options: .curveEaseIn,
+//                                      animations: {
+//                        //Do the data reload here
+//                        self.contentView.workoutListCollectionView.reloadData()
+//                        print("reload")
+//                    }, completion: nil)
                     self.contentView.workoutListCollectionView.reloadData()
                     
                 case .isFavoriteEmpty(let isEmpty):
@@ -170,6 +180,7 @@ import UIKit.UIViewController
     }
 }
 
+//MARK: - ModalViewControllerDelegate
 extension WorkoutListViewController2: ModalViewControllerDelegate {
     func modalDidTapCancel() {
         self.dismiss(animated: true)
