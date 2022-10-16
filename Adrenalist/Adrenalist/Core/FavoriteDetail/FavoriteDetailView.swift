@@ -11,7 +11,9 @@ import UIKit
 enum FavoriteDetailViewAction {
     case dismiss
     case add
-    case delete
+    case deleteStatus
+    case deleteItems
+    case cancelDeleteAction
 }
 
 class FavoriteDetailView: UIView {
