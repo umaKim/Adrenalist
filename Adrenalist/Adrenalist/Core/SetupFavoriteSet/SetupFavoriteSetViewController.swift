@@ -40,6 +40,7 @@ class SetupFavoriteSetViewController: UIViewController {
         navigationItem.leftBarButtonItems = [contentView.dismissButton]
         navigationItem.rightBarButtonItems = [contentView.confirmButton, contentView.deleteButton, contentView.addButton]
         
+        contentView.isModal = isModal
         contentView.workoutListCollectionView.delegate = self
         contentView.workoutListCollectionView.dataSource = self
         
