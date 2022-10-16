@@ -104,14 +104,6 @@ final class WorkoutListViewController2: UIViewController {
                     self.contentView.suggestedCollectionView.reloadData()
                     
                 case .reloadWorkoutList:
-//                    UIView.transition(with: self.contentView.workoutListCollectionView,
-//                                      duration: 0.5,
-//                                      options: .curveEaseIn,
-//                                      animations: {
-//                        //Do the data reload here
-//                        self.contentView.workoutListCollectionView.reloadData()
-//                        print("reload")
-//                    }, completion: nil)
                     self.contentView.workoutListCollectionView.reloadData()
                     
                 case .isFavoriteEmpty(let isEmpty):

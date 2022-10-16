@@ -782,10 +782,10 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "WorkoutListViewController2"
-            landmarkType = "21">
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1606,22 +1606,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F18E545B-E5A9-46E3-9201-BCBE8A6D237E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "bind()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "661A0A5D-3099-4B35-A559-5A936E70CF7A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1677,9 +1661,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1805,9 +1789,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "workoutSetupDidTapDone(with:type:)"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "collectionView(_:layout:insetForSectionAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2061,9 +2045,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
+            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2301,9 +2285,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2349,9 +2333,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "collectionView(_:performDropWith:)"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2365,10 +2349,10 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
-            landmarkType = "7">
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2381,9 +2365,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "collectionView(_:canHandle:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2461,9 +2445,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
-            landmarkName = "collectionView(_:itemsForBeginning:at:)"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "collectionView(_:performDropWith:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2477,10 +2461,10 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
-            landmarkType = "7">
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "WorkoutListViewController2"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2493,9 +2477,9 @@
             filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
-            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
