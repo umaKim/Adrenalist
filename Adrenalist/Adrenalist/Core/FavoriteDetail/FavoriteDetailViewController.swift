@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol FavoriteDetailViewControllerDelegate: AnyObject {
+    func favoriteDetailViewControllerDidTapDismiss()
+}
+
 class FavoriteDetailViewController: UIViewController {
     
     private typealias DataSource = UICollectionViewDiffableDataSource<Section, WorkoutResponse>
@@ -20,6 +24,8 @@ class FavoriteDetailViewController: UIViewController {
     private let contentView = FavoriteDetailView()
     
     private var viewModel: FavoriteDetailViewModel
+    
+    weak var delegate: FavoriteDetailViewControllerDelegate?
     
     private var cancellables: Set<AnyCancellable>
     
@@ -105,6 +111,11 @@ extension FavoriteDetailViewController: SetupFavoriteSetViewControllerDelegate {
     }
 }
 
+extension FavoriteDetailViewController: FavoriteCollectionViewCellDelegate {
+    func didTapDeleteButton(at index: Int) {
+        viewModel.deleteItem(at: index)
+    }
+}
 
 extension FavoriteDetailViewController {
     private func configureDataSource() {
