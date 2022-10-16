@@ -28,7 +28,11 @@ final class AdrenalistTitleSetupModalView: UIView {
         return lb
     }()
     
-    private lazy var titleTextField = AdrenalistTitleView(placeholder: "Set name")
+    private lazy var titleTextField: AdrenalistTitleView = {
+       let tv = AdrenalistTitleView(placeholder: "Set name")
+        tv.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        return tv
+    }()
     
     private lazy var confirmButton: AdrenalistTextRectangleButton = {
         let bt = AdrenalistTextRectangleButton(title: "confirm")
@@ -55,7 +59,8 @@ final class AdrenalistTitleSetupModalView: UIView {
     private func bind() {
         titleTextField
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .titleTextFieldDidChange(let text):
                     self.actionSubject.send(.titleDidChange(text))
@@ -66,15 +71,21 @@ final class AdrenalistTitleSetupModalView: UIView {
             }
             .store(in: &cancellables)
         
-        confirmButton.tapPublisher.sink { _ in
-            self.actionSubject.send(.confirmDidTap)
-        }
-        .store(in: &cancellables)
+        confirmButton
+            .tapPublisher
+            .sink {[weak self] _ in
+                guard let self = self else { return }
+                self.actionSubject.send(.confirmDidTap)
+            }
+            .store(in: &cancellables)
         
-        cancelButton.tapPublisher.sink { _ in
-            self.actionSubject.send(.cancelDidTap)
-        }
-        .store(in: &cancellables)
+        cancelButton
+            .tapPublisher
+            .sink {[weak self] _ in
+                guard let self = self else { return }
+                self.actionSubject.send(.cancelDidTap)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
@@ -104,11 +115,12 @@ final class AdrenalistTitleSetupModalView: UIView {
             addSubview(uv)
         }
         
+        totalSv.backgroundColor = .red
+        
         NSLayoutConstraint.activate([
-            titleTextField.heightAnchor.constraint(equalToConstant: 64),
-            
             totalSv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             totalSv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            totalSv.centerXAnchor.constraint(equalTo: centerXAnchor),
             totalSv.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }

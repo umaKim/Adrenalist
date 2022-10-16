@@ -494,10 +494,10 @@
             filePath = "Adrenalist/Core/Workout/View/CircularView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "CircularView"
-            landmarkType = "21">
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "animateInlineStroke(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -510,9 +510,9 @@
             filePath = "Adrenalist/Core/Workout/View/CircularView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "animateOutlineStroke(_:)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "animateInlineStroke(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -690,38 +690,6 @@
             endingLineNumber = "92"
             landmarkName = "unknown"
             landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "8670C33F-6210-4085-9388-EF5E36FC8F13 - b8f825bd82c37ee"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Adrenalist.SuggestionListCell.configure(with: Adrenalist.Item, mode: Swift.Optional&lt;Adrenalist.UpdateMode&gt;) -&gt; ()"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/View/SuggestionListCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "8670C33F-6210-4085-9388-EF5E36FC8F13 - b8f825bd82c37ee"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Adrenalist.SuggestionListCell.configure(with: Adrenalist.Item, mode: Swift.Optional&lt;Adrenalist.UpdateMode&gt;) -&gt; ()"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/View/SuggestionListCell.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "272">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -784,8 +752,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "256"
             endingLineNumber = "256"
-            landmarkName = "collectionView(_:performDropWith:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1280,55 +1248,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "137"
             endingLineNumber = "137"
-            landmarkName = "WorkoutListView2"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "EE0AADBB-4B26-45E2-BEC2-1BBDB8D4E33E - d39236e0b11c9c16"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Adrenalist.WorkoutListView2.workoutListCollectionView.getter : __C.UICollectionView"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/WorkoutListView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "136">
-               </Location>
-               <Location
-                  uuid = "EE0AADBB-4B26-45E2-BEC2-1BBDB8D4E33E - 32dd40c153326c22"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Adrenalist.WorkoutListView2.workoutListCollectionView.setter : __C.UICollectionView"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/WorkoutListView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "108">
-               </Location>
-               <Location
-                  uuid = "EE0AADBB-4B26-45E2-BEC2-1BBDB8D4E33E - 8fd6473ef1cd248c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; __C.UICollectionView in Adrenalist.WorkoutListView2.workoutListCollectionView.getter : __C.UICollectionView"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/WorkoutListView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "127"
-                  endingLineNumber = "127"
-                  offsetFromSymbolStart = "32">
-               </Location>
-            </Locations>
+            landmarkName = "isFavoriteEmpty(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1423,8 +1344,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
             endingLineNumber = "53"
-            landmarkName = "WorkoutListViewController2"
-            landmarkType = "3">
+            landmarkName = "bind()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1663,7 +1584,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "129"
             endingLineNumber = "129"
-            landmarkName = "bind()"
+            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1729,38 +1650,6 @@
             endingLineNumber = "138"
             landmarkName = "workoutSetupDidTapDone(with:type:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "71A5C5AD-28A3-4C43-81B0-FD992F9F97C1 - 745bd759e558c39"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Adrenalist.FavoriteSetListViewController.workoutSetupDidTapDone(with: Swift.Array&lt;Adrenalist.WorkoutModel&gt;, type: Adrenalist.WorkoutSetupType) -&gt; ()"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/FavoriteDetail/FavoriteSetList/FavoriteSetListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "138"
-                  endingLineNumber = "138"
-                  offsetFromSymbolStart = "55">
-               </Location>
-               <Location
-                  uuid = "71A5C5AD-28A3-4C43-81B0-FD992F9F97C1 - c944a07a2f733eaf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Adrenalist.FavoriteSetListViewController.workoutSetupDidTapDone(with: Swift.Array&lt;Adrenalist.WorkoutModel&gt;, type: Adrenalist.WorkoutSetupType) -&gt; ()"
-                  moduleName = "Adrenalist"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/FavoriteDetail/FavoriteSetList/FavoriteSetListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "141"
-                  endingLineNumber = "141"
-                  offsetFromSymbolStart = "126">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1791,7 +1680,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "380"
             endingLineNumber = "380"
-            landmarkName = "collectionView(_:layout:insetForSectionAt:)"
+            landmarkName = "workoutSetupDidTapDone(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1841,6 +1730,36 @@
             endingLineNumber = "68"
             landmarkName = "bind()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C5D4780A-709C-4AA3-A4C3-DFF14076AAED - 6b6e4844ea922ece"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Adrenalist.FavoriteSetListView.bind() -&gt; ()"
+                  moduleName = "Adrenalist"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/FavoriteDetail/FavoriteSetList/FavoriteSetListView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68">
+               </Location>
+               <Location
+                  uuid = "C5D4780A-709C-4AA3-A4C3-DFF14076AAED - d40e3b8210b892fe"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (()) -&gt; () in Adrenalist.FavoriteSetListView.bind() -&gt; ()"
+                  moduleName = "Adrenalist"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/FavoriteDetail/FavoriteSetList/FavoriteSetListView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1857,6 +1776,36 @@
             endingLineNumber = "113"
             landmarkName = "bind()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D473643-6FA2-4FF3-86D2-9D3134F30416 - 9d3c0a7ff3a2062f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Adrenalist.SetupFavoriteSetView.bind() -&gt; ()"
+                  moduleName = "Adrenalist"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/SetupFavoriteSet/SetupFavoriteSetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114">
+               </Location>
+               <Location
+                  uuid = "1D473643-6FA2-4FF3-86D2-9D3134F30416 - fe92af86452720ed"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (()) -&gt; () in Adrenalist.SetupFavoriteSetView.bind() -&gt; ()"
+                  moduleName = "Adrenalist"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/SetupFavoriteSet/SetupFavoriteSetView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "114"
+                  endingLineNumber = "114">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2047,7 +1996,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "308"
             endingLineNumber = "308"
-            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
+            landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2064,22 +2013,6 @@
             startingLineNumber = "291"
             endingLineNumber = "291"
             landmarkName = "fetchFavorites()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F6821AE9-EFF8-4183-877D-8131AA48495D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adrenalist/Core/WorkoutSetup/WorkoutSetupViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "setWeight(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2111,7 +2044,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
             endingLineNumber = "198"
-            landmarkName = "showBottomNavigationView()"
+            landmarkName = "hideBottomNavigationView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2246,22 +2179,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0D4CF596-E333-4EBD-9CFE-1AA5382358BF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adrenalist/Core/Modal/AdrenalistTitleSetupModalView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "bind()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A3CF084D-20D4-45B6-9532-913DA2E3BA1E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -2287,7 +2204,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
             endingLineNumber = "130"
-            landmarkName = "bind()"
+            landmarkName = "showWorkoutSetupViewController(for:didSelect:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2335,7 +2252,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "230"
             endingLineNumber = "230"
-            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
+            landmarkName = "collectionView(_:performDropWith:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2351,8 +2268,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
             endingLineNumber = "221"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2367,7 +2284,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "224"
             endingLineNumber = "224"
-            landmarkName = "collectionView(_:canHandle:)"
+            landmarkName = "collectionView(_:dropSessionDidUpdate:withDestinationIndexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2387,7 +2304,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "11D085FB-482D-4315-8F30-5BF8CA764A80 - f5a646133d820da4"
+                  uuid = "11D085FB-482D-4315-8F30-5BF8CA764A80 - f5a646133d820d87"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2397,12 +2314,11 @@
                   urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "502">
+                  startingLineNumber = "126"
+                  endingLineNumber = "126">
                </Location>
                <Location
-                  uuid = "11D085FB-482D-4315-8F30-5BF8CA764A80 - d56d84279773adec"
+                  uuid = "11D085FB-482D-4315-8F30-5BF8CA764A80 - d56d84279773ad8d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -2412,9 +2328,8 @@
                   urlString = "file:///Users/yokim/Documents/GitHub/Adrenalist/Adrenalist/Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "520">
+                  startingLineNumber = "127"
+                  endingLineNumber = "127">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2447,7 +2362,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "260"
             endingLineNumber = "260"
-            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkName = "collectionView(_:itemsForBeginning:at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2463,8 +2378,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "284"
             endingLineNumber = "284"
-            landmarkName = "WorkoutListViewController2"
-            landmarkType = "21">
+            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2479,23 +2394,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "297"
             endingLineNumber = "297"
-            landmarkName = "collectionView(_:itemsForAddingTo:at:point:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "09B950B9-445E-460A-8124-F9FAE26830C1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Adrenalist/Core/WorkoutList/WorkoutListViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
-            landmarkName = "fetchFavorites()"
+            landmarkName = "collectionView(_:dragPreviewParametersForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2545,6 +2444,22 @@
             endingLineNumber = "11"
             landmarkName = "WorkoutListViewController2"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0D1F8B3A-E136-48F5-9D7B-C4B714E420A6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Adrenalist/Core/Main/View/WorkoutHistoryCollectionViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "setupUI()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

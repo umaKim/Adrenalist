@@ -42,7 +42,8 @@ extension WorkoutViewController {
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                     
                 case .back:
@@ -59,7 +60,8 @@ extension WorkoutViewController {
         
         viewModel
             .notifyPublisher
-            .sink { noti in
+            .sink {[weak self] noti in
+                guard let self = self else { return }
                 switch noti {
                     
                 case .updateInlineStrokeEnd(let value):

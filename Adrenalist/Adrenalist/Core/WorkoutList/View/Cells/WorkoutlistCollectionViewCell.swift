@@ -92,14 +92,20 @@ final class WorkoutlistCollectionViewCell: UICollectionViewCell {
     private func bind() {
         self.modeView
             .actionPublisher
-            .sink { action in
+            .sink { [weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .tapCheckButton(let isTapped):
-                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(isTapped,
-                                                                               indexPathRow: self.tag)
+                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(
+                        isTapped,
+                        indexPathRow: self.tag
+                    )
+                    
                 case .tapDeleteButton(let isTapped):
-                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(isTapped,
-                                                                               indexPathRow: self.tag)
+                    self.delegate?.workoutlistCollectionViewCellDidTapComplete(
+                        isTapped,
+                        indexPathRow: self.tag
+                    )
                 }
             }
             .store(in: &cancellables)

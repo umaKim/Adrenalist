@@ -94,7 +94,8 @@ final class ModeView: UIView {
     private func bind() {
         checkButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.isCheckButtonTapped.toggle()
                 switch self.mode {
                 case .complete:
@@ -117,7 +118,8 @@ final class ModeView: UIView {
             .store(in: &cancellables)
         
         $mode
-            .sink { mode in
+            .sink {[weak self] mode in
+                guard let self = self else { return }
                 switch mode {
                 case .delete:
                     self.showDeleteButton()

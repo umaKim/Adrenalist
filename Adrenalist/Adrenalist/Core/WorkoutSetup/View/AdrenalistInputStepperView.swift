@@ -67,19 +67,22 @@ class AdrenalistInputStepperView: UIView {
     }
     
     private func bind() {
-        addButton.tapPublisher.sink { _ in
+        addButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.value += 1
             self.currentValue.send(self.value)
         }
         .store(in: &cancellables)
         
-        subButton.tapPublisher.sink { _ in
+        subButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.value -= 1
             self.currentValue.send(self.value)
         }
         .store(in: &cancellables)
         
-        currentValue.sink { value in
+        currentValue.sink {[weak self] value in
+            guard let self = self else { return }
             self.actionSubject.send(.valueDidChange("\(value)"))
             self.valueLabel.text = "\(value)"
         }

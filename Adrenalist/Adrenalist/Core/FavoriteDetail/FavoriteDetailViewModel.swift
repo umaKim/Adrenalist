@@ -28,7 +28,8 @@ class FavoriteDetailViewModel {
         favoriteSetManager
             .$favorites
             .receive(on: RunLoop.main)
-            .sink { favorites in
+            .sink {[weak self] favorites in
+                guard let self = self else { return }
                 self.favorites = favorites
                 self.notifySubject.send(.reload)
             }
