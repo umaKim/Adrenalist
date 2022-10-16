@@ -22,11 +22,12 @@ final class AdrenalistTitleSetupModalView: UIView {
     
     private lazy var setupTitle: UILabel = {
        let lb = UILabel()
-        lb.text = "Set name"
+        lb.text = "Create set"
+        lb.textColor = .white
         return lb
     }()
     
-    private lazy var titleTextField = AdrenalistTextField(placeHolder: "Title")
+    private lazy var titleTextField = AdrenalistTitleView(placeholder: "Set name")
     
     private lazy var confirmButton: AdrenalistTextRectangleButton = {
         let bt = AdrenalistTextRectangleButton(title: "confirm")
@@ -77,11 +78,13 @@ final class AdrenalistTitleSetupModalView: UIView {
     
     private func setupUI() {
         layer.cornerRadius = 20
+        backgroundColor = .darkNavy
         
-        let sv = UIStackView(arrangedSubviews: [setupTitle, titleTextField])
-        sv.axis = .vertical
-        sv.alignment = .fill
-        sv.distribution = .fill
+        let titleSv = UIStackView(arrangedSubviews: [setupTitle])
+        titleSv.axis = .vertical
+        titleSv.spacing = 12
+        titleSv.alignment = .center
+        titleSv.distribution = .fillEqually
         
         let buttonSv = UIStackView(arrangedSubviews: [cancelButton, confirmButton])
         buttonSv.axis = .horizontal
@@ -89,16 +92,23 @@ final class AdrenalistTitleSetupModalView: UIView {
         buttonSv.alignment = .fill
         buttonSv.distribution = .fillEqually
         
-        [sv, buttonSv].forEach { uv in
+        let totalSv = UIStackView(arrangedSubviews: [titleSv, titleTextField, buttonSv])
+        totalSv.axis = .vertical
+        totalSv.spacing = 16
+        totalSv.alignment = .fill
+        totalSv.distribution = .fill
+        
+        [totalSv].forEach { uv in
             uv.translatesAutoresizingMaskIntoConstraints = false
             addSubview(uv)
         }
         
         NSLayoutConstraint.activate([
-            sv.centerXAnchor.constraint(equalTo: centerXAnchor),
-            sv.centerYAnchor.constraint(equalTo: centerYAnchor),
-            buttonSv.topAnchor.constraint(equalTo: sv.bottomAnchor, constant: 8),
-            buttonSv.centerXAnchor.constraint(equalTo: centerXAnchor)
+            titleTextField.heightAnchor.constraint(equalToConstant: 64),
+            
+            totalSv.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            totalSv.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            totalSv.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
     
