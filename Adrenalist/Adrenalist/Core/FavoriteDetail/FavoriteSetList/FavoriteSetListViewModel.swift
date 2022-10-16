@@ -19,7 +19,13 @@ class FavoriteSetListViewModel {
     
     private(set) var response: WorkoutResponse
     
-    init(with response: WorkoutResponse) {
+    private(set) var mode: WorkoutListCellMode
+    
+    init(
+        with response: WorkoutResponse
+    ) {
+        self.mode = .none
+        self.cancellables = .init()
         self.response = response
         self.workoutList = response.workouts
         
