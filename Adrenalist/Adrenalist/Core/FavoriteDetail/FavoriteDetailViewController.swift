@@ -9,6 +9,14 @@ import Combine
 import UIKit
 
 class FavoriteDetailViewController: UIViewController {
+    
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, WorkoutResponse>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, WorkoutResponse>
+    
+    enum Section { case main }
+    
+    private var dataSource: DataSource?
+    
     private let contentView = FavoriteDetailView()
     
     private var viewModel: FavoriteDetailViewModel
@@ -97,17 +105,30 @@ extension FavoriteDetailViewController: SetupFavoriteSetViewControllerDelegate {
     }
 }
 
-extension FavoriteDetailViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.favorites.count - 1
+
+extension FavoriteDetailViewController {
+    private func configureDataSource() {
+        dataSource = DataSource(collectionView: contentView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            guard
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCollectionViewCell.identifier,
+                                                              for: indexPath) as? FavoriteCollectionViewCell
+            else {return UICollectionViewCell() }
+            
+            cell.status = self.viewModel.status
+            cell.configure(with: self.viewModel.favorites[indexPath.item])
+            cell.tag = indexPath.item
+            cell.delegate = self
+            return cell
+        })
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutlistCollectionViewCell.identifier, for: indexPath) as? WorkoutlistCollectionViewCell
-        else {return UICollectionViewCell() }
-        cell.configureFavoriteDetail(with: viewModel.favorites[indexPath.item])
-        return cell
+    private func updateSections() {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(viewModel.favorites)
+        dataSource?.apply(snapshot, animatingDifferences: true, completion: {
+            self.contentView.collectionView.reloadData()
+        })
     }
 }
 
