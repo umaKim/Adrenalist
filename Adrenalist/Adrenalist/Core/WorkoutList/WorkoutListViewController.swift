@@ -6,7 +6,6 @@
 //
 import Combine
 import UIKit.UIViewController
-import Foundation
 
     private(set) lazy var contentView = WorkoutListView2()
     
@@ -168,6 +167,44 @@ import Foundation
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WorkoutListViewController2: ModalViewControllerDelegate {
+    func modalDidTapCancel() {
+        self.dismiss(animated: true)
+    }
+    
+    func modalDidTapConfirm() {
+        self.dismiss(animated: true) {
+            self.viewModel.createSet()
+            self.viewModel.updateMode(type: .complete)
+            self.contentView.dismissBottomNavigationView()
+            self.isRightBarButtonItemsHidden(false)
+        }
+    }
+    
+    func modalDidChangeText(_ text: String) {
+        self.viewModel.setSetName(text)
+    }
+}
+
+//MARK: - FavoriteFooterCellDelegate
+extension WorkoutListViewController2: FavoriteFooterCellDelegate {
+    func favoriteFooterCellDidSelect() {
+        let vm = FavoriteDetailViewModel()
+        let vc = FavoriteDetailViewController(viewModel: vm)
+        vc.delegate = self
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        viewModel.presentThis(nav)
+    }
+}
+
+//MARK: - FavoriteDetailViewControllerDelegate
+extension WorkoutListViewController2: FavoriteDetailViewControllerDelegate {
+    func favoriteDetailViewControllerDidTapDismiss() {
+        viewModel.dismiss()
     }
 }
 
