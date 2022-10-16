@@ -161,7 +161,10 @@ extension FavoriteDetailViewController: UICollectionViewDelegate {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: UIScreen.main.bounds.width - 32, height: 78)
+        guard let name = viewModel.favorites[indexPath.item].name else { return .init() }
+        let width = name.size(withAttributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15)]).width + 48
+        let height: CGFloat = 50
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
