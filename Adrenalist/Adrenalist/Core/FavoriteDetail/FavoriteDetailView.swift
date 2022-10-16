@@ -24,11 +24,17 @@ class FavoriteDetailView: UIView {
     private(set) lazy var addButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .done, target: nil, action: nil)
     private(set) lazy var deleteButton = UIBarButtonItem(image: UIImage(systemName: "trash"), style: .done, target: nil, action: nil)
     
+    private let minCellSpacing: CGFloat = 16.0
+    private var maxCellWidth: CGFloat!
+    
     private(set) lazy var collectionView: UICollectionView = {
-        let cl = UICollectionViewFlowLayout()
-        cl.scrollDirection = .horizontal
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: cl)
-        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
+        let layout = FlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: self.minCellSpacing, left: 2.0, bottom: self.minCellSpacing, right: 2.0)
+        layout.minimumInteritemSpacing = self.minCellSpacing
+        layout.minimumLineSpacing = 16.0
+        
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
         cv.contentInset = .init(top: 0, left: 0, bottom: UIScreen.main.height/5, right: 0)
         return cv
     }()
