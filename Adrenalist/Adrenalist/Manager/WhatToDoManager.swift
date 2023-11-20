@@ -96,7 +96,8 @@ final class ItemManager {
                 case .finished:
                     print("finished")
                 }
-            } receiveValue: { workouts in
+            } receiveValue: {[weak self] workouts in
+                guard let self = self else { return }
                 self.suggestions = workouts
             }
             .store(in: &cancellables)
@@ -110,7 +111,8 @@ final class ItemManager {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
-            } receiveValue: { workouts in
+            } receiveValue: {[weak self] workouts in
+                guard let self = self else { return }
                 self.itemToDos = workouts
             }
             .store(in: &cancellables)

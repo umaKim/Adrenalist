@@ -56,7 +56,8 @@ class FavoriteDetailViewController: UIViewController {
     }
     
     private func bind() {
-        contentView.actionPublisher.sink { action in
+        contentView.actionPublisher.sink { [weak self] action in
+            guard let self = self else { return }
             switch action {
             case .dismiss:
 //                self.dismiss(animated: true)
@@ -82,7 +83,8 @@ class FavoriteDetailViewController: UIViewController {
         }
         .store(in: &cancellables)
         
-        viewModel.notifyPublisher.sink { noti in
+        viewModel.notifyPublisher.sink {[weak self] noti in
+            guard let self = self else { return }
             switch noti {
             case .reload:
                 self.updateSections()

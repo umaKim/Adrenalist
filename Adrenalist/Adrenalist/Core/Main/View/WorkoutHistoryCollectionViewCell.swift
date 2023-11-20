@@ -11,6 +11,7 @@ import UIKit.UICollectionViewCell
 enum WorkoutHistoryCollectionViewCellAction {
     case workout
     case present(UINavigationController)
+    case presentVC(UIViewController)
     case dismiss
     
     case push(UIViewController)
@@ -21,7 +22,8 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "WorkoutHistoryCollectionViewCell"
     
     private(set) lazy var action = PassthroughSubject<WorkoutHistoryCollectionViewCellAction, Never>()
-    
+    private lazy var viewModel = WorkoutListViewModel2()
+    private lazy var nav = UINavigationController(rootViewController: WorkoutListViewController2(viewModel: viewModel))
     private var cancellables: Set<AnyCancellable>
     
     override init(frame: CGRect) {
@@ -35,9 +37,6 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        let viewModel = WorkoutListViewModel2()
-        let vc = WorkoutListViewController2(viewModel: viewModel)
-        let nav = UINavigationController(rootViewController: vc)
         
         guard let myView = nav.view else {return }
         contentView.addSubview(myView)
@@ -51,13 +50,17 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
         
         viewModel
             .listenerPublisher
-            .sink { listen in
+            .sink {[weak self] listen in
+                guard let self = self else { return }
                 switch listen {
                 case .moveToCircularView:
                     self.action.send(.workout)
                     
                 case .present(let vc):
                     self.action.send(.present(vc))
+                    
+                case .presentVC(let vc):
+                    self.action.send(.presentVC(vc))
                     
                 case .dismiss:
                     self.action.send(.dismiss)

@@ -27,6 +27,7 @@ enum WorkoutListCellMode: Codable {
 
 enum WorkoutListViewModelListener {
     case present(UINavigationController)
+    case presentVC(UIViewController)
     case dismiss
     
     case push(UIViewController)
@@ -245,6 +246,10 @@ extension WorkoutListViewModel2 {
         self.listenerSubject.send(.present(vc))
     }
     
+    public func presentThis(_ vc: UIViewController) {
+        self.listenerSubject.send(.presentVC(vc))
+    }
+    
     public func dismiss() {
         self.listenerSubject.send(.dismiss)
     }
@@ -298,7 +303,8 @@ extension WorkoutListViewModel2 {
         workoutManager
             .$workoutDates
             .receive(on: RunLoop.main)
-            .sink { dates in
+            .sink {[weak self] dates in
+                guard let self = self else { return }
                 self.notifySubject.send(.setDates(1, 36500, dates))
         }
         .store(in: &cancellables)
@@ -306,7 +312,8 @@ extension WorkoutListViewModel2 {
         workoutManager
             .$workoutlist
             .receive(on: RunLoop.main)
-            .sink { workoutlist in
+            .sink {[weak self] workoutlist in
+                guard let self = self else { return }
                 self.workoutList = workoutlist
                 self.notifySubject.send(.reloadWorkoutList)
                 self.notifySubject.send(.isWorkoutListEmpty(self.workoutList.isEmpty))
@@ -316,7 +323,8 @@ extension WorkoutListViewModel2 {
         workoutManager
             .$selectedDate
             .receive(on: RunLoop.main)
-            .sink { date in
+            .sink {[weak self] date in
+                guard let self = self else { return }
                 self.selectedDate = date
             }
             .store(in: &cancellables)

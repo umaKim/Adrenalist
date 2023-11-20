@@ -48,7 +48,8 @@ class SetupFavoriteSetViewController: UIViewController {
         
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .confirm:
                     self.viewModel.didTapDone()
@@ -58,11 +59,15 @@ class SetupFavoriteSetViewController: UIViewController {
                     self.delegate?.setupFavoriteDidTapCancel()
                     
                 case .addNewWorkout:
-                    self.showWorkoutSetupViewController(for: .add,
-                                                        didSelect: WorkoutModel(title: "",
-                                                                                isFavorite: false,
-                                                                                isSelected: false,
-                                                                                isDone: false))
+                    self.showWorkoutSetupViewController(
+                        for: .add,
+                        didSelect: WorkoutModel(
+                            title: "",
+                            isFavorite: false,
+                            isSelected: false,
+                            isDone: false
+                        )
+                    )
                     
                 case .delete:
                     self.viewModel.changeMode(.delete)
@@ -85,7 +90,8 @@ class SetupFavoriteSetViewController: UIViewController {
         
         viewModel
             .notifyPublisher
-            .sink { noti in
+            .sink {[weak self] noti in
+                guard let self = self else { return }
                 switch noti {
                 case .reload:
                     self.contentView.workoutListCollectionView.reloadData()
