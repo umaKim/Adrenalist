@@ -55,7 +55,8 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         setupUI()
         
         $status
-            .sink { status in
+            .sink {[weak self] status in
+                guard let self = self else { return }
                 switch status {
                 case .usual:
                     self.starImageView.isHidden = false
@@ -70,7 +71,8 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
         
         deleteButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] status in
+                guard let self = self else { return }
                 self.delegate?.didTapDeleteButton(at: self.tag)
             }
             .store(in: &cancellables)
@@ -86,7 +88,6 @@ final class FavoriteCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         titleLabel.text = nil
     }
     

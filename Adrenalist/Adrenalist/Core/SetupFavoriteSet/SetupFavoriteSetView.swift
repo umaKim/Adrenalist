@@ -87,7 +87,8 @@ class SetupFavoriteSetView: UIView {
     }
     
     private func bind() {
-        titleTextField.actionPublisher.sink { action in
+        titleTextField.actionPublisher.sink {[weak self] action in
+            guard let self = self else { return }
             switch action {
             case .titleTextFieldDidChange(let text):
                 self.actionSubject.send(.titleTextFieldDidChange(text))
@@ -98,17 +99,20 @@ class SetupFavoriteSetView: UIView {
         }
         .store(in: &cancellables)
         
-        confirmButton.tapPublisher.sink { _ in
+        confirmButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.confirm)
         }
         .store(in: &cancellables)
         
-        dismissButton.tapPublisher.sink { _ in
+        dismissButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.dismiss)
         }
         .store(in: &cancellables)
         
-        deleteButton.tapPublisher.sink { _ in
+        deleteButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.delete)
             self.bottomNavigationView.show(.delete,
                                            self.isModal ? .modal : .overallFullScreen)
@@ -116,14 +120,16 @@ class SetupFavoriteSetView: UIView {
         }
         .store(in: &cancellables)
         
-        addButton.tapPublisher.sink { _ in
+        addButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.addNewWorkout)
         }
         .store(in: &cancellables)
         
         bottomNavigationView
             .actionPublisher
-            .sink { action in
+            .sink { [weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .delete:
                     self.actionSubject.send(.bottomSheetDidTapDelete)

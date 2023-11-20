@@ -88,7 +88,8 @@ class AdrenalistInputDetailView: UIView {
     private var cancellables: Set<AnyCancellable>
     
     private func bind() {
-        reps.actionPublisher.sink { action in
+        reps.actionPublisher.sink {[weak self] action in
+            guard let self = self else { return }
             switch action {
             case .textFieldDidChange(let text):
                 self.actionSubject.send(.repsDidChange(text))
@@ -96,7 +97,8 @@ class AdrenalistInputDetailView: UIView {
         }
         .store(in: &cancellables)
         
-        weight.actionPublisher.sink { action in
+        weight.actionPublisher.sink {[weak self] action in
+            guard let self = self else { return }
             switch action {
             case .textFieldDidChange(let text):
                 self.actionSubject.send(.weightDidChange(text))
@@ -104,7 +106,8 @@ class AdrenalistInputDetailView: UIView {
         }
         .store(in: &cancellables)
         
-        time.actionPublisher.sink { action in
+        time.actionPublisher.sink {[weak self] action in
+            guard let self = self else { return }
             switch action {
             case .textFieldDidChange(let text):
                 self.actionSubject.send(.timeDidChange(text))
@@ -112,7 +115,8 @@ class AdrenalistInputDetailView: UIView {
         }
         .store(in: &cancellables)
         
-        set.actionPublisher.sink { action in
+        set.actionPublisher.sink {[weak self] action in
+            guard let self = self else { return }
             switch action {
             case .valueDidChange(let value):
                 self.actionSubject.send(.setDidChange(value))

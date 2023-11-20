@@ -84,7 +84,8 @@ class AdrenalistTextInputView: UIView {
         textField
             .textPublisher
             .compactMap({$0})
-            .sink { text in
+            .sink {[weak self] text in
+                guard let self = self else { return }
             self.actionSubject.send(.textFieldDidChange(text))
         }
         .store(in: &cancellables)

@@ -40,7 +40,8 @@ final class AboutView: UIView {
     private func bind() {
         dismissButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] in
+                guard let self = self else { return }
                 self.actionSubject.send(.dismiss)
             }
             .store(in: &cancellables)

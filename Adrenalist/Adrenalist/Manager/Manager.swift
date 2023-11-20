@@ -95,7 +95,8 @@ final class FavoriteSetManager {
         retrieve()
             .sink { completion in
                 
-            } receiveValue: { favorites in
+            } receiveValue: {[weak self] favorites in
+                guard let self = self else { return }
                 self.favorites = favorites
             }
             .store(in: &cancellables)
@@ -185,7 +186,8 @@ final class Manager {
         retrieve()
             .sink { completion in
                 
-            } receiveValue: { responses in
+            } receiveValue: {[weak self] responses in
+                guard let self = self else { return }
                 self.workoutResponses = responses
                 self.selectedWorkoutlist(of: self.selectedDate)
                 self.setWorkoutDates()

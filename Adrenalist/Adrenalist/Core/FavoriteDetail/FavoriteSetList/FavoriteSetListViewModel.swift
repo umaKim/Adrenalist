@@ -32,7 +32,8 @@ class FavoriteSetListViewModel {
         
         favoriteManager
             .$favorites
-            .sink { responses in
+            .sink {[weak self] responses in
+                guard let self = self else { return }
                 let index = responses.firstIndex(where: {$0.uuid == response.uuid})!
                 self.response = responses[index]
                 self.workoutList = responses[index].workouts

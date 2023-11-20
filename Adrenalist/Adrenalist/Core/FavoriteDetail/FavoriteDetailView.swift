@@ -58,20 +58,23 @@ class FavoriteDetailView: UIView {
     private func bind() {
         backButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.dismiss)
             }.store(in: &cancellables)
         
         addButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.add)
             }
             .store(in: &cancellables)
         
         deleteButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.bottomNavigationView.show(.done)
                 self.actionSubject.send(.deleteStatus)
             }
@@ -79,7 +82,8 @@ class FavoriteDetailView: UIView {
         
         bottomNavigationView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .done:
                     self.actionSubject.send(.cancelDeleteAction)

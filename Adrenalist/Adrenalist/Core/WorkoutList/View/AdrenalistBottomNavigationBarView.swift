@@ -127,37 +127,28 @@ class AdrenalistBottomNavigationBarView: UIView {
     }
     
     private func bind() {
-        cancelButton.tapPublisher.sink { _ in
+        cancelButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.cancel)
             self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
         
-//        doneButton.tapPublisher.sink { _ in
-//            self.actionSubject.send(.done)
-//            self.hideBottomNavigationView()
-//        }
-//        .store(in: &cancellables)
-//
-//        moveButton.tapPublisher.sink { _ in
-//            self.actionSubject.send(.move)
-//            self.hideBottomNavigationView()
-//        }
-//        .store(in: &cancellables)
-        
-        createSetButton.tapPublisher.sink { _ in
+        createSetButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.createSet)
-//            self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
         
-        deleteButton.tapPublisher.sink { _ in
+        deleteButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.delete)
             self.hideBottomNavigationView()
         }
         .store(in: &cancellables)
         
-        doneButton.tapPublisher.sink { _ in
+        doneButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.done)
             self.hideBottomNavigationView()
         }
@@ -185,8 +176,6 @@ class AdrenalistBottomNavigationBarView: UIView {
     private func showBottomNavigationView() {
         let window = UIApplication.shared.windows.first
         let bottomPadding = window?.safeAreaInsets.bottom
-        
-        print(64 + bottomPadding! + 16)
         
         var buttonHeight: CGFloat = 0.0
         

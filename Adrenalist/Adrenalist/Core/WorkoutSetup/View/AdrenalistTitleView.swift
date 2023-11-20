@@ -46,14 +46,16 @@ final class AdrenalistTitleView: UIView {
     private func bind() {
         titleTextField
             .textPublisher
-            .sink { text in
+            .sink {[weak self] text in
+                guard let self = self else { return }
                 self.actionSubject.send(.titleTextFieldDidChange(text ?? ""))
             }
             .store(in: &cancellables)
         
         doneBarButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.done)
             }
             .store(in: &cancellables)

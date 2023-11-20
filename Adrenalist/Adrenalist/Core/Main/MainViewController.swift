@@ -10,6 +10,8 @@ import UIKit.UIViewController
 
 final class MainViewController: UIViewController {
     
+    let modalVC = ModalViewController()
+    
     private let contentView = MainView()
     private var cancellables: Set<AnyCancellable>
     
@@ -54,18 +56,24 @@ extension MainViewController: UICollectionViewDataSource {
         switch indexPath.item {
         case 0:
             guard
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier,
-                                                              for: indexPath) as? WorkoutHistoryCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier,
+                    for: indexPath
+                ) as? WorkoutHistoryCollectionViewCell
             else { return UICollectionViewCell() }
             cell.configure()
             cell.action
-                .sink { action in
+                .sink { [weak self] action in
+                    guard let self = self else { return }
                     switch action {
                     case .workout:
                         self.scrollTo(index: 1)
                         
                     case .present(let vc):
                         self.present(vc, animated: true)
+                        
+                    case .presentVC(let vc):
+                        self.present(self.modalVC, animated: true)
                         
                     case .dismiss:
                         self.dismiss(animated: true)
@@ -83,12 +91,15 @@ extension MainViewController: UICollectionViewDataSource {
         case 1:
             
             guard
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorkoutCollectionViewCell.identifier,
-                                                              for: indexPath) as? WorkoutCollectionViewCell
-            else {return UICollectionViewCell()}
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: WorkoutCollectionViewCell.identifier,
+                    for: indexPath
+                ) as? WorkoutCollectionViewCell
+            else { return UICollectionViewCell() }
             cell.configure()
             cell.action
-                .sink { action in
+                .sink { [weak self] action in
+                    guard let self = self else { return }
                     switch action {
                     case .setting:
                         self.scrollTo(index: 0)
@@ -103,15 +114,20 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     private func scrollTo(index: Int) {
-        contentView.collectionView.scrollToItem(at: IndexPath(row: index, section: 0),
-                                                at: .centeredHorizontally,
-                                                animated: true)
+        contentView.collectionView.scrollToItem(
+            at: IndexPath(row: index, section: 0),
+            at: .centeredHorizontally,
+            animated: true
+        )
     }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: collectionView.frame.height)
+        return .init(
+            width: view.frame.width,
+            height: collectionView.frame.height
+        )
     }
 }

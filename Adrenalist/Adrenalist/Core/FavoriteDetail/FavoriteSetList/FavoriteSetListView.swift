@@ -59,21 +59,26 @@ class FavoriteSetListView: UIView {
     private var cancellables: Set<AnyCancellable>
     
     private func bind() {
-        addButton.tapPublisher.sink { _ in
+        addButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.add)
         }
         .store(in: &cancellables)
         
-        deleteButton.tapPublisher.sink { _ in
+        deleteButton.tapPublisher.sink {[weak self] _ in
+            guard let self = self else { return }
             self.actionSubject.send(.delete)
-            self.bottomNavigationView.show(.delete,
-                                           self.isModal ? .modal : .overallFullScreen)
+            self.bottomNavigationView.show(
+                .delete,
+                self.isModal ? .modal : .overallFullScreen
+            )
         }
         .store(in: &cancellables)
         
         bottomNavigationView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .delete:
                     self.actionSubject.send(.bottomSheetDidTapDelete)

@@ -48,7 +48,8 @@ final class WorkoutViewModel {
         workoutManager
             .$workoutlist
             .receive(on: RunLoop.main)
-            .sink { models in
+            .sink { [weak self] models in
+                guard let self = self else { return }
                 self.workouts = models
                 self.setCurrentIndex()
                 self.sendViewUpdate()
@@ -113,11 +114,13 @@ extension WorkoutViewModel {
         
         isTimerGoingOn = true
         
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                                     target: self,
-                                     selector: #selector(self.timerRun),
-                                     userInfo: nil,
-                                     repeats: true)
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(self.timerRun),
+            userInfo: nil,
+            repeats: true
+        )
     }
     
     @objc

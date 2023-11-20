@@ -100,9 +100,11 @@ class MyScrollableDatepicker: UIView {
     
     private func updateCellSelection(with dateModel: MyScrollableDatepickerModel, isSelected: Bool) {
         guard let selectedIndex = dates.firstIndex(where: {dateModel.date == $0.date}) else {return }
-        dates[selectedIndex] = MyScrollableDatepickerModel(date: dateModel.date,
-                                                   isSelected: isSelected,
-                                                   isDot: dateModel.isDot)
+        dates[selectedIndex] = MyScrollableDatepickerModel(
+            date: dateModel.date,
+            isSelected: isSelected,
+            isDot: dateModel.isDot
+        )
         let indexPath = IndexPath(row: selectedIndex, section: 0)
         collectionView.reloadItems(at: [indexPath])
     }
@@ -126,9 +128,11 @@ class MyScrollableDatepicker: UIView {
         for day in min...max {
             let secondsInDay = 86400
             let selectedDate = Date(timeIntervalSince1970: Double(day * secondsInDay)).stripTime()
-            let dateModel = MyScrollableDatepickerModel(date: selectedDate,
-                                                        isSelected: false,
-                                                        isDot: dotDates.contains(selectedDate))
+            let dateModel = MyScrollableDatepickerModel(
+                date: selectedDate,
+                isSelected: false,
+                isDot: dotDates.contains(selectedDate)
+            )
             dateModels.append(dateModel)
         }
         
@@ -137,9 +141,11 @@ class MyScrollableDatepicker: UIView {
     
     public func removeDot(of date: Date) {
         guard let index = self.dates.firstIndex(where: {$0.date == date.stripTime()}) else {return }
-        dates[index] = MyScrollableDatepickerModel(date: date.stripTime(),
-                                                   isSelected: dates[index].isSelected,
-                                                   isDot: false)
+        dates[index] = MyScrollableDatepickerModel(
+            date: date.stripTime(),
+            isSelected: dates[index].isSelected,
+            isDot: false
+        )
         
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.reloadItems(at: [indexPath])
@@ -149,7 +155,6 @@ class MyScrollableDatepicker: UIView {
 // MARK: - UICollectionViewDataSource
 
 extension MyScrollableDatepicker: UICollectionViewDataSource {
-    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dates.count
     }
@@ -292,9 +297,7 @@ public struct DayStyleConfiguration {
     
     
     // MARK: - Initializer
-    public init() {
-    }
-    
+    public init() {}
     
     public func merge(with style: DayStyleConfiguration) -> DayStyleConfiguration {
         var newStyle = DayStyleConfiguration()

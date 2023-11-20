@@ -8,11 +8,11 @@
 import Combine
 import UIKit
 
-class FavoriteSetListViewController: UIViewController {
+final class FavoriteSetListViewController: UIViewController {
     
     private let contentView = FavoriteSetListView()
-    
     private let viewModel: FavoriteSetListViewModel
+    private var cancellables: Set<AnyCancellable>
     
     override func loadView() {
         super.loadView()
@@ -39,12 +39,11 @@ class FavoriteSetListViewController: UIViewController {
         contentView.workoutListCollectionView.dataSource = self
     }
     
-    private var cancellables: Set<AnyCancellable>
-    
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .delete:
                     self.viewModel.changeMode(.delete)
@@ -64,7 +63,8 @@ class FavoriteSetListViewController: UIViewController {
         
         viewModel
             .notifyPublisher
-            .sink { noti in
+            .sink {[weak self] noti in
+                guard let self = self else { return }
                 switch noti {
                 case .reload:
                     self.contentView.reload()
@@ -95,6 +95,7 @@ class FavoriteSetListViewController: UIViewController {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension FavoriteSetListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.workoutList.count
@@ -111,6 +112,7 @@ extension FavoriteSetListViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension FavoriteSetListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vm =  WorkoutSetupViewModel(workout: viewModel.workoutList[indexPath.item], type: .edit)
@@ -132,9 +134,9 @@ extension FavoriteSetListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: - WorkoutSetupViewControllerDelegate
 extension FavoriteSetListViewController: WorkoutSetupViewControllerDelegate {
     func workoutSetupDidTapDone(with models: [WorkoutModel], type: WorkoutSetupType) {
-//        self.viewModel.dismiss()
         self.dismiss(animated: true) {
             switch type {
             case .edit:
@@ -154,6 +156,7 @@ extension FavoriteSetListViewController: WorkoutSetupViewControllerDelegate {
     }
 }
 
+//MARK: - WorkoutlistCollectionViewCellDelegate
 extension FavoriteSetListViewController: WorkoutlistCollectionViewCellDelegate {
     func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
         viewModel.updateIsComplete(isTapped, at: indexPathRow)

@@ -47,8 +47,10 @@ final class WorkoutListView2: UIView {
     }()
     
     private(set) lazy var editButton: UIBarButtonItem = {
-        let bt = UIBarButtonItem(title: "Edit", image: nil, menu: UIMenu(options: .displayInline,
-                                                                         children: [createSet, delete]))
+        let bt = UIBarButtonItem(title: "Edit", image: nil, menu: UIMenu(
+            options: .displayInline,
+            children: [createSet, delete])
+        )
         bt.tintColor = .white
         return bt
     }()
@@ -64,17 +66,21 @@ final class WorkoutListView2: UIView {
     })
     
     private(set) lazy var addButton: UIBarButtonItem = {
-        let bt = UIBarButtonItem(image:UIImage(systemName: "plus"),
-                                 style: .done,
-                                 target: nil,
-                                 action: nil)
+        let bt = UIBarButtonItem(
+            image:UIImage(systemName: "plus"),
+            style: .done,
+            target: nil,
+            action: nil
+        )
         bt.tintColor = .white
         return bt
     }()
     
     private(set) lazy var moveToCircularButton: UIBarButtonItem = {
-        let bt = UIBarButtonItem(image: UIImage(systemName: "chevron.right"),
-                                 style: .plain, target: nil, action: nil)
+        let bt = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.right"),
+            style: .plain, target: nil, action: nil
+        )
         bt.tintColor = .white
         return bt
     }()
@@ -109,10 +115,15 @@ final class WorkoutListView2: UIView {
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-        cv.register(FavoriteFooterCell.self,
-                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                    withReuseIdentifier: FavoriteFooterCell.identifier)
-        cv.register(FavoriteCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier)
+        cv.register(
+            FavoriteFooterCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: FavoriteFooterCell.identifier
+        )
+        cv.register(
+            FavoriteCollectionViewCell.self,
+            forCellWithReuseIdentifier: FavoriteCollectionViewCell.identifier
+        )
         
         cv.showsHorizontalScrollIndicator = false
         cv.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -141,10 +152,15 @@ final class WorkoutListView2: UIView {
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .black
-        cv.register(WorkoutlistCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier)
-        cv.register(UICollectionReusableView.self,
-                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                    withReuseIdentifier: "UICollectionReusableView")
+        cv.register(
+            WorkoutlistCollectionViewCell.self,
+            forCellWithReuseIdentifier: WorkoutlistCollectionViewCell.identifier
+        )
+        cv.register(
+            UICollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: "UICollectionReusableView"
+        )
         cv.contentInset = .init(top: 0, left: 0, bottom: UIScreen.main.height / 4, right: 0)
         return cv
     }()
@@ -169,21 +185,23 @@ final class WorkoutListView2: UIView {
     private func bind() {
         calendarTitleButton
             .tapPublisher
-            .sink {[unowned self] _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.tapTitleCalendar(self.calendarViewController))
             }
             .store(in: &cancellables)
         
         addButton
             .tapPublisher
-            .sink { [weak self] in
-                self?.actionSubject.send(.add)
+            .sink { _ in
+                self.actionSubject.send(.add)
             }
             .store(in: &cancellables)
         
         bottomNavigationView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .delete:
                     self.actionSubject.send(.bottomSheetDidTapDelete)
@@ -202,7 +220,8 @@ final class WorkoutListView2: UIView {
         
         moveToCircularButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] in
+                guard let self = self else { return }
                 self.actionSubject.send(.start)
             }
             .store(in: &cancellables)

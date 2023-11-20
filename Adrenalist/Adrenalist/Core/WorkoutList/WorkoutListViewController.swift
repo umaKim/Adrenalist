@@ -26,6 +26,10 @@ final class WorkoutListViewController2: UIViewController {
     override func loadView() {
         super.loadView()
         view = contentView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         bind()
         setupUI()
@@ -50,14 +54,25 @@ final class WorkoutListViewController2: UIViewController {
         return nav
     }
     
+    let modalViewController = ModalViewController()
+    
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                     
                 case .add:
-                    self.showWorkoutSetupViewController(for: .add, didSelect: WorkoutModel(title: "", isFavorite: false, isSelected: false, isDone: false))
+                    self.showWorkoutSetupViewController(
+                        for: .add,
+                        didSelect: WorkoutModel(
+                            title: "",
+                            isFavorite: false,
+                            isSelected: false,
+                            isDone: false
+                        )
+                    )
                     
                 case .createSet:
                     self.viewModel.updateMode(type: .createSet)
@@ -83,11 +98,11 @@ final class WorkoutListViewController2: UIViewController {
                     self.isRightBarButtonItemsHidden(false)
                     
                 case .bottomSheetDidTapCreateSet:
-                    let vc = ModalViewController()
-                    vc.delegate = self
-                    vc.modalPresentationStyle = .overCurrentContext
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
+                    self.modalViewController.delegate = self
+                    self.modalViewController.modalPresentationStyle = .overCurrentContext
+                    self.modalViewController.modalTransitionStyle = .crossDissolve
+//                    self.present(self.modalViewController, animated: true)
+                    self.viewModel.presentThis(self.modalViewController)
                     
                 case .bottomNavigationBarDidTapCancel:
                     self.viewModel.updateMode(type: .complete)
@@ -98,7 +113,8 @@ final class WorkoutListViewController2: UIViewController {
         
         viewModel
             .notifyPublisher
-            .sink { noti in
+            .sink { [weak self] noti in
+                guard let self = self else { return }
                 switch noti {
                 case .reloadFavorites:
                     self.contentView.suggestedCollectionView.reloadData()
@@ -385,7 +401,6 @@ extension WorkoutListViewController2: WorkoutSetupViewControllerDelegate {
             self.viewModel.setupWorkout(with: models)
         }
         
-//        self.contentView.suggestedCollectionView.reloadData()
         self.contentView.workoutListCollectionView.reloadData()
         self.scrollToLast()
     }

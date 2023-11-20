@@ -19,22 +19,36 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
     
     private(set) lazy var action = PassthroughSubject<WorkoutCollectionViewCellAction, Never>()
     
+    private lazy var viewModel = WorkoutViewModel()
+    private lazy var nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
+    
     private var cancellables: Set<AnyCancellable>
     
     override init(frame: CGRect) {
         self.cancellables = .init()
         super.init(frame: frame)
-    }
-    
-    func configure() {
         setupUI()
     }
     
+    func configure() {
+        
+    }
+    
     private func setupUI() {
-        let viewModel = WorkoutViewModel()
+        guard let myListView = nav.view else { return }
+        contentView.addSubview(myListView)
+        
+        NSLayoutConstraint.activate([
+            myListView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            myListView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            myListView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            myListView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+        
         viewModel
             .transitionPublisher
-            .sink { trans in
+            .sink {[weak self] trans in
+                guard let self = self else { return }
                 switch trans {
 //                case .setting:
 //                    self.action.send(.setting)
@@ -46,16 +60,6 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
             }
             .store(in: &cancellables)
         
-        let nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
-        guard let myListView = nav.view else { return }
-        contentView.addSubview(myListView)
-        
-        NSLayoutConstraint.activate([
-            myListView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            myListView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            myListView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            myListView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
     }
     
     required init?(coder: NSCoder) {

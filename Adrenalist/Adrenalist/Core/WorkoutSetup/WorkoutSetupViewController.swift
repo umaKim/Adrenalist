@@ -49,7 +49,8 @@ class WorkoutSetupViewController: UIViewController {
     private func bind() {
         contentView
             .actionPublisher
-            .sink { action in
+            .sink { [weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .didTapCancel:
                     self.delegate?.workoutSetupDidTapCancel()
@@ -84,7 +85,8 @@ class WorkoutSetupViewController: UIViewController {
         viewModel
             .notifyPublisher
             .receive(on: RunLoop.main)
-            .sink { noti in
+            .sink { [weak self] noti in
+                guard let self = self else { return }
                 switch noti {
                 case .doneButtonDidTap(models: let models, type: let type):
                     self.delegate?.workoutSetupDidTapDone(with: models, type: type)

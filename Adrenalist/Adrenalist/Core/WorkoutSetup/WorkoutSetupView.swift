@@ -69,21 +69,24 @@ class WorkoutSetupView: UIView {
     private func bind() {
         doneButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.didTapDone)
             }
             .store(in: &cancellables)
         
         cancelButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] _ in
+                guard let self = self else { return }
                 self.actionSubject.send(.didTapCancel)
             }
             .store(in: &cancellables)
         
         titleTextFieldView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .titleTextFieldDidChange(let text):
                     self.actionSubject.send(.titleDidChange(text))
@@ -96,7 +99,8 @@ class WorkoutSetupView: UIView {
         
         adrenalistInputDetailView
             .actionPublisher
-            .sink { action in
+            .sink {[weak self] action in
+                guard let self = self else { return }
                 switch action {
                 case .repsDidChange(let text):
                     self.actionSubject.send(.repsDidChange(text))

@@ -134,21 +134,24 @@ extension WorkoutView {
     private func bind() {
         backButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] in
+                guard let self = self else { return }
                 self.actionSubject.send(.back)
             }
             .store(in: &cancellables)
         
         actionButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] in
+                guard let self = self else { return }
                 self.actionSubject.send(.didTapAction)
             }
             .store(in: &cancellables)
         
         skipButton
             .tapPublisher
-            .sink { _ in
+            .sink {[weak self] in
+                guard let self = self else { return }
                 self.actionSubject.send(.didTapSkip)
             }
             .store(in: &cancellables)
