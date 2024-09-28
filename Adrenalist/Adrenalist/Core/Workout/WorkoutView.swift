@@ -27,6 +27,7 @@ final class WorkoutView: UIView {
     private(set) lazy var backButton: UIBarButtonItem = {
         let bt = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .done, target: nil, action: nil)
         bt.tintColor = .white
+        
         return bt
     }()
     
@@ -188,25 +189,5 @@ extension WorkoutView {
             resumeButtonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             resumeButtonStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
-    }
-}
-
-extension UIButton {
-    var setResume: Void {
-        self.setTitle("RESUME", for: .normal)
-        self.backgroundColor = .purpleBlue
-        self.setTitleColor(.white, for: .normal)
-    }
-    
-    var setNext: Void {
-        self.setTitle("NEXT", for: .normal)
-        self.backgroundColor = .purpleBlue
-        self.setTitleColor(.white, for: .normal)
-    }
-    
-    var setPause: Void {
-        self.setTitle("PAUSE", for: .normal)
-        self.backgroundColor = UIColor(red: 86/255, green: 98/255, blue: 255/255, alpha: 0.3)
-        self.setTitleColor(.purpleBlue, for: .normal)
     }
 }

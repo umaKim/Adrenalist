@@ -22,14 +22,14 @@ final class AdrenalistTitleSetupModalView: UIView {
     private var actionSubject = PassthroughSubject<AdrenalistTitleSetupModalAction, Never>()
     
     private lazy var setupTitle: UILabel = {
-       let lb = UILabel()
+        let lb = UILabel()
         lb.text = "Create set"
         lb.textColor = .white
         return lb
     }()
     
     private lazy var titleTextField: AdrenalistTitleView = {
-       let tv = AdrenalistTitleView(placeholder: "Set name")
+        let tv = AdrenalistTitleView(placeholder: "Set name")
         tv.heightAnchor.constraint(equalToConstant: 64).isActive = true
         return tv
     }()
@@ -56,6 +56,12 @@ final class AdrenalistTitleSetupModalView: UIView {
         setupUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension AdrenalistTitleSetupModalView {
     private func bind() {
         titleTextField
             .actionPublisher
@@ -87,7 +93,9 @@ final class AdrenalistTitleSetupModalView: UIView {
             }
             .store(in: &cancellables)
     }
-    
+}
+
+extension AdrenalistTitleSetupModalView {
     private func setupUI() {
         layer.cornerRadius = 20
         backgroundColor = .darkNavy
@@ -125,7 +133,4 @@ final class AdrenalistTitleSetupModalView: UIView {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

@@ -1,4 +1,5 @@
 {
+  "originHash" : "23a92cf4f3e1a89f25d0080ce29a441dae8fa551cfac87259df3cc42a00ed42e",
   "pins" : [
     {
       "identity" : "combinecocoa",
@@ -19,12 +20,30 @@
       }
     },
     {
+      "identity" : "flexlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/layoutBox/FlexLayout.git",
+      "state" : {
+        "revision" : "9b46c098c0471b847e6feee49692ae239633bae3",
+        "version" : "2.0.10"
+      }
+    },
+    {
       "identity" : "fscalendar",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WenchaoD/FSCalendar",
       "state" : {
         "revision" : "0fbdec5172fccb90f707472eeaea4ffe095278f6",
         "version" : "2.8.4"
+      }
+    },
+    {
+      "identity" : "pinlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/layoutBox/PinLayout.git",
+      "state" : {
+        "revision" : "8eaa3a15e4dcabaca4c95aea4c0ff0c9b4a67213",
+        "version" : "1.10.5"
       }
     },
     {
@@ -37,5 +56,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

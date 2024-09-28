@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350DDB572C316A2500DECCCC /* FlexLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 350DDB562C316A2500DECCCC /* FlexLayout */; };
+		350DDB5A2C316AAC00DECCCC /* PinLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 350DDB592C316AAC00DECCCC /* PinLayout */; };
 		35189DF42886CE820030F987 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35189DF32886CE820030F987 /* FlowLayout.swift */; };
 		35189DF62886CF280030F987 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35189DF52886CF280030F987 /* UIView+Ext.swift */; };
 		351C5BAB28190B7000FE9C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351C5BAA28190B7000FE9C0F /* AppDelegate.swift */; };
@@ -159,8 +161,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				350DDB5A2C316AAC00DECCCC /* PinLayout in Frameworks */,
 				3548C863281910D90089A0C4 /* CombineCocoa in Frameworks */,
 				35632FFE285F59B1009C3B9D /* DGBottomSheet in Frameworks */,
+				350DDB572C316A2500DECCCC /* FlexLayout in Frameworks */,
 				35A6DBE6285F6C2E00D6FFF9 /* SheetPresentationController in Frameworks */,
 				3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */,
 			);
@@ -466,6 +470,8 @@
 				3548C86D281926A30089A0C4 /* FSCalendar */,
 				35632FFD285F59B1009C3B9D /* DGBottomSheet */,
 				35A6DBE5285F6C2E00D6FFF9 /* SheetPresentationController */,
+				350DDB562C316A2500DECCCC /* FlexLayout */,
+				350DDB592C316AAC00DECCCC /* PinLayout */,
 			);
 			productName = Adrenalist;
 			productReference = 351C5BA728190B7000FE9C0F /* Adrenalist.app */;
@@ -500,6 +506,8 @@
 				3548C86C281926A30089A0C4 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				35632FFC285F59B1009C3B9D /* XCRemoteSwiftPackageReference "DGBottomSheet" */,
 				35A6DBE4285F6C2E00D6FFF9 /* XCRemoteSwiftPackageReference "SheetPresentationController" */,
+				350DDB552C316A2500DECCCC /* XCRemoteSwiftPackageReference "FlexLayout" */,
+				350DDB582C316AAC00DECCCC /* XCRemoteSwiftPackageReference "PinLayout" */,
 			);
 			productRefGroup = 351C5BA828190B7000FE9C0F /* Products */;
 			projectDirPath = "";
@@ -730,7 +738,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PHT5ZHW738;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Adrenalist/Info.plist;
@@ -744,7 +752,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = yokim.adrenalist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -762,7 +770,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PHT5ZHW738;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Adrenalist/Info.plist;
@@ -776,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = yokim.adrenalist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -812,6 +820,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		350DDB552C316A2500DECCCC /* XCRemoteSwiftPackageReference "FlexLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/FlexLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.10;
+			};
+		};
+		350DDB582C316AAC00DECCCC /* XCRemoteSwiftPackageReference "PinLayout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/layoutBox/PinLayout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.10.5;
+			};
+		};
 		3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
@@ -847,6 +871,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		350DDB562C316A2500DECCCC /* FlexLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 350DDB552C316A2500DECCCC /* XCRemoteSwiftPackageReference "FlexLayout" */;
+			productName = FlexLayout;
+		};
+		350DDB592C316AAC00DECCCC /* PinLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 350DDB582C316AAC00DECCCC /* XCRemoteSwiftPackageReference "PinLayout" */;
+			productName = PinLayout;
+		};
 		3548C862281910D90089A0C4 /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3548C861281910D90089A0C4 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
