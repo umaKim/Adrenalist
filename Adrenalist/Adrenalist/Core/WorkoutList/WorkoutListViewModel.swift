@@ -2,12 +2,17 @@
 //  WorkoutListViewModel.swift
 //  Adrenalist
 //
-//  Created by 김윤석 on 2022/04/28.
+//  Created by 김윤석 on 2022/06/16.
 //
+<<<<<<< Updated upstream
 
 import UIKit
+=======
+>>>>>>> Stashed changes
 import Combine
+import UIKit
 
+<<<<<<< Updated upstream
 enum WorkoutListViewModel2Notification {
     case isWorkoutListEmpty(Bool)
     case isFavoriteEmpty(Bool)
@@ -37,12 +42,24 @@ enum WorkoutListViewModelListener {
 
 final class WorkoutListViewModel2  {
     
+=======
+enum WorkoutListViewModelNotification {
+    case updateInlineStrokeEnd(CGFloat)
+    case updateOutlineStrokeEnd(CGFloat)
+    case updatePulse(CGFloat)
+    case updateToCurrentWorkout(Item?)
+    case updateNextWorkout(Item?)
+}
+
+final class WorkoutListViewModel {
+>>>>>>> Stashed changes
     private(set) lazy var notifyPublisher = notifySubject.eraseToAnyPublisher()
     private let notifySubject = PassthroughSubject<WorkoutListViewModel2Notification, Never>()
     
-    private(set) lazy var listenerPublisher = listenerSubject.eraseToAnyPublisher()
-    private let listenerSubject = PassthroughSubject<WorkoutListViewModelListener, Never>()
+    private var favorites: [WorkoutModel] = []
+    private var workouts: [WorkoutModel] = []
     
+<<<<<<< Updated upstream
     private var cancellables: Set<AnyCancellable>
     
     private let favoriteSetManager = FavoriteSetManager.shared
@@ -338,4 +355,7 @@ extension WorkoutListViewModel2 {
     private func updateWorkoutPersistance() {
         workoutManager.setWorkoutlist(with: workoutList)
     }
+=======
+    
+>>>>>>> Stashed changes
 }
