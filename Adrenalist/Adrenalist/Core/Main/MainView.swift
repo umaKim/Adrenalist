@@ -4,7 +4,7 @@
 //
 //  Created by 김윤석 on 2022/04/27.
 //
-
+import ScrollableDatepicker
 import UIKit.UIView
 
 final class MainView: UIView {
@@ -14,8 +14,14 @@ final class MainView: UIView {
         layout.minimumLineSpacing = 0
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+<<<<<<< Updated upstream
         cv.register(WorkoutCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutCollectionViewCell.identifier)
         cv.register(WorkoutHistoryCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier)
+=======
+//        cv.register(SettingCollectionViewCell.self, forCellWithReuseIdentifier: SettingCollectionViewCell.identifier)
+        cv.register(WorkoutListCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutListCollectionViewCell.identifier)
+//        cv.register(WorkoutHistoryCollectionViewCell.self, forCellWithReuseIdentifier: WorkoutHistoryCollectionViewCell.identifier)
+>>>>>>> Stashed changes
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
