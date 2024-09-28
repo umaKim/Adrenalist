@@ -1,9 +1,10 @@
 //
-//  WorkoutList.swift
+//  WorkoutListViewController.swift
 //  Adrenalist
 //
-//  Created by 김윤석 on 2022/04/28.
+//  Created by 김윤석 on 2022/06/16.
 //
+<<<<<<< Updated upstream
 import Combine
 import UIKit.UIViewController
 
@@ -165,11 +166,23 @@ final class WorkoutListViewController2: UIViewController {
         contentView.workoutListCollectionView.dragDelegate  = self
         contentView.workoutListCollectionView.dragInteractionEnabled = true
         contentView.workoutListCollectionView.reorderingCadence = .immediate
+=======
+
+import UIKit
+
+class WorkoutListViewController: UIViewController {
+
+    private let contentView = WorkoutListView()
+    
+    init(viewModel: WorkoutListViewModel) {
+        super.init(nibName: nil, bundle: nil)
+>>>>>>> Stashed changes
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+<<<<<<< Updated upstream
 }
 
 //MARK: - ModalViewControllerDelegate
@@ -421,4 +434,19 @@ extension WorkoutListViewController2: WorkoutlistCollectionViewCellDelegate {
     func workoutlistCollectionViewCellDidTapComplete(_ isTapped: Bool, indexPathRow: Int) {
         viewModel.updateIsComplete(isTapped, at: indexPathRow)
     }
+=======
+    
+    override func loadView() {
+        super.loadView()
+        
+        view = contentView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        contentView.my
+    }
+
+>>>>>>> Stashed changes
 }

@@ -2,13 +2,13 @@
 //  WorkoutListView.swift
 //  Adrenalist
 //
-//  Created by 김윤석 on 2022/04/28.
+//  Created by 김윤석 on 2022/06/16.
 //
 
 import Combine
-import CombineCocoa
 import UIKit
 
+<<<<<<< Updated upstream
 enum WorkoutListView2Action {
     case add
     
@@ -27,9 +27,14 @@ enum WorkoutListView2Action {
 
 final class WorkoutListView2: UIView {
     
+=======
+final class WorkoutList: UIView {
+
+>>>>>>> Stashed changes
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutListView2Action, Never>()
     
+<<<<<<< Updated upstream
     private(set) lazy var calendarTitleButton: UIButton = {
         var config = UIButton.Configuration.plain()
         var container = AttributeContainer()
@@ -248,6 +253,77 @@ final class WorkoutListView2: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+=======
+    private(set) lazy var editButton = UIBarButtonItem(title: "Edit", image: nil, primaryAction: nil, menu: UIMenu(options: .displayInline, children: menuItems))
+    
+    private var menuItems: [UIAction] {
+        return [
+            UIAction(title: "순서 변경", image: UIImage(systemName: "sun.max"), handler: { (_) in
+            }),
+            UIAction(title: "내일로 미루기", image: UIImage(systemName: "moon"), handler: { (_) in
+            }),
+            UIAction(title: "삭제", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { (_) in
+            })
+        ]
+    }
+    
+    private(set) lazy var addButton: UIBarButtonItem = {
+        let lb = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: nil, action: nil)
+        lb.tintColor = .white
+        return lb
+    }()
+    
+    private(set) lazy var calendarTitleButton: UIButton = {
+        let bt = UIButton()
+        bt.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        return bt
+    }()
+    
+    public lazy var calendarView: MyScrollableDatepicker = {
+        let cv = MyScrollableDatepicker()
+        
+        cv.selectedDate = Date()
+        cv.delegate = self
+        
+        // weekend customization
+        var configuration = Configuration()
+        
+        configuration.weekendDayStyle.dateTextColor = UIColor(red: 242.0/255.0, green: 93.0/255.0, blue: 28.0/255.0, alpha: 1.0)
+        configuration.weekendDayStyle.dateTextFont = UIFont.boldSystemFont(ofSize: 20)
+        configuration.weekendDayStyle.weekDayTextColor = UIColor(red: 242.0/255.0, green: 93.0/255.0, blue: 28.0/255.0, alpha: 1.0)
+        
+        // selected date customization
+        configuration.selectedDayStyle.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        configuration.daySizeCalculation = .numberOfVisibleItems(5)
+        
+        cv.configuration = configuration
+        
+        return cv
+    }()
+    
+    private lazy var dividerView: UIView = {
+        let uv = UIView()
+        uv.backgroundColor = .lightGray
+        uv.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        return uv
+    }()
+
+}
+
+extension WorkoutList: MyScrollableDatepickerDelegate {
+    func datepicker(
+        _ datepicker: MyScrollableDatepicker,
+        didScroll index: IndexPath
+    ) {
+//        calendarTitleButton.setTitle("\( datepicker.dates[index.row].date.getFormattedDate(format: "yyyy년 MM월"))", for: .normal)
+    }
+    
+    func datepicker(
+        _ datepicker: MyScrollableDatepicker,
+        didSelectDate date: MyScrollableDatepickerModel
+    ) {
+        datepicker.updateDateSet(with: date)
+>>>>>>> Stashed changes
     }
 }
 
