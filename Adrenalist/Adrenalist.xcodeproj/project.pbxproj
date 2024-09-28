@@ -28,13 +28,16 @@
 		3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C8682819137A0089A0C4 /* SettingViewModel.swift */; };
 		3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C86A2819137F0089A0C4 /* SettingView.swift */; };
 		3548C86E281926A30089A0C4 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 3548C86D281926A30089A0C4 /* FSCalendar */; };
-		3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C878281A86960089A0C4 /* WorkoutListViewController.swift */; };
-		3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */; };
-		3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */; };
-		3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3548C87F281A87050089A0C4 /* WorkoutListView.swift */; };
 		3555CCE4281C0D1D00DA830E /* WhatToDoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CCE3281C0D1D00DA830E /* WhatToDoManager.swift */; };
 		3555CD27281C69A100DA830E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD26281C69A100DA830E /* Constant.swift */; };
+<<<<<<< Updated upstream
 		3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD29281C747100DA830E /* SuggestionListCell.swift */; };
+=======
+		3555CD2D281CD5DA00DA830E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD2C281CD5DA00DA830E /* Item.swift */; };
+		3555CD2F282004F200DA830E /* ItemSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD2E282004F200DA830E /* ItemSetupViewController.swift */; };
+		3555CD322820E88A00DA830E /* ItemSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD312820E88A00DA830E /* ItemSetupView.swift */; };
+		3555CD34282136B100DA830E /* ItemSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD33282136B100DA830E /* ItemSetupViewModel.swift */; };
+>>>>>>> Stashed changes
 		3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD36282169D600DA830E /* AdrenalistLabel.swift */; };
 		3555CD39282169EC00DA830E /* AdrenalistCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */; };
 		3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3555CD3A2821729800DA830E /* AdrenalistButton.swift */; };
@@ -47,6 +50,7 @@
 		35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F572858A403009C3B9D /* MyDatePickerCell.swift */; };
 		35632F5A2859DBFB009C3B9D /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */; };
 		35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */; };
+<<<<<<< Updated upstream
 		35632F95285B3696009C3B9D /* WorkoutSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F94285B3696009C3B9D /* WorkoutSetupView.swift */; };
 		35632F97285B369D009C3B9D /* WorkoutSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F96285B369D009C3B9D /* WorkoutSetupViewController.swift */; };
 		35632F99285B36A8009C3B9D /* WorkoutSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F98285B36A8009C3B9D /* WorkoutSetupViewModel.swift */; };
@@ -76,6 +80,12 @@
 		35D66D2F287D953400DC9D43 /* SetupFavoriteSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D66D2E287D953400DC9D43 /* SetupFavoriteSetViewController.swift */; };
 		35D66D31287D955C00DC9D43 /* SetupFavoriteSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D66D30287D955C00DC9D43 /* SetupFavoriteSetView.swift */; };
 		35D66D33287D956C00DC9D43 /* SetupFavoriteSetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D66D32287D956C00DC9D43 /* SetupFavoriteSetViewModel.swift */; };
+=======
+		35632F67285B202F009C3B9D /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F66285B202F009C3B9D /* WorkoutListView.swift */; };
+		35632F69285B203A009C3B9D /* WorkoutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F68285B203A009C3B9D /* WorkoutListViewController.swift */; };
+		35632F6B285B2053009C3B9D /* WorkoutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F6A285B2053009C3B9D /* WorkoutListViewModel.swift */; };
+		35632F6E285B20B7009C3B9D /* WorkoutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35632F6D285B20B7009C3B9D /* WorkoutModel.swift */; };
+>>>>>>> Stashed changes
 		35DD525B283E7E3E0031A912 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525A283E7E3E0031A912 /* InputView.swift */; };
 		35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DD525C283E7F090031A912 /* KeyboardHelper.swift */; };
 		35F16C77283F7EB90005352C /* UIScreen+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F16C76283F7EB90005352C /* UIScreen+Ext.swift */; };
@@ -103,13 +113,16 @@
 		3548C85A28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		3548C8682819137A0089A0C4 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3548C86A2819137F0089A0C4 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		3548C878281A86960089A0C4 /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
-		3548C87A281A86CD0089A0C4 /* WorkoutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewModel.swift; sourceTree = "<group>"; };
-		3548C87C281A86F60089A0C4 /* WorkoutListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListCell.swift; sourceTree = "<group>"; };
-		3548C87F281A87050089A0C4 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		3555CCE3281C0D1D00DA830E /* WhatToDoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatToDoManager.swift; sourceTree = "<group>"; };
 		3555CD26281C69A100DA830E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
 		3555CD29281C747100DA830E /* SuggestionListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionListCell.swift; sourceTree = "<group>"; };
+=======
+		3555CD2C281CD5DA00DA830E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		3555CD2E282004F200DA830E /* ItemSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupViewController.swift; sourceTree = "<group>"; };
+		3555CD312820E88A00DA830E /* ItemSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupView.swift; sourceTree = "<group>"; };
+		3555CD33282136B100DA830E /* ItemSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSetupViewModel.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		3555CD36282169D600DA830E /* AdrenalistLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistLabel.swift; sourceTree = "<group>"; };
 		3555CD38282169EC00DA830E /* AdrenalistCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistCircleButton.swift; sourceTree = "<group>"; };
 		3555CD3A2821729800DA830E /* AdrenalistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdrenalistButton.swift; sourceTree = "<group>"; };
@@ -122,6 +135,7 @@
 		35632F572858A403009C3B9D /* MyDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDatePickerCell.swift; sourceTree = "<group>"; };
 		35632F592859DBFB009C3B9D /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
 		35632F5B2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutlistCollectionViewCell.swift; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
 		35632F94285B3696009C3B9D /* WorkoutSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupView.swift; sourceTree = "<group>"; };
 		35632F96285B369D009C3B9D /* WorkoutSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupViewController.swift; sourceTree = "<group>"; };
 		35632F98285B36A8009C3B9D /* WorkoutSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetupViewModel.swift; sourceTree = "<group>"; };
@@ -149,6 +163,12 @@
 		35D66D2E287D953400DC9D43 /* SetupFavoriteSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFavoriteSetViewController.swift; sourceTree = "<group>"; };
 		35D66D30287D955C00DC9D43 /* SetupFavoriteSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFavoriteSetView.swift; sourceTree = "<group>"; };
 		35D66D32287D956C00DC9D43 /* SetupFavoriteSetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFavoriteSetViewModel.swift; sourceTree = "<group>"; };
+=======
+		35632F66285B202F009C3B9D /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
+		35632F68285B203A009C3B9D /* WorkoutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewController.swift; sourceTree = "<group>"; };
+		35632F6A285B2053009C3B9D /* WorkoutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListViewModel.swift; sourceTree = "<group>"; };
+		35632F6D285B20B7009C3B9D /* WorkoutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutModel.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		35DD525A283E7E3E0031A912 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		35DD525C283E7F090031A912 /* KeyboardHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelper.swift; sourceTree = "<group>"; };
 		35F16C76283F7EB90005352C /* UIScreen+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Ext.swift"; sourceTree = "<group>"; };
@@ -206,10 +226,14 @@
 				35D66D2D287D951900DC9D43 /* SetupFavoriteSet */,
 				35A6DBF728718F4F00D6FFF9 /* Modal */,
 				3548C84A28190DFC0089A0C4 /* Main */,
+				35632F65285B2023009C3B9D /* WorkoutList */,
 				3548C84C28190E130089A0C4 /* Setting */,
+<<<<<<< Updated upstream
 				35632F93285B3687009C3B9D /* WorkoutSetup */,
 				35A6DBEE28684AF100D6FFF9 /* FavoriteDetail */,
 				3548C877281A868A0089A0C4 /* WorkoutList */,
+=======
+>>>>>>> Stashed changes
 				3548C84D28190E190089A0C4 /* Workout */,
 				3555CD4728219BCA00DA830E /* About */,
 				35632FFF285F6260009C3B9D /* CalendarView */,
@@ -276,6 +300,7 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		3548C877281A868A0089A0C4 /* WorkoutList */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +324,8 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> Stashed changes
 		3555CD28281C69A400DA830E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,7 +406,32 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+<<<<<<< Updated upstream
 		35632FFF285F6260009C3B9D /* CalendarView */ = {
+=======
+		35632F65285B2023009C3B9D /* WorkoutList */ = {
+			isa = PBXGroup;
+			children = (
+				35632F6D285B20B7009C3B9D /* WorkoutModel.swift */,
+				35632F6A285B2053009C3B9D /* WorkoutListViewModel.swift */,
+				35632F68285B203A009C3B9D /* WorkoutListViewController.swift */,
+				35632F66285B202F009C3B9D /* WorkoutListView.swift */,
+				35632F6C285B2078009C3B9D /* View */,
+			);
+			path = WorkoutList;
+			sourceTree = "<group>";
+		};
+		35632F6C285B2078009C3B9D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				35632F53285899DA009C3B9D /* MyDatepicker.swift */,
+				35632F572858A403009C3B9D /* MyDatePickerCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8B1759E6EDC59B6EE6B97AAF /* Pods */ = {
+>>>>>>> Stashed changes
 			isa = PBXGroup;
 			children = (
 				35632FF6285F1EB3009C3B9D /* CalendarViewController.swift */,
@@ -528,22 +580,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				3548C86B2819137F0089A0C4 /* SettingView.swift in Sources */,
+<<<<<<< Updated upstream
 				357CBE122876FC0A00031348 /* AdrenalistTitleSetupModalView.swift in Sources */,
 				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
 				357CBE1A2877117500031348 /* FavoriteSetListView.swift in Sources */,
 				3548C879281A86960089A0C4 /* WorkoutListViewController.swift in Sources */,
 				3555CD2A281C747100DA830E /* SuggestionListCell.swift in Sources */,
+=======
+				35632F69285B203A009C3B9D /* WorkoutListViewController.swift in Sources */,
+				3548C8692819137A0089A0C4 /* SettingViewModel.swift in Sources */,
+				3555CD2F282004F200DA830E /* ItemSetupViewController.swift in Sources */,
+>>>>>>> Stashed changes
 				351C5BBF28190BCC00FE9C0F /* MainView.swift in Sources */,
 				35D66D2F287D953400DC9D43 /* SetupFavoriteSetViewController.swift in Sources */,
 				351C5BCB28190D6200FE9C0F /* WorkoutViewController.swift in Sources */,
 				35632F97285B369D009C3B9D /* WorkoutSetupViewController.swift in Sources */,
 				351C5BAB28190B7000FE9C0F /* AppDelegate.swift in Sources */,
+				35632F6B285B2053009C3B9D /* WorkoutListViewModel.swift in Sources */,
 				3548C85B28190F7F0089A0C4 /* WorkoutHistoryCollectionViewCell.swift in Sources */,
 				351C5BAD28190B7000FE9C0F /* SceneDelegate.swift in Sources */,
+<<<<<<< Updated upstream
 				3548C87D281A86F60089A0C4 /* WorkoutListCell.swift in Sources */,
 				35632F99285B36A8009C3B9D /* WorkoutSetupViewModel.swift in Sources */,
 				357CBE1C287711B200031348 /* FavoriteSetListViewModel.swift in Sources */,
 				35D66D31287D955C00DC9D43 /* SetupFavoriteSetView.swift in Sources */,
+=======
+>>>>>>> Stashed changes
 				3555CD3B2821729800DA830E /* AdrenalistButton.swift in Sources */,
 				35DD525B283E7E3E0031A912 /* InputView.swift in Sources */,
 				351C5BC928190D4100FE9C0F /* WorkoutView.swift in Sources */,
@@ -554,13 +616,17 @@
 				3555CD462821903400DA830E /* UIViewController+Ext.swift in Sources */,
 				3548C85028190E410089A0C4 /* WorkoutViewModel.swift in Sources */,
 				351C5BC128190C2100FE9C0F /* MainViewController.swift in Sources */,
+<<<<<<< Updated upstream
 				35A6DBED2865868B00D6FFF9 /* Manager.swift in Sources */,
 				35632FF7285F1EB3009C3B9D /* CalendarViewController.swift in Sources */,
 				3548C87B281A86CD0089A0C4 /* WorkoutListViewModel.swift in Sources */,
 				35632FE3285CA590009C3B9D /* AdrenalistTitleView.swift in Sources */,
 				35632FE0285C9CF7009C3B9D /* WorkoutModel.swift in Sources */,
+=======
+>>>>>>> Stashed changes
 				35632F582858A403009C3B9D /* MyDatePickerCell.swift in Sources */,
 				35DD525D283E7F090031A912 /* KeyboardHelper.swift in Sources */,
+				35632F6E285B20B7009C3B9D /* WorkoutModel.swift in Sources */,
 				35632F5628589DA9009C3B9D /* Date+Ext.swift in Sources */,
 				35632F54285899DA009C3B9D /* MyDatepicker.swift in Sources */,
 				35A6DBE82860201B00D6FFF9 /* AdrenalistBottomNavigationBarView.swift in Sources */,
@@ -580,12 +646,16 @@
 				3555CD4928219BD100DA830E /* AboutView.swift in Sources */,
 				35632FEA285CADB7009C3B9D /* AdrenalistTextInputView.swift in Sources */,
 				3555CD4B28219BD900DA830E /* AboutViewController.swift in Sources */,
+<<<<<<< Updated upstream
 				35A6DBF028684B1700D6FFF9 /* FavoriteDetailViewController.swift in Sources */,
 				3548C880281A87050089A0C4 /* WorkoutListView.swift in Sources */,
 				35632FE5285CA5BF009C3B9D /* AdrenalistInputDetailView.swift in Sources */,
+=======
+>>>>>>> Stashed changes
 				3555CD37282169D600DA830E /* AdrenalistLabel.swift in Sources */,
 				357CBE142877065700031348 /* FavoriteDetailCollectionViewCell.swift in Sources */,
 				351C5BC528190C9000FE9C0F /* SettingViewController.swift in Sources */,
+				35632F67285B202F009C3B9D /* WorkoutListView.swift in Sources */,
 				351C5BC328190C6500FE9C0F /* MainViewModel.swift in Sources */,
 				35632F5C2859DC08009C3B9D /* WorkoutlistCollectionViewCell.swift in Sources */,
 				35632FEC285CE272009C3B9D /* AdrenalistDividerView.swift in Sources */,
