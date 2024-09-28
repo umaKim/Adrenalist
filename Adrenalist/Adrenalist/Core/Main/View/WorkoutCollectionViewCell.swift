@@ -8,16 +8,21 @@
 import UIKit.UICollectionViewCell
 import Combine
 
+<<<<<<< Updated upstream
 enum WorkoutCollectionViewCellAction {
     case setting
 //    case workout
 //    case calendar
+=======
+enum WorkoutListCollectionViewCellAction {
+    case setting, workout ,calendar
+>>>>>>> Stashed changes
 }
 
-final class WorkoutCollectionViewCell: UICollectionViewCell {
+final class WorkoutListCollectionViewCell: UICollectionViewCell {
     static let identifier = "WorkoutCollectionViewCell"
     
-    private(set) lazy var action = PassthroughSubject<WorkoutCollectionViewCellAction, Never>()
+    private(set) lazy var action = PassthroughSubject<WorkoutListCollectionViewCellAction, Never>()
     
     private var cancellables: Set<AnyCancellable>
     
@@ -31,20 +36,34 @@ final class WorkoutCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
+<<<<<<< Updated upstream
         let viewModel = WorkoutViewModel()
         viewModel
             .transitionPublisher
             .sink { trans in
                 switch trans {
+=======
+        let viewModel = WorkoutListViewModel()
+//        viewModel
+//            .transitionPublisher
+//            .sink { trans in
+//                switch trans {
+>>>>>>> Stashed changes
 //                case .setting:
 //                    self.action.send(.setting)
 //                case .calendar:
 //                    self.action.send(.calendar)
+<<<<<<< Updated upstream
                 case .workoutList:
                     self.action.send(.setting)
                 }
             }
             .store(in: &cancellables)
+=======
+//                }
+//            }
+//            .store(in: &cancellables)
+>>>>>>> Stashed changes
         
         let nav = UINavigationController(rootViewController: WorkoutViewController(viewModel: viewModel))
         guard let myListView = nav.view else { return }

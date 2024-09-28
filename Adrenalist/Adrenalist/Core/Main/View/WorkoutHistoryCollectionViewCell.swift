@@ -35,6 +35,7 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
+<<<<<<< Updated upstream
         let viewModel = WorkoutListViewModel2()
         let vc = WorkoutListViewController2(viewModel: viewModel)
         let nav = UINavigationController(rootViewController: vc)
@@ -70,6 +71,30 @@ final class WorkoutHistoryCollectionViewCell: UICollectionViewCell {
                 }
             }
             .store(in: &cancellables)
+=======
+//        let viewModel = WorkoutHistoryViewModel()
+//        viewModel
+//            .transitionPublisher
+//            .sink { trans in
+//                switch trans {
+//                case .workout:
+//                    self.action.send(.workout)
+//                }
+//            }
+//            .store(in: &cancellables)
+//
+//        let vc =  WorkoutHistoryViewController(viewModel: viewModel)
+//        let nav = UINavigationController(rootViewController: vc)
+//        guard let myHistoryView = nav.view else { return }
+//        contentView.addSubview(myHistoryView)
+//
+//        NSLayoutConstraint.activate([
+//            myHistoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            myHistoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            myHistoryView.topAnchor.constraint(equalTo: contentView.topAnchor),
+//            myHistoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+//        ])
+>>>>>>> Stashed changes
     }
     
     required init?(coder: NSCoder) {
