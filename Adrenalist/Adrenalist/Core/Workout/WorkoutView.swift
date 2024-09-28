@@ -16,7 +16,19 @@ enum WorkoutViewAction {
     case back
 }
 
+<<<<<<< Updated upstream
 final class WorkoutView: UIView {
+=======
+final class WorkoutListView: UIView, MyScrollableDatepickerDelegate {
+    func datepicker(_ datepicker: MyScrollableDatepicker, didSelectDate date: MyScrollableDatepickerModel) {
+        
+    }
+    
+    func datepicker(_ datepicker: MyScrollableDatepicker, didScroll index: IndexPath) {
+        
+    }
+    
+>>>>>>> Stashed changes
     
     private(set) lazy var actionPublisher = actionSubject.eraseToAnyPublisher()
     private let actionSubject = PassthroughSubject<WorkoutViewAction, Never>()
@@ -90,6 +102,7 @@ final class WorkoutView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+<<<<<<< Updated upstream
 
 //MARK: - Public Methods
 extension WorkoutView {
@@ -207,3 +220,5 @@ extension UIButton {
         self.setTitleColor(.purpleBlue, for: .normal)
     }
 }
+=======
+>>>>>>> Stashed changes
