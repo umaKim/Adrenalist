@@ -11,7 +11,11 @@ import UIKit.UIViewController
 
 final class WorkoutViewController: UIViewController {
     
-    private let contentView = WorkoutView()
+//    private let contentView = WorkoutView()
+    
+    fileprivate var contentView: WorkoutView {
+        return self.view as! WorkoutView
+    }
     
     private let viewModel: WorkoutViewModel
     
@@ -26,7 +30,7 @@ final class WorkoutViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        view = contentView
+        view = WorkoutView()
         
         bind()
         setupUI()

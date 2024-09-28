@@ -5,7 +5,7 @@
 //  Created by 김윤석 on 2022/05/03.
 //
 
-import UIKit.UIButton
+import UIKit
 
 final class AdrenalistCircleButton: UIButton {
 

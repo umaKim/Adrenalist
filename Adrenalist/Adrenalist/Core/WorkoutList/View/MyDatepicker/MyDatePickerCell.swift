@@ -5,6 +5,9 @@
 //  Created by 김윤석 on 2022/06/14.
 //
 
+
+import FlexLayout
+import PinLayout
 import UIKit.UICollectionViewCell
 
 final class MyScrollableDatepickerCell: UICollectionViewCell {
@@ -13,7 +16,10 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
     private lazy var dayLabel: UILabel = {
        let lb = UILabel()
         lb.textColor = .white
-        lb.font = lb.font.withSize(15)
+        lb.font = lb.font.withSize(13)
+        lb.numberOfLines = 0 // Allow multiple lines
+        lb.lineBreakMode = .byWordWrapping // Handle text wrapping
+        lb.textAlignment = .center // Optional: Center the text
         return lb
     }()
     
@@ -73,6 +79,9 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
         self.dot.isHidden = !date.isDot
     }
     
+    private let rootFlexContainer = UIView()
+
+    
     private func setupUI() {
         layer.cornerRadius = 16
         layer.borderWidth = 1
@@ -93,4 +102,35 @@ final class MyScrollableDatepickerCell: UICollectionViewCell {
             sv.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
+    
+//    private func setupUI() {
+//           layer.cornerRadius = 16
+//           layer.borderWidth = 1
+//        
+//        contentView.addSubview(rootFlexContainer)
+////        rootFlexContainer.flex
+////            .alignItems(.center)
+////            .justifyContent(.center)
+////            .define { (flex) in
+////                flex.addItem(dayLabel)
+////                flex.addItem(dateLabel).marginTop(2)
+////                flex.addItem(dot).size(6).marginTop(2)
+////            }
+//        
+//        rootFlexContainer.flex
+//            .alignItems(.center)
+//            .justifyContent(.center)
+////            .padding(0)
+//            .define { (flex) in
+//                flex.addItem(dayLabel).grow(1).shrink(1)
+//                flex.addItem(dateLabel).marginTop(2).shrink(1).grow(1)
+//                flex.addItem(dot).size(6).marginTop(2)
+//            }
+//    }
+    
+//    override func layoutSubviews() {
+//            super.layoutSubviews()
+//            rootFlexContainer.pin.all()
+//            rootFlexContainer.flex.layout()
+//        }
 }
